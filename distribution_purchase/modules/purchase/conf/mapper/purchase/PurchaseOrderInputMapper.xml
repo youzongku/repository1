@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.purchase.PurchaseOrderInputMapper">
+	<resultMap id="BaseResultMap" type="entity.purchase.PurchaseOrderInput">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="input_user" property="inputUser" jdbcType="VARCHAR" />
+		<result column="dis_account" property="disAccount" jdbcType="VARCHAR" />
+		<result column="input_type" property="inputType" jdbcType="INTEGER" />
+		<result column="dis_mode" property="disMode" jdbcType="INTEGER" />
+		<result column="dis_type" property="disType" jdbcType="INTEGER" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, input_user,
+		dis_account,input_type,dis_mode,dis_type
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_purchase_order_input
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectByInputType" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_purchase_order_input
+		where input_type = #{inputType,jdbcType=INTEGER} and input_user =
+		#{inputUser}
+	</select>
+
+	<select id="selectByParam" resultMap="BaseResultMap"
+		parameterType="entity.purchase.PurchaseOrderInput">
+		select
+		<include refid="Base_Column_List" />
+		from t_purchase_order_input
+		where input_user = #{inputUser,jdbcType=VARCHAR} and input_type =
+		#{inputType,jdbcType=INTEGER}
+		order by id desc
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_purchase_order_input
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="entity.purchase.PurchaseOrderInput"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_purchase_order_input
+		(input_user, dis_account, input_type, dis_mode, dis_type)
+		values (
+		#{inputUser,jdbcType=VARCHAR}, #{disAccount,jdbcType=VARCHAR},
+		#{inputType}, #{disMode}, #{disType}
+		)
+	</insert>
+
+	<insert id="insertSelective" parameterType="entity.purchase.PurchaseOrderInput"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_purchase_order_input
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="inputUser != null">
+				input_user,
+			</if>
+			<if test="disAccount != null">
+				dis_account,
+			</if>
+			<if test="inputType != null">
+				input_type,
+			</if>
+			<if test="disMode != null">
+				dis_mode,
+			</if>
+			<if test="disType != null">
+				dis_type,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="inputUser != null">
+				#{inputUser,jdbcType=VARCHAR},
+			</if>
+			<if test="disAccount != null">
+				#{disAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="inputType != null">
+				#{inputType,jdbcType=INTEGER},
+			</if>
+			<if test="disMode != null">
+				#{disMode,jdbcType=INTEGER},
+			</if>
+			<if test="disType != null">
+				#{disType,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="entity.purchase.PurchaseOrderInput">
+		update t_purchase_order_input
+		<set>
+			<if test="inputUser != null">
+				input_user = #{inputUser,jdbcType=VARCHAR},
+			</if>
+			<if test="disAccount != null">
+				dis_account = #{disAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="inputType != null">
+				input_type = #{inputType,jdbcType=INTEGER},
+			</if>
+			<if test="disMode != null">
+				dis_mode = #{disMode,jdbcType=INTEGER},
+			</if>
+			<if test="disType != null">
+				dis_type = #{disType,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="entity.purchase.PurchaseOrderInput">
+		update t_purchase_order_input
+		set input_user = #{inputUser,jdbcType=VARCHAR},
+		dis_account = #{disAccount,jdbcType=VARCHAR},
+		dis_mode = #{disMode}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<delete id="deleteInput" parameterType="java.lang.Integer">
+		delete from t_purchase_order_input where id = #{inputId,jdbcType=INTEGER};
+		delete from t_purchase_order_input_gift where input_id =
+		#{inputId,jdbcType=INTEGER};
+		delete from t_purchase_order_input_pro where input_id =
+		#{inputId,jdbcType=INTEGER};
+	</delete>
+	
+	<delete id="deleteInputByParam" parameterType="entity.purchase.PurchaseOrderInput">
+		delete from
+		t_purchase_order_input_gift where input_id in
+		(
+		select id from
+		t_purchase_order_input
+		where input_user = #{inputUser,jdbcType=VARCHAR}
+		and
+		input_type = #{inputType,jdbcType=INTEGER}
+		);
+		delete from
+		t_purchase_order_input_pro where input_id in
+		(
+		select id from
+		t_purchase_order_input
+		where input_user = #{inputUser,jdbcType=VARCHAR}
+		and
+		input_type = #{inputType,jdbcType=INTEGER}
+		);
+		delete from
+		t_purchase_order_input
+		where input_user = #{inputUser,jdbcType=VARCHAR}
+		and
+		input_type = #{inputType,jdbcType=INTEGER}
+	</delete>
+
+</mapper>

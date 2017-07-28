@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.contract.ContractFeeItemMapper" >
+  <resultMap id="BaseResultMap" type="entity.contract.ContractFeeItem" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="fee_type_id" property="feeTypeId" jdbcType="INTEGER" />
+    <result column="fee_type_name" property="feeTypeName" jdbcType="VARCHAR" />
+    <result column="fee_type" property="feeType" jdbcType="INTEGER" />
+    <result column="contract_no" property="contractNo" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="deleted" property="deleted" jdbcType="BOOLEAN" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_user" property="lastUpdateUser" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, fee_type_id, fee_type_name, fee_type, contract_no, start_time, 
+    end_time, content, deleted,
+    create_user, create_time, last_update_user, update_time, remarks
+  </sql>
+  
+  <sql id="PAGE_QUERY_CONDITIONS">
+  	<where>
+  		deleted = false
+  		<if test="contractNo">
+  			and contract_no = #{contractNo}
+  		</if>
+  	</where>
+  </sql>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="dto.contract.fee.ContractFeeItemPageQeuryParam">
+  	select <include refid="Base_Column_List"/>
+    from t_contract_fee_items
+    <include refid="PAGE_QUERY_CONDITIONS"/>
+    order by id desc
+    <if test="pageSize!=null and currPage!=null">
+    	LIMIT #{pageSize} OFFSET (#{currPage}-1)*#{pageSize}
+    </if>
+  </select>
+  <select id="selectCountByPage" resultType="java.lang.Integer" parameterType="dto.contract.fee.ContractFeeItemPageQeuryParam">
+  	select count(*)
+    from t_contract_fee_items
+    <include refid="PAGE_QUERY_CONDITIONS"/>
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer">
+  	select count(*)
+    from t_contract_fee_items
+    <where>
+    	deleted = false
+    	<if test="feeTypeId!=null">
+    		and fee_type_id = #{feeTypeId,jdbcType=INTEGER}
+    	</if>
+    	<if test="contractNo!=null and contractNo!=''">
+    		and contract_no = #{contractNo}
+    	</if>
+    </where>
+  </select>
+  
+  <select id="select" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_contract_fee_items
+    <where>
+    	deleted = false
+    	<if test="feeTypeId!=null">
+    		and fee_type_id = #{feeTypeId,jdbcType=INTEGER}
+    	</if>
+    	<if test="contractNo!=null and contractNo!=''">
+    		and contract_no = #{contractNo}
+    	</if>
+    </where>
+    order by end_time desc
+  </select>
+  
+  <select id="selectByConditions" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_contract_fee_items
+    <where>
+    	deleted = false
+    	<if test="feeTypeId!=null">
+    		and fee_type_id = #{feeTypeId,jdbcType=INTEGER}
+    	</if>
+    	<if test="contractNo!=null and contractNo!=''">
+    		and contract_no = #{contractNo}
+    	</if>
+    	<if test="contractNoList!=null and contractNoList.size()>0">
+    		and contract_no in
+    		<foreach collection="contractNoList" item="item" open="("  separator=","   close=")">  
+				#{item}
+		    </foreach>
+    	</if>
+    </where>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_contract_fee_items
+    where id = #{id,jdbcType=INTEGER} and deleted = false
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_contract_fee_items
+    where id = #{id,jdbcType=INTEGER} and deleted = false
+  </delete>
+  
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="entity.contract.ContractFeeItem" >
+    insert into t_contract_fee_items (fee_type_id, fee_type_name, 
+      fee_type, contract_no, start_time, 
+      end_time, content, create_user, 
+      create_time, remarks, deleted
+      )
+    values (#{feeTypeId,jdbcType=INTEGER}, #{feeTypeName,jdbcType=VARCHAR}, 
+      #{feeType,jdbcType=INTEGER}, #{contractNo,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR},
+      #{createUser,jdbcType=VARCHAR}, now(), #{remarks}, false
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="entity.contract.ContractFeeItem" >
+    insert into t_contract_fee_items
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="feeTypeId != null" >
+        fee_type_id,
+      </if>
+      <if test="feeTypeName != null" >
+        fee_type_name,
+      </if>
+      <if test="feeType != null" >
+        fee_type,
+      </if>
+      <if test="contractNo != null" >
+        contract_no,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      update_time, deleted
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="feeTypeId != null" >
+        #{feeTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="feeTypeName != null" >
+        #{feeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="feeType != null" >
+        #{feeType,jdbcType=INTEGER},
+      </if>
+      <if test="contractNo != null" >
+        #{contractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks},
+      </if>
+      now(), false
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.contract.ContractFeeItem" >
+    update t_contract_fee_items
+    <set >
+      update_time = now(),	
+      <if test="endTime != null" >
+        end_time = #{endTime},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

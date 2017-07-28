@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.CustomerCreditMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.CustomerCredit" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="customer_mode" property="customerMode" jdbcType="INTEGER" />
+    <result column="customer_type" property="customerType" jdbcType="INTEGER" />
+    <result column="has_long_credit" property="hasLongCredit" jdbcType="BIT" />
+    <result column="has_short_credit" property="hasShortCredit" jdbcType="BIT" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="DATE" />
+    <result column="update_date" property="updateDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, customer_mode, customer_type, has_long_credit, has_short_credit, create_user, 
+    create_date, update_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_credit_mapper
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_credit_mapper
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.CustomerCredit" >
+    insert into t_credit_mapper (id, customer_mode, customer_type, 
+      has_long_credit, has_short_credit, create_user, 
+      create_date, update_date)
+    values (#{id,jdbcType=INTEGER}, #{customerMode,jdbcType=INTEGER}, #{customerType,jdbcType=INTEGER}, 
+      #{hasLongCredit,jdbcType=BIT}, #{hasShortCredit,jdbcType=BIT}, #{createUser,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=DATE}, #{updateDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.CustomerCredit" >
+    insert into t_credit_mapper
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerMode != null" >
+        customer_mode,
+      </if>
+      <if test="customerType != null" >
+        customer_type,
+      </if>
+      <if test="hasLongCredit != null" >
+        has_long_credit,
+      </if>
+      <if test="hasShortCredit != null" >
+        has_short_credit,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="customerMode != null" >
+        #{customerMode,jdbcType=INTEGER},
+      </if>
+      <if test="customerType != null" >
+        #{customerType,jdbcType=INTEGER},
+      </if>
+      <if test="hasLongCredit != null" >
+        #{hasLongCredit,jdbcType=BIT},
+      </if>
+      <if test="hasShortCredit != null" >
+        #{hasShortCredit,jdbcType=BIT},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.CustomerCredit" >
+    update t_credit_mapper
+    <set >
+      <if test="customerMode != null" >
+        customer_mode = #{customerMode,jdbcType=INTEGER},
+      </if>
+      <if test="customerType != null" >
+        customer_type = #{customerType,jdbcType=INTEGER},
+      </if>
+      <if test="hasLongCredit != null" >
+        has_long_credit = #{hasLongCredit,jdbcType=BIT},
+      </if>
+      <if test="hasShortCredit != null" >
+        has_short_credit = #{hasShortCredit,jdbcType=BIT},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.CustomerCredit" >
+    update t_credit_mapper
+    set customer_mode = #{customerMode,jdbcType=INTEGER},
+      customer_type = #{customerType,jdbcType=INTEGER},
+      has_long_credit = #{hasLongCredit,jdbcType=BIT},
+      has_short_credit = #{hasShortCredit,jdbcType=BIT},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE},
+      update_date = #{updateDate,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+   <!-- add by zbc 信用额度配置 -->
+  <select id="getCreditConfig" resultMap="BaseResultMap" parameterType="entity.dismember.CustomerCredit">
+   	 select 
+     <include refid="Base_Column_List" />
+     from t_credit_mapper
+     where 
+     customer_mode = #{distributionMode,jdbcType=INTEGER}
+     and 
+     customer_type = #{comsumerType,jdbcType=INTEGER}
+  </select>
+</mapper>

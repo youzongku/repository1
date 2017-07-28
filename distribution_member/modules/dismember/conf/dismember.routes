@@ -1,0 +1,565 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                       controllers.dismember.Assets.at(path="/public", file)
+
+#--------------------------------------------------login module--------------------------------------------------#
+
+GET         /api                                @controllers.api.ApiController.getResources()
+
+GET         /api/:path                          @controllers.api.ApiController.getResource(path:String)
+
+POST        /register                           @controllers.dismember.LoginController.register()
+
+POST        /login                              @controllers.dismember.LoginController.login()
+POST        /login4php                          @controllers.dismember.LoginController.login4php()
+
+GET         /logout                             @controllers.dismember.LoginController.logout()
+
+POST        /adminlogin                         @controllers.dismember.LoginController.adminLogin()
+POST        /adminlogin4php                     @controllers.dismember.LoginController.adminLogin4php()
+
+GET         /adminlogout                        @controllers.dismember.LoginController.adminLogout()
+
+GET         /isnulogin                          @controllers.dismember.LoginController.isNormalUserLogin()
+
+GET         /isaulogin                          @controllers.dismember.LoginController.isAdminUserLogin()
+
+GET         /getcaptcha                         @controllers.dismember.Captcha.generate()
+
+POST        /checkcaptcha                       @controllers.dismember.Captcha.checkCaptcha()
+
+POST        /checktelRegister                   @controllers.dismember.LoginController.checktelRegister()
+
+POST        /telRegister                        @controllers.dismember.LoginController.telRegister()
+   
+POST        /backstageRegister                  @controllers.dismember.LoginController.backstageRegister()
+
+POST        /checkTelFindPWD                    @controllers.dismember.LoginController.checkTelFindPWD()
+
+POST        /sendCheckCode                      @controllers.dismember.LoginController.sendCheckCode()
+
+POST        /reseloginPWDbyTEL                  @controllers.dismember.LoginController.resetPWDbyTEL()
+
+GET         /times                              @controllers.dismember.LoginController.loginTimes()
+
+POST        /registerApply                      @controllers.dismember.LoginController.registerApply()
+
+POST        /getApplys                       	@controllers.dismember.LoginController.getApplys()
+
+GET         /showDetail                       	@controllers.dismember.LoginController.showDetail(id:Integer)
+
+POST        /auditApply                       	@controllers.dismember.LoginController.auditApply()
+
+GET         /watchAuidtFile                     @controllers.dismember.LoginController.getAuditFile(id:Integer)
+
+GET         /becomeOrdinaryUser                 @controllers.dismember.LoginController.becomeOrdinaryUser(id:Integer)
+
+POST        /backRegisterApply                  @controllers.dismember.LoginController.backRegisterApply()
+
+POST        /modifyApplyFiles                   @controllers.dismember.LoginController.modifyApplyFiles()
+
+GET         /applyFileHistory                   @controllers.dismember.LoginController.applyFileHistory(applyId:Integer)
+
+#--------------------------------------------------member module--------------------------------------------------#
+POST        /dismember                          @controllers.dismember.MemberController.getDisMemberByEmail()
+
+GET         /getMode                            @controllers.dismember.MemberController.getMode()
+ 
+GET         /activedEmail                       @controllers.dismember.MemberController.activedEmail(email:String,code:String)
+
+GET         /infor                              @controllers.dismember.MemberController.getInformation(email : String ?= "")
+
+POST        /gaininfo                           @controllers.dismember.MemberController.gainInfoByEmail()
+
+GET         /activeagain                        @controllers.dismember.MemberController.sendEmailAgain(e : String)
+
+POST        /updateinfo                         @controllers.dismember.MemberController.updateInfo()
+
+GET         /verifyuser                         @controllers.dismember.MemberController.verifyUser()
+
+POST        /message	                        @controllers.dismember.MemberController.sendMessageForTel()
+
+POST        /checkMessageCaptcha                @controllers.dismember.MemberController.checkMessageCaptcha()
+
+POST        /verify                             @controllers.dismember.MemberController.getEmailVerifySuccessRecord()
+
+POST        /headimg/upload                     @controllers.dismember.HeadImgController.uploadHeadImg()
+
+GET         /img/*imgfile                       @controllers.dismember.HeadImgController.view(imgfile: String)
+
+POST        /changePayPwdByEmail                @controllers.dismember.MemberController.changePayPassword()
+
+POST        /repeatPayPwdsendByEmail            @controllers.dismember.MemberController.rsendEmailForchangePaypassword()
+
+POST        /checkPayPwdEmailTime               @controllers.dismember.MemberController.checkPaypasswordEmailHours()
+
+POST        /applymodicell                      @controllers.dismember.MemberController.applyModifyCellphone()
+
+POST        /applymodicell2                     @controllers.dismember.MemberController.applyModifyCellphone2()
+
+POST        /checkModifyCode                    @controllers.dismember.MemberController.checkModifyCode()
+
+POST        /repeatsendmpe                      @controllers.dismember.MemberController.repeatSendModifyCellphoneVerifyEmail()
+
+POST        /resetcellphone                     @controllers.dismember.MemberController.resetCellphone()
+
+GET         /resetcipher                        @controllers.dismember.MemberController.resetCipher(userId : Integer)
+
+POST        /insert                             @controllers.dismember.MemberController.addBackstageUser()
+
+GET         /delUser                            @controllers.dismember.MemberController.deleteBackstageUser(uid : Integer)
+
+POST        /resetpwd                           @controllers.dismember.MemberController.resetPwd()
+
+POST        /updateComsumerInfo                 @controllers.dismember.MemberController.updateComsumerInfoInBack()
+
+GET         /custaccount                        @controllers.dismember.MemberController.getCustAccount(email : String ?= "")
+
+GET        	/clientid                     		@controllers.dismember.MemberController.clientCode()
+
+POST        /getMenuList                        @controllers.dismember.MenuController.getLoginMemMenuList()
+
+POST        /getMemMenuList                     @controllers.dismember.MenuController.getMemberMenuList()
+
+
+
+#--------------------------------------------------account module--------------------------------------------------#
+
+GET         /account                            @controllers.dismember.AccountController.getAccount()
+
+GET         /checkFrozen                         @controllers.dismember.AccountController.checkFrozen()
+
+POST        /changeNick                          @controllers.dismember.AccountController.changeNickName()
+
+GET         /unfreeze/:em                       @controllers.dismember.AccountController.unfreeze(em : String)
+
+POST        /savepaycode                        @controllers.dismember.AccountController.savePayPassword()
+
+POST        /resetpayPassword                   @controllers.dismember.AccountController.resetPayPassword()
+
+GET         /getAccount                         @controllers.dismember.AccountController.getAccountByEmail(email : String ?= "")
+
+GET         /period/frozen                      @controllers.dismember.AccountController.queryPeriodFrozen(email : String ?= "")
+
+POST        /period/setFrozen                   @controllers.dismember.AccountController.setPeriodFrozen()
+
+GET        	/getDisAccountInfo                  @controllers.dismember.AccountController.getDisAccountInfo()
+
+POST       	/getAllAccount                      @controllers.dismember.AccountController.getAllAccount()
+
+POST       	/reduceAccount		                @controllers.dismember.AccountController.reduceAccountByEmail()
+
+GET         /getAccountHistory               	@controllers.dismember.AccountController.getAccountHistory(accountId:Integer)
+
+#--------------------------------------------------apply module--------------------------------------------------#
+
+POST        /sendApply                          @controllers.dismember.ApplyController.sendApply()
+
+POST        /sendOnlineApply                    @controllers.dismember.ApplyController.sendOnlineApply()
+
+POST        /onlinePaySuccessCallback           @controllers.dismember.ApplyController.onlinePaySuccessCallback()
+
+POST        /audit                              @controllers.dismember.ApplyController.audit()
+
+#POST        /updateBalance                      @controllers.dismember.ApplyController.updateBalance()
+
+POST        /addOfflineApply                    @controllers.dismember.ApplyController.addOfflineApply()
+
+POST        /queryApply                         @controllers.dismember.ApplyController.queryApply()
+
+POST        /balancePayment                     @controllers.dismember.ApplyController.balancePayment()
+
+POST        /freightRefund                      @controllers.dismember.ApplyController.freightRefund()
+
+POST        /batchAudit                         @controllers.dismember.ApplyController.batchAudit()
+
+GET         /queryOp                            @controllers.dismember.ApplyController.queryOperations(d : Integer)
+
+POST        /applyOpenMobile                    @controllers.dismember.ApplyController.applyOpenMobile()
+
+POST        /getMobileApplyInfo                 @controllers.dismember.ApplyController.getMobileApplyInfo()
+
+POST        /changeMobileClient                 @controllers.dismember.ApplyController.changeMobileClient()
+
+POST        /rechargeMsite                      @controllers.dismember.ApplyController.getMoneyFromMsite()
+
+POST        /backStagePayment                   @controllers.dismember.ApplyController.backStagePayment()
+
+GET         /checktranNo 						@controllers.dismember.ApplyController.checktranNo(tno:String)
+
+POST        /queryWithdraw                      @controllers.dismember.ApplyController.queryWithdraw()
+
+POST        /checkPayPwd                        @controllers.dismember.ApplyController.checkPayPwd()
+
+POST        /applyWithdraw                      @controllers.dismember.ApplyController.applyWithdraw()
+
+POST        /addWithdrawNo                      @controllers.dismember.ApplyController.addWithdrawNo()
+
+POST        /auditWithdraw                      @controllers.dismember.ApplyController.auditWithdraw()
+
+POST        /existWithdrawNo                    @controllers.dismember.ApplyController.existWithdrawNo()
+
+GET         /wbActiveEmail                      @controllers.dismember.ApplyController.wbActiveEmail()
+
+POST        /saveWLimit                         @controllers.dismember.ApplyController.saveWLimit()
+
+GET         /getCWLimit                         @controllers.dismember.ApplyController.getCommonWLimit()
+
+POST        /getBindBankCard                    @controllers.dismember.ApplyController.getBindBankCardList()
+
+POST        /removeBindBankCard                 @controllers.dismember.ApplyController.delBindBankCard()
+
+POST        /reSendMail                			@controllers.dismember.ApplyController.reSendMail()
+
+POST        /reSendTelFor                       @controllers.dismember.ApplyController.reSendTelFor()
+
+GET         /screenUrl                          @controllers.dismember.ApplyController.screenUrl(ap:Integer)
+
+GET         /backstage/welcome                  @controllers.dismember.ApplyController.backstageWelcome()
+
+#--------------------------------------------------bill module--------------------------------------------------#
+
+POST        /getBills                           @controllers.dismember.BillController.queryPagedBills()
+
+POST        /back/getBills                      @controllers.dismember.BillController.backQueryBills()
+
+POST        /createBill                         @controllers.dismember.BillController.createBill()
+
+GET         /getBill						    @controllers.dismember.BillController.getBill(id: Integer)
+
+#--------------------------------------------------shop module--------------------------------------------------#
+
+GET         /getallstore                        @controllers.dismember.ShopController.getAllStore(email : String ?= "")
+
+POST        /getstore                           @controllers.dismember.ShopController.getAllShops()
+
+POST        /addstore                           @controllers.dismember.ShopController.addNewShop()
+
+POST        /alterstore                         @controllers.dismember.ShopController.updateShop()
+
+GET         /delstore                           @controllers.dismember.ShopController.deleteShop()
+
+POST        /getstoreById                       @controllers.dismember.ShopController.getShop()
+
+GET         /shop                               @controllers.dismember.ShopController.shop(name : String ?= "")
+
+POST        /shop/setdp                         @controllers.dismember.ShopController.setShopDeductionPoints()
+
+POST        /shop/dp/logs                       @controllers.dismember.ShopController.getDisShopDpLogs()
+
+GET         /getAllUserShop                     @controllers.dismember.ShopController.getAllUserShop()
+
+GET         /getshopplat                        @controllers.dismember.ShopController.getAllShopPlatforms()
+
+GET         /getshopcate                        @controllers.dismember.ShopController.getAllShopCategorys()
+
+POST        /checkShopName                      @controllers.dismember.ShopController.checkShopName()
+
+#--------------------------------------------------find password module--------------------------------------------------#
+
+GET         /sendEmail                          @controllers.dismember.FindPasswordByEmailController.sendEmailForFindPassword()
+
+POST        /sendEmailAgain                     @controllers.dismember.FindPasswordByEmailController.sendEmailForFindPassword()
+
+GET         /checkEmail                         @controllers.dismember.FindPasswordByEmailController.checkEmail(email:String)
+
+GET         /showResetPasswordPage              @controllers.dismember.FindPasswordByEmailController.showResetPasswordPage(id:String,email:String,decode:String)
+
+POST        /showResetPasswordPageRemote        @controllers.dismember.FindPasswordByEmailController.showResetPasswordPage(id:String,email:String,decode:String)
+
+GET         /resetPassword                      @controllers.dismember.FindPasswordByEmailController.resetPassword()
+
+POST        /resetPasswordRemote                @controllers.dismember.FindPasswordByEmailController.resetPassword()
+
+POST        /getRecord                          @controllers.dismember.FindPasswordByEmailController.getRecord()
+
+#--------------------------------------------------backstage module--------------------------------------------------#
+
+POST        /getroles                           @controllers.dismember.RoleController.getAllRoles()
+
+POST        /getrole                            @controllers.dismember.RoleController.getRoleById()
+
+POST        /addrole                            @controllers.dismember.RoleController.addNewRole()
+
+POST        /updrole                            @controllers.dismember.RoleController.updateRole()
+
+GET         /delrole                            @controllers.dismember.RoleController.deleteRole(rid : Integer)
+
+GET         /getRoleNames                       @controllers.dismember.RoleController.getRoleNames()
+
+POST        /getUsers                           @controllers.dismember.MemberController.getUsers()
+
+GET         /admin/loginhistory                 @controllers.dismember.MemberController.getAdminLoginHistory()
+
+GET         /getallranks                        @controllers.dismember.RankController.gainAllRanks()
+
+POST        /getranks                           @controllers.dismember.RankController.getRanksByPage()
+
+POST        /checkRank                          @controllers.dismember.RankController.checkRank()
+
+POST        /saverank                           @controllers.dismember.RankController.addOrUpdateRank()
+
+GET         /delrank                            @controllers.dismember.RankController.deleteRankData()
+
+POST        /user/changerank                    @controllers.dismember.RankController.updateUserRank()
+
+GET         /user/rankhistory                   @controllers.dismember.RankController.gainUserRankHistory()
+
+GET         /admin/disable/:em                  @controllers.dismember.MemberController.adminDisable(em:String)
+
+GET         /admin/record/:id                  @controllers.dismember.MemberController.adminRecord(id:Integer)
+
+POST         /user/setMemberUserCode                  @controllers.dismember.MemberController.setMemberUserCode()
+
+GET         /user/:id/getPackageMailLogsByMemberId                   @controllers.dismember.PackageMailLogController.getPackageMailLogsByMemberId(id : Integer)
+
+POST         /user/setIsPackageMail                   @controllers.dismember.MemberController.setIsPackageMail()
+
+POST         /user/batchSetIsPackageMail                   @controllers.dismember.MemberController.batchSetIsPackageMail()
+
+#--------------------------------------------------province city area module--------------------------------------------------#
+
+GET         /getprovs                           @controllers.dismember.ProvinceController.getAllProvinces()
+
+GET         /provinces                          @controllers.dismember.ProvinceController.getProvinces(key : String ?= "")
+
+GET         /getcities                          @controllers.dismember.ProvinceController.getCitiesByProvince()
+
+GET         /getareas                           @controllers.dismember.ProvinceController.getAreasByCity()
+
+GET         /addarea                            @controllers.dismember.ProvinceController.addarea(name : String,cityId : Integer)
+
+GET         /getAllAreas                        @controllers.dismember.ProvinceController.getAllAreas()
+
+GET         /getAllCities                       @controllers.dismember.ProvinceController.getAllCities()
+
+POST        /getChinaArea                       @controllers.dismember.ProvinceController.getChinaArea()
+
+#--------------------------------------------------address module--------------------------------------------------#
+
+POST        /getaddress                         @controllers.dismember.AddressController.getAddresses()
+
+POST        /addaddress                         @controllers.dismember.AddressController.addAddress()
+
+POST        /updaddress                         @controllers.dismember.AddressController.updateAddress()
+
+GET         /deladdress                         @controllers.dismember.AddressController.deleteAddress()
+
+#--------------------------------------------------export module--------------------------------------------------#
+
+GET         /exportBills                        @controllers.dismember.ExportController.exportBills()
+
+GET         /back/exportBills                   @controllers.dismember.ExportController.backExportBills()
+
+GET         /exportUser                         @controllers.dismember.ExportController.exportUser()
+
+GET         /exportApply                        @controllers.dismember.ExportController.exportApply()
+
+GET         /exportuandr                        @controllers.dismember.ExportController.exportUserRank()
+
+GET         /exportWithdraw                     @controllers.dismember.ExportController.exportWithdraw()
+
+#--------------------------------------------------bank module--------------------------------------------------#
+
+GET         /getbanks                           @controllers.dismember.BankController.getAllBanks()
+
+GET         /getremos                           @controllers.dismember.BankController.getAllReceiptModes()
+
+
+#--------------------------------------------------authority module--------------------------------------------------#
+
+GET         /getRoleMenuOfUser                  @controllers.dismember.MenuController.getRoleMenuOfUser(tp : Boolean ?= false,mi :Integer ?= null)
+
+POST        /checkMenuAuthority                 @controllers.dismember.MenuController.checkMenuAuthority()
+
+POST        /createMenu                         @controllers.dismember.MenuController.createMenu()
+
+#--------------------------------------------------tree module--------------------------------------------------#
+
+POST        /getTree                            @controllers.dismember.MenuTreeControllers.initTree(roleId : Integer)
+
+POST        /configure                          @controllers.dismember.MenuTreeControllers.configure()
+
+#--------------------------------------------------organiztaion module--------------------------------------------------#
+
+POST        /getOrganization                    @controllers.dismember.OrganizationController.initOrganization()
+
+POST        /checkOrganization                  @controllers.dismember.OrganizationController.checkOrganization()
+
+POST        /saveOrganization                   @controllers.dismember.OrganizationController.addOrganization()
+
+POST        /changeOrganization                 @controllers.dismember.OrganizationController.updateOrganzition()
+
+POST        /removeOrganization                 @controllers.dismember.OrganizationController.removeOrganzition()
+
+GET         /getHeader                          @controllers.dismember.OrganizationController.queryHeader()
+
+POST        /saveSalesMan                       @controllers.dismember.OrganizationController.addSalesman()
+
+POST        /getSalesmans                       @controllers.dismember.OrganizationController.querySalesmans()
+
+POST        /changeSalesMan                     @controllers.dismember.OrganizationController.updateSalesman()
+
+POST        /removeSalesMan                     @controllers.dismember.OrganizationController.removeSalesMan()
+
+POST        /getAllUsers                        @controllers.dismember.OrganizationController.getAllUsers()
+
+POST        /relatedDistributors                @controllers.dismember.OrganizationController.relatedDistributors()
+
+POST        /relatedEmp            				@controllers.dismember.OrganizationController.relatedSalesMan()
+
+POST        /getSalesmanMember                  @controllers.dismember.OrganizationController.getSalesmanMember()
+
+POST        /getDistributorDetail               @controllers.dismember.OrganizationController.gainMemberByIds()
+
+POST        /cancleRelated                      @controllers.dismember.OrganizationController.cancleRelated()
+
+GET         /cancelEmpRelate                     @controllers.dismember.OrganizationController.cancelEmpRelate(sd:Integer)
+
+POST        /relatedMember                      @controllers.dismember.OrganizationController.relatedMember()
+
+GET         /org/getInfo                        @controllers.dismember.OrganizationController.getInfo(od:Integer ?= null)                                       
+
+GET         /organization/data                  @controllers.dismember.OrganizationController.organizationalData(account:String,key:String)                                       
+  
+#--------------------------------------------------common field module--------------------------------------------------#
+POST        /saveOrUpdateField                  @controllers.dismember.CommonFieldController.saveOrUpdate()
+
+POST        /getCommonField                     @controllers.dismember.CommonFieldController.getCommonField()
+
+#--------------------------------------------------transferAccount field module--------------------------------------------------#
+GET         /getTransferAccount                 @controllers.dismember.DisTransferAccountController.getTransferAccount()
+
+POST        /editTransferAccount                @controllers.dismember.DisTransferAccountController.editTransferAccount()
+
+GET         /delTransferAccount                 @controllers.dismember.DisTransferAccountController.delTransferAccount(id : Integer)
+
+GET         /getTransferAccountByid             @controllers.dismember.DisTransferAccountController.getTransferAccountByid(id : Integer)
+
+#--------------------------------------------------credit module--------------------------------------------------#
+
+POST        /getAllCredit                       @controllers.dismember.CreditController.getAllCredit()
+
+POST        /getCreditInfo                      @controllers.dismember.CreditController.getCreditInfo()
+
+POST        /addCredit                          @controllers.dismember.CreditController.addCredit()
+
+POST        /updateCredit                       @controllers.dismember.CreditController.updateCredit()
+
+POST        /updIsActivated                     @controllers.dismember.CreditController.updIsActivated()
+
+POST        /getCreditOperRecord                @controllers.dismember.CreditController.getCreditOperRecord()
+
+GET         /exportCredit                       @controllers.dismember.CreditController.exportCredit()
+
+POST        /checkCredit                        @controllers.dismember.CreditController.checkCredit()
+
+POST        /checkIsRepayByEmail                @controllers.dismember.CreditController.checkIsRepayByEmail()
+
+POST        /delCreditByEmail                   @controllers.dismember.CreditController.delCreditByEmail()
+
+GET        	/getDebtByEmail                     @controllers.dismember.CreditController.getCreditByEmail(email : String)
+
+#------------------------------------------------acitve module-------------------------------------------------------------#
+POST        /saveActive                         @controllers.dismember.ActiveController.addActive()
+
+POST        /getActive                          @controllers.dismember.ActiveController.queryActive()
+
+POST        /getCoupons                         @controllers.dismember.ActiveController.queryCoupons()
+
+GET         /exportCoupons                      @controllers.dismember.ExportController.exportCoupons()
+
+GET         /getCouponsInfo                     @controllers.dismember.ActiveController.getCouponsInfo(couponsNo:String,orderAmount:Double)
+
+POST        /updateCoupons                      @controllers.dismember.ActiveController.updateCoupons()
+
+#------------------------------------------------Pull jd Order-------------------------------------------------------------#
+
+POST        /jd/code                            @controllers.dismember.AccessTokenController.getCodeUrl()
+
+GET         /callbackSuccess                    @controllers.dismember.AccessTokenController.callbackSuccess(code : String,state : String)
+
+GET         /callbackError                      @controllers.dismember.AccessTokenController.callbackError()
+
+#------------------------------------------------android apk repackage-------------------------------------------------------------#
+
+GET         /getApplyAccount	                @controllers.dismember.AndroidApkController.getApplyAccount(account : String)
+
+POST        /applyForApk                        @controllers.dismember.AndroidApkController.applyForApk()
+
+GET         /getApplyNeedToRebuiltBeforeYou     @controllers.dismember.AndroidApkController.getApplyNeedToRebuiltBeforeYou(account : String)
+
+GET         /downloadApk     					@controllers.dismember.AndroidApkController.downloadApk(account : String)
+
+POST        /apkupgrade                         @controllers.dismember.AndroidApkController.apkUpgrade()  
+
+POST        /apkSourceUpload                    @controllers.dismember.AndroidApkController.uploadApkSourceForUpgrade()          
+
+#------------------------------------------------payment method-------------------------------------------------------------#
+
+GET			/method								@controllers.dismember.PaymentMethodController.foregroundMethod(purpose : Integer)
+
+GET		    /method/backstage					@controllers.dismember.PaymentMethodController.backgroundMethod(purpose : Integer,email : String)
+
+POST		/method/mapping						@controllers.dismember.PaymentMethodController.addMapping()
+
+GET         /method/all                         @controllers.dismember.PaymentMethodController.readAllMethod()
+
+#-----------------------------------------------------vip code module--------------------------------------------------------------------#
+
+GET         /vip/create                         @controllers.dismember.VipController.create(num : Integer)
+
+#-----------------------------------------------------account period module -------------------------------------------------------------#
+
+POST        /ap/sv                              @controllers.dismember.AccountPeriodController.addAccountPeriod()
+
+GET         /ap/s/:id/std                       @controllers.dismember.AccountPeriodController.getStartDate(id : Integer)    
+
+POST        /ap/m/md                            @controllers.dismember.AccountPeriodController.modifyMaster()
+
+GET         /ap/m/:id/rdo                       @controllers.dismember.AccountPeriodController.readMasterOne(id : Integer)
+
+POST        /ap/m/rdls                          @controllers.dismember.AccountPeriodController.readMasterList()
+
+POST         /ap/m/adjust                        @controllers.dismember.AccountPeriodController.adjust()
+
+GET         /ap/s/:id/rdo                       @controllers.dismember.AccountPeriodController.readSlaveOne(id : Integer)
+
+POST        /ap/s/rdls                          @controllers.dismember.AccountPeriodController.readSlaveList()
+
+GET         /ap/s/:id/next                      @controllers.dismember.AccountPeriodController.nextSlaveMsg(id : Integer)
+
+GET         /ap/s/:id/stop                      @controllers.dismember.AccountPeriodController.stopSlave(id : Integer)               
+ 
+POST        /ap/s/next                          @controllers.dismember.AccountPeriodController.nextSlave()
+
+POST        /ap/s/md                            @controllers.dismember.AccountPeriodController.modifySlave()
+   
+GET         /ap/deal                            @controllers.dismember.AccountPeriodController.deal()
+   
+GET         /ap/m/:id/rcd                       @controllers.dismember.AccountPeriodController.masterRecord(id:Integer)
+
+GET         /ap/s/:id/rcd                       @controllers.dismember.AccountPeriodController.slaveRecord(id:Integer)
+
+POST        /ap/o/rdls                          @controllers.dismember.AccountPeriodController.readOrderList() 
+
+POST        /ap/b/cre                           @controllers.dismember.AccountPeriodController.generBill()
+
+GET         /ap/b/:id/rd                     	@controllers.dismember.AccountPeriodController.readBill(id:Integer)
+
+GET         /ap/b/:id/del                       @controllers.dismember.AccountPeriodController.delBill(id:Integer)
+
+POST         /ap/b/cof                          @controllers.dismember.AccountPeriodController.chargeOff()
+
+POST        /ap/setRs			               	@controllers.dismember.AccountPeriodController.setReminderSetting()    
+
+POST        /ap/getRs			               	@controllers.dismember.AccountPeriodController.getReminderSetting()
+
+GET         /ap/brushApOrderDetail             	@controllers.dismember.AccountPeriodController.brushApOrderDetail()
+    
+#-----------------------------------------------------common export module -------------------------------------------------------------#
+POST        /export/ap/bill		               	@controllers.dismember.CommonExportController.export()
+GET        /export/excel/download             	@controllers.dismember.CommonExportController.download()

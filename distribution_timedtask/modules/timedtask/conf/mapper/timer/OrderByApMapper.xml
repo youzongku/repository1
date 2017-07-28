@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.OrderByApMapper" >
+  <resultMap id="BaseResultMap" type="entity.timer.OrderByAp" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pay_amount" property="payAmount" jdbcType="NUMERIC" />
+    <result column="pay_date" property="payDate" jdbcType="TIMESTAMP" />
+    <result column="is_choice" property="isChoice" jdbcType="INTEGER" />
+    <result column="ap_id" property="apId" jdbcType="INTEGER" />
+    <result column="refund_date" property="refundDate" jdbcType="TIMESTAMP" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="order_amount" property="orderAmount" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pay_amount, pay_date, is_choice, ap_id, refund_date, account, status, order_no, 
+    order_amount
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_by_ap
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByBillId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    	o.*
+   	from 
+    	t_order_by_ap o
+    	left join t_ap_bill_order_mapping m on m.order_id = o.id
+    	left join t_ap_bill b on b.id = m.bill_id
+    where m.bill_id = #{billId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_order_by_ap
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByBillId" parameterType="java.lang.Integer" >
+    delete from t_order_by_ap
+    where bill_id = #{1,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.timer.OrderByAp" >
+    insert into t_order_by_ap (id, pay_amount, pay_date, 
+      is_choice, ap_id, refund_date, 
+      account, status, order_no, 
+      order_amount)
+    values (#{id,jdbcType=INTEGER}, #{payAmount,jdbcType=NUMERIC}, #{payDate,jdbcType=TIMESTAMP}, 
+      #{isChoice,jdbcType=INTEGER}, #{apId,jdbcType=INTEGER}, #{refundDate,jdbcType=TIMESTAMP}, 
+      #{account,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, 
+      #{orderAmount,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.timer.OrderByAp" >
+    insert into t_order_by_ap
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="payAmount != null" >
+        pay_amount,
+      </if>
+      <if test="payDate != null" >
+        pay_date,
+      </if>
+      <if test="isChoice != null" >
+        is_choice,
+      </if>
+      <if test="apId != null" >
+        ap_id,
+      </if>
+      <if test="refundDate != null" >
+        refund_date,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="orderAmount != null" >
+        order_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="payAmount != null" >
+        #{payAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="payDate != null" >
+        #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isChoice != null" >
+        #{isChoice,jdbcType=INTEGER},
+      </if>
+      <if test="apId != null" >
+        #{apId,jdbcType=INTEGER},
+      </if>
+      <if test="refundDate != null" >
+        #{refundDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        #{orderAmount,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.timer.OrderByAp" >
+    update t_order_by_ap
+    <set >
+      <if test="payAmount != null" >
+        pay_amount = #{payAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="payDate != null" >
+        pay_date = #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isChoice != null" >
+        is_choice = #{isChoice,jdbcType=INTEGER},
+      </if>
+      <if test="apId != null" >
+        ap_id = #{apId,jdbcType=INTEGER},
+      </if>
+      <if test="refundDate != null" >
+        refund_date = #{refundDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        order_amount = #{orderAmount,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.timer.OrderByAp" >
+    update t_order_by_ap
+    set pay_amount = #{payAmount,jdbcType=NUMERIC},
+      pay_date = #{payDate,jdbcType=TIMESTAMP},
+      is_choice = #{isChoice,jdbcType=INTEGER},
+      ap_id = #{apId,jdbcType=INTEGER},
+      refund_date = #{refundDate,jdbcType=TIMESTAMP},
+      account = #{account,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      order_amount = #{orderAmount,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="pageSearch" resultMap="BaseResultMap" parameterType="entity.timer.Search">
+  	select 
+		o.*
+	from 
+		t_order_by_ap o
+		left join t_account_period_slave s on s.master_id = o.ap_id 
+	where 
+	 	is_choice = 0
+	 	and  <![CDATA[o.pay_date < s.performance_end_time + interval '1 D']]>
+		<if test="id != null">
+			and	s.id = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="std != null and std != ''">
+			and <![CDATA[pay_date <= to_date(#{std,jdbcType=VARCHAR}, 'YYYY-MM-DD')]]> 
+		</if>	
+		<if test="search != null and search != ''">
+			and lower(order_no) LIKE lower('%'||#{search,jdbcType=VARCHAR}||'%')
+		</if>
+		<if test="orderIds != null and orderIds.size > 0">
+			and o.id in 
+			<foreach collection="orderIds" item="item" open="(" close=")" separator=",">
+				#{item,jdbcType=INTEGER}
+			</foreach>
+		</if>
+		order by
+		<choose>
+			<when test="filter != null and  sort!= null and sort != '' ">
+				${sort} ${filter} 
+			</when>
+			<otherwise>
+				 pay_date desc
+			</otherwise>
+		</choose>
+	<if test="pageSize != null and currPage != null">
+		limit #{pageSize} OFFSET #{pageSize}*(#{currPage}-1);
+	</if>
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="entity.timer.Search">
+  	select 
+		count(o.*)
+	from 
+		t_order_by_ap o
+		left join t_account_period_slave s on s.master_id = o.ap_id 
+	where 
+	 	is_choice = 0
+	 	and  <![CDATA[o.pay_date < s.performance_end_time + interval '1 D']]>
+		<if test="id != null">
+			and	s.id = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="std != null and std != ''">
+			and <![CDATA[pay_date <= to_date(#{std,jdbcType=VARCHAR}, 'YYYY-MM-DD')]]> 
+		</if>
+		<if test="search != null and search != ''">
+			and lower(order_no) LIKE lower('%'||#{search,jdbcType=VARCHAR}||'%')
+		</if>
+		<if test="orderIds != null and orderIds.size > 0">
+			and o.id in 
+			<foreach collection="orderIds" item="item" open="(" close=")" separator=",">
+				#{item,jdbcType=INTEGER}
+			</foreach>
+		</if>
+  </select>
+  <update id="batchUpdate" parameterType="java.util.List">
+	 <foreach collection="list" item="item" separator=";">
+	 	update t_order_by_ap 
+	 	<set>
+	 		is_choice = #{item.isChoice,jdbcType=INTEGER}
+	 		where id = #{item.id,jdbcType=INTEGER}
+	 	</set>
+	 </foreach> 
+  </update>
+</mapper>

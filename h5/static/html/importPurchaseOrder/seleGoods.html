@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="email=no" name="format-detection" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>已选商品</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main/main.css">
+</head>
+<body onload="loaded()">
+<header class="posFix head">
+    <a href="####" class="ret-logo"></a>
+    已选商品
+    <a href="####" class="home-logo"></a>
+</header>
+
+<section class="imporCon conTop">
+    <div class="impornor">
+        <label>分销商：</label>
+        <label>2850289715@qq.com</label>
+    </div>
+    <div class="impornor" id="checkall">
+        <label><input type="checkbox" value="全选" class="mui-checkbox" onClick="selectAll('list')"/>全选</label>
+        <input type="button" class="btn-blue-sm" value="批量设置数量"/>
+        <input type="button" class="btn-gray-sm" value="批量移除"/>
+    </div>
+    <div class="imporCom">
+        <div class="imporComL">
+            <input type="checkbox"name="list" value="1" class="mui-checkbox" />
+        </div>
+        <div class="imporComR">
+            <div class="impor-img">
+                <a href="####"><img src="../../img/1.jpg" alt=""/></a>
+                <span class="gift"></span>
+            </div>
+            <div class="impor-tit">
+                <h5>我是商品标题我是商品标题我是商品标题我是商品标题</h5>
+                <div><span>采购价：<b><i>¥</i>0.00</b></span><span>库存：<b class="impor-tit2">10</b></span></div><br />
+                <div><span>采购数量：<input type="text" class="inp2" value="100"/></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="imporCom">
+        <div class="imporComL">
+            <input type="checkbox"name="list" value="2" class="mui-checkbox" />
+        </div>
+        <div class="imporComR">
+            <div class="impor-img">
+                <a href="####"><img src="../../img/1.jpg" alt=""/></a>
+            </div>
+            <div class="impor-tit">
+                <h5>我是商品标题我是商品标题我是商品标题我是商品标题</h5>
+                <div><span>采购价：<b><i>¥</i>0.00</b></span><span>库存：<b class="impor-tit2">10</b></span></div><br />
+                <div><span>采购数量：<input type="text" class="inp2" value="100"/></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="imporCom">
+        <div class="imporComL">
+            <input type="checkbox"name="list" value="3" class="mui-checkbox"/>
+        </div>
+        <div class="imporComR">
+            <div class="impor-img">
+                <a href="####"><img src="../../img/1.jpg" alt=""/></a>
+            </div>
+            <div class="impor-tit">
+                <h5>我是商品标题我是商品标题我是商品标题我是商品标题我是商品标题我是商品标题我是商品标题我是商品标题</h5>
+                <div><span>采购价：<b><i>¥</i>0.00</b></span><span>库存：<b class="impor-tit2">10</b></span></div><br />
+                <div><span>采购数量：<input type="text" class="inp2" value="100"/></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="imporCom">
+        <div class="imporComL">
+            <input type="checkbox"name="list" value="4" class="mui-checkbox" />
+        </div>
+        <div class="imporComR">
+            <div class="impor-img">
+                <a href="####"><img src="../../img/1.jpg" alt=""/></a>
+            </div>
+            <div class="impor-tit">
+                <h5>我是商品标题我是商品标题我是商品标题我是商品标题我是商品标题我是商品标题我是商品标题我是商品标题</h5>
+                <div><span>采购价：<b><i>¥</i>0.00</b></span><span>库存：<b class="impor-tit2">10</b></span></div><br />
+                <div><span>采购数量：<input type="text" class="inp2" value="100"/></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="imporCom">
+        <div class="imporComL">
+            <input type="checkbox"name="list" value="5" class="mui-checkbox" />
+        </div>
+        <div class="imporComR">
+            <div class="impor-img">
+                <a href="####"><img src="../../img/1.jpg" alt=""/></a>
+            </div>
+            <div class="impor-tit">
+                <h5>我是商品标题我是商品标题我是商品标题我是商品标题我是商品标题我是商品标题我是商品标题我是商品标题</h5>
+                <div><span>采购价：<b><i>¥</i>0.00</b></span><span>库存：<b class="impor-tit2">10</b></span></div><br />
+                <div><span>采购数量：<input type="text" class="inp2" value="100"/></span></div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="foot">
+    <a href="####">
+        <input type="submit" value="编辑" class="inp-3 btn-gray fl" onclick="edit()"/>
+        <input type="submit" value="生成订单" class="inp-3 btn-blue fr" onclick="generate()"/>
+    </a>
+</footer>
+</body>
+<script type="text/javascript" src="../../js/lib/iscroll.js"></script>
+<script type="text/javascript" src="../../js/lib/layer.js"></script>
+<script type="text/javascript">
+    // 全选按钮选中标志
+    var checkflag = "false";
+    // 全选功能
+    function selectAll(name){
+        var field = document.getElementsByName(name);
+        // 如果全选按钮状态是未选中
+        if (checkflag == "false"){
+            for (i = 0; i < field.length; i++){
+                field[i].checked = true;
+            }
+            // 更改全选按钮选中标志
+            checkflag = "true";
+        }else{
+            for (i = 0; i < field.length; i++){
+                field[i].checked = false;
+            }
+            // 更改全选按钮选中标志
+            checkflag = "false";
+        }
+    }
+
+    /*编辑--弹出窗*/
+    function edit(){
+        layer.open({
+            title: [
+                '请选择编辑项',
+                'background-color:#666; color:#fff;'
+            ]
+            ,anim: 'up'
+            ,content: '<div class="editPop"><p onMouseOver="over()" onMouseOut="out()"><a href="####"><span>添加正价商品</span></a></p><p onMouseOver="over()" onMouseOut="out()"><a href="####"><span>添加赠品(请先选择正价商品)</span></a></p></div>'
+        });
+    }
+
+    /*生成订单--弹出窗*/
+    function generate(){
+        layer.open({
+            title: [
+                '生成订单',
+                'background-color:#90ddff; color:#fff;'
+            ]
+            ,anim: 'up'
+            ,content: '<div class="generatePop">'+
+                '<p class="gen-p-l">'+
+                '<span>商品总数：<b>200</b></span>'+
+                '<span>总计：<b class="color-blue">￥<i>2000</i></b></span>'+
+                '</p>'+
+                '<p class="gen-p-r">'+
+                '<span>是否收款：</span>'+
+                '<span>'+
+                '<label><input type="radio" name="radio" />未收款</label><br />'+
+                '<label><input type="radio" name="radio" />已收款</label><br />'+
+                '<input type="text" class="inp5" placeholder="请输入收款金额"/>'+
+                '</span>'+
+                '</p>'+
+                '</div>'
+            ,btn: ['确认', '取消']
+        });
+    }
+
+    /*单选变色*/
+    function out() {
+        var oObj = event.srcElement;
+        if(oObj.tagName.toLowerCase() == "span"){
+            var oTr = oObj.parentNode;
+            if(!oTr.tag) oTr.style.backgroundColor = "";
+        }
+    }
+    function over(){
+        var oObj = event.srcElement;
+        if(oObj.tagName.toLowerCase() == "span"){
+            var oTr = oObj.parentNode;
+            if(!oTr.tag) oTr.style.backgroundColor = "#ececec";
+        }
+    }
+</script>
+</html>

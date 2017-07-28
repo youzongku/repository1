@@ -1,0 +1,73 @@
+@(vir:dto.category.VirCategoryDto, catInd : Integer)
+<div class="content-category-cont" id="contCate@catInd">
+  <div class="content-category-nav hd" data-id="@vir.getId()" id="content-category-nav_@vir.getId()">
+	<span>
+		@if(vir.getName().length() > 6){
+			@vir.getName().substring(0, 6)
+		}else{
+	        @vir.getName()
+	    }
+	</span>
+	<ul>
+		@if(vir.getSubList() != null){
+			@for( (v, ind)<- vir.getSubList().zipWithIndex){
+				@if(ind < 5){
+					@if(ind == 0){
+						<li id="cate_product_@v.getId()" name="cateli" tag="@v.getId()" class="on">
+							<a target="_blank" href="/product/sub_page.html?v=@v.getId()">@v.getName()</a>
+						</li>
+					}else{
+						<li id="cate_product_@v.getId()" name="cateli" tag="@v.getId()" class="">
+							<a target="_blank" href="/product/sub_page.html?v=@v.getId()">@v.getName()</a>
+						</li>
+					}
+				}
+				
+			}
+		}
+	</ul>
+  </div>
+  	@if(vir.getSubList() != null){
+		@for( (v, ind)<- vir.getSubList().zip(Stream from 1)){
+			@if(ind <= 5){
+				@if(ind == 1){
+					<div class="bd hide show" id="bd_@v.getId()">
+				}else{
+					<div class="bd hide" id="bd_@v.getId()">
+				}
+					<div class="content-category-con">
+					  <a href="https://www.tomtop.com.cn/product/sub_page.html?v=@v.getId()" class="content-category-con-l"
+					  id="content-category-con-l_@v.getId()">
+						<img src="../product/banner/getBannerImg?id=@v.getBannerId()" alt="" />
+					  </a>
+					  <ul class="content-category-con-r">
+					  	@if(null != v.getProdList()){
+					  		@for( p<- v.getProdList()){
+								<li class="bor-b">
+								  <div class="product-top">
+									<div>
+									  <a href="../product/product-detail.html?sku=@p.getCsku()&warehouseId=@p.getWarehouseId()" target="_blank">
+										<img src="https://static.tomtop.com.cn/imaging/imaging/product/@p.getCsku()/150-142-100/@p.getImageName()"
+										alt="" />
+									  </a>
+									</div>
+									<p class="bar-code">国际条码:@p.getInterBarCode()</p>
+									<p class="product-title">@p.getCtitle()</p>
+									<p class="product-price">@p.getDisPrice()</p>
+								  </div>
+								</li>
+					  		}
+					  	}
+					  </ul>
+					</div>
+				</div>
+			}
+		}
+	    @if(vir.getBannerId() != null){
+	    	<a href="@vir.getBannerLink()" class="foot-banner">
+				<img src="../product/banner/getBannerImg?id=@vir.getBannerId()" alt="" />
+			  </a>
+	    }
+	}
+
+</div>

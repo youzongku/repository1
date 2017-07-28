@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.ProductPriceCategoryBrandMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.ProductPriceCategoryBrand" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="last_operator" property="lastOperator" jdbcType="VARCHAR" />
+    <result column="last_operator_time" property="lastOperatorTime" jdbcType="TIMESTAMP" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, category_id, status,last_operator, last_operator_time, category_name, 
+    brand
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_price_category_brand
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_product_price_category_brand
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.ProductPriceCategoryBrand" >
+    insert into t_product_price_category_brand (id, category_id, status,last_operator, last_operator_time, 
+      category_name, brand)
+    values (#{id,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{status,jdbcType=BIT}, 
+      #{lastOperator,jdbcType=VARCHAR}, #{lastOperatorTime,jdbcType=TIMESTAMP}, 
+      #{categoryName,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.ProductPriceCategoryBrand" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_product_price_category_brand
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="lastOperator != null" >
+        last_operator,
+      </if>
+      <if test="lastOperatorTime != null" >
+        last_operator_time,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="lastOperator != null" >
+        #{lastOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="lastOperatorTime != null" >
+        #{lastOperatorTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.ProductPriceCategoryBrand" >
+    update t_product_price_category_brand
+    <set >
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="lastOperator != null" >
+        last_operator = #{lastOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="lastOperatorTime != null" >
+        last_operator_time = #{lastOperatorTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.ProductPriceCategoryBrand" >
+    update t_product_price_category_brand
+    set category_id = #{categoryId,jdbcType=INTEGER},
+      status = #{status,jdbcType=BIT},
+      last_operator = #{lastOperator,jdbcType=VARCHAR},
+      last_operator_time = #{lastOperatorTime,jdbcType=TIMESTAMP},
+      category_name = #{categoryName,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="select" resultMap="BaseResultMap"  parameterType="entity.product.ProductPriceCategoryBrand" >
+    select 
+     <include refid="Base_Column_List" />
+    from t_product_price_category_brand
+    where 1 = 1 
+    <if test="brand != null" >
+       and  brand = #{brand,jdbcType=VARCHAR}
+    </if>
+    <if test="categoryId != null" >
+       and  category_id = #{categoryId,jdbcType=INTEGER}
+    </if>
+    <if test="status != null" >
+       and  status = #{status,jdbcType=BIT}
+    </if>
+    limit 1 offset 0
+  </select>
+  <select id="getPageList" resultMap="BaseResultMap"
+		parameterType="dto.product.ProductPriceFactorDto">
+		SELECT
+		<include refid="Base_Column_List" />
+		from t_product_price_category_brand
+		where 1 = 1
+		<if test="key != null">
+			and (category_name like '%'||#{key,jdbcType=VARCHAR}||'%' or brand like
+			'%'||#{key,jdbcType=VARCHAR}||'%')
+		</if>
+		<if test="categoryId != null">
+			and category_id = #{categoryId,jdbcType=INTEGER}
+		</if>
+		<if test="brand != null">
+			and brand = #{brand,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null">
+			and status = #{status,jdbcType=BIT}
+		</if>
+		order by last_operator_time desc nulls last
+		<if test="pageSize != null and currPage != null">
+			limit #{pageSize,jdbcType=INTEGER} offset (#{currPage,jdbcType=INTEGER} -1)
+			* #{pageSize,jdbcType=INTEGER}
+		</if>
+	</select>
+	<select id="getPageCount" resultType="java.lang.Integer"
+		parameterType="dto.product.ProductPriceFactorDto">
+		SELECT
+		  count(*)
+		from t_product_price_category_brand
+		where 1 = 1
+		<if test="key != null">
+			and (category_name like '%'||#{key,jdbcType=VARCHAR}||'%' or brand like
+			'%'||#{key,jdbcType=VARCHAR}||'%')
+		</if>
+		<if test="categoryId != null">
+			and category_id = #{categoryId,jdbcType=INTEGER}
+		</if>
+		<if test="brand != null">
+			and brand = #{brand,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null">
+			and status = #{status,jdbcType=BIT}
+		</if>
+	</select>
+	 <insert id="batchInsert" parameterType="java.util.List">
+	insert into t_product_price_category_brand
+	(category_id,category_name)
+	values
+	<foreach collection="list" item="item" index="index" separator=",">
+		(#{item.categoryId,jdbcType=INTEGER},
+		#{item.categoryName,jdbcType=VARCHAR})
+	</foreach>
+   </insert>
+</mapper>

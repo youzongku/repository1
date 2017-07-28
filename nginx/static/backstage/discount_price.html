@@ -1,0 +1,389 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<div class="special_zone">
+    <h1>营销工具<span>---</span><span>特价专区</span></h1>
+    <button class="add-promotion-code" id="sprice_addact" style="cursor: pointer; line-height: normal;">新增活动</button>
+    <ul class="search_category" style="height:62px;">
+        <li>活动名称：
+            <input id="sprice_actname" class="searchInput">
+        </li>
+        <li>活动时间：
+            <input  class="searchInput" placeholder="开始日期" id="sprice_start_time" name="createStart" readonly="true"
+                   style="width:120px"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">&nbsp;至&nbsp;
+            <input  class="searchInput" placeholder="结束日期" id="sprice_end_time" name="createEnd" readonly="true"
+                   style="width:120px"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+        </li>
+        <li>
+            <select id="sprice_status">
+                <option value="" selected="selected">所有状态</option>
+                <option value="1">未开始</option>
+                <option value="2">启用中</option>
+                <option value="3">已结束</option>
+                <option value="4">已禁止</option>
+            </select>
+        </li>
+        <li>
+            <div class="search">
+                <input id="sprice_creater" class="searchInput" placeholder="创建人" style="width:180px;">
+                <input id="sprice_search_btn" class="searchButton" value="搜索" type="button" style="cursor: pointer;">
+            </div>
+        </li>
+    </ul>
+    <div class="content_list">
+        <!--<table class="special_zone_table">-->
+            <!--<thead>-->
+            <!--<tr class="">-->
+                <!--<th width="5%">排序</th>-->
+                <!--<th width="7%">活动名称</th>-->
+                <!--<th width="7%">活动备注</th>-->
+                <!--<th width="36%">活动时间</th>-->
+                <!--<th width="7%">商品数量</th>-->
+                <!--<th width="16%">创建时间</th>-->
+                <!--<th width="7%">创建人</th>-->
+                <!--<th width="7%">活动状态</th>-->
+                <!--<th width="8%">操作</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody id="sprice_tbody">-->
+            <!--&lt;!&ndash;<tr class="">-->
+                <!--<td width="5%">1</td>-->
+                <!--<td width="7%">特价专区</td>-->
+                <!--<td width="7%">限时特卖</td>-->
+                <!--<td width="36%"><span>2016-06-22 00：00：00</span> 至 <span>2016-06-22 00：00：00</span></td>-->
+                <!--<td width="7%">1000</td>-->
+                <!--<td width="16%">2016-06-21 00 00：00</td>-->
+                <!--<td width="7%">admin1</td>-->
+                <!--<td width="7%">启用中</td>-->
+                <!--<td width="8%" class="special_dose">-->
+                    <!--<span onclick="changepage(3)">关联商品</span>-->
+                    <!--<span onclick="changepage(4)">查看</span>-->
+                    <!--<span class="r_forbidden">禁止</span>-->
+                    <!--<span>修改</span>-->
+                <!--</td>-->
+            <!--</tr>&ndash;&gt;-->
+            <!--</tbody>-->
+        <!--</table>-->
+        <!--<div class="clear"></div>-->
+        <!--<div class="list_content">-->
+            <!--<p>共<span id="activeTotal" style="display:inline-block;">0</span>记录，每页显示-->
+                <!--<select id="active_pageSize">-->
+                    <!--<option value="10" selected="selected">10</option>-->
+                    <!--<option value="20">20</option>-->
+                    <!--<option value="30">30</option>-->
+                    <!--<option value="50">50</option>-->
+                <!--</select>-->
+                <!--条，共<span id="activePages" style="display:inline-block;">0</span>页-->
+            <!--</p>-->
+        <!--</div>-->
+
+        <table class="list_title all_table" id="discount_price_table">
+        </table>
+        <div id="discount_price_pagination" style="text-align: center; margin-top: 30px;"></div>
+
+        <div id="sprice_pagination" style="text-align: center; margin-top: 30px;"></div>
+        <div class="recharge_operation" style="display: none; padding: 0;">
+            <ul>
+                <li class="recharge_operation_li1"></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="zone_add_activity">
+    <h1>活动配置<span>---</span><span>添加活动</span></h1>
+    <button class="back_zone" id="sprice_addact_back" style="line-height: normal; width: 110px; cursor: pointer;">返回活动页</button>
+    <div class="content_list">
+        <form id="sprice_addact_form">
+        <input type="hidden" id="sprice_addact_id">
+        <input type="hidden" id="sprice_add_or_edit_mark">
+        <ul class="activity_content">
+            <li>
+                <span><span class="red">*</span>活动名称：</span>
+                <input name="activityName">
+                <d>(0-10字以内)</d>
+                <label><input type="checkbox" name="showTotitle" checked="checked" id="p_title_show">显示到宝贝页标题</label>
+            </li>
+            <li>
+                <span>活动备注：</span>
+                <textarea name="activityRemark" class="a-remark"></textarea>
+                <d>(0-100字以内)</d>
+            </li>
+            <li>
+                <span><span class="red">*</span>开始时间：</span>
+                <input placeholder="开始日期" name="startTime" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                <d>(开始和结束的时分秒均默认00：00：00)</d>
+            </li>
+            <li>
+                <span><span class="red">*</span>结束时间：</span>
+                <input placeholder="结束日期" name="endTime" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                <d>(开始和结束的时分秒均默认00：00：00)</d>
+            </li>
+            <li>
+                <span><span class="red">*</span>添加活动海报：</span>
+                <span id="sprice_select_btn" style="padding: 0px; margin: 0px; width: 90px; height: 30px; top: 4px; border: 0 none; display: inline-block;">选择文件</span>
+                <d>(支持上传多张，限定长度为1090，不限定宽度)</d>
+                <table id="sprice_file_list" style="margin-top: 10px; margin-bottom: 10px;"><tbody></tbody></table>
+            </li>
+            <li>
+                <span>排序：</span>
+                <input name="activitySort">
+            </li>
+            <li>
+                <span>&nbsp;</span>
+                <button class="add-new" id="sprice_create_btn" type="button" style="background-color: #00b7ee;">创建</button>
+            </li>
+        </ul>
+        </form>
+    </div>
+</div>
+<div class="zone_relevance">
+    <div>
+        <h1>活动配置<span>---</span><span>关联商品</span><span>---</span></span><span>当前活动：</span></h1>
+        <button class="back_zone" id="sprice_relate_back" style="line-height: normal; width: 110px; cursor: pointer;">返回活动页</button>
+        <div>
+            <div class="relevance_list">
+                <ul id="sprice_goods_category">分类：
+                    <li class="relevance_cur" value="">全部</li>
+                    <!--<li value="">母婴用品</li>
+                    <li value="">营养保健</li>
+                    <li value="">美容个护</li>
+                    <li value="">箱包手袋</li>
+                    <li value="">数码产品</li>
+                    <li value="">钟表首饰</li>
+                    <li value="">家具生活</li>
+                    <li value="">进口食品</li>
+                    <li value="">户外运动</li>-->
+                </ul>
+            </div>
+            <div>
+                <ul class="search_category" style="height:62px;">
+                    <li>
+                        <select id="sprice_goods_warehouse">
+                            <option value="">所有仓库</option>
+                            <!--<option value="">深圳仓</option>
+                            <option value="">杭州保税仓</option>
+                            <option value="">南沙保税仓</option>-->
+                        </select>
+                    </li>
+                    <li>分销价：
+                        <input id="sprice_relate_disprice_left" class="searchInput">&nbsp;&nbsp;-&nbsp;&nbsp;<input id="sprice_relate_disprice_right" class="searchInput">
+                    </li>
+                    <li>
+                        <div class="search">
+                            <input id="sprice_relate_search_title" class="searchInput" placeholder="商品名称/商品编号" style="width:180px;">
+                            <input id="sprice_relate_search_btn" class="searchButton" value="搜索" type="button" style="cursor: pointer;">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <p class="relevance_check">
+                    <span><input id="sprice_relate_checkbox_all" type="checkbox">全选当前页</span>
+                    <span><input id="sprice_relate_checkbox_invert" type="checkbox">反选当前页</span>
+                    <!--<span><input type="checkbox">全选搜索条件</span>
+                    <span><input type="checkbox">反选搜索条件</span>-->
+                    <button type="button" class="r_add">确定添加</button>
+                    <div id="sprice_relate_goods" style="display: none;">
+
+                    </div>
+                </p>
+                <table class="list_title all_table" id="sprice_relate_goods_table">
+                </table>
+                <div id="sprice_relate_goods_pagination" style="text-align: center; margin-top: 30px;"></div>
+                <!--<table class="relevance_table">-->
+                    <!--<thead>-->
+                    <!--<th>勾选</th>-->
+                    <!--<th>商品名称</th>-->
+                    <!--<th>商品编号</th>-->
+                    <!--<th>成本价(元)</th>-->
+                    <!--<th>分销价(元)</th>-->
+                    <!--<th>市场零售价(元)</th>-->
+                    <!--<th>分销利润率</th>-->
+                    <!--<th>云仓库存</th>-->
+                    <!--<th>所属库存</th>-->
+                    <!--</thead>-->
+                    <!--<tbody id="sprice_relate_table">-->
+                    <!--&lt;!&ndash;<td><input type="checkbox"></td>-->
+                    <!--<td class="relevance_product_link">-->
+                        <!--<img src="../img/IW71-4-1a3c.jpg">-->
+                        <!--<a href="javascript:;">柚子茶专用勺（赠品）</a>-->
+                    <!--</td>-->
+                    <!--<td>IH177</td>-->
+                    <!--<td>0.10</td>-->
+                    <!--<td>0.10</td>-->
+                    <!--<td>0.10</td>-->
+                    <!--<td>0.10</td>-->
+                    <!--<td>1000</td>-->
+                    <!--<td>深圳仓</td>&ndash;&gt;-->
+                    <!--</tbody>-->
+                <!--</table>-->
+                <!--<div class="list_content">-->
+                    <!--<p>共<span id="sprice_relate_totalcount" style="display:inline-block;">0</span>记录，每页显示-->
+                        <!--<select id="sprice_relate_pagesize">-->
+                            <!--<option value="10" selected="selected">10</option>-->
+                            <!--<option value="20">20</option>-->
+                            <!--<option value="30">30</option>-->
+                            <!--<option value="50">50</option>-->
+                        <!--</select>-->
+                        <!--条，共<span id="sprice_relate_totalpage" style="display:inline-block;">0</span>页-->
+                    <!--</p>-->
+                <!--</div>-->
+                <!--<div id="sprice_relate_pagination" style="text-align: center; margin-top: 30px; margin-bottom: 30px;"></div>-->
+                <!--<div class="recharge_black" style="display: none"></div>-->
+            </div>
+        </div>
+        <div>
+            <h1>已添加商品</h1>
+
+            <div>
+                <!--<div>
+                    <ul class="search_category" style="height:62px;">
+                        <li>
+                            <select>
+                                <option>所有仓库</option>
+                                <option>深圳仓</option>
+                                <option>杭州保税仓</option>
+                                <option>南沙保税仓</option>
+                            </select>
+                        </li>
+                        <li>分销价：
+                            <input class="searchInput">&nbsp;&nbsp;-&nbsp;&nbsp;<input class="searchInput">
+                        </li>
+                    </ul>
+                </div>-->
+                <div>
+                    <p class="relevance_check">
+                        <span><input id="sprice_selected_checkbox_all" type="checkbox">全选当前页</span>
+                        <span><input id="sprice_selected_checkbox_invert" type="checkbox">反选当前页</span>
+                        <!--<span><input type="checkbox">全选搜索条件</span>
+                        <span><input type="checkbox">反选搜索条件</span>-->
+                        <span>已添加商品数：<span id="sprice_selected_goods_number">0</span></span>
+                    </p>
+
+                    <p class="relevance_check">
+                        <span>批量设置：优惠/折扣
+                            <input id="sprice_predis_number" class="searchInput">
+                            <select id="sprice_predis_unit" class="searchInput">
+                                <option value="元">元（优惠金额）</option>
+                                <option value="%">%(请输入0~100的数字,例如95即95折)</option>
+                            </select>
+                        </span>
+                        <span>锁定库存：
+                            <label><input id="sprice_batch_nolimit" type="checkbox" checked="checked">不限制</label>
+                            <!--<span>
+                                <label><input id="sprice_batch_limit" type="checkbox">限购</label>
+                                <input id="sprice_limit_number" class="searchInput"/>个
+                            </span>-->
+                        </span>
+                        <textarea id="sprice_selected_goods" style="display: none;"></textarea>
+                        <input type="hidden" id="sprice_selected_actid">
+                    </p>
+                    <table class="relevance_table">
+                        <thead>
+                        <th>勾选</th>
+                        <th>商品名称</th>
+                        <th>成本价(元)</th>
+                        <th>分销价(元)</th>
+                        <th>分销利润率</th>
+                        <th>限时优惠折扣</th>
+                        <th>折后价</th>
+                        <th>折后利润率</th>
+                        <th>所属仓库</th>
+                        <th>云仓库存</th>
+                        <th>锁定库存</th>
+                        <th>操作</th>
+                        </thead>
+                        <tbody id="sprice_selected_table">
+                        <!--<tr>
+                        <td><input type="checkbox" class="sprice_selected_checkbox_child"></td>
+                        <td class="relevance_product_link">
+                            <a href="javascript:;"><img src="../img/IW71-4-1a3c.jpg"></a>
+                            <div>
+                                <a href="javascript:;">柚子茶专用勺（赠品）</a>
+
+                                <span>商品编号：<span>IH177</span></span>
+                            </div>
+                        </td>
+                        <td>IH177</td>
+                        <td>0.10</td>
+                        <td>0.10</td>
+                        <td class="discount-t">
+                            <input class="searchInput">
+                            <select class="searchInput">
+                                <option>元（优惠金额）</option>
+                                <option>%(请输入0~100的数字,例如95即95折)</option>
+                            </select>
+                        </td>
+                        <td>0.10</td>
+                        <td>1000</td>
+                        <td>深圳仓</td>
+                        <td>1000</td>
+                        <td>
+                            <label><input type="checkbox">不限制</label>
+                            <span>
+                                <label><input type="checkbox">限购</label>
+                                <input class="searchInput" style="width: 100px;"/>个
+                            </span>
+                        </td>
+                        <td><span class="r-del">删除</span></td>
+                        </tr>-->
+                        </tbody>
+                    </table>
+                    <!--<div class="recharge_black" style="display: none"></div>-->
+                </div>
+            </div>
+            <p>
+                <button type="button" class="sure_link">确定关联</button>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="zone_examine">
+    <h1>活动配置<span>---</span><span>活动详情</span></h1>
+    <button class="back_zone" id="sprice_watch_back" style="line-height: normal; width: 110px; cursor: pointer;">返回活动页</button>
+    <div>
+        <ul class="zone_examine_about">
+            <li><span>活动名称:</span><div id="sprice_watch_actname">---</div></li>
+            <li><span>备注:</span><div id="sprice_watch_actremark">---</div></li>
+            <li><span>起止时间:</span><div id="sprice_watch_actstart">---</div>&emsp;至&emsp;<div id="sprice_watch_actend">---</div></li>
+            <li><span style="vertical-align: top;">活动海报:</span><div id="sprice_watch_actposter"><!--<img src="javascript:;" class="ac-picture">--></div></li>
+        </ul>
+    </div>
+    <h4>已关联商品:</h4>
+    <!--<table class="relevance_table">-->
+        <!--<thead>-->
+        <!--<th>勾选</th>-->
+        <!--<th>商品名称</th>-->
+        <!--<th>成本价(元)</th>-->
+        <!--<th>分销价(元)</th>-->
+        <!--<th>分销利润率</th>-->
+        <!--<th>折后价</th>-->
+        <!--<th>折后利润率</th>-->
+        <!--<th>所属仓库</th>-->
+        <!--<th>云仓库存</th>-->
+        <!--<th>锁定库存</th>-->
+        <!--</thead>-->
+        <!--<tbody id="sprice_watch_table">-->
+        <!--&lt;!&ndash;<tr>-->
+        <!--<td><input type="checkbox"></td>-->
+        <!--<td class="relevance_product_link">-->
+            <!--<a href="javascript:;"><img src="../img/IW71-4-1a3c.jpg"></a>-->
+            <!--<div>-->
+                <!--<a href="javascript:;">柚子茶专用勺（赠品）</a>-->
+                <!--<span>商品编号：<span>IH177</span></span>-->
+            <!--</div>-->
+        <!--</td>-->
+        <!--<td>IH177</td>-->
+        <!--<td>0.10</td>-->
+        <!--<td>0.10</td>-->
+        <!--<td>0.10</td>-->
+        <!--<td>1000</td>-->
+        <!--<td>深圳仓</td>-->
+        <!--<td>1000</td>-->
+        <!--<td>不限制</td>-->
+        <!--</tr>&ndash;&gt;-->
+        <!--</tbody>-->
+    <!--</table>-->
+    <table class="list_title all_table" id="watch_goods_area_table">
+    </table>
+</div>

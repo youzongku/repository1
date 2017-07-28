@@ -1,0 +1,167 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<script>  //解决IEplaceholder不兼容问题
+$(document).ready(function () {
+    $(function () {
+        if (!placeholderSupport()) {
+            $('[placeholder]').focus(function () {
+                var input = $(this);
+                if (input.val() == input.attr('placeholder')) {
+                    input.val('');
+                    input.removeClass('placeholder');
+                }
+            }).blur(function () {
+                var input = $(this);
+                if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                    input.addClass('placeholder');
+                    input.val(input.attr('placeholder'));
+                }
+            }).blur();
+        }
+    });
+    function placeholderSupport() {
+        return 'placeholder' in document.createElement('input');
+    }
+})
+</script>
+<div class="preview-goods">
+    <h1>商品管理<span>---</span><span>商品属性库</span></h1>
+    <ul class="search_category">
+        <li>
+            <input type="text" id="searchInput" class="searchInput" placeholder="sku名称/编号">
+        </li>
+        <li>
+            商品预览表：
+            <select class="select_sel">
+                <option value="">请选择商品类目</option>
+                <option value="" class="select_bold">母婴用品</option>
+                <option value="" class="select_bold">&emsp;&emsp;奶粉</option>
+                <option value="">&emsp;&emsp;&emsp;&emsp;特配奶粉</option>
+                <option value="">&emsp;&emsp;&emsp;&emsp;养奶粉</option>
+                <option value="" class="select_bold">&emsp;&emsp;车床玩具</option>
+                <option value="" class="select_bold">&emsp;&emsp;宝宝寝居</option>
+                <option value="" class="select_bold">&emsp;&emsp;服饰鞋帽</option>
+                <option value="" class="select_bold">营养保健</option>
+                <option value="" class="select_bold">&emsp;&emsp;基础营养</option>
+                <option value="">&emsp;&emsp;&emsp;&emsp;维生素</option>
+                <option value="">&emsp;&emsp;&emsp;&emsp;膳食纤维</option>
+                <option value="">&emsp;&emsp;&emsp;&emsp;蛋白粉</option>
+                <option value="">&emsp;&emsp;&emsp;&emsp;矿物质</option>
+                <option value="" class="select_bold">&emsp;&emsp;美体养颜</option>
+            </select>
+            <input id="searchButton" class="searchButton" value="搜索" type="submit">
+        </li>
+    </ul>
+    <table class="record_purchaseList_table">
+        <thead>
+        <tr>
+            <th style="width: 40%;">SKU名称|图片|描述</th>
+            <th style="width: 15%;">真实分类</th>
+            <th style="width: 15%;">创建时间</th>
+            <th style="width: 15%;">SPU编号</th>
+            <th style="width: 15%;">属性</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <img class="bagproduct-img" src="">
+                <p style="text-align: left">
+                    丹尼尔惠灵顿（Daniel Welli）手表 时尚系列女表
+                    <span style="font-size: 12px;padding-top: 6px;">SKU编号</span>
+                </p>
+            </td>
+            <td>母婴用品</td>
+            <td>2016-07-04 15:19:01</td>
+            <td>SPU编号</td>
+            <td>
+                <a href="javascript:;" class="previewGoods">查看详情</a>
+            </td>
+        </tr>
+    </table>
+
+    <p style="margin-left: 19px">共<span id="sale_total" style="display:inline-block;">0</span>记录，每页显示
+        <select id="sale_pageSize">
+            <option value="10" selected>10</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+        </select>
+        ，共<span id="sale_pages" style="display:inline-block;">0</span>页
+    </p>
+    <div id="sale_pagination" style="text-align: center; margin-top: 30px;"></div>
+</div>
+<!--查看详情-->
+<div class="preview-goods-details" style="display: none">
+    <h1>
+        商品管理<span>---</span><span>商品属性详情</span>
+        <ul class="priceButton">
+            <li class="search">
+                <button class="previewGoodsDetails">返回</button>
+            </li>
+        </ul>
+    </h1>
+    <ul class="search_category">
+        <li>
+            <input type="text" id="searchInput" class="searchInput" placeholder="sku名称/编号">
+        </li>
+        <li>
+            <select>
+                <option value="0">请选择属性类型</option>
+                <option value="1">文本</option>
+                <option value="2">单选</option>
+                <option value="3">多选</option>
+                <option value="4">时间</option>
+            </select>
+        </li>
+        <li>
+            <select>
+                <option value="0">请属性集</option>
+                <option value="1">属性集A</option>
+                <option value="2">属性集B</option>
+                <option value="3">属性集C</option>
+                <option value="4">属性集D</option>
+            </select>
+            <input id="searchButton" class="searchButton" value="搜索" type="submit">
+        </li>
+    </ul>
+    <table class="list_title all_table">
+        <thead>
+        <tr>
+            <th style="width: 10%">序号</th>
+            <th style="width: 20%;">属性名称</th>
+            <th style="width: 25%;">属性值</th>
+            <th style="width: 20%;">属性类型</th>
+            <th style="width: 25%;">所属属性集</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>01</td>
+            <td>属性A</td>
+            <td>值1，值2</td>
+            <td>文本</td>
+            <td>属性集1</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="list_content">
+        <p>共<span id="goodsTotal" style="display:inline-block;">2687</span>记录，每页显示
+            <select id="goods_pageSize">
+                <option value="10" selected="">10</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
+            ，共<span id="goodsPages" style="display:inline-block;">269</span>页
+        </p>
+    </div>
+</div>
+<script type="text/javascript">
+    //  关联属性集-页面切换
+    $('.previewGoods').click(function(){
+        $('.preview-goods').hide();
+        $('.preview-goods-details').show();
+    });
+    $('.previewGoodsDetails').click(function(){
+        $('.preview-goods').show();
+        $('.preview-goods-details').hide();
+    });
+</script>

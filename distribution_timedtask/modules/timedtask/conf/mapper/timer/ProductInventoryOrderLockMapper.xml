@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.ProductInventoryOrderLockMapper" >
+  <resultMap id="BaseResultMap" type="entity.timer.ProductInventoryOrderLock" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="stock_locked" property="stockLocked" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="is_effective" property="isEffective" jdbcType="SMALLINT" />
+    <result column="container_number" property="containerNumber" jdbcType="VARCHAR" />
+    <result column="storage_location" property="storageLocation" jdbcType="VARCHAR" />
+    <result column="expiration_date" property="expirationDate" jdbcType="DATE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_no, sku, stock_locked, warehouse_id, warehouse_name, is_effective, container_number, 
+    storage_location, expiration_date, create_time, update_time
+  </sql>
+  
+  <select id="selectInventoryLockListByParams" resultMap="BaseResultMap" parameterType="entity.timer.ProductInventoryOrderLock">
+  	select 
+    <include refid="Base_Column_List" />
+    from public.t_product_inventory_order_lock
+    <where>
+    1=1
+      <if test="orderNo != null" >
+       and order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="stockLocked != null" >
+        and stock_locked = #{stockLocked,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseName != null" >
+        and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+      </if>
+      <if test="isEffective != null" >
+        and is_effective = #{isEffective,jdbcType=SMALLINT}
+      </if>
+      <if test="containerNumber != null" >
+        and container_number = #{containerNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="storageLocation != null" >
+        and storage_location = #{storageLocation,jdbcType=VARCHAR}
+      </if>
+      <if test="expirationDate != null" >
+        and expiration_date = #{expirationDate,jdbcType=DATE}
+      </if>
+      <if test="createTime != null" >
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateTime != null" >
+        and update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.timer.ProductInventoryOrderLock" >
+    update public.t_product_inventory_order_lock
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="stockLocked != null" >
+        stock_locked = #{stockLocked,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="isEffective != null" >
+        is_effective = #{isEffective,jdbcType=SMALLINT},
+      </if>
+      <if test="containerNumber != null" >
+        container_number = #{containerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="storageLocation != null" >
+        storage_location = #{storageLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date = #{expirationDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

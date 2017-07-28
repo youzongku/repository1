@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.inventory.DisProductMapper" >
+  <resultMap id="BaseResultMap" type="entity.inventory.DisProduct" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sku, email, create_date, creater, product_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.inventory.DisProduct" useGeneratedKeys="true" keyProperty="id">
+    insert into t_dis_product (id, sku, email, 
+      create_date, creater, product_name
+      )
+    values (#{id,jdbcType=INTEGER}, #{sku,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.inventory.DisProduct" useGeneratedKeys="true" keyProperty="id">
+    insert into t_dis_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.inventory.DisProduct" >
+    update t_dis_product
+    <set >
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.inventory.DisProduct" >
+    update t_dis_product
+    set sku = #{sku,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectDisproductByWareIdAndEmail" resultType="dto.inventory.DisInventoryDto">
+  	SELECT res.* from (
+	  	SELECT
+		    dp.product_name as ctitle,
+			dp.sku,
+			SUM (di.stock) as totalQty
+		FROM
+			t_dis_product dp
+		LEFT JOIN t_dis_inventory di ON dp. ID = di.dis_product_id
+		where 1=1
+		and dp.email = #{email}
+		<if test="warehouseId != 0 ">
+			and di.warehouse_id = #{warehouseId}
+		</if>
+		<if test="skus != null and skus.size() > 0">
+			and dp.sku in 
+			<foreach collection="skus" open="(" separator="," close=")" item="sku">
+				#{sku}
+			</foreach>
+		</if>
+		<if test="title != null">
+			and (lower(dp.sku) like '%'||#{title}||'%' or lower(dp.product_name) like '%'||#{title}||'%')
+		</if>
+		GROUP BY
+			dp.sku,
+			dp.product_name
+		) AS res where 1=1
+	<if test="stock == 1">
+		and res.totalQty > 0
+	</if>
+	<if test="stock == 2">
+		and res.totalQty = 0
+	</if>
+	<if test="qty != 0 ">
+		and res.totalQty > #{qty}
+	</if>
+	<if test="pageSize != null and pageSize != 0">
+		limit #{pageSize} offset (#{currPage}-1) * #{pageSize}
+	</if>
+  </select>
+  
+  <select id="selectDisproductByWareIdAndEmailCount" resultType="java.lang.Integer">
+  	SELECT count(1) from (
+	  	SELECT
+		    dp.product_name as ctitle,
+			dp.sku,
+			SUM (di.stock) as totalQty
+		FROM
+			t_dis_product dp
+		LEFT JOIN t_dis_inventory di ON dp. ID = di.dis_product_id
+		where 1=1
+		and dp.email = #{email}
+		<if test="warehouseId != 0 ">
+			and di.warehouse_id = #{warehouseId}
+		</if>
+		<if test="skus != null and skus.size() > 0">
+			and dp.sku in 
+			<foreach collection="skus" open="(" separator="," close=")" item="sku">
+				#{sku}
+			</foreach>
+		</if>
+		<if test="title != null">
+			and (lower(dp.sku) like '%'||#{title}||'%' or lower(dp.product_name) like '%'||#{title}||'%')
+		</if>
+		GROUP BY
+			dp.sku,
+			dp.product_name
+		) AS res where 1=1
+		<if test="stock == 1">
+		and res.totalQty > 0
+		</if>
+		<if test="stock == 2">
+			and res.totalQty = 0
+		</if>
+		<if test="qty != 0 ">
+			and res.totalQty > #{qty}
+		</if>
+  </select>
+  
+  <select id="selectDisproductBySkuAndEmail" resultType="entity.inventory.DisProduct" >
+    SELECT
+	*
+	FROM
+		t_dis_product
+	WHERE
+		email = #{1}
+	AND sku = #{0}
+  </select>
+  <select id="selectDisproductAndStockBySkuAndEmail" resultType="dto.inventory.DisProductDto" >
+  	SELECT
+		dp.product_name as pname,
+  		di.warehouse_id as wid,
+  		tw.warehouse_name as wname,
+  		SUM(di.stock) as stock
+	FROM
+		t_dis_product dp
+	LEFT JOIN t_dis_inventory di ON dp.ID = di.dis_product_id left join t_warehouse tw on di.warehouse_id = tw.id
+	WHERE
+		dp.email = #{email}
+	AND dp.sku = #{sku}
+	<if test="wid != 0 and wid != null">
+			AND di.warehouse_id = #{wid}
+	</if>
+	GROUP BY tw.warehouse_name,dp.product_name,di.warehouse_id
+  </select>
+  
+  <select id="selectAllStock" resultType="dto.inventory.DisProductDto"  parameterType="java.lang.String">
+
+	SELECT DISTINCT
+		i.warehouse_id AS wid,
+		w.warehouse_name AS wname
+	FROM
+		t_dis_inventory i
+	LEFT JOIN t_warehouse w ON i.warehouse_id = w. ID
+	WHERE
+		i.dis_product_id IN (
+			SELECT
+				ID
+			FROM
+				t_dis_product P
+			WHERE
+				P .email = #{email}
+		)
+
+  </select>
+  
+</mapper>

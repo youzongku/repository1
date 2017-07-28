@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.OperateRecordMapper" >
+  <resultMap id="BaseResultMap" type="entity.sales.OperateRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="orderid" property="orderId" jdbcType="INTEGER" />
+    <result column="operate_type" property="operateType" jdbcType="INTEGER" />
+    <result column="result" property="result" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, operate_time, comment, orderid, operate_type, result, email
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_operate_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_operate_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.sales.OperateRecord" >
+    insert into t_operate_record 
+    	(comment,orderid, operate_type, result,email)
+    values 
+ 		(#{comment,jdbcType=VARCHAR},#{orderId,jdbcType=INTEGER}, #{operateType,jdbcType=INTEGER}, #{result,jdbcType=INTEGER}, 
+      	#{email,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.sales.OperateRecord" >
+    insert into t_operate_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="operateTime != null" >
+        operate_time,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="orderId != null" >
+        orderid,
+      </if>
+      <if test="operateType != null" >
+        operate_type,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="operateType != null" >
+        #{operateType,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.sales.OperateRecord" >
+    update t_operate_record
+    <set >
+      <if test="operateTime != null" >
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        orderid = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="operateType != null" >
+        operate_type = #{operateType,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.sales.OperateRecord" >
+    update t_operate_record
+    set operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      comment = #{comment,jdbcType=VARCHAR},
+      orderid = #{orderId,jdbcType=INTEGER},
+      operate_type = #{operateType,jdbcType=INTEGER},
+      result = #{result,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByOrderIdList" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select 
+      <include refid="Base_Column_List"></include>
+      from t_operate_record where orderid in 
+      <foreach item="orderId" collection="list" open="(" separator="," close=")">
+		#{orderId}
+	  </foreach>
+      order by operate_time desc
+  </select>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+      <include refid="Base_Column_List"></include>
+      from t_operate_record where 1 =1
+       <if test="orderId != null and orderId != ''">
+       and orderid=#{orderId,jdbcType=INTEGER} 
+       </if>
+       <if test="operateType != null and operateType != ''">
+       and operate_type=#{operateType,jdbcType=INTEGER} 
+       </if>
+       <if test="operateTypes != null and operateTypes.size() >0">
+       and operate_type in 
+       		<foreach collection="operateTypes" item="item" open="(" close=")" separator=",">
+       			#{item,jdbcType=INTEGER}
+       		</foreach>
+       </if>
+       <if test="result != null and result != ''">
+       and result=#{result,jdbcType=INTEGER}
+       </if>
+      order by operate_time desc
+  </select>
+  
+  <update id="updateByOrderId" parameterType="entity.sales.OperateRecord">
+	  <if test="orderId ! null">
+	     update t_operate_record set 
+	     <if test="operateType != null">operate_type = #{operateType}</if>
+	     <if test="result != null">result = #{result}</if>
+	     <if test="comment != null">comment = #{comment}</if>
+	     where orderid = #{orderId}
+      </if>
+  </update>
+  
+  <delete id="deleteByOrderId" parameterType="entity.sales.OperateRecord"> 
+     delete from t_operate_record where orderid = #{orderId}
+  </delete>
+
+  <select id="findOperateRecordByCondition" resultMap="BaseResultMap" parameterType="entity.sales.OperateRecord">
+    select
+    <include refid="Base_Column_List"></include>
+    from t_operate_record
+    where 1 = 1
+    <if test="orderId != null">
+      and orderid = #{orderId}
+    </if>
+    <if test="operateType != null">
+      and operate_type = #{operateType}
+    </if>
+    <if test="result != null">
+      and result = #{result}
+    </if>
+    order by operate_time desc
+  </select>
+</mapper>

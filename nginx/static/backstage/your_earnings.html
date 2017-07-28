@@ -1,0 +1,171 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<div class="earnings-box">
+    <h1>充值提现<span>---</span><span>返佣记录</span></h1>
+    <ul class="search_category" style="height:62px;">
+        <li>
+            <div class="search">
+                <input id="searchInput" class="searchInput" placeholder="用户名" style="width:180px;">
+                <input id="searchButton" class="searchButton" value="搜索" type="button" style="cursor: pointer;">
+                <button id="" style="cursor: pointer;">导出excel</button>
+            </div>
+        </li>
+    </ul>
+    <script>  //解决IEplaceholder不兼容问题
+    $(document).ready(function () {
+        $(function () {
+            if (!placeholderSupport()) {
+                $('[placeholder]').focus(function () {
+                    var input = $(this);
+                    if (input.val() == input.attr('placeholder')) {
+                        input.val('');
+                        input.removeClass('placeholder');
+                    }
+                }).blur(function () {
+                    var input = $(this);
+                    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                        input.addClass('placeholder');
+                        input.val(input.attr('placeholder'));
+                    }
+                }).blur();
+            }
+        })
+        function placeholderSupport() {
+            return 'placeholder' in document.createElement('input');
+        }
+    })
+
+    </script>
+    <div class="content_list">
+        <table class="earnings_recharge">
+            <thead>
+            <tr class="user_recharge_header">
+                <th width="10%">ID</th>
+                <th width="25%">用户名</th>
+                <th width="20%">最近返佣日期</th>
+                <th width="15%">返佣总金额（元）</th>
+                <th width="15%">已返佣订单数</th>
+                <th width="15%">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="user_recharge_header">
+                <td width="10%">1</td>
+                <td width="25%">001001@qq.com</td>
+                <td width="20%">2016-05-25 17：42</td>
+                <td width="15%">1000</td>
+                <td width="15%">2000</td>
+                <td width="15%" class="earnings-show"><a href="#">查看详情</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="clear"></div>
+        <div class="list_content">
+            <div id="goodsList"></div>
+            <p>共<span id="goodsTotal" style="display:inline-block;">0</span>记录，每页显示
+                <select id="goods_pageSize">
+                    <option value="10" selected="selected">10</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                </select>
+                ，共<span id="goodsPages" style="display:inline-block;">0</span>页
+            </p>
+        </div>
+        <div class="recharge_operation" style="display: none; padding: 0;">
+            <ul>
+                <li class="recharge_operation_li1"></li>
+            </ul>
+        </div>
+    </div>
+    <div id="pagination_recharge" style="text-align: center; margin-top: 30px;"></div>
+    <div class="recharge_black" style="display: none"></div>
+</div>
+
+
+<div class="earnings-detail" style="display: none">
+    <h1>用户充值<span>---</span><span>返佣列表</span></h1>
+    <ul class="search_category" style="height:62px;">
+        <li>
+            <div class="search">
+                <input id="searchInput" class="searchInput" placeholder="用户名" style="width:180px;">
+                <input id="searchButton" class="searchButton" value="搜索" type="button" style="cursor: pointer;">
+                <button class="back-earnings" style="cursor: pointer;">返回列表</button>
+            </div>
+        </li>
+    </ul>
+    <script>  //解决IEplaceholder不兼容问题
+    $(document).ready(function () {
+        $(function () {
+            if (!placeholderSupport()) {
+                $('[placeholder]').focus(function () {
+                    var input = $(this);
+                    if (input.val() == input.attr('placeholder')) {
+                        input.val('');
+                        input.removeClass('placeholder');
+                    }
+                }).blur(function () {
+                    var input = $(this);
+                    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                        input.addClass('placeholder');
+                        input.val(input.attr('placeholder'));
+                    }
+                }).blur();
+            }
+        })
+        function placeholderSupport() {
+            return 'placeholder' in document.createElement('input');
+        }
+    })
+
+    </script>
+    <div class="content_list">
+        <table class="earnings_recharge">
+            <thead>
+            <tr class="user_recharge_header">
+                <th width="10%">ID</th>
+                <th width="30%">用户名</th>
+                <th width="25%">销售单号</th>
+                <th width="15%">返佣金额（元）</th>
+                <th width="20%">返佣日期</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="user_recharge_header">
+                <td width="10%">1</td>
+                <td width="30%">001001@qq.com</td>
+                <td width="25%">xs20160808</td>
+                <td width="15%">1000</td>
+                <td width="20%">2016-05-25 17：42</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="clear"></div>
+        <div class="list_content">
+            <div id="goodsList"></div>
+            <p>共<span id="goodsTotal" style="display:inline-block;">0</span>记录，每页显示
+                <select id="goods_pageSize">
+                    <option value="10" selected="selected">10</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                </select>
+                ，共<span id="goodsPages" style="display:inline-block;">0</span>页
+            </p>
+        </div>
+        <div class="recharge_operation" style="display: none; padding: 0;">
+            <ul>
+                <li class="recharge_operation_li1"></li>
+            </ul>
+        </div>
+    </div>
+    <div id="pagination_recharge" style="text-align: center; margin-top: 30px;"></div>
+    <div class="recharge_black" style="display: none"></div>
+</div>
+<script type="text/javascript">
+    $(".earnings-show").on("click",function(){
+        $(".earnings-detail").show();
+        $(".earnings-box").hide();
+    });
+    $(".back-earnings").on("click",function(){
+        $(".earnings-detail").hide();
+        $(".earnings-box").show();
+    });
+</script>

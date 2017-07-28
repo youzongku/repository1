@@ -1,0 +1,10 @@
+此nginx服务器压缩包是用于tomtop分销系统
+
+使用注意
+一：使用前请配置一个本地域名：tomtopx.com.cn，指向127.0.0.1
+host文件位置：C:\Windows\System32\drivers\etc
+打开host文件，在最后一行添加以下内容
+127.0.0.1       tomtopx.com.cn
+
+二：nginx端口配置
+

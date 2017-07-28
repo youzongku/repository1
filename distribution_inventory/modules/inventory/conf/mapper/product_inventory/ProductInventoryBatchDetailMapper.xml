@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product_inventory.ProductInventoryBatchDetailMapper" >
+  <resultMap id="BaseResultMap" type="entity.product_inventory.ProductInventoryBatchDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="container_stock_change" property="containerStockChange" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="container_number" property="containerNumber" jdbcType="VARCHAR" />
+    <result column="storage_location" property="storageLocation" jdbcType="VARCHAR" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="expiration_date" property="expirationDate" jdbcType="DATE" />
+    <result column="identifier" property="identifier" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sku, product_name, container_stock_change, remark, update_date, container_number, 
+    storage_location, warehouse_name, warehouse_id, expiration_date, identifier, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_inventory_batch_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getBatchDetailByIdentifier" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_inventory_batch_detail
+    where identifier = #{identifier,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getSyncRecordByParam" resultMap="BaseResultMap" parameterType="dto.product_inventory.ErpStockChangeQueryDto">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_product_inventory_batch_detail
+    <where>
+    	<if test="begin !=null">
+    		and update_date &gt;= #{begin,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="end !=null">
+    		and update_date	&lt;= #{end,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="sku !=null">
+    		and sku=#{sku,jdbcType=VARCHAR}
+    	</if>
+    </where>
+    order by update_date DESC
+    <if test="page !=null">
+    	limit #{rows} offset (#{page}-1)*#{rows}
+    </if>
+  </select>
+  
+  <select id="getSyncRecordTotalCountByParam" resultType="INTEGER" parameterType="dto.product_inventory.ErpStockChangeQueryDto">
+  	select 
+    count(1)
+    from t_product_inventory_batch_detail
+    <where>
+    	<if test="begin !=null">
+    		and update_date &gt;= #{begin,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="end !=null">
+    		and update_date	&lt;= #{end,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="sku !=null">
+    		and sku=#{sku,jdbcType=VARCHAR}
+    	</if>
+        <if test="identifier !=null">
+            and identifier=#{identifier,jdbcType=VARCHAR}
+        </if>
+    </where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_product_inventory_batch_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteBySku" parameterType="java.lang.String" >
+    delete from t_product_inventory_batch_detail
+    where sku = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  
+  <insert id="insert" parameterType="entity.product_inventory.ProductInventoryBatchDetail" >
+    insert into t_product_inventory_batch_detail (id, sku, product_name, 
+      container_stock_change, remark, update_date, 
+      container_number, storage_location, warehouse_name, 
+      warehouse_id, expiration_date, identifier, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{sku,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{containerStockChange,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{containerNumber,jdbcType=VARCHAR}, #{storageLocation,jdbcType=VARCHAR}, #{warehouseName,jdbcType=VARCHAR}, 
+      #{warehouseId,jdbcType=INTEGER}, #{expirationDate,jdbcType=DATE}, #{identifier,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product_inventory.ProductInventoryBatchDetail" >
+    insert into t_product_inventory_batch_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="containerStockChange != null" >
+        container_stock_change,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="containerNumber != null" >
+        container_number,
+      </if>
+      <if test="storageLocation != null" >
+        storage_location,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date,
+      </if>
+      <if test="identifier != null" >
+        identifier,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="containerStockChange != null" >
+        #{containerStockChange,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="containerNumber != null" >
+        #{containerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="storageLocation != null" >
+        #{storageLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="expirationDate != null" >
+        #{expirationDate,jdbcType=DATE},
+      </if>
+      <if test="identifier != null" >
+        #{identifier,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product_inventory.ProductInventoryBatchDetail" >
+    update t_product_inventory_batch_detail
+    <set >
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="containerStockChange != null" >
+        container_stock_change = #{containerStockChange,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="containerNumber != null" >
+        container_number = #{containerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="storageLocation != null" >
+        storage_location = #{storageLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date = #{expirationDate,jdbcType=DATE},
+      </if>
+      <if test="identifier != null" >
+        identifier = #{identifier,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product_inventory.ProductInventoryBatchDetail" >
+    update t_product_inventory_batch_detail
+    set sku = #{sku,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      container_stock_change = #{containerStockChange,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      container_number = #{containerNumber,jdbcType=VARCHAR},
+      storage_location = #{storageLocation,jdbcType=VARCHAR},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      expiration_date = #{expirationDate,jdbcType=DATE},
+      identifier = #{identifier,jdbcType=VARCHAR},
+      create_time=#{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

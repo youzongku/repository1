@@ -1,0 +1,38 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Map static resources from the /public folder to the /assets URL path
+
+# test response result
+GET  /suc        @controllers.TestController.suc()
+GET  /err        @controllers.TestController.err()
+
+# purchase order
+POST	  /purchase/order			@controllers.openapi.PurchaseController.order()
+
+POST      /purchase/order/list    	@controllers.openapi.PurchaseController.getOrderPage()      
+
+# customer order
+POST      /sales/order/list       	@controllers.openapi.SalesController.getCustomerOrderPage()
+
+POST      /sales/order      		@controllers.openapi.SalesController.createNewOrder()
+
+# product
+POST      /product/list				@controllers.openapi.ProductController.products()
+
+POST      /product/detail    		@controllers.openapi.ProductController.getProductsDetail()
+
+POST      /product/category    		@controllers.openapi.ProductController.queryCategorys()
+
+# inventory
+POST      /inventory/list      		@controllers.openapi.InventoryController.getMicroWarehuoseStorage()
+
+#GET      /inventory/getCloudWarehuoseInfo          @controllers.openapi.InventoryController.getCloudWarehuoseStorage(sku : String ?= null,warehouseId : Integer ?= null)
+
+POST      /inventory/warehouse      @controllers.openapi.InventoryController.queryWarehouse()
+
+# user login
+POST      /user/login          		@controllers.openapi.LoginController.login()
+
+GET       /user/logout          	@controllers.openapi.LoginController.logout(ltc : String ?= "")

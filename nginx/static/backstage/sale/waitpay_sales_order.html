@@ -1,0 +1,270 @@
+<script src="../../js/backstage/lib/laydate/laydate.js"></script>
+<div class="sales_order_box">
+    <div id="winxin_content" class="modal fade in"></div>
+    <h1>销售发货<span>---</span><span>待付款订单</span></h1>
+    <ul class="search_category" style = "height:125px;">
+        <li>下单时间：
+            <input class="searchInput" placeholder="开始日期" id="seachTime0"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+            至
+            <input class="searchInput" placeholder="结束日期" id="seachTime1"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+        </li>
+        <li id="send_select" style="display: none;">订单状态：
+            <select name="orderStatus" id="orderStatus" >
+                <option value="1,103">待付款</option>
+            </select>
+        </li>
+        <li>发货仓库：
+            <select id="delivery_warehouse_select" >
+                <option value="">所有仓库</option>
+            </select>
+        </li>
+        <li style="display: none;" >分销商类型：
+            <select id="distributorType" >
+                <option value="0">全部分销商</option>
+            </select>
+        </li>
+        <li >分销渠道：
+            <select id="disMode" >
+            </select>
+        </li>
+        <li>
+            订单来源：
+            <select id="source" >
+                <option value="">全部订单</option>
+                <option value="BBC">BBC订单</option>
+                <option value="MSITE">分销模式M站订单</option>
+                <option value="MSITE-BRAND">代言模式M站订单</option>
+            </select>
+        </li>    
+        <li>
+            <div class="search">
+                <input onkeyup="enter_keyUp(event,this, getList_wait_pay_sale)" id="searchInput" class="searchInput" placeholder="订单编号/分销商/支付交易号/交易号/品牌M站/业务员/订单收货人/名称" style="width: 418px;">
+                <input class="searchButton"  value="搜索" type="submit">
+                <button id="exportSaleOrder" class="display">导出表格</button>
+            </div>
+        </li>
+    </ul>
+    <script>  //解决IEplaceholder不兼容问题
+    $(document).ready(function () {
+        $(function () {
+            if (!placeholderSupport()) {
+                $('[placeholder]').focus(function () {
+                    var input = $(this);
+                    if (input.val() == input.attr('placeholder')) {
+                        input.val('');
+                        input.removeClass('placeholder');
+                    }
+                }).blur(function () {
+                    var input = $(this);
+                    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                        input.addClass('placeholder');
+                        input.val(input.attr('placeholder'));
+                    }
+                }).blur();
+            }
+        })
+        function placeholderSupport() {
+            return 'placeholder' in document.createElement('input');
+        }
+    })
+
+    </script>
+    <div class="recharge_operation" style="display: none; padding: 0;">
+        <ul class="operation_record" style="display: none;">
+            <!--<li class="recharge_operation_li1">操作记录</li>-->
+        </ul>
+        <ul class="check_reason" style="display: none;">
+            <li class="recharge_operation_li1">查看原因</li>
+        </ul>
+        <ul class="logistics_info" style="display: none;">
+            <li class="recharge_operation_li1">物流信息</li>
+            <li class="recharge_operation_li2">
+                <ul>
+                    <li>物流公司：</li>
+                    <li>申通快递</li>
+                </ul>
+            </li>
+            <li class="recharge_operation_li2">
+                <ul>
+                    <li>物流单号：</li>
+                    <li>192029489321859123583475</li>
+                </ul>
+            </li>
+            <li class="recharge_operation_li2">
+                <ul>
+                    <li>2015-12-03 19：01</li>
+                    <li>深圳保税仓揽件</li>
+                </ul>
+            </li>
+            <li class="recharge_operation_li2">
+                <ul>
+                    <li>2015-12-03 19：01</li>
+                    <li>前往调拨中心</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="content_list" id="order_info_list">
+
+        <table class="list_title all_table" id="waitpay_sales_order_table">
+        </table>
+        <div id="waitpay_sales_order_pagination" style="text-align: center; margin-top: 30px;"></div>
+    </div>
+</div>
+
+<!--发货单详情 start-->
+<div id="sale_order_detail_div" class="sale-order-detail display">
+    <ul class="sale-order-detail-lbox">
+        <li class="currentBlue"><a>订单信息</a></li>
+        <li><a>物流信息</a></li>
+        <li><a>收件人信息</a></li>
+        <li><a>寄件人信息</a></li>
+        <li><a>采购进货支付信息</a></li>
+        <li><a>后台审核支付信息</a></li>
+        <li><a>订购信息</a></li>
+        <li><a>商品信息</a></li>
+        <li><a>采购信息</a></li>
+    </ul>
+    <div class="sale-order-detail-rbox">
+        <h4>订单信息</h4>
+        <div class="sale-order-detail-rbox-cont">
+            <div>
+                <span>平台名称：<em id="platformName"></em></span>
+                <span>平台单号：<em id="platformNo"></em></span>
+                <span>交易号：<em id="tradeNumber"></em></span>
+                <span>实付款：<em id="actualAmount"></em>元</span>
+                <span>运费：<em id="postFee"></em>元</span>
+            </div>
+            <div>
+                收款账户：<em id="collectAccount"></em>
+            </div>
+            <div>
+                备注信息：<em id="remark"></em>
+            </div>
+        </div>
+        <h4>物流信息</h4>
+        <div class="sale-order-detail-rbox-cont">
+            <div>
+                <span>快递方式：<em id="logisticsMode"></em></span>
+                <span>运费：<em id="originalFreight"></em>元</span>
+                <span>调整后运费：<em id="bbcPostage"></em>元</span>
+            </div>
+        </div>
+        <h4>收件人信息</h4>
+        <div class="sale-order-detail-rbox-cont">
+            <div>
+                <span>姓名：<em id="receiverName"></em></span>
+                <span>手机：<em id="receiverTel"></em></span>
+                <address>地址：<em id="receiverAddr"></em></address>
+            </div>
+        </div>
+        <h4>寄件人信息</h4>
+        <div class="sale-order-detail-rbox-cont">
+            <div>
+                <span>姓名：<em id="senderName"></em></span>
+                <span>手机：<em id="senderTel"></em></span>
+                <address>地址：<em id="senderAddress"></em></address>
+            </div>
+        </div>
+        <h4>采购进货支付信息</h4>
+        <div class="sale-order-detail-rbox-cont">
+            <div>
+                <span>支付交易号：<em id="purchasePaymentNo"></em></span>
+                <span>支付时间：<em id="purchasePayDate"></em></span>
+                <span>支付方式：<em id="purchasePaymentType"></em></span>
+            </div>
+        </div>
+        <h4>后台审核支付信息</h4>
+        <div class="sale-order-detail-rbox-cont">
+            <div>
+                <span>支付姓名：<em id="payer"></em></span>
+                <span>支付身份证：<em id="payerIDCard"></em></span>
+                <span>支付交易号：<em id="payNumber"></em></span>
+                <span>支付时间：<em id="payTime"></em></span>
+            </div>
+            <div>
+                支付方式：<em id="payType"></em>
+            </div>
+        </div>
+        <h4>订购信息</h4>
+        <div class="sale-order-detail-rbox-cont">
+            <div>
+                <span>订购人姓名：<em id="orderer"></em></span>
+                <span>订购人身份证：<em id="ordererIDCard"></em></span>
+                <span>手机号码：<em id="ordererTel"></em></span>
+                <span>订购邮编：<em id="ordererPostcode"></em></span>
+            </div>
+            <div>
+                客户昵称：<em id="buyerID"></em>
+            </div>
+        </div>
+        <h4 class="light-blue">商品信息</h4>
+        <div class="sale-order-detail-rbox-cont">
+            <table>
+                <thead>
+                <tr>
+                    <th>商品编码</th>
+                    <th>商品名称</th>
+                    <th>国际条码</th>
+                    <th>所属仓库</th>
+                    <th>到期日期</th>
+                    <th>真实售价（元）</th>
+                    <th>数量（个）</th>
+                    <th>小计（元）</th>
+                </tr>
+                </thead>
+                <tbody id="sales_detail_info">
+                </tbody>
+            </table>
+            <p class="red">
+                <span>终端消费者实际支付：<em id="mOrderActualAmount"></em>元</span>
+                <span>商品总数量：<em id="totalQty"></em>个</span>
+                <span>平台运费：<em id="bbcPostage2"></em>元</span>
+                <span>分销商总成本：<em id="disPrimeCost"></em>元</span>
+            </p>
+        </div>
+        <h4 class="light-blue">采购信息</h4>
+        <div class="sale-order-detail-rbox-cont">
+            <table class="sale-order-procurement">
+                <thead>
+                <tr>
+                    <th>采购订单</th>
+                    <th>商品编号</th>
+                    <th>到期日期</th>
+                    <th>均摊价（元）</th>
+                    <th>商品数量（个）</th>
+                    <th>所含采购金额（元）</th>
+                </tr>
+                </thead>
+                <tbody id="purchase_detail_info">
+                </tbody>
+            </table>
+            <p class="red" id="total_purchases_amount">
+            </p>
+        </div>
+    </div>
+</div>
+<!--发货单详情 end-->
+
+<script>
+    $(document).ready(function() {
+//  发货单详情锚点跳转效果 start
+        var i=0;
+        $(".sale-order-detail-lbox li a").each(function(){
+            var s = ++i;
+            $(this).attr("href","#linktitle-"+s);
+        });
+        var x=0;
+        $(".sale-order-detail-rbox h4").each(function(){
+            var z = ++x;
+            $(this).attr("id","linktitle-"+z);
+        });
+        $(".sale-order-detail-lbox li a").click(function(){
+            $(this).parent().addClass("currentBlue");
+            $(this).parent().siblings().removeClass("currentBlue");
+        });
+//  发货单详情锚点跳转效果 end
+    });
+</script>

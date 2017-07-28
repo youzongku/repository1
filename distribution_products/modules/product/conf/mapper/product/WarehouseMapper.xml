@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.WarehouseMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.Warehouse" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="warehouse_no" property="warehouseNo" jdbcType="VARCHAR" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="street" property="street" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="batch_no" property="batchNo" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="deal_fee" property="dealFee" jdbcType="DOUBLE" />
+    <result column="deal_sku_fee" property="dealSkuFee" jdbcType="DOUBLE" />
+    <result column="deal_item_fee" property="dealItemFee" jdbcType="DOUBLE" />
+    <result column="other_fee" property="otherFee" jdbcType="DOUBLE" />
+    <result column="is_opt_fee_actived" property="isOptFeeActived" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, warehouse_no, warehouse_name, created, status, last_updated, province, city, 
+    area, street, remarks, batch_no, type, deal_fee, deal_sku_fee, deal_item_fee, other_fee, 
+    is_opt_fee_actived
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_warehouse
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_warehouse
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.Warehouse" >
+    insert into t_warehouse (id, warehouse_no, warehouse_name, 
+      created, status, last_updated, 
+      province, city, area, 
+      street, remarks, batch_no, 
+      type, deal_fee, deal_sku_fee, 
+      deal_item_fee, other_fee, is_opt_fee_actived
+      )
+    values (#{id,jdbcType=INTEGER}, #{warehouseNo,jdbcType=VARCHAR}, #{warehouseName,jdbcType=VARCHAR}, 
+      #{created,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{lastUpdated,jdbcType=TIMESTAMP}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
+      #{street,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{batchNo,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{dealFee,jdbcType=DOUBLE}, #{dealSkuFee,jdbcType=DOUBLE}, 
+      #{dealItemFee,jdbcType=DOUBLE}, #{otherFee,jdbcType=DOUBLE}, #{isOptFeeActived,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.Warehouse" >
+    insert into t_warehouse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="warehouseNo != null" >
+        warehouse_no,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="street != null" >
+        street,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="batchNo != null" >
+        batch_no,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="dealFee != null" >
+        deal_fee,
+      </if>
+      <if test="dealSkuFee != null" >
+        deal_sku_fee,
+      </if>
+      <if test="dealItemFee != null" >
+        deal_item_fee,
+      </if>
+      <if test="otherFee != null" >
+        other_fee,
+      </if>
+      <if test="isOptFeeActived != null" >
+        is_opt_fee_actived,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseNo != null" >
+        #{warehouseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="street != null" >
+        #{street,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null" >
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="dealFee != null" >
+        #{dealFee,jdbcType=DOUBLE},
+      </if>
+      <if test="dealSkuFee != null" >
+        #{dealSkuFee,jdbcType=DOUBLE},
+      </if>
+      <if test="dealItemFee != null" >
+        #{dealItemFee,jdbcType=DOUBLE},
+      </if>
+      <if test="otherFee != null" >
+        #{otherFee,jdbcType=DOUBLE},
+      </if>
+      <if test="isOptFeeActived != null" >
+        #{isOptFeeActived,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.Warehouse" >
+    update t_warehouse
+    <set >
+      <if test="warehouseNo != null" >
+        warehouse_no = #{warehouseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="street != null" >
+        street = #{street,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null" >
+        batch_no = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="dealFee != null" >
+        deal_fee = #{dealFee,jdbcType=DOUBLE},
+      </if>
+      <if test="dealSkuFee != null" >
+        deal_sku_fee = #{dealSkuFee,jdbcType=DOUBLE},
+      </if>
+      <if test="dealItemFee != null" >
+        deal_item_fee = #{dealItemFee,jdbcType=DOUBLE},
+      </if>
+      <if test="otherFee != null" >
+        other_fee = #{otherFee,jdbcType=DOUBLE},
+      </if>
+      <if test="isOptFeeActived != null" >
+        is_opt_fee_actived = #{isOptFeeActived,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.Warehouse" >
+    update t_warehouse
+    set warehouse_no = #{warehouseNo,jdbcType=VARCHAR},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      street = #{street,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      batch_no = #{batchNo,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      deal_fee = #{dealFee,jdbcType=DOUBLE},
+      deal_sku_fee = #{dealSkuFee,jdbcType=DOUBLE},
+      deal_item_fee = #{dealItemFee,jdbcType=DOUBLE},
+      other_fee = #{otherFee,jdbcType=DOUBLE},
+      is_opt_fee_actived = #{isOptFeeActived,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap">
+  	select 
+    	<include refid="Base_Column_List" />
+    from t_warehouse
+    order by created asc
+  </select>
+  
+  
+  
+  <resultMap id="GoodsInventory" type="entity.product.GoodsInventory">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="sku" property="sku" jdbcType="VARCHAR" />
+		<result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+		<result column="warehouse_name" property="warehouseName"
+			jdbcType="VARCHAR" />
+		<result column="total_stock" property="totalStock" jdbcType="INTEGER" />
+		<result column="frozen_stock" property="frozenStock" jdbcType="INTEGER" />
+		<result column="available_stock" property="availableStock"
+			jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Column">
+		i.id, i.sku, i.warehouse_id, i.warehouse_name, i.total_stock,
+		i.frozen_stock,
+		i.available_stock
+  </sql>
+  
+ <!--  <select id="getGoodsInventorys" parameterType="java.lang.String" resultMap="GoodsInventory" >
+	  	select
+	  	<include refid="Column" />
+		from t_goods_inventory i left join t_warehouse w on i.warehouse_id=cast(w.warehouse_no as int)
+	  	where w.status=1 and sku=#{0}
+  </select> -->
+  
+  <select id="getGoodsInventorys" parameterType="java.lang.String" resultMap="GoodsInventory" >
+	  	select
+	  		i.dis_stock_id as warehouse_id,w.warehouse_name
+		from t_product_disprice i 
+			left join t_warehouse w on i.dis_stock_id=cast(w.warehouse_no as int)
+  		where w.status=1 and sku = #{0} and w.type != '-10'
+  </select> 
+  <select id="getAvailableWarehouse" resultMap="BaseResultMap">
+	 SELECT
+	 	<include refid="Base_Column_List" />
+	 FROM
+		t_warehouse
+	 WHERE
+		status = 1;
+  </select>
+</mapper>

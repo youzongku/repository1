@@ -1,0 +1,167 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<h1>充值提现<span>---</span><span>录入充值记录</span></h1>
+<ul class="record_purchaseList_tab" style="width: auto;float: right;margin-top: -54px;">
+    <li class="recharge_current">线下充值</li>
+    <li>现金充值</li>
+</ul>
+<hr style="border: 1px solid #ccc;">
+<div>
+    <div class="offline_transfer_ul zone_examine_about record-tab-con" id="offline_transfer">
+        <p class="red" style="padding: 10px 0 16px;text-align: center;">温馨提示：请选择收款银行后将所要充值汇款转至您选择的收款账户里，并留下您的汇款信息，请确保信息真实有效。</p>
+        <form class="sendApply" enctype="multipart/form-data" method="post" action="/member/sendApply" type="1">
+            <table class="recharge-table">
+                <tbody>
+                <tr>
+                    <td>
+                        <span class="red">*</span><span>分销商：</span>
+                    </td>
+                    <td>
+                        <input disabled="disabled" class="selected_email" name="selectedEmail" type="text">
+                        <button class="distributorSelection" type="button" onclick="showDistributes(this)">选择</button>
+                        <input name="isBackStage" type="hidden" value="true">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                       <span>名称：</span>
+                    </td>
+                    <td>
+                        <input type="text" accesskey="_nick_name_" disabled />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="red">*</span><span>付款人：</span>
+                    </td>
+                    <td>
+                        <input type="text" name="distributorName" tag="validate"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="red">*</span><span>充值金额：</span>
+                    </td>
+                    <td>
+                        <input type="text" name="transferAmount" tag="validate"/>&nbsp;元
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="red" >*</span><span>付款流水号：</span>
+                    </td>
+                    <td>
+                        <input type="text" name="transferNumber" maxlength="50" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span></span><span>充值日期：</span>
+                    </td>
+                    <td>
+                        <input placeholder="充值日期" name="transTime" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss',max:laydate.now()})" readonly="true" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <span></span><span>充值截图：</span>
+                    </td>
+                    <td>
+                        <img id="preview" class="preview-img" alt="暂无图片" title="点击预览大图" onclick="previewImg(this)">
+                        <input type="file" name="image" onchange="readImg(this)" style="margin-top: -50px;border: none;text-indent: 0;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <span></span><span>备注：</span>
+                    </td>
+                    <td>
+                        <textarea class="recharge-textarea" name="applyRemark" maxlength="500"></textarea>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="text-align: center">
+                <button style="cursor: pointer" class="btn instructions-submit" type="button">提交</button>
+            </div>
+        </form>
+    </div>
+    <div class="offline_transfer_ul zone_examine_about record-tab-con" style="display: none" id="cash_transfer">
+        <p class="red" style="padding: 10px 0 16px;text-align: center;">温馨提示：请选择收款银行后将所要充值汇款转至您选择的收款账户里，并留下您的汇款信息，请确保信息真实有效。</p>
+        <form class="sendApply" enctype="multipart/form-data" method="post" action="/member/sendApply" type="2">
+            <table class="recharge-table">
+                <tbody>
+                <tr>
+                    <td>
+                        <span class="red">*</span><span>分销商：</span>
+                    </td>
+                    <td>
+                        <input disabled="disabled" class="selected_email" name="selectedEmail" type="text">
+                        <button class="distributorSelection" type="button" onclick="showDistributes(this)">选择</button>
+                        <input name="isBackStage" type="hidden" value="true">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>名称：</span>
+                    </td>
+                    <td>
+                        <input type="text" accesskey="_nick_name_" disabled />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="red">*</span><span>充值金额：</span>
+                    </td>
+                    <td>
+                        <input type="text" name="transferAmount" tag="validate"/>&nbsp;元
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span></span><span>充值日期：</span>
+                    </td>
+                    <td>
+                        <input placeholder="充值日期" name="transTime" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss',max:laydate.now()})" readonly="true" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <span></span><span>备注：</span>
+                    </td>
+                    <td>
+                        <textarea class="recharge-textarea" name="applyRemark" maxlength="500" ></textarea>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="text-align: center">
+                <button style="cursor: pointer" class="btn instructions-submit" type="button">提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+//解决IEplaceholder不兼容问题
+$(document).ready(function () {
+    $(function () {
+        if (!placeholderSupport()) {
+            $('[placeholder]').focus(function () {
+                var input = $(this);
+                if (input.val() == input.attr('placeholder')) {
+                    input.val('');
+                    input.removeClass('placeholder');
+                }
+            }).blur(function () {
+                var input = $(this);
+                if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                    input.addClass('placeholder');
+                    input.val(input.attr('placeholder'));
+                }
+            }).blur();
+        }
+    });
+    function placeholderSupport() {
+        return 'placeholder' in document.createElement('input');
+    }
+});
+</script>

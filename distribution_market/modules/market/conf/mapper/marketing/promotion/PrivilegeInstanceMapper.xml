@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.promotion.PrivilegeInstanceMapper" >
+  <resultMap id="BaseResultMap" type="entity.marketing.promotion.PrivilegeInstance" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="act_inst_id" property="actInstId" jdbcType="INTEGER" />
+    <result column="condt_inst_id" property="condtInstId" jdbcType="INTEGER" />
+    <result column="pro_pvlg_id" property="proPvlgId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="p_type" property="pType" jdbcType="INTEGER" />
+    <result column="pvlg_value" property="pvlgValue" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="BOOLEAN" />
+  </resultMap>
+  
+  <update id="deleteSoftlyByPrimaryKey">
+  	update t_pvlg_inst set is_delete=true where where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <sql id="Base_Column_List" >
+    id, act_inst_id, condt_inst_id, pro_pvlg_id, is_delete, name, p_type, pvlg_value
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_pvlg_inst
+    where id = #{id,jdbcType=INTEGER} and is_delete = false
+  </select>
+  
+  <select id="selectByActInstId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  	select 
+    <include refid="Base_Column_List" />
+    from t_pvlg_inst
+    where act_inst_id = #{actInstId,jdbcType=INTEGER} and is_delete = false
+  </select>
+  
+  <select id="selectByCondtInstId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  	select 
+    <include refid="Base_Column_List" />
+    from t_pvlg_inst
+    where condt_inst_id = #{condtInstId,jdbcType=INTEGER} 
+    and is_delete = false
+  </select>
+  
+  <select id="selectByCondtInstIdList" resultMap="BaseResultMap" parameterType="java.util.List" >
+  	select 
+    <include refid="Base_Column_List" />
+    from t_pvlg_inst
+    where is_delete = false 
+    <if test="list != null and list.size >0 ">
+     	and condt_inst_id in
+    	<foreach collection="list" item="condtInstId" open="(" separator="," close=")">  
+    	#{condtInstId}  
+    	</foreach>
+    </if>
+    
+  </select>
+  
+  <insert id="insert" parameterType="entity.marketing.promotion.PrivilegeInstance" >
+    insert into t_pvlg_inst (act_inst_id, condt_inst_id, pro_pvlg_id, is_delete, name, p_type, pvlg_value)
+    values (#{actInstId}, #{condtInstId}, #{proPvlgId}, #{isDelete}, #{name}, #{pType}, #{pvlgValue})
+  </insert>
+  
+  <insert id="insertBatch" parameterType="java.util.List">
+  	insert into t_pvlg_inst (act_inst_id, condt_inst_id, pro_pvlg_id, is_delete, name, p_type, pvlg_value)
+    values
+  	<foreach collection="list" item="item" index="index" separator="," >
+		(#{item.actInstId}, #{item.condtInstId} , #{item.proPvlgId}, #{item.isDelete}, #{item.name}, #{item.pType}, #{item.pvlgValue})
+	</foreach>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.marketing.promotion.PrivilegeInstance" >
+    update t_pvlg_inst
+    <set >
+      <if test="pvlgValue != null" >
+        pvlg_value = #{pvlgValue},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <update id="updateBatch"  parameterType="java.util.List">
+  	<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+    	update t_pvlg_inst
+    	<set>
+	      	<if test="item.jsonValue != null and item.jsonValue != ''" >
+		        pvlg_value = #{item.jsonValue},
+		    </if>
+		</set>
+		where id = ${item.pvlgInstId}
+  	</foreach>
+  </update>
+  
+  <select id="getPriInstance" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+   select  <include refid="Base_Column_List" />
+   from t_pvlg_inst where act_inst_id = #{activityInstId} and is_delete = false
+  </select>
+  
+  <select id="byIdGetPri"  resultMap="BaseResultMap" parameterType="java.util.List">
+   select  <include refid="Base_Column_List" />
+   from t_pvlg_inst where 
+   <foreach collection="list" item="item" index="index" separator="or">
+        id = #{item}
+   </foreach>    
+   and is_delete = false
+  </select>
+</mapper>

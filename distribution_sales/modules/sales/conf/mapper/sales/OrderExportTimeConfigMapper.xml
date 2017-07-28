@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.OrderExportTimeConfigMapper" >
+  <resultMap id="BaseResultMap" type="entity.sales.OrderExportTimeConfig" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="is_sync" property="isSync" jdbcType="BIT" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="export_type" property="exportType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, operator, is_sync, path, file_name, create_time, update_time, export_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_export_time_config
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByParmas" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_export_time_config
+    where 
+    	operator = #{0,jdbcType=VARCHAR}
+    	and export_type = #{1,jdbcType=VARCHAR}
+   	limit 1 offset 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_order_export_time_config
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.sales.OrderExportTimeConfig" >
+    insert into t_order_export_time_config (id, operator, is_sync, 
+      path, file_name, create_time, 
+      update_time, export_type)
+    values (#{id,jdbcType=INTEGER}, #{operator,jdbcType=VARCHAR}, #{isSync,jdbcType=BIT}, 
+      #{path,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{exportType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.sales.OrderExportTimeConfig" >
+    insert into t_order_export_time_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="isSync != null" >
+        is_sync,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="fileName != null" >
+        file_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="exportType != null" >
+        export_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="isSync != null" >
+        #{isSync,jdbcType=BIT},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exportType != null" >
+        #{exportType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.sales.OrderExportTimeConfig" >
+    update t_order_export_time_config
+    <set >
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="isSync != null" >
+        is_sync = #{isSync,jdbcType=BIT},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null" >
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exportType != null" >
+        export_type = #{exportType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.sales.OrderExportTimeConfig" >
+    update t_order_export_time_config
+    set operator = #{operator,jdbcType=VARCHAR},
+      is_sync = #{isSync,jdbcType=BIT},
+      path = #{path,jdbcType=VARCHAR},
+      file_name = #{fileName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      export_type = #{exportType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

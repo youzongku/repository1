@@ -1,0 +1,163 @@
+.shop-cart-table{
+  width: 100%;
+  text-align: center;
+  //.shop-checkbox{
+  //  text-align: left;
+  //}
+  thead{
+    tr{
+      th{
+        padding: 22px 0;
+      }
+    }
+  }
+  tbody{
+    border: 1px solid $cGe9;
+    background: $cW;
+    font-size: $f12;
+    tr{
+      .shop-checkbox{
+        border-bottom: none;
+        .iCheck{
+          background-position: center 0!important;
+        }
+        .iCheck-ed{
+          background-position: center 0!important;
+        }
+      }
+      td{
+        overflow: hidden;
+        border-bottom: 1px solid $cGe9;
+      }
+    }
+  }
+}
+
+.commodity{
+  overflow: hidden;
+  .commodity-l{
+    height: 160px;
+    line-height: 160px;
+    float: left;
+    img{
+      width: 120px;
+      height: 120px;
+      border: 1px solid $cGe9;
+      cursor: pointer;
+    }
+  }
+  .commodity-r{
+    height: 160px;
+    padding-left: 10px;
+    vertical-align: middle;
+    text-align: left;
+    display: inherit;
+    span{
+      display: block;
+      color: $cG9;
+    }
+    a{
+      display: block;
+      max-height: 34px;
+      margin: 12px 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.commodity-price{
+  span{
+    display: block;
+    font-size: $f18;
+  }
+  s{
+    color: $cG9;
+  }
+}
+
+.commodity-price-subtotal{
+  font-size: $f18;
+  color: $cB1;
+}
+
+.event-promotion-pop{
+  .hd{
+    position: fixed;
+    top: 0;
+    background: #f8f8f8;
+    display: inline-block;
+    ul{
+      li{
+        float: left;
+        margin: 0 20px;
+        display: inline-block;
+        height: 42px;
+        line-height: 42px;
+        cursor: pointer;
+      }
+      .on{
+        border-bottom: 2px solid $cB1!important;
+        color: $cB1!important;
+        @include borderBox;
+      }
+    }
+  }
+  .bd{
+    font-size: $f12;
+    max-height: 457px;
+    overflow: auto;
+    div{
+      padding: 0 20px;
+      h4{
+        font-size: $f18;
+        line-height: 40px;
+      }
+      p{
+        padding-bottom: 15px;
+        border-bottom: 1px solid $cGe9;
+      }
+    }
+  }
+}
+
+.main-foot{
+  height: 64px;
+  line-height: 64px;
+  margin-top: 20px;
+  padding-left: 10px;
+  background: $cGf2;
+  border: 1px solid $cGe9;
+  overflow: hidden;
+  label{
+    margin: 0 20px 0 15px;
+    input{
+      margin-right: 10px;
+    }
+  }
+  a{
+    margin-right: 20px;
+  }
+  .hotR{
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+  .main-foot-inp{
+    margin: 0 10px 0 30px;
+    .inp-selc{
+      vertical-align: middle;
+      cursor: pointer;
+      text-align: left;
+    }
+  }
+  .main-foot-btn{
+    font-size: $f0;
+    float: right;
+    button{
+      width: 180px;
+      height: 64px;
+      font-size: $f14;
+    }
+  }
+}

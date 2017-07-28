@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.payment.shengpay.ShengOrderMapper" >
+  <resultMap id="BaseResultMap" type="entity.payment.shengpay.ShengOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="sign_type" property="signType" jdbcType="VARCHAR" />
+    <result column="mac" property="mac" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="interface_type" property="interfaceType" jdbcType="VARCHAR" />
+    <result column="app_id" property="appId" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="machine_name" property="machineName" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="VARCHAR" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="notify_url" property="notifyUrl" jdbcType="VARCHAR" />
+    <result column="notify_url_type" property="notifyUrlType" jdbcType="VARCHAR" />
+    <result column="merchant_order_id" property="merchantOrderId" jdbcType="VARCHAR" />
+    <result column="product_no" property="productNo" jdbcType="VARCHAR" />
+    <result column="product_desc" property="productDesc" jdbcType="VARCHAR" />
+    <result column="payer" property="payer" jdbcType="VARCHAR" />
+    <result column="to_payer" property="toPayer" jdbcType="VARCHAR" />
+    <result column="json_string" property="jsonString" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_no, merchant_no, sign_type, mac, version, interface_type, app_id, summary, 
+    machine_name, amount, currency, notify_url, notify_url_type, merchant_order_id, product_no, 
+    product_desc, payer, to_payer, json_string, create_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sheng_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_sheng_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.payment.shengpay.ShengOrder" >
+    insert into t_sheng_order (id, order_no, merchant_no, 
+      sign_type, mac, version, 
+      interface_type, app_id, summary, 
+      machine_name, amount, currency, 
+      notify_url, notify_url_type, merchant_order_id, 
+      product_no, product_desc, payer, 
+      to_payer, json_string, create_date
+      )
+    values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{signType,jdbcType=VARCHAR}, #{mac,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
+      #{interfaceType,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
+      #{machineName,jdbcType=VARCHAR}, #{amount,jdbcType=VARCHAR}, #{currency,jdbcType=VARCHAR}, 
+      #{notifyUrl,jdbcType=VARCHAR}, #{notifyUrlType,jdbcType=VARCHAR}, #{merchantOrderId,jdbcType=VARCHAR}, 
+      #{productNo,jdbcType=VARCHAR}, #{productDesc,jdbcType=VARCHAR}, #{payer,jdbcType=VARCHAR}, 
+      #{toPayer,jdbcType=VARCHAR}, #{jsonString,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.payment.shengpay.ShengOrder" useGeneratedKeys="true" keyColumn="id" keyProperty="id" >
+    insert into t_sheng_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="merchantNo != null" >
+        merchant_no,
+      </if>
+      <if test="signType != null" >
+        sign_type,
+      </if>
+      <if test="mac != null" >
+        mac,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="interfaceType != null" >
+        interface_type,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+      <if test="machineName != null" >
+        machine_name,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+      <if test="notifyUrl != null" >
+        notify_url,
+      </if>
+      <if test="notifyUrlType != null" >
+        notify_url_type,
+      </if>
+      <if test="merchantOrderId != null" >
+        merchant_order_id,
+      </if>
+      <if test="productNo != null" >
+        product_no,
+      </if>
+      <if test="productDesc != null" >
+        product_desc,
+      </if>
+      <if test="payer != null" >
+        payer,
+      </if>
+      <if test="toPayer != null" >
+        to_payer,
+      </if>
+      <if test="jsonString != null" >
+        json_string,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        #{signType,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null" >
+        #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="interfaceType != null" >
+        #{interfaceType,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="machineName != null" >
+        #{machineName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrl != null" >
+        #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrlType != null" >
+        #{notifyUrlType,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantOrderId != null" >
+        #{merchantOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="productNo != null" >
+        #{productNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productDesc != null" >
+        #{productDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="payer != null" >
+        #{payer,jdbcType=VARCHAR},
+      </if>
+      <if test="toPayer != null" >
+        #{toPayer,jdbcType=VARCHAR},
+      </if>
+      <if test="jsonString != null" >
+        #{jsonString,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.payment.shengpay.ShengOrder" >
+    update t_sheng_order
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        sign_type = #{signType,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null" >
+        mac = #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="interfaceType != null" >
+        interface_type = #{interfaceType,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="machineName != null" >
+        machine_name = #{machineName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrl != null" >
+        notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrlType != null" >
+        notify_url_type = #{notifyUrlType,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantOrderId != null" >
+        merchant_order_id = #{merchantOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="productNo != null" >
+        product_no = #{productNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productDesc != null" >
+        product_desc = #{productDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="payer != null" >
+        payer = #{payer,jdbcType=VARCHAR},
+      </if>
+      <if test="toPayer != null" >
+        to_payer = #{toPayer,jdbcType=VARCHAR},
+      </if>
+      <if test="jsonString != null" >
+        json_string = #{jsonString,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.payment.shengpay.ShengOrder" >
+    update t_sheng_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      sign_type = #{signType,jdbcType=VARCHAR},
+      mac = #{mac,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      interface_type = #{interfaceType,jdbcType=VARCHAR},
+      app_id = #{appId,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      machine_name = #{machineName,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      notify_url_type = #{notifyUrlType,jdbcType=VARCHAR},
+      merchant_order_id = #{merchantOrderId,jdbcType=VARCHAR},
+      product_no = #{productNo,jdbcType=VARCHAR},
+      product_desc = #{productDesc,jdbcType=VARCHAR},
+      payer = #{payer,jdbcType=VARCHAR},
+      to_payer = #{toPayer,jdbcType=VARCHAR},
+      json_string = #{jsonString,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getShengOrderByCondition" resultMap="BaseResultMap" parameterType="entity.payment.shengpay.ShengOrder" >
+    select
+    <include refid="Base_Column_List" />
+    from t_sheng_order
+    where 1 = 1
+    <if test="orderNo != null" >
+      and order_no = #{orderNo,jdbcType=VARCHAR}
+    </if>
+    <if test="interfaceType != null" >
+      and interface_type = #{interfaceType,jdbcType=VARCHAR}
+    </if>
+    order by create_date desc
+    limit 1 offset 0
+  </select>
+</mapper>

@@ -1,0 +1,831 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.DisApplyMapper">
+	<resultMap id="BaseResultMap" type="entity.dismember.DisApply">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="distributor_name" property="distributorName"
+			jdbcType="VARCHAR" />
+		<result column="transfer_card" property="transferCard"
+			jdbcType="VARCHAR" />
+		<result column="transfer_time" property="transferTime"
+			jdbcType="TIMESTAMP" />
+		<result column="transfer_number" property="transferNumber"
+			jdbcType="VARCHAR" />
+		<result column="transfer_amount" property="transferAmount"
+			jdbcType="NUMERIC" />
+		<result column="distributor_telphone" property="distributorTelphone"
+			jdbcType="VARCHAR" />
+		<result column="audit_state" property="auditState" jdbcType="INTEGER" />
+		<result column="transfer_type" property="transferType"
+			jdbcType="VARCHAR" />
+		<result column="transfer_desc" property="transferDesc"
+			jdbcType="VARCHAR" />
+		<result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+		<result column="updatedate" property="updatedate" jdbcType="TIMESTAMP" />
+		<result column="is_confirm" property="isConfirm" jdbcType="BIT" />
+		<result column="distributor_email" property="email" jdbcType="VARCHAR" />
+		<result column="apply_type" property="applyType" jdbcType="VARCHAR" />
+		<result column="recipient_card_id" property="recipientId"
+			jdbcType="INTEGER" />
+
+		<result column="actual_amount" property="actualAmount"
+			jdbcType="NUMERIC" />
+		<result column="review_state" property="reviewState" jdbcType="INTEGER" />
+		<result column="screenshot_url" property="screenshotUrl"
+			jdbcType="VARCHAR" />
+		<result column="audit_reasons" property="auditReasons"
+			jdbcType="VARCHAR" />
+		<result column="receiptcard" property="receiptCard" jdbcType="VARCHAR" />
+		<result column="receiptname" property="receiptName" jdbcType="VARCHAR" />
+		<result column="actual_time" property="actualDate" jdbcType="TIMESTAMP" />
+		<result column="audit_remark" property="auditRemark" jdbcType="VARCHAR" />
+		<result column="online_apply_no" property="onlineApplyNo" jdbcType="VARCHAR" />
+		<result column="re_audit_remark" property="reAuditRemark" jdbcType="VARCHAR" />
+		<result column="apply_remark" property="applyRemark" jdbcType="VARCHAR" />
+		<result column="withdraw_account_id" property="withdrawAccountId" jdbcType="INTEGER" />
+		<result column="withdraw_amount" property="withdrawAmount" jdbcType="NUMERIC" />
+		<result column="counter_fee" property="counterFee" jdbcType="NUMERIC" />
+		<result column="apply_man" property="applyMan" jdbcType="VARCHAR" />
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		t.id, t.distributor_name, t.transfer_card, t.transfer_time,
+		t.transfer_number,
+		t.transfer_amount,
+		t.distributor_telphone,
+		t.audit_state, t.transfer_type, t.transfer_desc, t.createdate,
+		t.is_confirm,t.distributor_email,t.apply_type,t.updatedate,t.recipient_card_id,t.actual_amount,t.review_state,t.screenshot_url,t.audit_reasons,t.actual_time,
+		t.audit_remark,online_apply_no,re_audit_remark,apply_remark, withdraw_account_id, withdraw_amount,counter_fee,apply_man
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_dis_operate_apply t
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getBytransferNumber" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_dis_operate_apply t
+		where t.transfer_number = #{transferNumber,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getApplyByOnlinePayNo" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_dis_operate_apply t
+		where online_apply_no = #{onlinePayNo,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_dis_operate_apply
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="entity.dismember.DisApply">
+		insert into
+		t_dis_operate_apply (id, distributor_name, transfer_card,
+		transfer_time, transfer_number, transfer_amount,
+		distributor_telphone,
+		audit_state, transfer_type,
+		transfer_desc, createdate,
+		is_confirm,distributor_email,
+		apply_type,updatedate,
+		recipient_card_id,
+		actual_amount,review_state,screenshot_url,audit_reasons,actual_time,audit_remark,
+		withdraw_account_id, withdraw_amount,counter_fee
+		)
+		values (#{id,jdbcType=INTEGER}, #{distributorName,jdbcType=VARCHAR},
+		#{transferCard,jdbcType=VARCHAR},
+		#{transferTime,jdbcType=TIMESTAMP},
+		#{transferNumber,jdbcType=VARCHAR},
+		#{transferAmount,jdbcType=NUMERIC},
+		#{distributorTelphone,jdbcType=VARCHAR},
+		#{auditState,jdbcType=INTEGER}, #{transferType,jdbcType=VARCHAR},
+		#{transferDesc,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP},
+		#{isConfirm,jdbcType=BIT},#{email,jdbcType=VARCHAR},
+		#{applyType,jdbcType=VARCHAR},#{updatedate,jdbcType=TIMESTAMP},#{recipientId,jdbcType=INTEGER},
+		#{actualAmount,jdbcType=NUMERIC},#{reviewState,jdbcType=INTEGER},#{screenshotUrl,jdbcType=VARCHAR},
+		#{auditReasons,jdbcType=VARCHAR},#{actualDate,jdbcType=TIMESTAMP},#{auditRemark,jdbcType=VARCHAR},
+		#{withdrawAccountId,jdbcType=INTEGER}, #{withdrawAmount, jdbcType=NUMERIC},#{counterFee, jdbcType=NUMERIC}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="entity.dismember.DisApply" useGeneratedKeys="true" keyProperty="id">
+		insert into t_dis_operate_apply
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="distributorName != null">
+				distributor_name,
+			</if>
+			<if test="transferCard != null">
+				transfer_card,
+			</if>
+			<if test="transferTime != null">
+				transfer_time,
+			</if>
+			<if test="transferNumber != null">
+				transfer_number,
+			</if>
+			<if test="transferAmount != null">
+				transfer_amount,
+			</if>
+			<if test="distributorTelphone != null">
+				distributor_telphone,
+			</if>
+			<if test="auditState != null">
+				audit_state,
+			</if>
+			<if test="transferType != null">
+				transfer_type,
+			</if>
+			<if test="transferDesc != null">
+				transfer_desc,
+			</if>
+			<if test="createdate != null">
+				createdate,
+			</if>
+			<if test="isConfirm != null">
+				is_confirm,
+			</if>
+			<if test="email != null">
+				distributor_email,
+			</if>
+			<if test="applyType != null">
+				apply_type,
+			</if>
+			<if test="updatedate != null">
+				updatedate,
+			</if>
+			<if test="recipientId != null">
+				recipient_card_id,
+			</if>
+			<if test="actualAmount != null">
+				actual_amount,
+			</if>
+			<if test="reviewState != null">
+				review_state,
+			</if>
+			<if test="screenshotUrl != null">
+				screenshot_url,
+			</if>
+			<if test="auditReasons != null">
+				audit_reasons,
+			</if>
+			<if test="actualDate != null">
+				actual_time,
+			</if>
+			<if test="auditRemark != null">
+				audit_remark,
+			</if>
+			<if test="onlineApplyNo != null">
+				online_apply_no,
+			</if>
+			<if test="applyRemark != null">
+				apply_remark,
+			</if>
+			<if test="withdrawAccountId != null">
+				withdraw_account_id,
+			</if>
+			<if test="withdrawAmount != null">
+				withdraw_amount,
+			</if>
+			<if test="counterFee != null">
+				counter_fee,
+			</if>
+			<if test="applyMan != null">
+				apply_man,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="distributorName != null">
+				#{distributorName,jdbcType=VARCHAR},
+			</if>
+			<if test="transferCard != null">
+				#{transferCard,jdbcType=VARCHAR},
+			</if>
+			<if test="transferTime != null">
+				#{transferTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="transferNumber != null">
+				#{transferNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="transferAmount != null">
+				#{transferAmount,jdbcType=NUMERIC},
+			</if>
+			<if test="distributorTelphone != null">
+				#{distributorTelphone,jdbcType=VARCHAR},
+			</if>
+			<if test="auditState != null">
+				#{auditState,jdbcType=INTEGER},
+			</if>
+			<if test="transferType != null">
+				#{transferType,jdbcType=VARCHAR},
+			</if>
+			<if test="transferDesc != null">
+				#{transferDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="createdate != null">
+				#{createdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isConfirm != null">
+				#{isConfirm,jdbcType=BIT},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="applyType != null">
+				#{applyType,jdbcType=VARCHAR},
+			</if>
+			<if test="updatedate != null">
+				#{updatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="recipientId != null">
+				#{recipientId,jdbcType=INTEGER},
+			</if>
+
+			<if test="actualAmount != null">
+				#{actualAmount,jdbcType=NUMERIC},
+			</if>
+			<if test="reviewState != null">
+				#{reviewState,jdbcType=INTEGER},
+			</if>
+			<if test="screenshotUrl != null">
+				#{screenshotUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="auditReasons != null">
+				#{auditReasons,jdbcType=VARCHAR},
+			</if>
+			<if test="actualDate != null">
+				#{actualDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditRemark != null">
+				#{auditRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="onlineApplyNo != null">
+				#{onlineApplyNo,jdbcType=VARCHAR},
+			</if>
+			<if test="applyRemark != null">
+				#{applyRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="withdrawAccountId != null">
+				#{withdrawAccountId,jdbcType=INTEGER},
+			</if>
+			<if test="withdrawAmount != null">
+				#{withdrawAmount,jdbcType=NUMERIC},
+			</if>
+			<if test="counterFee != null">
+				#{counterFee,jdbcType=NUMERIC},
+			</if>
+			<if test="applyMan != null">
+				#{applyMan,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="entity.dismember.DisApply">
+		update t_dis_operate_apply
+		<set>
+			<if test="distributorName != null">
+				distributor_name = #{distributorName,jdbcType=VARCHAR},
+			</if>
+			<if test="transferCard != null">
+				transfer_card = #{transferCard,jdbcType=VARCHAR},
+			</if>
+			<if test="transferTime != null">
+				transfer_time = #{transferTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="transferNumber != null">
+				transfer_number = #{transferNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="transferAmount != null">
+				transfer_amount = #{transferAmount,jdbcType=NUMERIC},
+			</if>
+			<if test="distributorTelphone != null">
+				distributor_telphone =
+				#{distributorTelphone,jdbcType=VARCHAR},
+			</if>
+			<if test="auditState != null">
+				audit_state = #{auditState,jdbcType=INTEGER},
+			</if>
+			<if test="transferType != null">
+				transfer_type = #{transferType,jdbcType=VARCHAR},
+			</if>
+			<if test="transferDesc != null">
+				transfer_desc = #{transferDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="createdate != null">
+				createdate = #{createdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isConfirm != null">
+				is_confirm = #{isConfirm,jdbcType=BIT},
+			</if>
+			<if test="email != null">
+				distributor_email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="applyType != null">
+				apply_type = #{applyType,jdbcType=VARCHAR},
+			</if>
+			<if test="updatedate != null">
+				updatedate = #{updatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="recipientId != null">
+				recipient_card_id = #{recipientId,jdbcType=INTEGER},
+			</if>
+			<if test="actualAmount != null">
+				actual_amount = #{actualAmount,jdbcType=NUMERIC},
+			</if>
+			<if test="reviewState != null">
+				review_state = #{reviewState,jdbcType=INTEGER},
+			</if>
+			<if test="screenshotUrl != null">
+				screenshot_url = #{screenshotUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="auditReasons != null">
+				audit_reasons = #{auditReasons,jdbcType=VARCHAR},
+			</if>
+			<if test="actualDate != null">
+				actual_time = #{actualDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditRemark != null">
+				audit_remark = #{auditRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="onlineApplyNo != null">
+				online_apply_no = #{onlineApplyNo,jdbcType=VARCHAR},
+			</if>
+			<if test="reAuditRemark != null">
+				re_audit_remark = #{reAuditRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="applyRemark != null">
+				apply_remark = #{applyRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="withdrawAccountId != null">
+				withdraw_account_id = #{withdrawAccountId,jdbcType=INTEGER},
+			</if>
+			<if test="withdrawAmount != null">
+				withdraw_amount = #{withdrawAmount,jdbcType=NUMERIC},
+			</if>
+			<if test="counterFee != null">
+				counter_fee = #{counterFee,jdbcType=NUMERIC},
+			</if>
+			<if test="applyMan != null">
+				apply_man = #{applyMan,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="entity.dismember.DisApply">
+		update
+		t_dis_operate_apply
+		set distributor_name =
+		#{distributorName,jdbcType=VARCHAR},
+		transfer_card =
+		#{transferCard,jdbcType=VARCHAR},
+		transfer_time =
+		#{transferTime,jdbcType=TIMESTAMP},
+		transfer_number =
+		#{transferNumber,jdbcType=VARCHAR},
+		transfer_amount =
+		#{transferAmount,jdbcType=NUMERIC},
+		distributor_telphone =
+		#{distributorTelphone,jdbcType=VARCHAR},
+		audit_state =
+		#{auditState,jdbcType=INTEGER},
+		transfer_type =
+		#{transferType,jdbcType=VARCHAR},
+		transfer_desc =
+		#{transferDesc,jdbcType=VARCHAR},
+		createdate =
+		#{createdate,jdbcType=TIMESTAMP},
+		is_confirm =
+		#{isConfirm,jdbcType=BIT},
+		distributor_email =
+		#{email,jdbcType=VARCHAR},
+		apply_type = #{applyType,jdbcType=VARCHAR},
+		updatedate = #{updatedate,jdbcType=TIMESTAMP},
+		recipient_card_id =
+		#{recipientId,jdbcType=INTEGER},
+		actual_amount =
+		#{actualAmount,jdbcType=NUMERIC},
+		review_state =
+		#{reviewState,jdbcType=INTEGER},
+		screenshot_url =
+		#{screenshotUrl,jdbcType=VARCHAR},
+		audit_reasons =
+		#{auditReasons,jdbcType=VARCHAR},
+		actual_time =
+		#{actualDate,jdbcType=TIMESTAMP},
+		audit_remark =
+		#{auditRemark,jdbcType=VARCHAR},
+		withdraw_account_id =
+		#{withdrawAccountId,jdbcType=INTEGER},
+		withdraw_amount =
+		#{withdrawAmount,jdbcType=NUMERIC},
+		counter_fee =
+		#{counterFee,jdbcType=NUMERIC},
+		apply_man =
+		#{applyMan,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="queryApply" resultMap="BaseResultMap">
+		select
+		t2.receipt_account as receiptcard,
+		t2.remark as receiptname,
+		m.nick_name,
+		<include refid="Base_Column_List" />
+		from t_dis_operate_apply t
+		left join t_dis_receipt_mode t2	on t.recipient_card_id = t2.id
+		left join t_dis_member m on t.distributor_email = m.email
+		where 1=1
+		<if test="search != null">
+			<!-- search -->
+			and (lower(distributor_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(distributor_email) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(apply_man) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			)
+		</if>
+		<if test="receiptMode != null">
+			<!-- receiptMode -->
+			and recipient_card_id = #{receiptMode,jdbcType=INTEGER}
+		</if>
+		<if test="email != null">
+			<!-- email -->
+			and distributor_email = #{email,jdbcType=VARCHAR}
+		</if>
+		<if test="transferCard != null">
+			<!-- 转账卡号 -->
+			and transfer_card = #{transferCard,jdbcType=VARCHAR}
+		</if>
+		<if test="transferNumber != null">
+			<!-- 流水号 -->
+			and transfer_number = #{transferNumber,jdbcType=VARCHAR}
+		</if>
+		<if test="applyType != null">
+			<!-- 申请类型，充值和提现 -->
+			and apply_type = #{applyType,jdbcType=VARCHAR}
+		</if>
+		<if test="auditState != null">
+			<!-- 申请类型，充值和提现 -->
+			and audit_state = #{auditState,jdbcType=INTEGER}
+		</if>
+		<if test='time != null and time != ""'>
+			<!-- 转账时间 -->
+			and transfer_time <![CDATA[>=]]>
+			TO_DATE(#{time,jdbcType=VARCHAR},
+			'FMYYYY-FMMM-FMDDTFMHH24:FMMI:FMSS')
+		</if>
+		<if test="reviewState != null">
+			<!-- 复审状态 -->
+			and review_state = #{reviewState,jdbcType=INTEGER}
+			<if test="auditOrreview != null">
+				and audit_state != 1
+				and audit_state != 0
+			</if>
+		</if>
+		<if test="disState != null">
+			<!-- 复审状态 -->
+			and review_state = #{disState,jdbcType=INTEGER}
+		</if>
+		<if test="isOnline != null">
+			<!-- 在线充值单号不为空 -->
+			and online_apply_no is not null and transfer_type is not null
+		</if>
+		<if test="isOnline == null">
+			<!-- 在线充值单号为空 -->
+			and online_apply_no is null
+		</if>
+		<if test="onlineApplyNo  != null">
+			and online_apply_no = #{onlineApplyNo,jdbcType=VARCHAR}
+		</if>
+		<if test="applyMan  != null">
+			and apply_man = #{applyMan,jdbcType=VARCHAR}
+		</if>
+		<choose>
+			<when test="filter != null and sort != null and sort != ''">
+				order by ${sort} ${filter} nulls last
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="pageSize != null">
+			limit #{pageSize} offset (#{currPage}-1) * #{pageSize}
+		</if>
+
+	</select>
+
+	<select id="queryApplyCount" resultType="java.lang.Integer">
+		select
+		count(*)
+		from t_dis_operate_apply t
+		left join t_dis_receipt_mode t2	on t.recipient_card_id = t2.id
+		left join t_dis_member m on t.distributor_email = m.email
+		where 1=1
+		<if test="search != null">
+			<!-- search -->
+			and (lower(distributor_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(distributor_email) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(apply_man) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			)
+		</if>
+		<if test="receiptMode != null">
+			<!-- receiptMode -->
+			and recipient_card_id = #{receiptMode,jdbcType=INTEGER}
+		</if>
+		<if test="email != null">
+			<!-- email -->
+			and distributor_email = #{email,jdbcType=VARCHAR}
+		</if>
+		<if test="transferCard != null">
+			<!-- 转账卡号 -->
+			and transfer_card = #{transferCard,jdbcType=VARCHAR}
+		</if>
+		<if test="transferNumber != null">
+			<!-- 流水号 -->
+			and transfer_number = #{transferNumber,jdbcType=VARCHAR}
+		</if>
+		<if test="applyType != null">
+			<!-- 申请类型，充值和提现 -->
+			and apply_type = #{applyType,jdbcType=VARCHAR}
+		</if>
+		<if test="auditState != null">
+			<!-- 申请类型，充值和提现 -->
+			and audit_state = #{auditState,jdbcType=INTEGER}
+		</if>
+		<if test='time != null and time != ""'>
+			<!-- 转账时间 -->
+			and transfer_time <![CDATA[>=]]>
+			TO_DATE(#{time,jdbcType=VARCHAR},
+			'FMYYYY-FMMM-FMDDTFMHH24:FMMI:FMSS')
+		</if>
+		<if test="reviewState != null">
+			<!-- 复审状态 -->
+			and review_state = #{reviewState,jdbcType=INTEGER}
+			<if test="auditOrreview != null">
+				and audit_state != 1
+				and audit_state != 0
+			</if>
+		</if>
+		<if test="disState != null">
+			<!-- 复审状态 -->
+			and review_state = #{disState,jdbcType=INTEGER}
+		</if>
+		<if test="isOnline != null">
+			<!-- 在线充值单号不为空 -->
+			and online_apply_no is not null and transfer_type is not null
+		</if>
+		<if test="isOnline == null">
+			<!-- 在线充值单号为空 -->
+			and online_apply_no is null
+		</if>
+		<if test="onlineApplyNo  != null">
+			and online_apply_no = #{onlineApplyNo,jdbcType=VARCHAR}
+		</if>
+		<if test="applyMan  != null">
+			and apply_man = #{applyMan,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<!-- 提现 -->
+	<resultMap id="WithdrawResultMap" type="dto.dismember.WithdrawBalanceDto">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="online_apply_no" property="onlineApplyNo" jdbcType="VARCHAR" />
+		<result column="withdraw_account_id" property="withdrawAccountId" jdbcType="INTEGER" />
+		<result column="withdraw_account" property="withdrawAccountNo" jdbcType="VARCHAR" />
+		<result column="account_user" property="accountUser" jdbcType="VARCHAR" />
+		<result column="account_unit" property="accountUnit" jdbcType="VARCHAR" />
+		<result column="withdraw_amount" property="withdrawAmount" jdbcType="NUMERIC" />
+		<result column="createdate" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="transfer_time" property="transferTime" jdbcType="TIMESTAMP" />
+		<result column="updatedate" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="audit_state" property="auditState" jdbcType="INTEGER" />
+		<result column="transfer_number" property="transferNumber" jdbcType="VARCHAR" />
+		<result column="transfer_amount" property="transferAmount" jdbcType="NUMERIC" />
+		<result column="audit_reasons" property="auditReasons" jdbcType="VARCHAR" />
+		<result column="apply_type" property="applyType" jdbcType="VARCHAR" />
+		<result column="audit_remark" property="auditMark" jdbcType="VARCHAR" />
+		<result column="distributor_email" property="distributorEmail" jdbcType="VARCHAR" />
+		<result column="account_province" property="accountProvince" jdbcType="VARCHAR" />
+		<result column="account_city" property="accountCity" jdbcType="VARCHAR" />
+		<result column="account_pc" property="accountPC" jdbcType="VARCHAR" />
+		<result column="account_type" property="accountType" jdbcType="INTEGER" />
+		<result column="counter_fee" property="counterFee" jdbcType="NUMERIC" />
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 提现记录数 -->
+	<select id="queryWithdrawCount" resultType="java.lang.Integer">
+		select
+		count(1)
+		from t_dis_operate_apply t left join t_dis_withdraw_account t2
+		on t.withdraw_account_id = t2.id
+		where 1=1
+		<if test="search != null">
+			<!-- search -->
+			and (lower(t2.account_user) like
+			lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or
+			lower(t.distributor_email) like
+			lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or
+			lower(t2.account_unit) like
+			lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or
+			lower(t2.withdraw_account) like
+			lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or
+			lower(t.online_apply_no) like
+			lower('%'||#{search,jdbcType=VARCHAR}||'%'))
+		</if>
+		<if test="applyType != null">
+			and t.apply_type = #{applyType,jdbcType=VARCHAR}
+		</if>
+		<if test="auditState != null">
+			<!-- 审核状态 -->
+			and t.audit_state = #{auditState,jdbcType=INTEGER}
+		</if>
+		<if test='transferTime != null and transferTime != ""'>
+			<!-- 转账时间 -->
+			and t.transfer_time >=
+			TO_DATE(#{transferTime,jdbcType=VARCHAR},
+			'FMYYYY-FMMM-FMDDTFMHH24:FMMI:FMSS')
+		</if>
+		<if test='updateDate != null and updateDate != ""'>
+			<!-- 审核时间 -->
+			and t.updatedate >=
+			TO_DATE(#{updateDate,jdbcType=VARCHAR},
+			'FMYYYY-FMMM-FMDDTFMHH24:FMMI:FMSS')
+		</if>
+		<if test='createDate != null and createDate != ""'>
+			<!-- 申请时间 -->
+			and t.createdate >=
+			TO_DATE(#{createDate,jdbcType=VARCHAR},
+			'FMYYYY-FMMM-FMDDTFMHH24:FMMI:FMSS')
+		</if>
+		<if test="distributorEmail != null">
+			and t.distributor_email = #{distributorEmail,jdbcType=VARCHAR}
+		</if>
+		<if test='ismswa == "0"'>
+			and t2.account_type != 2
+		</if>
+	</select>
+
+	<!-- 提现记录信息 -->
+	<select id="queryWithdrawRecord" resultMap="WithdrawResultMap" parameterType="java.util.Map">
+		select 
+			t.id, t.online_apply_no, t.withdraw_account_id,
+			t2.withdraw_account, t2.account_user, t2.account_unit,
+			t.withdraw_amount, t.createdate, t.transfer_time, t.updatedate,
+			t.audit_state, t.transfer_number, t.transfer_amount,
+			t.audit_reasons, t.apply_type, t.audit_remark, t.distributor_email,
+			t2.account_province, t2.account_city, t2.account_type,
+			(t2.account_province || t2.account_city) as account_pc,
+			t.counter_fee,
+			m.nick_name
+		from 
+			t_dis_operate_apply t 
+			left join t_dis_withdraw_account t2 on t.withdraw_account_id = t2.id
+			left join t_dis_member m on m.email = t2.distributor_email
+		where 1=1
+		<if test="search != null">
+			<!-- search -->
+			and (lower(t2.account_user) like
+			lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or
+			lower(t.distributor_email) like
+			lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or
+			lower(t2.account_unit) like
+			lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or
+			lower(t2.withdraw_account) like
+			lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or
+			lower(t.online_apply_no) like
+			lower('%'||#{search,jdbcType=VARCHAR}||'%'))
+		</if>
+		<if test="applyType != null">
+			and t.apply_type = #{applyType,jdbcType=VARCHAR}
+		</if>
+		<if test="auditState != null">
+			<!-- 审核状态 -->
+			and t.audit_state = #{auditState,jdbcType=INTEGER}
+		</if>
+		<if test='transferTime != null and transferTime != ""'>
+			<!-- 转账时间 -->
+			and t.transfer_time >=
+			TO_DATE(#{transferTime,jdbcType=VARCHAR},
+			'FMYYYY-FMMM-FMDDTFMHH24:FMMI:FMSS')
+		</if>
+		<if test='updateDate != null and updateDate != ""'>
+			<!-- 审核时间 -->
+			and t.updatedate >=
+			TO_DATE(#{updateDate,jdbcType=VARCHAR},
+			'FMYYYY-FMMM-FMDDTFMHH24:FMMI:FMSS')
+		</if>
+		<if test='createDate != null and createDate != ""'>
+			<!-- 申请时间 -->
+			and t.createdate >=
+			TO_DATE(#{createDate,jdbcType=VARCHAR},
+			'FMYYYY-FMMM-FMDDTFMHH24:FMMI:FMSS')
+		</if>
+		<if test="distributorEmail != null">
+			and t.distributor_email = #{distributorEmail,jdbcType=VARCHAR}
+		</if>
+		<if test='ismswa == "0"'>
+			and t2.account_type != 2
+		</if>
+		<choose>
+			<when test="filter != null and sort != null and sort != ''">
+				order by ${sort} ${filter} nulls last
+			</when>
+			<otherwise>
+				order by t.createdate desc,id desc
+			</otherwise>
+		</choose>
+		<if test="pageSize != null">
+			limit #{pageSize} offset (#{currPage}-1) * #{pageSize}
+		</if>
+	</select>
+
+	<select id="queryApplys" resultMap="BaseResultMap"
+		parameterType="java.util.List">
+		select
+		<include refid="Base_Column_List" />
+		from t_dis_operate_apply t
+		where t.audit_state = 2
+		<if test="list != null and list.size() > 0">
+			and t.id in
+			<foreach collection="list" item="id" open="(" separator=","
+				close=")">
+				#{id}
+			</foreach>
+		</if>
+	</select>
+	<select id="getRechargeAuditUser" parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+		select DISTINCT phone from (
+		select
+		member.id,
+		r.id as roleId,
+		r.role_name as roleName,
+		r.role_desc as roleDesc,
+		r.button_authority as
+		buttonAuth,
+		member.telphone as phone,
+		m.id as menuId,
+		m.name as menuName,
+		m.position,
+		m.level,
+		m.parentid as parentId,
+		m.description,
+		m.createtime
+		as createTime,
+		m.updatetime as updateTime,
+		m.isparent as isParent,
+		m.type
+		from
+		t_dis_role r,
+		t_dis_menu m,
+		t_dis_role_menu_mapper rm,
+		t_dis_member member
+		where r.id = rm.roleid
+		and m.id = rm.menuid
+		and
+		member.role_id = r.id
+		and r.isactive = true
+		and r.is_message = true
+		and member.is_delete = true
+		and
+		m.id = #{menuid,jdbcType=INTEGER} order by r.id asc ) foo
+	</select>
+	
+	<select id="getApplyCountByCurMonth" parameterType="entity.dismember.DisApply" resultType="java.lang.Integer">
+		select count(1)
+		  from t_dis_operate_apply t,t_dis_withdraw_account a
+		 where t.withdraw_account_id = a.id
+		   and t.distributor_email = #{email,jdbcType=VARCHAR}
+		  <![CDATA[
+	 	   and to_date(to_char(t.createdate,'yyyy-mm-dd'),'yyyy-mm-dd') >= to_date(#{curMonthFirstDay,jdbcType=VARCHAR},'yyyy-mm-dd')
+	 	   and to_date(to_char(t.createdate,'yyyy-mm-dd'),'yyyy-mm-dd') <= to_date(#{curMonthLastDay,jdbcType=VARCHAR},'yyyy-mm-dd')
+		  ]]>
+		   and t.apply_type = #{applyType,jdbcType=VARCHAR}
+		   and a.account_type != 2
+	</select>
+
+	<select id="findWithdrawToMsiteApply" resultMap="BaseResultMap" >
+		select toa.* from t_dis_operate_apply toa
+		inner join t_dis_withdraw_account twa
+		on toa.withdraw_account_id = twa.id
+		where 1 = 1 and toa.apply_type = '2'
+		and toa.audit_state = 0 and twa.account_type = 2
+		order by toa.createdate asc
+	</select>
+</mapper>

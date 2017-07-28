@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="shortcut icon" href="../img/favicon.ico"/>
+    <link rel="stylesheet" href="../css/public.css"/>
+    <link rel="stylesheet" href="../css/sub-details.css"/>
+    <link type="text/css" rel="stylesheet" href="../../css/style/style.css">
+    <link rel="stylesheet" href="../js/lib/layer2.0/skin/layer.css"/>
+    <!--<script charset="utf-8" src="https://wpa.b.qq.com/cgi/wpa.php"></script>-->
+    <script data-main="../js/product/order_sure.js" src="../js/lib/requirejs/require.js"></script>
+    <title>订单支付</title>
+</head>
+
+<body>
+<div id="div_head"></div>
+<div>
+    <div class="cart-borld content">
+    <!--    <div class="submit-paid-message">
+            <p class="paid-title"><span></span>订单提交成功，请尽快支付</p>
+        </div>-->
+        <div class="cart-borld-p">
+            <span style="float: left">
+                <i></i>订单提交成功，请尽快支付
+            </span>
+            <span style="float: right">
+                <p class="pur-order">采购订单号： <span id="purchaseNo"></span></p>
+                <p class="need-money">需支付金额： <span>￥<span id="totalAmount"></span></span></p>
+            </span>
+        </div>
+        <h1 class="titile">支付方式</h1>
+        <div class="pay-methods">
+        </div>
+        <h1 class="titile">商品列表</h1>
+        <div class="cart-list order-sure-product">
+            <ul class="product-list">
+                <li id="order-product_title">描述</li>
+                <li class="product_price">价格</li>
+                <li class="product_number">数量(个)</li>
+                <li class="product_sum">总额(元)</li>
+            </ul>
+            <div class="product_table">
+                <div id="product_content">
+                    <table class="product_content">
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="paid-list-bottom">
+        </div>
+        <div class="customer-remarks">
+            <h4>客户备注信息</h4>
+            <div>
+                <p>备注时间：<span id="remarkTime"></span></p>
+                <p>备注：<span id="remark"></span></p>
+            </div>
+        </div>
+    </div>
+    <!--微信支付-->
+    <div id="winxin_content" class="modal fade in">
+        <!-- <div class="weixin-pay-content">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ><span >×</span></button>
+                    <h4 class="modal-title modal-title-wechat" >支付76.09元</h4>
+                </div>
+                <div class="modal-body modal-body-wechat">
+                    <h4 class="wechat-title">微信扫码支付</h4>
+                    <div>
+                        <img src="../img/WEIXIN.png" class="wechat-icon">
+                        <img class="wechat-img" src="../img/tt-wx.jpg">
+                    </div>
+                    <span class="wechat-time"><span class="wechat-time-desc"></span>支付成功之前，请勿关闭二维码页面。</span>
+                </div>
+            </div>
+            <div class="wechat-course" style="display: none; right: 0;"><img src="../img/wechat_help.png"></div>
+        </div> -->
+    </div>
+</div>
+<div id="div_footer"></div>
+
+<!--现金支付-->
+<div class="money_pop all_pop  display">
+    <p>
+        <span>支付金额：</span>
+        <input type="text">&nbsp;&nbsp;元
+    </p>
+</div>
+</body>
+<!--<script>-->
+    <!--function moneyPay(){-->
+        <!--layer.open({-->
+            <!--type:1,-->
+            <!--title:'现金支付',-->
+            <!--area:['450px','230px'],-->
+            <!--content:$('.money_pop'),-->
+            <!--btn:['确定','取消']-->
+        <!--})-->
+    <!--}-->
+<!--</script>-->
+</html>

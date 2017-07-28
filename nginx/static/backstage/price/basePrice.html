@@ -1,0 +1,160 @@
+<script src="../../js/backstage/lib/laydate/laydate.js"></script>
+<script type="text/javascript" src="../../js/backstage/goodsmgr/product_price.js"></script>
+<div class="productPrice_box">
+    <h1>商品管理<span>---</span><span>基础价格设置</span>
+        <ul class="priceButton">
+            <li style = "display: none;">
+                <button class="defaultPrice">查看默认价格设置</button>
+            </li>
+            <li>
+                <button class="priceCheck_log display" >查看操作日志</button>
+            </li>
+        </ul>
+    </h1>
+    <ul class="search_category" style="height: 60px;border-bottom:none;">
+        <li>到岸价：
+            <input class="priceInput" style="width:80px;" id="min_cost" tag="min" type="text">
+            -<input class="priceInput" style="width:80px;" id="max_cost" tag="max" type="text">
+        </li>
+        <li>到仓价：
+            <input class="priceInput" style="width:80px;" id="min_a_price" tag="min" type="text">
+            -<input class="priceInput" style="width:80px;" id="max_a_price" tag="max" type="text">
+        </li>
+        <li>市场最低价：
+            <input class="priceInput" style="width:80px;" id="min_f_price" tag="min" type="text">
+            -<input class="priceInput" style="width:80px;" id="max_f_price" tag="max" type="text">
+        </li>
+        <li>零售价：
+            <input class="priceInput" style="width:80px;" type="text" id="min_p_price" tag="min">
+            -<input class="priceInput" style="width:80px;" type="text" id="max_p_price" tag="max">
+        </li>
+    </ul>
+    <ul class="search_category" style="border-top: none;">
+        <li>
+            <select name="price_categorys" id="cate_price_select">
+            </select>
+        </li>
+        <li>
+            <select name="price_categorys" id="ware_price_select">
+            </select>
+        </li>
+        <li>
+            <select name="price_categorys" id="price_brand_select">
+            </select>
+        </li>
+        <li>
+            <select name="price_type" id="price_type">
+            </select>
+        </li>
+        <li>
+            <div class="search">
+                <input id="price_search_key" class="searchInput" placeholder="商品编号/商品名称">
+                <input class="searchButton" id="price_search" value="搜索" type="submit">
+            </div>
+        </li>
+    </ul>
+    <div class="content_list">
+        <p class="set_price_line">
+        <span>
+            <label><input id="select_curr_all" type="checkbox">全选当前页所有</label>
+        </span>
+        <span>
+            <label><input id="select_all" type="checkbox">全选搜索结果所有</label>
+        </span>
+        <div></div>
+        <button class="check_ProductPrice" style="top:10px;right:155px;">筛选价格有空缺的商品</button>
+        <button class="A_set_price" onclick="one_key_price(true)" style="top:10px;">一键设基础价格</button>
+        </p>
+        <table id="price_table">
+           <!--  <thead>
+            <tr>
+                <th style="width: 3%"></th>
+                <th style="width: 6%">商品编号</th>
+                <th style="width:14%">商品名称</th>
+                <th style="width: 5%">商品分类</th>
+                <th style="width: 5%">商品类别</th>
+                <th style="width: 5%">品牌</th>
+                <th style="width: 5%">仓库</th>
+                <th style="width: 5%">到岸价(元)</th>
+                <th style="width: 5%">到仓价(元)</th>
+                <th style="width: 5%">市场最低价(元)</th>
+                <th style="width: 6%">零售价(元)</th>
+                <th style="width: 17%">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody> -->
+        </table>
+     <!--    <div class="list_content">
+            <div id="priceList"></div>
+            <p>
+                共<span id="priceTotal" style="display:inline-block;">0</span>记录，每页显示
+                <select id="price_pageSize">
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                </select>
+                ，共<span id="pricePages" style="display:inline-block;">0</span>页
+            </p>
+        </div> -->
+    </div>
+    <div id="price_pagination" ></div>
+</div>
+<div class="defaultLog_box display">
+    <h1>商品管理<span>---</span><span>商品价格</span><span>---</span><span>操作日志</span>
+        <ul class="priceButton">
+            <li>
+                <button class="defaultLog_back">返回商品价格列表</button>
+            </li>
+        </ul>
+    </h1>
+    <ul class="search_category">
+        <li>分类：
+            <select id="record_cate_select">
+            </select>
+        </li>
+        <li>操作时间：
+            <input placeholder="开始时间" class="searchInput" readonly="true" style="width:130px"
+                   id="startDate" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">至
+            <input placeholder="结束时间" class="searchInput" readonly="true" style="width:130px"
+                   id="endDate" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+        </li>
+        <li>
+            <div class="search">
+                <input class="searchInput" id="price_record_key"
+                       placeholder="商品编号/商品名称/操作管理员">
+                <input class="searchButton" id="price_record_search" value="搜索" type="submit">
+            </div>
+        </li>
+    </ul>
+    <div class="content_list">
+        <table class="defaultLog_table">
+            <thead>
+            <tr>
+                <th style="width: 10%">商品编号</th>
+                <th style="width: 20%">商品名称</th>
+                <th style="width: 10%">分类</th>
+                <th style="width: 10%">操作人</th>
+                <th style="width: 20%">操作时间</th>
+                <th style="width: 30%">操作明细</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="list_content">
+            <div id="priceList"></div>
+            <p>共<span id="priceRecordTotal" style="display:inline-block;">0</span>记录，每页显示
+                <select id="price_record_pageSize">
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                </select>
+                ，共<span id="priceRecordPages" style="display:inline-block;">0</span>页
+            </p>
+        </div>
+    </div>
+    <div id="price_record_pagination" style="text-align: center; margin-top: 30px;"></div>
+</div>

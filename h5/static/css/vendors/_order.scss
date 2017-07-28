@@ -1,0 +1,111 @@
+.order{
+  width: 100%;
+  height: auto;
+  padding: 0 5px;
+  background-color: #fff;
+  padding-bottom: 40px;
+  .orderCon{
+    border-bottom: 1px solid #eee;
+    background: #f9fdff;
+    margin-top: 1px;
+    font-size: 13px;
+    p{
+      padding: 5px;
+    }
+    h4{
+      height: 32px;
+      line-height: 32px;
+      background: #6cceff;
+      color: #fff;
+      padding: 0 8px;
+    }
+  }
+}
+.gift{
+  display: inline-block;
+  width: 23px;
+  height: 23px;
+  margin-right: 2px;
+  background: url(../../img/spirit.png) no-repeat;
+  background-size: 230px auto;
+  float: left;
+  background-position: -17px -34px;
+}
+.impor-tit1{
+  h5{
+    display: inline!important;
+  }
+  span{
+    float: right;
+    color: #90ddff;
+  }
+}
+.total{
+  background: #444;
+  color: #fff;
+  b{
+    padding: 0 5px;
+  }
+}
+.ware-menu{
+  width: 100%;
+  color: #444;
+  display: inline-block;
+}
+.ware-menu:hover{
+  color: #444;
+}
+.ware-tit{
+  p{
+    display: block!important;
+    padding: 10px 0;
+    font-size: 13px;
+  .ware-tit-sp{
+    margin-right: 20px;
+    }
+  }
+  .ware-tit-p{
+  span{
+    b{
+      margin: 0 5px;
+      color: #90ddff;
+      i{
+        margin-right: 5px;
+        color: #90ddff;
+        font-weight: normal;
+      }
+    }
+  }
+}
+}
+.wareNum{
+  padding: 5px 0;
+  border-bottom: 1px dashed #ccc;
+  display: block;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+.ware-img img{
+  max-width: 100px;
+  vertical-align: middle;
+  border: 1px solid #fafafa;
+  display: inline-block;
+}
+
+.list-img{
+  display: table-cell;
+  width: 100px;
+  height: 100px;
+  vertical-align: middle;
+  img{
+    max-width: 100px;
+    max-height: 100px;
+    min-width: 100px;
+    min-height: 100px;
+    background: url(../../img/c.gif) no-repeat center center;
+    background-size: 50%;
+    text-indent: -2000em;
+    vertical-align: middle;
+    border: 1px solid #eee;
+  }
+}

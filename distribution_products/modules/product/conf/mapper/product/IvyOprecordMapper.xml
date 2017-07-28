@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.IvyOprecordMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.IvyOprecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="lock_id" property="lockId" jdbcType="INTEGER" />
+    <result column="opuser" property="opuser" jdbcType="VARCHAR" />
+    <result column="opdate" property="opdate" jdbcType="TIMESTAMP" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, lock_id, opuser, opdate, comment, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_inventory_oprecord
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_inventory_oprecord
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.IvyOprecord" >
+    insert into t_inventory_oprecord (id, lock_id, opuser, 
+      opdate, comment, remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{lockId,jdbcType=INTEGER}, #{opuser,jdbcType=VARCHAR}, 
+      #{opdate,jdbcType=TIMESTAMP}, #{comment,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.IvyOprecord" useGeneratedKeys="true" keyProperty="id">
+    insert into t_inventory_oprecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="lockId != null" >
+        lock_id,
+      </if>
+      <if test="opuser != null" >
+        opuser,
+      </if>
+      <if test="opdate != null" >
+        opdate,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="lockId != null" >
+        #{lockId,jdbcType=INTEGER},
+      </if>
+      <if test="opuser != null" >
+        #{opuser,jdbcType=VARCHAR},
+      </if>
+      <if test="opdate != null" >
+        #{opdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.IvyOprecord" >
+    update t_inventory_oprecord
+    <set >
+      <if test="lockId != null" >
+        lock_id = #{lockId,jdbcType=INTEGER},
+      </if>
+      <if test="opuser != null" >
+        opuser = #{opuser,jdbcType=VARCHAR},
+      </if>
+      <if test="opdate != null" >
+        opdate = #{opdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.IvyOprecord" >
+    update t_inventory_oprecord
+    set lock_id = #{lockId,jdbcType=INTEGER},
+      opuser = #{opuser,jdbcType=VARCHAR},
+      opdate = #{opdate,jdbcType=TIMESTAMP},
+      comment = #{comment,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="pageSearch" resultMap="BaseResultMap" parameterType="dto.product.search.InventoryLockDeSearch">
+  	select
+		<include refid="Base_Column_List"/>
+	from
+		t_inventory_oprecord
+	where
+		1 = 1
+		<if test="lockId != null">
+			and lock_id = #{lockId,jdbcType=INTEGER}
+		</if>
+		order by
+		<choose>
+			<when test="sidx != null and sidx != '' and sord != null and sord != ''">
+			   ${sidx} ${sord} nulls last
+			</when>
+			<otherwise>
+				opdate desc
+			</otherwise>
+		</choose>
+		<if test="page != null and rows != null">
+    		limit #{rows} offset (#{page}-1)*#{rows}
+    	</if>
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="dto.product.search.InventoryLockDeSearch">
+  	select
+		count(1)
+	from
+		t_inventory_oprecord
+	where
+		1 = 1
+		<if test="lockId != null">
+			and lock_id = #{lockId,jdbcType=INTEGER}
+		</if>
+  </select>
+</mapper>

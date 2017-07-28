@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.warehousing.ErpPushInvenDetailMapper" >
+  <resultMap id="BaseResultMap" type="entity.warehousing.ErpPushInvenDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="push_id" property="pushId" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="costprice" property="costPrice" jdbcType="DOUBLE" />
+    <result column="types" property="type" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, push_id, sku, warehouse_id, stock, costprice, types, created
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_erp_push_inven_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_erp_push_inven_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.warehousing.ErpPushInvenDetail" >
+    insert into t_erp_push_inven_detail (id, push_id, sku, 
+      warehouse_id, stock, costprice, 
+      types, created)
+    values (#{id,jdbcType=INTEGER}, #{pushId,jdbcType=INTEGER}, #{sku,jdbcType=VARCHAR}, 
+      #{warehouseId,jdbcType=INTEGER}, #{stock,jdbcType=INTEGER}, #{costPrice,jdbcType=DOUBLE},
+      #{type,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.warehousing.ErpPushInvenDetail" >
+    insert into t_erp_push_inven_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pushId != null" >
+        push_id,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="costPrice != null" >
+        costprice,
+      </if>
+      <if test="type != null" >
+        types,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pushId != null" >
+        #{pushId,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="costPrice != null" >
+        #{costPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.warehousing.ErpPushInvenDetail" >
+    update t_erp_push_inven_detail
+    <set >
+      <if test="pushId != null" >
+        push_id = #{pushId,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="costPrice != null" >
+        costprice = #{costPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null" >
+        types = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.warehousing.ErpPushInvenDetail" >
+    update t_erp_push_inven_detail
+    set push_id = #{pushId,jdbcType=INTEGER},
+      sku = #{sku,jdbcType=VARCHAR},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      stock = #{stock,jdbcType=INTEGER},
+      costprice = #{costPrice,jdbcType=DOUBLE},
+      types = #{type,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

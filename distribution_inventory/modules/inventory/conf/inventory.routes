@@ -1,0 +1,173 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file             controllers.inventory.Assets.at(path="/public", file)
+
+#---------------------------api modoule-----------------------------------------#
+
+GET          /api                                      	@controllers.api.ApiController.getResources()
+
+GET         /api/:path                             		@controllers.api.ApiController.getResource(path:String)
+
+#------------------------------------------------inventory module----------------------------------------------#
+
+POST        /stkChgRrd                	@controllers.inventory.InventoryRecord.stockChangeRecord()
+
+POST        /updIvy                   	@controllers.inventory.Inventory.updateWarehouseInventoryByOrderInfo()
+
+POST        /ivyChk                   	@controllers.inventory.Inventory.disInventoryCheck()
+
+POST        /manager/ivyChk           	@controllers.inventory.InventoryManager.disInventoryCheck()
+
+POST        /ivyDe                    	@controllers.inventory.Inventory.deductDisInventory()
+
+POST        /manager/ivyDe            	@controllers.inventory.InventoryManager.deductDisInventory()
+
+POST        /getIvy                   	@controllers.inventory.Inventory.getDisProduct()
+
+POST        /getIvysAndStorage        	@controllers.inventory.Inventory.initDisproduct()
+
+POST        /selectAllStock           	@controllers.inventory.Inventory.selectAllStock()
+
+GET			/elastic-search/init	  	@controllers.inventory.Inventory.esInit()
+
+POST        /getIvySt                 	@controllers.inventory.Inventory.getDisProductAndStockInfo()
+
+POST		/froStk				      	@controllers.inventory.Inventory.updateWarehouseInventoryStockByOrderInfo()
+
+GET        	/queryWarehouse           	@controllers.inventory.WarehInvenContoller.queryWarehouse(wid : Integer ?= null)
+
+GET        	/backstage/queryWarehouse   @controllers.inventory.WarehInvenContoller.backstageWarehouse(wid : Integer ?= null)
+
+GET        	/virtual/queryWarehouse     @controllers.inventory.WarehInvenContoller.virtualWarehouses()
+
+GET        	/getShippingMethod        	@controllers.inventory.Inventory.getShippingMethodByWarehouseId(wid : Integer ?= null)
+
+POST        /getFreight               	@controllers.inventory.Inventory.getFreight()
+
+POST        /queryInventory           	@controllers.inventory.WarehInvenContoller.queryInventory()
+
+POST        /inventory                	@controllers.inventory.WarehInvenContoller.inventory()
+
+#POST       /getIvyChangeHistory        @controllers.inventory.Inventory.getDisProductMicroChangeHistory()
+POST        /getIvyChangeHistory        @controllers.inventory.Inventory.getDisProductMicroDetail()
+
+#------------------------------------------------b2c to b2b module----------------------------------------------#
+
+POST        /receWarehouses           	@controllers.inventory.WarehInvenContoller.receWarehouses()
+
+POST        /receProducts             	@controllers.inventory.WarehInvenContoller.receProducts()
+
+#-------------------------------------------b2c warehousing module---------------------------------------------------------
+
+POST        /warehousing/getppbych    		@controllers.warehousing.InventoryChangeHistoryController.getPurchasePriceByChangeHistory()
+
+GET         /warehousing/cloud-inventory	@controllers.warehousing.CloudInventoryController.read()
+
+
+#----------------------------------------------------b2c product_inventory------------------------------------------------------
+
+GET        /cloud/physicalInventoryStock					@controllers.product_inventoy.InventoryInitatingController.physicalInventoryStock()
+
+GET        /cloud/checkInventoryStock						@controllers.product_inventoy.InventoryInitatingController.checkInventoryStock()
+
+GET        /cloud/getInventoryPhysicalResult				@controllers.product_inventoy.InventoryInitatingController.getInventoryPhysicalResult()
+
+GET        /cloud/downCheckInventoryResult					@controllers.product_inventoy.InventoryInitatingController.downloadInventoryCheckResult()
+
+GET		   /cloud/stockInManually							@controllers.product_inventoy.InventorySynchronizingManuallyController.executeInventorySynchronizationManually()
+
+GET        /cloud/checkBBCInventoryCompareToErp				@controllers.product_inventoy.InventoryInitatingController.checkBBCInventoryCompareToErp()
+
+POST       /cloud/erpStockInDetail               			@controllers.product_inventoy.ProductCloudInventoyController.erpStockInDetail()
+
+POST       /cloud/getCloudInventoryDetail        			@controllers.product_inventoy.ProductCloudInventoyController.getCloudInventoryDetail()
+
+GET        /cloud/getInventoryDispersion					@controllers.product_inventoy.ProductCloudInventoyController.getInventoryDispersion()
+
+POST       /cloud/searchProductCloudAndMicroInventory       @controllers.product_inventoy.ProductCloudInventoyController.searchProductCloudAndMicroInventory()
+
+POST       /cloud/list                            			@controllers.product_inventoy.ProductCloudInventoyController.list()
+
+POST       /erp/stock	          							@controllers.product_inventoy.ProductCloudInventoyController.erpStock()
+
+######GET        /cloud/init                            	@controllers.product_inventoy.InventoryInitatingController.syncingInitInventory()
+
+GET        /cloud/initRecord								@controllers.product_inventoy.InventoryInitatingController.checkInitRecord(sku:String)
+
+GET        /cloud/inventoruyCheck							@controllers.product_inventoy.InventoryInitatingController.cloudInventoryCheck()
+
+POST       /cloud/getsyncrecord								@controllers.product_inventoy.InventorySynchronizingManuallyController.checkInventoySyncRecord()
+
+POST       /cloud/initNewProduct                            @controllers.product_inventoy.InventoryInitatingController.inintNewProduct()
+
+POST       /cloud/getCloudDetail                            @controllers.product_inventoy.ProductCloudInventoyController.searchProductCloudInventory()
+
+POST       /cloud/cloudInventorySyncing						@controllers.product_inventoy.InventoryInitatingController.cloudInventorySyncing()
+
+POST       /cloud/cleanCloudInventory							@controllers.product_inventoy.InventoryInitatingController.setCloudInventory()
+
+#######GET        /cloud/initResidueNum                            @controllers.product_inventoy.ProductInventoryOrderController.initResidueNum()                  
+
+POST       /micro/getmicrodata                    			@controllers.product_inventoy.ProductMicroInventoyController.microDetailData()
+
+GET        /micro/getmicropurchasedetail           			@controllers.product_inventoy.ProductMicroInventoyController.getMicroPurchaseDetail(id:Integer)
+
+POST       /micro/getList                 		  			@controllers.product_inventoy.ProductMicroInventoyController.microList()
+
+POST       /micro/getMicroDetailBySkuAndWareId              @controllers.product_inventoy.ProductMicroInventoyController.microDetailWithExpirdateList()
+
+POST       /micro/getMicroDetailList						@controllers.product_inventoy.ProductMicroInventoyController.microDetailList()
+
+POST       /micro/createSaleOrderWithInventory				@controllers.product_inventoy.ProductMicroInventoyController.saleOrderWithInventory()
+
+POST       /micro/cancleSaleOrderWithInventory     			@controllers.product_inventoy.ProductMicroInventoyController.cancleSaleOrder()
+
+POST       /micro/cancleMsiteSaleOrderWithInventory       	@controllers.product_inventoy.ProductMicroInventoyController.cancleMsiteSaleOrderWithInventory()
+
+GET        /micro/restorecloudfrommicro            			@controllers.product_inventoy.ProductMicroInventoyController.restoreCloudFormMicro(orderNo:String)
+
+POST       /micro/realsemicrostock                         	@controllers.product_inventoy.ProductMicroInventoyController.releaseMicroStockToCloud()
+
+POST       /micro/msiteStockOut                    			@controllers.product_inventoy.ProductMicroInventoyController.msiteStockOut()
+
+POST       /micro/returnLock          					  	@controllers.product_inventoy.ProductMicroInventoyController.returnProductLockMicroInventory()
+
+POST        /micro/returnToCloudInventory                   @controllers.product_inventoy.ProductMicroInventoyController.returnProductSuccess()
+
+POST        /micro/releaseReturnLock                     	@controllers.product_inventoy.ProductMicroInventoyController.updateReturnLockRecordEffective()
+
+POST       /micro/getList                 		  			@controllers.product_inventoy.ProductMicroInventoyController.microList()
+
+POST       /micro/cancleMsiteSaleOrderWithInventory       	@controllers.product_inventoy.ProductMicroInventoyController.cancleMsiteSaleOrderWithInventory()	
+
+POST       /micro/getMicroInRecordByPurchaseOrderNo         @controllers.product_inventoy.ProductMicroInventoyController.getMicroInventoryInRecordByOrderNo()
+
+GET        /manager/warehousing/queryMicroWarehouse   		@controllers.product_inventoy.ProductMicroInventoyController.manQueryMicroWarehouse(email : String) 
+
+GET        /warehousing/queryMicroWarehouse                 @controllers.product_inventoy.ProductMicroInventoyController.queryMicroWarehouse(email : String ?= null) 
+
+POST       /inventoryorder/lockcloudstock     	  			@controllers.product_inventoy.ProductInventoryOrderController.purchaseOrderLockCloudStock()
+
+POST       /inventoryorder/changeOrderDetail                @controllers.product_inventoy.ProductInventoryOrderController.changeOrderDetailInfo()
+
+GET        /inventoryorder/updatestock 	 		  			@controllers.product_inventoy.ProductInventoryOrderController.updateStockByPurchaseOrder(orderNo:String)
+
+GET        /inventoryorder/updatelockstatus         		@controllers.product_inventoy.ProductInventoryOrderController.changeLockStatus(orderNo:String)
+
+GET        /inventoryorder/purchasecancel          			@controllers.product_inventoy.ProductInventoryOrderController.orderCanceled(orderNo:String)
+
+GET        /inventory/asyncMicroInventory                   @controllers.product_inventoy.ProductMicroInventoyController.asyncMicroInventory()
+
+GET        /inventoryorder/getOrderDetails                  @controllers.product_inventoy.ProductInventoryOrderController.getOrderDetails(orderNo:String)
+
+POST       /inventoryorder/historyOrderClosed    			@controllers.product_inventoy.ProductInventoryOrderController.historyOrderClosed()
+
+POST       /inventoryorder/getOrderDetailBySkuAndSaleOrderNo		@controllers.product_inventoy.ProductInventoryOrderController.getOrderDetailBySkuAndSaleOrderNo()
+
+POST       /inventoryorder/getPurchaseByPurchaseOrderNo    			@controllers.product_inventoy.ProductInventoryOrderController.getPurchaseByPurchaseOrderNo()
+
+
+

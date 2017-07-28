@@ -1,0 +1,193 @@
+.goods-detail-l{
+  width: auto;
+  font-size: $f0;
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  .tempWrap{
+    height: 320px!important;
+    margin-top: 40px!important;
+  }
+  ul{
+    width: 400px;
+    height: 400px;
+    border: 1px solid $cGe9;
+    float: left;
+    display: inline-block;
+    overflow: hidden;
+    @include borderBox;
+    li{
+      display: inline-block;
+    }
+  }
+  ol{
+    display: inline-block;
+    overflow: hidden;
+    li{
+      img{
+        width: 98px;
+        height: 98px;
+        border: 1px solid $cGe9;
+        margin: 0 20px 10px 10px;
+        cursor: pointer;
+        &:hover{
+          border: 1px solid $cB5;
+        }
+      }
+    }
+  }
+  #switch-top,#switch-down{
+    width: 100px;
+    height: 30px;
+    background: url(../../img/sprite.png) no-repeat;
+    position: absolute;
+    right: 20px;
+  }
+  #switch-top{
+    top: 0;
+    background-position: -77px -20px;
+    z-index: 9;
+    &:hover{
+      background-position: -183px -57px;
+    }
+  }
+  #switch-down{
+    bottom: 0;
+    background-position: -183px -20px;
+    &:hover{
+      background-position: -77px -57px;
+    }
+  }
+}
+
+.goods-detail-r{
+  width: 670px;
+  float: right;
+  display: inline-block;
+  .goods-detail-r-t{
+    height: 230px;
+    padding: 20px 30px;
+    background: $cW;
+    border: 1px solid $cGe9;
+    @include borderBox;
+    p{
+      height: 86px;
+      line-height: 28px;
+      font-size: $f24;
+      overflow: hidden;
+    }
+    .goods-detail-price{
+      padding-bottom: 16px;
+      span{
+        color: $cRec;
+        font-size: $f30;
+        margin-right: 20px;
+      }
+    }
+    .goods-detail-text{
+      height: 24px;
+      line-height: 24px;
+      span{
+        padding-right: 56px;
+      }
+    }
+  }
+  .goods-detail-r-d{
+    height: 170px;
+    padding: 30px 30px 0;
+    @include borderBox;
+    .goods-num{
+      border-bottom: 1px solid $cGe9;
+      padding-bottom: 30px;
+      .subtotal{
+        margin-left: 40px;
+      }
+    }
+    .goods-btn{
+      padding-top: 30px;
+      font-size: $f0;
+      button{
+        width: 232px;
+        height: 56px;
+        font-size: $f14;
+        margin-right: 20px;
+      }
+    }
+  }
+}
+
+.gw-num{
+  width: auto;
+  height: 26px;
+  line-height: 26px;
+  margin: 0 20px;
+  overflow: hidden;
+  margin-bottom: -8px;
+  display: inline-block;
+  em{
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    color: $cG3;
+    border: 1px solid $cGbf;
+    background: $cW;
+    font-weight: bold;
+    float: left;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+  }
+  .add{
+    float: right;
+  }
+  .num{
+    width: 58px;
+    height: 24px;
+    line-height: 24px;
+    border: 1px solid $cGbf;
+    margin: 0 5px;
+    float: left;
+    display: inline-block;
+    text-align: center;
+    text-indent: 0;
+    padding: 0 5px;
+  }
+}
+
+.goods-detail-title{
+  line-height: 48px;
+  height: 48px;
+  border: 1px solid $cGe9;
+  background: $cGf2;
+  padding: 0 20px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.remark{
+  font-size: $f12;
+  color: $cG69;
+  margin: 15px 0;
+  .hotR{
+    vertical-align: middle;
+    padding: 3px 10px 0 0;
+    display: inline-block;
+  }
+  a{
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+}
+
+.goods-detail-img{
+  width: 100%;
+  height: auto;
+  font-size: $f0;
+  background: $cW;
+  border: 1px solid $cGe9;
+  box-sizing: border-box;
+  text-align: center;
+}
+.goods-details-main{
+  padding-bottom: 45px;
+}

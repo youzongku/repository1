@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.InventoryLockMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.InventoryLock" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="lock_no" property="lockNo" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="sale_man" property="saleMan" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="is_left_stock" property="isLeftStock" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="estimated_shipping_time" property="estimatedShippingTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, account, lock_no, nick_name, sale_man, create_user, is_left_stock, create_date, 
+    update_date, remark, estimated_shipping_time, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_inventory_lock
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_inventory_lock
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.InventoryLock" >
+    insert into t_inventory_lock (id, account, lock_no, 
+      nick_name, sale_man, create_user, 
+      is_left_stock, create_date, update_date, 
+      remark, estimated_shipping_time, status
+      )
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{lockNo,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{saleMan,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, 
+      #{isLeftStock,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{estimatedShippingTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.InventoryLock"
+   keyProperty="id" useGeneratedKeys="true" >
+    insert into t_inventory_lock
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="lockNo != null" >
+        lock_no,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="saleMan != null" >
+        sale_man,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="isLeftStock != null" >
+        is_left_stock,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="estimatedShippingTime != null" >
+        estimated_shipping_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="lockNo != null" >
+        #{lockNo,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="saleMan != null" >
+        #{saleMan,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="isLeftStock != null" >
+        #{isLeftStock,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="estimatedShippingTime != null" >
+        #{estimatedShippingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.InventoryLock" >
+    update t_inventory_lock
+    <set >
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="lockNo != null" >
+        lock_no = #{lockNo,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="saleMan != null" >
+        sale_man = #{saleMan,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="isLeftStock != null" >
+        is_left_stock = #{isLeftStock,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="estimatedShippingTime != null" >
+        estimated_shipping_time = #{estimatedShippingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.InventoryLock" >
+    update t_inventory_lock
+    set account = #{account,jdbcType=VARCHAR},
+      lock_no = #{lockNo,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      sale_man = #{saleMan,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      is_left_stock = #{isLeftStock,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      estimated_shipping_time = #{estimatedShippingTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+   <select id="pageSearch" resultMap="BaseResultMap" parameterType="dto.product.search.InventoryLockSearch">
+  	select
+		<include refid="Base_Column_List"/>
+	from
+		t_inventory_lock
+	where
+		1 = 1
+		<if test="isLeftStock != null">
+			and is_left_stock = #{isLeftStock,jdbcType=INTEGER}
+		</if>
+		<if test="search != null and search != ''">
+			and (
+				lower (nick_name) like lower ('%' || #{search,jdbcType=VARCHAR} || '%')
+				or lower (account) like lower ('%' || #{search,jdbcType=VARCHAR}|| '%')
+				or lower (create_user) like lower ('%' || #{search,jdbcType=VARCHAR}|| '%')
+				or lower (sale_man) like lower ('%' || #{search,jdbcType=VARCHAR}|| '%')
+			)
+		</if>
+		order by
+		<choose>
+			<when test="sidx != null and sidx != '' and sord != null and sord != ''">
+			   ${sidx} ${sord} nulls last
+			</when>
+			<otherwise>
+				create_date desc nulls last
+			</otherwise>
+		</choose>
+		<if test="page != null and rows != null">
+    		limit #{rows} offset (#{page}-1)*#{rows}
+    	</if>
+  </select>
+   <select id="pageCount" resultType="java.lang.Integer" parameterType="dto.product.search.InventoryLockSearch">
+  	select
+		count(1)
+	from
+		t_inventory_lock
+	where
+		1 = 1
+		<if test="isLeftStock != null">
+			and is_left_stock = #{isLeftStock,jdbcType=INTEGER}
+		</if>
+		<if test="search != null and search != ''">
+			and (
+				lower (nick_name) like lower ('%' || #{search,jdbcType=VARCHAR} || '%')
+				or lower (account) like lower ('%' || #{search,jdbcType=VARCHAR}|| '%')
+				or lower (create_user) like lower ('%' || #{search,jdbcType=VARCHAR}|| '%')
+				or lower (sale_man) like lower ('%' || #{search,jdbcType=VARCHAR}|| '%')
+			)
+		</if>
+  </select>
+</mapper>

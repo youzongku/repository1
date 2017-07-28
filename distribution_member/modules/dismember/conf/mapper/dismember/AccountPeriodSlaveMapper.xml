@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.AccountPeriodSlaveMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.AccountPeriodSlave" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="master_id" property="masterId" jdbcType="INTEGER" />
+    <result column="total_limit" property="totalLimit" jdbcType="NUMERIC" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="contract_period_date" property="contractPeriodDate" jdbcType="TIMESTAMP" />
+    <result column="red_line_date" property="redLineDate" jdbcType="TIMESTAMP" />
+    <result column="red_line_days" property="redLineDays" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="performance_start_time" property="performanceStartTime" jdbcType="TIMESTAMP" />
+    <result column="performance_end_time" property="performanceEndTime" jdbcType="TIMESTAMP" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="period_length" property="periodLength" jdbcType="INTEGER" />
+    <result column="period_type" property="periodType" jdbcType="INTEGER" />
+    <result column="has_next" property="hasNext" jdbcType="BIT" />
+    <result column="order_qty" property="orderQty" jdbcType="INTEGER" />
+    <result column="duty_officer" property="dutyOfficer" jdbcType="VARCHAR" />
+    <result column="recharge_left" property="rechargeLeft" jdbcType="NUMERIC" />
+    <result column="salesman_erp" property="saleMan" jdbcType="VARCHAR" />
+    <result column="has_bill" property="hasBill" jdbcType="BIT" />
+    <result column="is_charge_off" property="isChargeOff" jdbcType="BIT" />
+    <result column="used_limit" property="usedLimit" jdbcType="NUMERIC" />
+    <result column="has_prev" property="hasPrev" jdbcType="BIT" />
+    <result column="arear_amount" property="arearAmount" jdbcType="NUMERIC" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, master_id,total_limit, start_time, contract_period_date, red_line_date, 
+    red_line_days, state, performance_start_time, performance_end_time, create_date, 
+    create_user, update_date,has_next,is_charge_off,has_prev
+  </sql>
+  
+  <select id="selectValid" resultMap="BaseResultMap">
+	select <include refid="Base_Column_List"/> 
+	from t_account_period_slave slave
+	<where>
+	  	<![CDATA[
+	  		date_trunc('day', slave.performance_start_time) <= date_trunc('day', now())
+	  	]]>
+  		<![CDATA[
+  			and date_trunc('day', now()) <= date_trunc('day', slave.contract_period_date)
+  		]]>
+	</where>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+     s.*,
+     m.account,
+     m.period_type,
+     m.period_length,
+     m.duty_officer,
+     m.recharge_left,
+     dis.salesman_erp,
+     (select count(b.*) from t_ap_bill b where b.ap_id = s.id)>0 as has_bill,
+     (
+		select
+			count (od.*)
+		from
+			t_order_by_ap od
+			left join t_ap_bill_order_mapping mp on od.id = mp.order_id
+			left join t_ap_bill bl on bl.id = mp.bill_id
+		where
+		 	od.ap_id = s.master_id
+			and ((od.is_choice = 1 and  bl.is_charge_off = false) or od.is_choice = 0)
+			and <![CDATA[od.pay_date < s.contract_period_date +  interval '1 D']]>
+	) as order_qty
+    from t_account_period_slave s
+    left join t_account_period_master m on s.master_id = m.id
+    left join t_dis_member dis on m.account = dis.email
+    where s.id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getAccountPeriodsByMasterId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_account_period_slave
+    where master_id = #{1,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_account_period_slave
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="entity.dismember.AccountPeriodSlave" >
+    insert into t_account_period_slave (id, master_id, 
+      total_limit, start_time, contract_period_date, 
+      red_line_date, red_line_days, state, 
+      performance_start_time, performance_end_time, 
+      create_date, create_user, update_date
+      )
+    values (#{id,jdbcType=INTEGER}, #{masterId,jdbcType=INTEGER},  
+      #{totalLimit,jdbcType=NUMERIC}, #{startTime,jdbcType=TIMESTAMP}, #{contractPeriodDate,jdbcType=TIMESTAMP}, 
+      #{redLineDate,jdbcType=TIMESTAMP}, #{redLineDays,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, 
+      #{performanceStartTime,jdbcType=TIMESTAMP}, #{performanceEndTime,jdbcType=TIMESTAMP}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="entity.dismember.AccountPeriodSlave"
+ 	 useGeneratedKeys="true" keyProperty="id" >
+    insert into t_account_period_slave
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="masterId != null" >
+        master_id,
+      </if>
+      <if test="totalLimit != null" >
+        total_limit,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="contractPeriodDate != null" >
+        contract_period_date,
+      </if>
+      <if test="redLineDate != null" >
+        red_line_date,
+      </if>
+      <if test="redLineDays != null" >
+        red_line_days,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="performanceStartTime != null" >
+        performance_start_time,
+      </if>
+      <if test="performanceEndTime != null" >
+        performance_end_time,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="hasPrev != null" >
+        has_prev,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="masterId != null" >
+        #{masterId,jdbcType=INTEGER},
+      </if>
+      <if test="totalLimit != null" >
+        #{totalLimit,jdbcType=NUMERIC},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contractPeriodDate != null" >
+        #{contractPeriodDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="redLineDate != null" >
+        #{redLineDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="redLineDays != null" >
+        #{redLineDays,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="performanceStartTime != null" >
+        #{performanceStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="performanceEndTime != null" >
+        #{performanceEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hasPrev != null" >
+        #{hasPrev,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.AccountPeriodSlave" >
+    update t_account_period_slave
+    <set >
+      <if test="masterId != null" >
+        master_id = #{masterId,jdbcType=INTEGER},
+      </if>
+      <if test="totalLimit != null" >
+        total_limit = #{totalLimit,jdbcType=NUMERIC},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contractPeriodDate != null" >
+        contract_period_date = #{contractPeriodDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="redLineDate != null" >
+        red_line_date = #{redLineDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="redLineDays != null" >
+        red_line_days = #{redLineDays,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="performanceStartTime != null" >
+        performance_start_time = #{performanceStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="performanceEndTime != null" >
+        performance_end_time = #{performanceEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hasNext != null" >
+        has_next = #{hasNext,jdbcType=BIT},
+      </if>
+      <if test="isChargeOff != null" >
+        is_charge_off = #{isChargeOff,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getAccountPeriods" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+			s.*
+		from 
+			t_account_period_slave s
+			left join t_account_period_master m on s.master_id = m.id
+		where account = #{1,jdbcType=VARCHAR}
+  </select>
+	
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.AccountPeriodSlave" >
+    update t_account_period_slave
+    set master_id = #{masterId,jdbcType=INTEGER},
+      total_limit = #{totalLimit,jdbcType=NUMERIC},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      contract_period_date = #{contractPeriodDate,jdbcType=TIMESTAMP},
+      red_line_date = #{redLineDate,jdbcType=TIMESTAMP},
+      red_line_days = #{redLineDays,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      performance_start_time = #{performanceStartTime,jdbcType=TIMESTAMP},
+      performance_end_time = #{performanceEndTime,jdbcType=TIMESTAMP},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      has_next = #{hasNext,jdbcType=BIT},
+      is_charge_off = #{isChargeOff,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="pageSearch" resultMap="BaseResultMap"  parameterType="dto.dismember.Search">
+		select
+			aps.*, apm.account,
+			dis.nick_name,
+			apm.period_length,
+			apm.period_type,
+			b.id is not null as has_bill
+		from
+			t_account_period_slave aps
+		left join t_account_period_master apm on apm. id = aps.master_id
+		left join t_dis_member dis on apm.account = dis.email
+		left join t_ap_bill b on b.ap_id = aps.id
+		<where>
+			<if test="state != null">
+				and state = #{state,jdbcType=INTEGER}
+			</if>
+			<if test="masterId">
+				and master_id = #{masterId,jdbcType=INTEGER}
+			</if>
+			<if test="std != null and std != ''">
+				and <![CDATA[aps.start_time = to_date(#{std,jdbcType=VARCHAR}, 'YYYY-MM-DD')]]> 
+			</if>
+			<if test="isUnfinished != null and isUnfinished == true">
+				and state != 5
+			</if>
+		</where>
+		order by	
+		<choose>
+			<when test="filter != null and  sort!= null and sort != '' ">
+				${sort} ${filter} 
+			</when>
+			<otherwise>
+			 create_date desc
+			</otherwise>
+		</choose>
+		<if test="pageSize != null and currPage != null">
+			limit #{pageSize} OFFSET #{pageSize}*(#{currPage}-1);
+		</if>
+  </select>
+  
+  <select id="pageCount" resultType="java.lang.Integer"  parameterType="dto.dismember.Search">
+	  	select
+			count(aps.*)
+		from
+			t_account_period_slave aps
+		left join t_account_period_master apm on apm. id = aps.master_id
+		left join t_dis_member dis on apm.account = dis.email
+		<where>
+			<if test="state != null">
+				and state = #{state,jdbcType=INTEGER}
+			</if>
+			<if test="masterId">
+				and master_id = #{masterId,jdbcType=INTEGER}
+			</if>
+			<if test="std != null and std != ''">
+				and <![CDATA[aps.start_time = to_date(#{std,jdbcType=VARCHAR}, 'YYYY-MM-DD')]]> 
+			</if>
+			<if test="isUnfinished != null and isUnfinished == true">
+				and state != 5
+			</if>
+		</where>
+  </select>
+  
+  <select id="getNeedHandleApByState" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select
+		s.*, 
+		m.account,
+		(
+			select
+				count (od.*)
+			from
+				t_order_by_ap od
+				left join t_ap_bill_order_mapping mp on od.id = mp.order_id
+				left join t_ap_bill bl on bl.id = mp.bill_id
+			where
+			 	od.ap_id = s.master_id
+				and ((od.is_choice = 1 and  bl.is_charge_off = false) or od.is_choice = 0)
+				and <![CDATA[od.pay_date < s.contract_period_date +  interval '1 D']]>
+		) as order_qty,
+		b.id is not null as has_bill
+	from 
+		t_account_period_slave s
+		left join t_account_period_master m on s.master_id = m.id
+		left join t_ap_bill b on b.ap_id = s.id
+	<where>
+	 	 state = #{state,jdbcType=INTEGER}
+		<choose>
+			<when test="state == 0 and now != null">
+				and <![CDATA[#{now,jdbcType=TIMESTAMP} >= performance_start_time]]>
+			</when>
+			<when test="state == 1 and now != null ">
+				and <![CDATA[#{now,jdbcType=TIMESTAMP} >= contract_period_date + interval '1 D']]>
+			</when>
+			<when test="state == 4 and now != null">
+				and <![CDATA[#{now,jdbcType=TIMESTAMP} >= red_line_date + interval '1 D']]>
+			</when>
+			<otherwise></otherwise>
+		</choose>
+	</where>
+  </select>
+  
+  <update id="batchUpdate"  parameterType="java.util.List" >
+	<foreach collection="list" item="item" separator=";">
+		update 
+			t_account_period_slave
+		set
+			state = #{item.state,jdbcType=INTEGER},
+			update_date = #{item.updateDate,jdbcType=TIMESTAMP}
+		where id = #{item.id,jdbcType=INTEGER}
+	</foreach>
+ </update>
+ 
+ <select id="getStartDate" parameterType="java.lang.Integer" resultType="java.lang.String">
+	select 
+		 <![CDATA[to_char(start_time,'yyyy-mm-dd') ]]> 
+	from 
+		t_account_period_slave
+	where master_id = #{1,jdbcType=INTEGER}
+ </select>
+ 
+ <select id="getCurAccountPeriod" parameterType="java.lang.String" resultMap="BaseResultMap" >
+	select
+		s.*,
+		m.account,
+		m.used_limit,
+		b.arear_amount
+	from
+		t_account_period_slave s
+		left join t_account_period_master m on s.master_id = m.id
+		LEFT JOIN t_ap_bill b on s.id = b.ap_id
+	where
+		s. state != 5
+		and m .account = #{1,jdbcType=VARCHAR}
+		order by s.create_date desc
+	limit 1 offset 0
+ </select>
+ 
+</mapper>

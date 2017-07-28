@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.ApReminderSettingLogMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.ApReminderSettingLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="enable" property="enable" jdbcType="BOOLEAN" />
+    <result column="ap_rs_id" property="reminderSettingId" jdbcType="INTEGER" />
+    <result column="days_ago" property="daysAgo" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="set_suc" property="setSuc" jdbcType="BOOLEAN" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, ap_rs_id, enable, days_ago, create_date, create_user, set_suc
+  </sql>
+  
+  <select id="selectByRSId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_ap_reminder_setting_logs
+    where ap_rs_id = #{reminderSettingId,jdbcType=INTEGER}
+  </select>
+  
+  <insert id="insert" parameterType="entity.dismember.ApReminderSettingLog" >
+    insert into t_ap_reminder_setting_logs (ap_rs_id, enable, days_ago, create_date, create_user, set_suc)
+    values (#{reminderSettingId}, #{enable}, #{daysAgo}, now(), #{createUser}, #{setSuc})
+  </insert>
+</mapper>

@@ -1,0 +1,115 @@
+<div id="purchase_list">
+    <p class="title">创建微仓进货</p>
+
+    <!--<p id="purchase-total-product">共<span class="goodsTotal">0</span>件商品</p>-->
+
+    <div class="purchase-product-smallnav">
+        <ul class="purchase-nav">
+            <span>分类：</span>
+        </ul>
+        <ul class="purchase-save-nav">
+        </ul>
+    </div>
+    <div class="purchase-product-search">
+        <span>采购价：</span>
+
+        <div class="price-space only-number">
+            <input type="text" class="formatMoney input-pub" id="minPrice"/>
+            <span>至</span>
+            <input type="text" class="formatMoney input-pub" style="margin-left: 0" id="maxPrice"/>
+        </div>
+        <input type="text" value="" id="seachInput" class="search-input-pub" placeholder="SKU(, 隔开可多个查询)/商品名称" style="width:230px"/>
+        <span id="seachSpan" class="search-btn-pub" onclick="seachgoods(this)" style="margin-left: 0">搜索</span>
+        <button class="btn check-mine-price" style="display: none;" onclick="toggle_menu_content(24)">查看我的报价单</button>
+        <script>  //解决IEplaceholder不兼容问题
+        $(document).ready(function () {
+            $(function () {
+                if (!placeholderSupport()) {
+                    $('[placeholder]').focus(function () {
+                        var input = $(this);
+                        if (input.val() == input.attr('placeholder')) {
+                            input.val('');
+                            input.removeClass('placeholder');
+                        }
+                    }).blur(function () {
+                        var input = $(this);
+                        if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                            input.addClass('placeholder');
+                            input.val(input.attr('placeholder'));
+                        }
+                    }).blur();
+                }
+            })
+            function placeholderSupport() {
+                return 'placeholder' in document.createElement('input');
+            }
+        })
+
+        </script>
+    </div>
+
+    <div class="purchase-product light-gray"></div>
+
+    <div id="pagination_goo" style="text-align: center; margin-top: 30px;"></div>
+</div>
+
+<span class="show-seld-detail-pro showFixed" style="display:none;">
+    <a href="javascript:;">确定</a>
+</span>
+<span class="closeFixed" style="display: none">×</span>
+<!--查看我的报价单-->
+  <!--我的报价单列表-->
+<div class="mine_price_list">
+    <p class="title">我的报价单列表 <button class="btn mine_price_back" onclick="minePrice(1)">返回</button></p>
+    <table class="mine_price_list_table">
+        <thead>
+        <tr>
+            <th>Excel名称</th>
+            <th>报价时间</th>
+            <th>是否生成采购单</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="quotation_body">
+
+        </tbody>
+    </table>
+    <div id="quotation_page" style="text-align: center; margin-top: 30px;"></div>
+</div>
+<div class="mine_price_box">
+    <p class="title">我的报价单<span class="small_title">----</span><span  id = "excelName"></span> <button class="btn mine_price_detail_back">返回</button></p>
+    <table class="mine_price_list_table">
+        <thead>
+        <tr>
+            <th style = "width:46%">商品名称</th>
+            <th>商品编号</th>
+            <th>采购价(元)</th>
+            <th>市场零售价(元)</th>
+            <th>采购数量(个)</th>
+            <th>所属仓库</th>
+        </tr>
+        </thead>
+        <tbody id="quotation_detail">
+
+
+        </tbody>
+    </table>
+    <div class="mine_price_statistics">
+        <p>商品种类：<span class="selected_product"></span> 种 </p>
+        <p>商品总数量：<span class="all_product"></span> 个 </p>
+        <p class="sum_order_product">待采购商品金额合计： <span class="red num_order_product"></span>元</p>
+    </div>
+
+    <p><button class="create_purchasing_order btn">生成采购单</button></p>
+</div>
+<script src="../js/lib/jquery.fly.js"></script>
+<script>
+    function minePrice(change){
+        if(change = 1){
+            $("#purchase_list").show();
+            $(".mine_price_list").hide();
+        }
+    }
+</script>
+
+

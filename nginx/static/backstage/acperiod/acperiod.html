@@ -1,0 +1,88 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<div id="homepage">
+    <h1>用户管理<span>---</span><span>账期管理</span></h1>
+    <ul class="search_category">
+        <li>
+            <select id="model_select">
+            </select>
+        </li>
+        <li>
+            <input type="text" id="apm_input" class="input-s" placeholder="分销商用户名/名称/OA审批单号/账期合同单号/责任人/创建人" style="width: 400px;">
+            <input type="button" id="apm_search" class="searchButton" value="搜索">
+        </li>
+        <li>
+            <div class="search">
+                <button class="add-user" onclick="addPayment();">添加账期</button>
+            </div>
+        </li>
+    </ul>
+
+    <div class="content_list">
+        <table id="apm_table"></table>
+        <div id="apm_pagination"></div>
+    </div>
+
+</div>
+
+<div id="follower" class="display">
+    <h1>用户管理<span>---</span><span>账期管理</span><span class="record_sendList_do"><button class="btn-black" onclick="checkDetailsBack();">返回</button></span></h1>
+    <ul class="search_category">
+        <li>
+            <select id="state_select" >
+                <option value="">所有账期状态</option>
+                <option value="0">未生效</option>
+                <option value="1">可使用</option>
+                <option value="2">待还款</option>
+                <option value="3">已逾期</option>
+                <option value="4">禁用中</option>
+                <option value="5">已完结</option>
+            </select>
+        </li>
+        <li>
+            <select id="std_select" >
+            </select>
+        </li>
+    </ul>
+    <div class="content_list">
+        <table id="aps_table"></table>
+        <div id="aps_pagination"></div>
+    </div>
+</div>
+
+<div id="chargeOff" class="display">
+    <h1>用户管理<span>---</span><span>账期管理</span><span class="record_sendList_do"><button class="btn-black" onclick="chargeOffBack();">返回</button></span></h1>
+    <div class="charge-off">
+        <nav>
+            <span>用户名：<em id="_account"></em></span>
+            <span>名称：<em id="_nickName"></em></span>
+            <span>业务员：<em id="_saleMan"></em></span>
+            <span>责任人：<em id="_dutyOfficer"></em></span>
+        </nav>
+        <header>
+            筛选设定时间之前的订单：
+            <input type="text" id="_dateSearch" readonly="true" class="searchInput" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder=""/>
+            <div class="search">
+                <input type="text" id="_searchInput" class="searchInput" placeholder="订单号">
+                <input id="_searchButton" class="searchButton" value="搜索">
+            </div>
+        </header>
+        <div class="content_list">
+            <ul class="charge-off-title">
+                <li>
+                    <input type="checkbox" id="curr_all"/>全选当前页
+                </li>
+                <li>
+                    <input type="checkbox" id="select_all" />全选搜索结果
+                </li>
+                <li>
+                    总已还金额：￥<em id="_rechargeLeft"></em>元
+                </li>
+            </ul>
+            <table id="charge_off_table"></table>
+            <div id="charge_off_pagination"></div>
+            <div class="charge-off-create">
+                <button class="btn-black" id="bill_create""></button>
+            </div>
+        </div>
+    </div>
+</div>

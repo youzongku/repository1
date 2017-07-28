@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.AccountPeriodMasterMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.AccountPeriodMaster" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="total_limit" property="totalLimit" jdbcType="NUMERIC" />
+    <result column="duty_officer" property="dutyOfficer" jdbcType="VARCHAR" />
+    <result column="oa_audit_code" property="oaAuditCode" jdbcType="VARCHAR" />
+    <result column="contract_no" property="contractNo" jdbcType="VARCHAR" />
+    <result column="period_type" property="periodType" jdbcType="INTEGER" />
+    <result column="period_length" property="periodLength" jdbcType="INTEGER" />
+    <result column="recharge_total" property="rechargeTotal" jdbcType="NUMERIC" />
+    <result column="recharge_left" property="rechargeLeft" jdbcType="NUMERIC" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="distribution_mode" property="disMode" jdbcType="INTEGER" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="dis_mode" property="disModeDesc" jdbcType="VARCHAR" />
+    <result column="used_limit" property="usedLimit" jdbcType="NUMERIC" />
+    <result column="effect_count" property="effectCount" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, account, total_limit, duty_officer, oa_audit_code, contract_no, period_type, period_length, 
+    recharge_total, recharge_left, create_user, create_date, update_date, used_limit
+  </sql>
+  
+  <select id="selectByAccountList" resultMap="BaseResultMap" parameterType="java.util.List">
+  	select <include refid="Base_Column_List"/>
+  	from t_account_period_master
+  	<where>
+  		<if test="accountList!=null and accountList.size()>0">
+  			account in 
+		  	<foreach collection="accountList" item="account" open="(" close=")" separator=",">
+		  		#{account}
+		  	</foreach>
+  		</if>
+  	</where>
+  </select>
+  
+  <select id="selectByIds" resultMap="BaseResultMap" parameterType="java.util.List">
+  	select <include refid="Base_Column_List"/>
+  	from t_account_period_master
+  	<where>
+  		<if test="idList!=null and idList.size()>0">
+  			id in 
+		  	<foreach collection="idList" item="id" open="(" close=")" separator=",">
+		  		#{id}
+		  	</foreach>
+  		</if>
+  	</where>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_account_period_master
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_account_period_master
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="entity.dismember.AccountPeriodMaster" >
+    insert into t_account_period_master (id, account,used_limit, total_limit, 
+      duty_officer, oa_audit_code, contract_no, 
+      period_type, period_length, recharge_total, 
+      recharge_left, create_user, create_date
+      )
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR},#{usedLimit,jdbcType=NUMERIC}, #{totalLimit,jdbcType=NUMERIC}, 
+      #{dutyOfficer,jdbcType=VARCHAR}, #{oaAuditCode,jdbcType=VARCHAR}, #{contractNo,jdbcType=VARCHAR}, 
+      #{periodType,jdbcType=INTEGER}, #{periodLength,jdbcType=INTEGER}, #{rechargeTotal,jdbcType=NUMERIC}, 
+      #{rechargeLeft,jdbcType=NUMERIC}, #{createUser,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="entity.dismember.AccountPeriodMaster" 
+  	useGeneratedKeys="true" keyProperty="id">
+    insert into t_account_period_master
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="totalLimit != null" >
+        total_limit,
+      </if>
+      <if test="usedLimit != null" >
+        usedLimit,
+      </if>
+      <if test="dutyOfficer != null" >
+        duty_officer,
+      </if>
+      <if test="oaAuditCode != null" >
+        oa_audit_code,
+      </if>
+      <if test="contractNo != null" >
+        contract_no,
+      </if>
+      <if test="periodType != null" >
+        period_type,
+      </if>
+      <if test="periodLength != null" >
+        period_length,
+      </if>
+      <if test="rechargeTotal != null" >
+        recharge_total,
+      </if>
+      <if test="rechargeLeft != null" >
+        recharge_left,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="totalLimit != null" >
+        #{totalLimit,jdbcType=NUMERIC},
+      </if>
+      <if test="usedLimit != null" >
+        #{usedLimit,jdbcType=NUMERIC},
+      </if>
+      <if test="dutyOfficer != null" >
+        #{dutyOfficer,jdbcType=VARCHAR},
+      </if>
+      <if test="oaAuditCode != null" >
+        #{oaAuditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contractNo != null" >
+        #{contractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="periodType != null" >
+        #{periodType,jdbcType=INTEGER},
+      </if>
+      <if test="periodLength != null" >
+        #{periodLength,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeTotal != null" >
+        #{rechargeTotal,jdbcType=NUMERIC},
+      </if>
+      <if test="rechargeLeft != null" >
+        #{rechargeLeft,jdbcType=NUMERIC},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.AccountPeriodMaster" >
+    update t_account_period_master
+    <set >
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="totalLimit != null" >
+        total_limit = #{totalLimit,jdbcType=NUMERIC},
+      </if>
+      <if test="usedLimit != null" >
+        used_limit = #{usedLimit,jdbcType=NUMERIC},
+      </if>
+      <if test="dutyOfficer != null" >
+        duty_officer = #{dutyOfficer,jdbcType=VARCHAR},
+      </if>
+      <if test="oaAuditCode != null" >
+        oa_audit_code = #{oaAuditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contractNo != null" >
+        contract_no = #{contractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="periodType != null" >
+        period_type = #{periodType,jdbcType=INTEGER},
+      </if>
+      <if test="periodLength != null" >
+        period_length = #{periodLength,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeTotal != null" >
+        recharge_total = #{rechargeTotal,jdbcType=NUMERIC},
+      </if>
+      <if test="rechargeLeft != null" >
+        recharge_left = #{rechargeLeft,jdbcType=NUMERIC},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.AccountPeriodMaster" >
+    update t_account_period_master
+    set account = #{account,jdbcType=VARCHAR},
+      total_limit = #{totalLimit,jdbcType=NUMERIC},
+      used_limit = #{usedLimit,jdbcType=NUMERIC},
+      duty_officer = #{dutyOfficer,jdbcType=VARCHAR},
+      oa_audit_code = #{oaAuditCode,jdbcType=VARCHAR},
+      contract_no = #{contractNo,jdbcType=VARCHAR},
+      period_type = #{periodType,jdbcType=INTEGER},
+      period_length = #{periodLength,jdbcType=INTEGER},
+      recharge_total = #{rechargeTotal,jdbcType=NUMERIC},
+      recharge_left = #{rechargeLeft,jdbcType=NUMERIC},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="pageSearch" resultMap="BaseResultMap" parameterType="dto.dismember.Search">
+		select apm.*,
+			dis.distribution_mode,
+			dis.nick_name,
+			mo.dis_mode,
+			(select
+					count (aps.*)
+				from
+					t_account_period_slave aps
+				where
+					aps. state != 0
+					and aps.master_id = apm.id
+			) effect_count -- 生效账期数量
+		from
+			t_account_period_master apm
+			left join t_dis_member dis on apm.account = dis.email
+			left join t_dis_mode mo on mo.id = dis.distribution_mode
+		where 1 = 1
+		<if test="state != null">
+			and state = #{state,jdbcType=INTEGER}
+		</if>
+		<if test="search != null and search != ''">
+			and (
+			lower(apm.account) LIKE lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(dis.nick_name) LIKE lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(apm.oa_audit_code) LIKE
+			lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(apm.contract_no) LIKE
+			lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(apm.duty_officer) LIKE
+			lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(apm.create_user) LIKE
+			lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			)
+		</if>
+		<if test="disMode != null">
+			and distribution_mode = #{disMode,jdbcType=INTEGER}
+		</if>
+		order by	
+		<choose>
+			<when test="filter != null and  sort!= null and sort != '' ">
+				${sort} ${filter} 
+			</when>
+			<otherwise>
+			 create_date desc
+			</otherwise>
+		</choose>
+		<if test="pageSize != null and currPage != null">
+			limit #{pageSize} OFFSET #{pageSize}*(#{currPage}-1);
+		</if>
+	</select>
+	<select id="pageCount" parameterType="dto.dismember.Search"  resultType="java.lang.Integer">
+		select
+			count(apm.*)
+		from
+			t_account_period_master apm
+			left join t_dis_member dis on apm.account = dis.email
+		where 1 = 1
+		<if test="state != null">
+			and state = #{state,jdbcType=INTEGER}
+		</if>
+		<if test="search != null and search != ''">
+			and (
+			lower(apm.account) LIKE lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(dis.nick_name) LIKE lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(apm.oa_audit_code) LIKE
+			lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(apm.contract_no) LIKE
+			lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(apm.duty_officer) LIKE
+			lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(apm.create_user) LIKE
+			lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			)
+		</if>
+		<if test="disMode != null">
+			and distribution_mode = #{disMode,jdbcType=INTEGER}
+		</if>
+	</select>
+	<select id="getValidAp" resultMap="BaseResultMap" parameterType="java.lang.String" >
+		select distinct
+			apm.*
+		from
+			t_account_period_master apm
+			left join t_account_period_slave aps on apm. id = aps.master_id
+		where
+			account = #{1,jdbcType=VARCHAR}
+			and state = 1
+		limit 1 offset 0
+	</select>
+	<select id="getAcPeriodInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+		select distinct
+			apm.*,state
+		from
+			t_account_period_master apm
+			left join t_account_period_slave aps on apm. id = aps.master_id
+		where
+			account = #{1,jdbcType=VARCHAR}
+		order by apm.id desc,aps.id desc
+		limit 1 offset 0
+	</select>
+	<select id="getUsedAps"  resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" />
+		from
+			t_account_period_master
+		where
+			account = #{1,jdbcType=VARCHAR}
+			and used_limit > 0
+		order by create_date desc
+	</select>
+</mapper>

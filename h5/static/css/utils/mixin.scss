@@ -1,0 +1,93 @@
+@mixin imgPos{
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  margin-top: 9px;
+  background: url("../../img/spirit.png") no-repeat;
+  background-size: 320px auto;
+  position: absolute;
+}
+@mixin inp{
+  text-indent: 10px;
+  border: 1px solid #eee;
+  border-radius: 20px;
+  background-color: #fafafa;
+}
+@mixin bg{
+  height: 45px;
+  line-height: 45px;
+  font-size: 13px;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+  padding: 0 4px;
+  background: #fff;
+}
+
+@mixin checkedCon($fs:18px) {
+  &:before {
+    display: inline-block;
+    z-index: 1;
+  }
+}
+$duration: .4s;
+.mui-checkbox {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: solid 1px #d9d9d9;
+  border-radius: 20px;
+  background-clip: padding-box;
+  display: inline-block;
+/*  background: url("../../img/gou.png") no-repeat 2px;*/
+
+  &:focus {
+    outline: 0 none;
+    outline-offset: -2px
+  }
+  &:checked {
+    background: #18b4ed url(../../img/spirit.png) no-repeat;
+    border: solid 1px #FFFFFF;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-size: 212px auto;
+    background-position: -16px -16px;
+  }
+  &:disabled {
+    background-color: #d9d9d9;
+    border: solid 1px #d9d9d9;
+    @include checkedCon();
+  }
+  &.checkbox-green:checked {
+    background-color: #5cb85c;
+  }
+  &.checkbox-orange:checked {
+    background-color: #f0ad4e;
+  }
+  &.checkbox-s {
+    width: 19px;
+    height: 19px;
+    @include checkedCon(13px);
+  }
+}
+
+.mui-checkbox-anim{
+  transition: background-color ease $duration/2;
+}
+
+@mixin offlineSpan{
+  span{
+    display: inline-block;
+    text-align: center;    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  span:nth-of-type(1){
+    width: 42%;
+  }
+  span:nth-of-type(2){
+    width: 32%;
+  }
+  span:nth-of-type(3){
+    width: 26%;
+  }
+}

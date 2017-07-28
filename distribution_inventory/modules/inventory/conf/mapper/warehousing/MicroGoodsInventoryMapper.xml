@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.warehousing.MicroGoodsInventoryMapper">
+	<resultMap id="BaseResultMap" type="entity.warehousing.MicroGoodsInventory">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="sku" property="sku" jdbcType="VARCHAR" />
+		<result column="product_title" property="productTitle" jdbcType="VARCHAR" />
+		<result column="product_category" property="productCategory" jdbcType="INTEGER" />
+		<result column="product_category_name" property="productCategoryName" jdbcType="VARCHAR" />
+		<result column="mwarehouse_id" property="mwarehouseId" jdbcType="VARCHAR" />
+		<result column="mwarehouse_name" property="mwarehouseName" jdbcType="VARCHAR" />
+		<result column="warehouse_id" property="warehouseId" jdbcType="VARCHAR" />
+		<result column="warehouse_no" property="warehouseNo" jdbcType="VARCHAR" />
+		<result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+		<result column="total_stock" property="totalStock" jdbcType="INTEGER" />
+		<result column="frozen_stock" property="frozenStock" jdbcType="INTEGER" />
+		<result column="available_stock" property="avaliableStock" jdbcType="INTEGER" />
+		<result column="costprice" property="costprice" jdbcType="DOUBLE" />
+		<result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+		<result column="is_gift" property="isGift" jdbcType="BIT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, 
+		sku, 
+		product_title, 
+		product_category, 
+		mwarehouse_id,
+		mwarehouse_name,
+		warehouse_id, 
+		warehouse_no, 
+		warehouse_name, 
+		total_stock, 
+		frozen_stock,
+		available_stock, 
+		costprice, 
+		last_updated,
+		is_gift
+	</sql>
+	<insert id="insert" parameterType="entity.warehousing.MicroGoodsInventory">
+		insert into
+		t_micro_goods_inventory 
+		(
+			sku, 
+			product_title, 
+			product_category, 
+			product_category_name,
+			mwarehouse_id,
+			mwarehouse_name,
+			warehouse_id, 
+			warehouse_no, 
+			warehouse_name, 
+			total_stock, 
+			frozen_stock,
+			available_stock, 
+			costprice, 
+			last_updated,
+			is_gift
+		)
+		values
+		(
+			#{sku,jdbcType=VARCHAR},
+			#{productTitle,jdbcType=VARCHAR},
+			#{productCategory,jdbcType=INTEGER},
+			#{productCategoryName,jdbcType=VARCHAR},
+			#{mwarehouseId,jdbcType=INTEGER},
+			#{mwarehouseName,jdbcType=VARCHAR},
+			#{warehouseId,jdbcType=INTEGER},
+			#{warehouseNo,jdbcType=VARCHAR},
+			#{warehouseName,jdbcType=VARCHAR},
+			#{totalStock,jdbcType=INTEGER},
+			#{frozenStock,jdbcType=INTEGER},
+			#{avaliableStock,jdbcType=INTEGER},
+			#{costprice,jdbcType=DOUBLE}, 
+			#{lastUpdated,jdbcType=TIMESTAMP},
+			#{isGift,jdbcType=BIT}
+		)
+	</insert>
+	
+
+	<delete id="delete" parameterType="entity.warehousing.MicroGoodsInventory">
+		delete from
+		t_micro_goods_inventory
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<select id="query" parameterType="java.util.List" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_micro_goods_inventory
+		<if test="paramDto != null">
+			<where>
+				1 = 1
+				<if test="paramDto.id != null">
+					and id = #{paramDto.id}
+				</if>
+				<if test="paramDto.sku != null">
+					and sku = #{paramDto.sku}  
+				</if>
+				<if test="paramDto.productTitle != null">
+					and product_title like '%'||#{paramDto.productTitle}||'%'
+				</if>
+				<if test="paramDto.productCategoryId != null">
+					<!-- and product_category = #{paramDto.productCategoryId} -->
+					<!-- 由于微仓中没存类目id 所以要关联查询  -->
+					and sku in
+					( 
+						select csku from
+						t_product_category_mapper
+						where
+						icategory = #{paramDto.productCategoryId,jdbcType=INTEGER}
+					)
+				</if>
+				<if test="paramDto.productCategoryName != null">
+					and product_category_name = #{paramDto.productCategoryName}
+				</if>
+				<if test="paramDto.mwarehouseId != null">
+					and mwarehouse_id = #{paramDto.mwarehouseId}
+				</if>
+				<if test="paramDto.mwarehouseName != null">
+					and mwarehouse_name = #{paramDto.mwarehouseName}
+				</if>
+				<if test="paramDto.warehouseId != null">
+					and warehouse_id = #{paramDto.warehouseId}
+				</if>
+				<if test="paramDto.warehouseNo != null">
+					and warehouse_no = #{paramDto.warehouseNo}
+				</if>
+				<if test="paramDto.warehouseName != null">
+					and warehouse_name = #{paramDto.warehouseName}
+				</if>
+				<if test="paramDto.totalStock != null ">
+					<choose>
+						<when test="paramDto.totalStock > 0">
+							and total_stock >= #{paramDto.totalStock}
+						</when>
+						<otherwise>
+							and total_stock = #{paramDto.totalStock}
+						</otherwise>
+					</choose>
+				</if>
+				<if test="paramDto.frozenStock != null">
+					<choose>
+						<when test="paramDto.frozenStock > 0">
+							and frozen_stock >= #{paramDto.frozenStock}
+						</when>
+						<otherwise>
+							and frozen_stock = #{paramDto.frozenStock}
+						</otherwise>
+					</choose>
+				</if>
+				<if test="paramDto.avaliableStock != null">
+					<choose>
+						<when test="paramDto.avaliableStock > 0">
+							and available_stock >= #{paramDto.avaliableStock}
+						</when>
+						<otherwise>
+							and available_stock = #{paramDto.avaliableStock}
+						</otherwise>
+					</choose>
+				</if>
+				<if test="paramDto.costprice != null">
+					and costprice = #{paramDto.costprice}
+				</if>
+				<if test="paramDto.lastUpdated != null">
+					and last_updated = #{paramDto.lastUpdated}
+				</if>
+				<if test="paramDto.key != null">
+					and (sku like '%'||#{paramDto.key}||'%' or product_title like '%'||#{paramDto.key}||'%')
+				</if>
+				<if test="paramDto.isGift != null">
+					and is_gift = #{paramDto.isGift}  
+				</if>
+			</where>
+			
+				<if test="paramDto.isGift == null">
+					and available_stock > 0  
+				</if>
+				
+			    order by available_stock desc
+			    <if test="pageNum != null and length != null">
+				 limit #{length} offset (#{pageNum}-1)*#{length}
+				</if>
+		</if>
+	</select>
+	
+	<select id="total" parameterType="java.util.List" resultType="Integer">
+		select
+			count(1)
+		from t_micro_goods_inventory
+		<if test="paramDto != null">
+			<where>
+				1 = 1
+				<if test="paramDto.id != null">
+					and id = #{paramDto.id}
+				</if>
+				<if test="paramDto.sku != null">
+					and sku = #{paramDto.sku}  
+				</if>
+				<if test="paramDto.productTitle != null">
+					and product_title like '%'||#{paramDto.productTitle}||'%'
+				</if>
+				<if test="paramDto.productCategoryId != null">
+					<!-- and product_category = #{paramDto.productCategoryId} -->
+					<!-- 由于微仓中没存类目id 所以要关联查询  -->
+					and sku in
+					( 
+						select csku from
+						t_product_category_mapper
+						where
+						icategory = #{paramDto.productCategoryId,jdbcType=INTEGER}
+					)
+				</if>
+				<if test="paramDto.productCategoryName != null">
+					and product_category_name = #{paramDto.productCategoryName}
+				</if>
+				<if test="paramDto.mwarehouseId != null">
+					and mwarehouse_id = #{paramDto.mwarehouseId}
+				</if>
+				<if test="paramDto.mwarehouseName != null">
+					and mwarehouse_name = #{paramDto.mwarehouseName}
+				</if>
+				<if test="paramDto.warehouseId != null">
+					and warehouse_id = #{paramDto.warehouseId}
+				</if>
+				<if test="paramDto.warehouseNo != null">
+					and warehouse_no = #{paramDto.warehouseNo}
+				</if>
+				<if test="paramDto.warehouseName != null">
+					and warehouse_name = #{paramDto.warehouseName}
+				</if>
+				<if test="paramDto.totalStock != null ">
+					<choose>
+						<when test="paramDto.totalStock > 0">
+							and total_stock >= #{paramDto.totalStock}
+						</when>
+						<otherwise>
+							and total_stock = #{paramDto.totalStock}
+						</otherwise>
+					</choose>
+				</if>
+				<if test="paramDto.frozenStock != null">
+					<choose>
+						<when test="paramDto.frozenStock > 0">
+							and frozen_stock >= #{paramDto.frozenStock}
+						</when>
+						<otherwise>
+							and frozen_stock = #{paramDto.frozenStock}
+						</otherwise>
+					</choose>
+				</if>
+				<if test="paramDto.avaliableStock != null">
+					<choose>
+						<when test="paramDto.avaliableStock > 0">
+							and available_stock >= #{paramDto.avaliableStock}
+						</when>
+						<otherwise>
+							and available_stock = #{paramDto.avaliableStock}
+						</otherwise>
+					</choose>
+				</if>
+				<if test="paramDto.costprice != null">
+					and costprice = #{paramDto.costprice}
+				</if>
+				<if test="paramDto.lastUpdated != null">
+					and last_updated = #{paramDto.lastUpdated}
+				</if>
+				<if test="paramDto.isGift != null">
+					and is_gift = #{paramDto.isGift}  
+				</if>
+				<if test="paramDto.key != null">
+					and (sku like '%'||#{paramDto.key}||'%' or product_title like '%'||#{paramDto.key}||'%')
+				</if>
+			</where>
+		</if>
+		<if test="paramDto.isGift == null">
+			and available_stock > 0  
+		</if>
+	</select>
+	
+	
+
+	<update id="update" parameterType="entity.warehousing.MicroGoodsInventory">
+		update t_micro_goods_inventory
+		<set>
+			<trim suffixOverrides="," >
+				<if test="sku != null">
+					sku = #{sku,jdbcType=VARCHAR},
+				</if>
+				<if test="productTitle != null">
+					product_title = #{productTitle,jdbcType=VARCHAR},
+				</if>
+				<if test="productCategory != null">
+					product_category = #{productCategory,jdbcType=INTEGER},
+				</if>
+				<if test="productCategoryName != null">
+					product_category_name = #{productCategoryName,jdbcType=VARCHAR}
+				</if>
+				<if test="mwarehouseId != null">
+					mwarehouse_id = #{mwarehouseId,jdbcType=INTEGER},
+				</if>
+				<if test="mwarehouseName != null">
+					mwarehouse_name = #{mwarehouseName,jdbcType=VARCHAR},
+				</if>
+				<if test="warehouseId != null">
+					warehouse_id = #{warehouseId,jdbcType=INTEGER},
+				</if>
+				<if test="warehouseNo != null">
+					warehouse_no = #{warehouseNo,jdbcType=VARCHAR},
+				</if>
+				<if test="warehouseName != null">
+					warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+				</if>
+				<if test="totalStock != null">
+					total_stock = #{totalStock,jdbcType=INTEGER},
+				</if>
+				<if test="frozenStock != null">
+					frozen_stock = #{frozenStock,jdbcType=INTEGER},
+				</if>
+				<if test="avaliableStock != null">
+					available_stock = #{avaliableStock,jdbcType=INTEGER},
+				</if>
+				<if test="costprice != null">
+					costprice = #{costprice,jdbcType=DOUBLE},
+				</if>
+				<if test="lastUpdated != null">
+					last_updated=#{lastUpdated,jdbcType=TIMESTAMP},
+				</if>
+				
+			</trim>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="selectbyemail" parameterType="java.lang.String" resultType="dto.warehousing.MicroRealWarehouseDto">
+		select 
+		DISTINCT 
+		warehouse_id as warehouseId
+		,warehouse_name warehouseName
+		from t_micro_goods_inventory
+		where total_stock > 0 and mwarehouse_name = #{email,jdbcType=VARCHAR}
+		order by warehouse_id asc
+	</select>
+	
+	<resultMap id="ImageMap" type="java.util.Map">
+		<result column="sku" property="sku" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- add by xuse -->
+	<select id="queryImage" parameterType="java.util.List" resultMap="ImageMap">
+		select csku as sku,cimageurl as url from 
+		t_product_image where bbaseimage='true'
+		and csku in 
+		<foreach collection="list" open="(" separator="," close=")" item="item">
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="queryByList" parameterType="java.util.List" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_micro_goods_inventory
+		where available_stock > 0
+	</select>
+</mapper>

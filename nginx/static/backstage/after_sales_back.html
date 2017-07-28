@@ -1,0 +1,149 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<h1>售后管理<span>---</span><span>客户售后单</span></h1>
+<span class="postage-setting show-derive-list"
+      style="display: inline-block; padding:5px 10px;color: #fff;background-color: #55ccc8">售后邮费补贴设置</span>
+<ul class="search_category" id = "after_search_box">
+    <li>申请时间：
+        <input placeholder="开始日期" id="seachTime0" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">至
+        <input placeholder="结束日期" id="seachTime1" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+    </li>
+    <!--<li>客户订单生成时间：-->
+        <!--<input placeholder="开始日期" id="seachTime0" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">至-->
+        <!--<input placeholder="结束日期" id="seachTime1" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">-->
+    <!--</li>-->
+    <li>根据商品售后类型查询：
+        <select name="" id="after_sale_type">
+            <option value="">所有类型</option>
+            <option value="1">退货</option>
+            <option value="2">换货</option>
+            <option value="3">退款</option>
+        </select>
+    </li>
+    <li style = "display:none">当前状态：
+        <select name="" id="">
+            <option value="selected">所有状态</option>
+            <option value="1">待付款</option>
+            <option value="2">已付款</option>
+            <option value="3">已取消</option>
+        </select>
+    </li>
+    <li>
+        <div class="search">
+            <input id="searchInput" class="searchInput" placeholder="售后单编号/客户订单编号/分销商" style="width:200px">
+            <input class="searchButton" value="搜索" type="submit">
+            <button>导出excel</button>
+        </div>
+    </li>
+</ul>
+
+<div class="content_list">
+    <ul class="list_title">
+        <li style="width:20%">售后单号</li>
+        <li style="width:20%">售后单生成时间</li>
+        <li style="width:20%">客户订单号</li>
+        <li style="width:20%">客户订单生成时间</li>
+        <!-- <li style="width:20%">售后类型</li> -->
+        <li style="width:20%">分销商</li>
+        <!-- <li style="width:10%">当前状态</li>
+        <li style="width:20%">相关操作</li> -->
+    </ul>
+    <div class="list_content" id='sublit_detail'></div>
+    <div class="list_content">
+        <p>
+            共<span id="afterSaleTotal"  style="display:inline-block;" >0</span>记录，每页显示
+            <select id="afterSale_pageSize">
+                <option value="10" selected>10</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
+            ，共<span id="afterSalePages" style="display:inline-block;">0</span>页
+        </p>
+    </div>
+</div>
+<div id="after_sale_pagination" style="text-align: center; margin-top: 30px;"></div>
+
+<!--审核弹出窗-->
+<div class="aftersales-audit-pop" style="display: none">
+    <div class="recharge-button">
+        <button class="approved" onclick="rechargebox('Ushow')">审核通过</button>
+        <button class="audit-not-through" onclick="rechargebox('Uhide')">审核不通过</button>
+    </div>
+    <div class="y-recharge" style="display: none">
+        <p>是否需要寄回商品：
+            <span><input type="radio" name="return">是</span>
+            <span><input type="radio" name="return">否</span>
+        </p>
+    </div>
+    <div class="n-recharge" style="display: none">
+        <p>请填写不通过审核的原因：</p>
+        <textarea placeholder="不超过500字"></textarea>
+    </div>
+</div>
+<!--售后邮费补贴设置-->
+<div class="after-postage-setting" style="display: none;">
+    <h1>售后管理<span>---</span><span>客户售后单-售后邮费补贴设置</span></h1>
+    <div class="after-postage">
+        <p>
+            当前每笔订单邮费补贴：<span class="after-postage-num">6</span>
+            <input type="text" class="after-postage-input" style="display: none;">元
+            <button class="after-edit" onclick="AfterSalesPost('Ushow')">编辑</button>
+            <button class="after-save" style="display: none;" onclick="AfterSalesPost('Uhide')">保存</button>
+        </p>
+    </div>
+    <div class="address-return">
+        <p>
+            退货地址：<span class="address-return-address">华南城一号交易广场乾隆物流</span>
+            <input class="address-return-input" type="text" style="display: none;">
+            <button class="after-addressedit" onclick="AfterSalesPost('Uchange')">编辑</button>
+            <button class="after-addresssave" style="display: none;" onclick="AfterSalesPost('Uback')">保存</button>
+        </p>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $('.content-R-sixteen').on('click', '.aftersales-audit', function () {
+        layer.open({
+            type: 1,
+            title: "审核",
+            area: ['318px', '300px'],
+            content: $('.aftersales-audit-pop'),
+            btn: ['确定', '取消'],
+            shadeClose: true,
+        })
+    })
+
+    $('.content-R-sixteen').on('click', '.aftersales-log', function () {
+        layer.open({
+            type: 1,
+            title: "操作日志",
+            area: ['404px', '400px'],
+            content: $('.aftersales-log-lit'),
+            shadeClose: true,
+        })
+    })
+    function AfterSalesPost(change) {
+        if (change == 'Ushow') {
+            $('.after-postage-num,.after-edit').hide();
+            $('.after-postage-input,.after-save').show();
+        } else if (change == 'Uhide') {
+            $('.after-postage-num,.after-edit').show();
+            $('.after-postage-input,.after-save').hide();
+        } else if (change == 'Uchange') {
+            $('.address-return-address,.after-addressedit').hide();
+            $('.address-return-input,.after-addresssave').show();
+        } else if (change == 'Uback') {
+            $('.address-return-address,.after-addressedit').show();
+            $('.address-return-input,.after-addresssave').hide();
+        }
+    }
+
+    function rechargebox(convert) {
+        if (convert == 'Ushow') {
+            $('.y-recharge').show();
+            $('.n-recharge').hide();
+        } else if (convert == 'Uhide') {
+            $('.y-recharge').hide();
+            $('.n-recharge').show();
+        }
+    }
+</script>

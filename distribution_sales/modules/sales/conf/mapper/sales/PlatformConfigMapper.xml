@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.PlatformConfigMapper" >
+  <resultMap id="BaseResultMap" type="entity.sales.PlatformConfig" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="platform_code" property="platformCode" jdbcType="VARCHAR" />
+    <result column="platform_key" property="platformKey" jdbcType="VARCHAR" />
+    <result column="platform_value" property="platformValue" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, platform_code, platform_key, platform_value, create_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from public.t_platform_config
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from public.t_platform_config
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.sales.PlatformConfig" >
+    insert into public.t_platform_config (id, platform_code, platform_key, 
+      platform_value, create_date)
+    values (#{id,jdbcType=INTEGER}, #{platformCode,jdbcType=VARCHAR}, #{platformKey,jdbcType=VARCHAR}, 
+      #{platformValue,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.sales.PlatformConfig" >
+    insert into public.t_platform_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="platformCode != null" >
+        platform_code,
+      </if>
+      <if test="platformKey != null" >
+        platform_key,
+      </if>
+      <if test="platformValue != null" >
+        platform_value,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="platformCode != null" >
+        #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="platformKey != null" >
+        #{platformKey,jdbcType=VARCHAR},
+      </if>
+      <if test="platformValue != null" >
+        #{platformValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.sales.PlatformConfig" >
+    update public.t_platform_config
+    <set >
+      <if test="platformCode != null" >
+        platform_code = #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="platformKey != null" >
+        platform_key = #{platformKey,jdbcType=VARCHAR},
+      </if>
+      <if test="platformValue != null" >
+        platform_value = #{platformValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.sales.PlatformConfig" >
+    update public.t_platform_config
+    set platform_code = #{platformCode,jdbcType=VARCHAR},
+      platform_key = #{platformKey,jdbcType=VARCHAR},
+      platform_value = #{platformValue,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findPlatformConfigByCodeAndKey" parameterType="java.util.Map" resultMap="BaseResultMap">
+      SELECT
+      <include refid="Base_Column_List"/>
+      from t_platform_config
+      where platform_code = #{platformCode} and platform_key = #{platformKey}
+  </select>
+
+  <select id="findPlatformConfigsByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from t_platform_config
+    where platform_code = #{platformCode}
+  </select>
+</mapper>

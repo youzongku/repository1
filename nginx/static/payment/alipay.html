@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Cache-Control" content="no-cache"/>
+		<meta http-equiv="Expires" content="0"/>
+		<title>支付宝支付跳转</title>
+	</head>
+<body>
+<div id="alipay_detail">
+	<form id="alipaysubmit" name="alipaysubmit"  method="post" onsubmit="return beforeSubmit()">
+		<input name="partner" readonly type="hidden" id="partner" />
+		<input name="service" type="hidden" id="service" />
+		<input name="_input_charset" type="hidden" id="_input_charset" />
+		<input name="sign_type" type="hidden" id="sign_type" />
+		<input name="sign" type="hidden" id="sign" />
+		<input name="notify_url" type="hidden" id="notify_url" />
+		<input name="return_url" type="hidden" id="return_url" />
+		<input name="out_trade_no" type="hidden" id="out_trade_no" />
+		<input name="subject" type="hidden" id="subject" />
+		<input name="payment_type" type="hidden" id="payment_type" />
+		<input name="total_fee" type="hidden" id="total_fee" />
+		<input name="seller_id" type="hidden" id="seller_id" />
+		<input name="body" type="hidden" id="body" />
+		<input  type="button" style= "display:none;" onclick="alipay()"/>
+	</form>
+</div>
+</body>
+<script type="text/javascript" src="../js/lib/jquery-1.11.3.min.js" ></script>
+<script type="text/javascript" src="../js/payment/alipay.js" ></script>	
+</html>

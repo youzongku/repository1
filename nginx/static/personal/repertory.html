@@ -1,0 +1,358 @@
+<div class="repertory-box" id="tabs">
+    <ul class="repertory-list ">
+        <li class="show">我的微仓</li>
+        <li>微仓售后记录</li>
+    </ul>
+    <div class="repertory">
+        <div class="five-date">
+            库存：
+            <select name="stock" tag="changEvent" class="select-pub">
+                <option value="" selected>全部</option>
+                <option value="1">有库存</option>
+                <option value="0">已售完</option>
+            </select>
+            &nbsp;&nbsp;&nbsp;商品类型：
+            <select name="categorys" class="select-pub">
+                <option value="" selected>全部</option>
+            </select>
+            &nbsp;&nbsp;&nbsp;所属仓库：
+            <select name="choose" tag="changEvent" class="select-pub">
+                <option value="" selected>全部</option>
+                <option value="2024">深圳仓</option>
+                <option value="2029">南沙仓</option>
+            </select>
+
+            <div class="three-search five-search">
+                <input id="title" type="text" value="" placeholder="商品编号/商品名称" class="search-input-pub"/>
+                <span name="search" class="search-btn-pub">搜索</span>
+                <button class="btn slaes-btn" onclick="SalesBtn('show')">申请售后</button>
+            </div>
+            <script>
+                //解决IEplaceholder不兼容问题
+                $(document).ready(function () {
+                    $(function () {
+                        if (!placeholderSupport()) {
+                            $('[placeholder]').focus(function () {
+                                var input = $(this);
+                                if (input.val() == input.attr('placeholder')) {
+                                    input.val('');
+                                    input.removeClass('placeholder');
+                                }
+                            }).blur(function () {
+                                var input = $(this);
+                                if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                                    input.addClass('placeholder');
+                                    input.val(input.attr('placeholder'));
+                                }
+                            }).blur();
+                        }
+                    })
+                    function placeholderSupport() {
+                        return 'placeholder' in document.createElement('input');
+                    }
+                })
+
+            </script>
+        </div>
+        <div class="repertory-table-box">
+            <table class="repertory-table">
+                <thead>
+                <tr>
+                    <td style="width: 50%;">商品名称</td>
+                    <td style="width: 15%;">商品编号</td>
+                    <td style="width: 15%;">微仓数量</td>
+                    <td style="width: 20%;">所属库存</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="width: 40%;">
+                        <div class="r-box">
+                            <a href="#" class="r-img"><img src="../../img/IW71-4-1a3c.jpg"/></a>
+                            <a href="#" class="r-title">澳洲(900g) 贝拉米奶粉3段 成长型</a>
+                        </div>
+                    </td>
+                    <td style="width: 15%;">IM142</td>
+                    <td style="width: 15%;">12<span class="Reset-Password"></span></td>
+                    <td style="width: 30%;" class="r-belong">
+                        <span>深圳仓</span>
+                        <span>1222</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 40%;">
+                        <div class="r-box">
+                            <a href="#" class="r-img"><img src="../../img/IW71-4-1a3c.jpg"/></a>
+                            <a href="#" class="r-title">澳洲(900g) 贝拉米奶粉3段 成长型</a>
+                        </div>
+                    </td>
+                    <td style="width: 15%;">IM142</td>
+                    <td style="width: 15%;">12<span class="Reset-Password"></span></td>
+                    <td style="width: 30%;" class="r-belong">
+                        <span>深圳仓</span>
+                        <span>1222</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="hide">
+        <div class="five-date">
+            <input placeholder="商品编号/商品名称/退货单号搜索" class="r-input">
+
+            <div class="three-search five-search">
+                退货状态：
+                <select class="select-pub">
+                    <option>全部</option>
+                    <option>待审核</option>
+                    <option>审核不通过</option>
+                    <option>已退款</option>
+                    <option>已取消</option>
+                </select>
+                <span name="search" class="search-btn-pub">搜索</span>
+            </div>
+            <script>
+                //解决IEplaceholder不兼容问题
+                $(document).ready(function () {
+                    $(function () {
+                        if (!placeholderSupport()) {
+                            $('[placeholder]').focus(function () {
+                                var input = $(this);
+                                if (input.val() == input.attr('placeholder')) {
+                                    input.val('');
+                                    input.removeClass('placeholder');
+                                }
+                            }).blur(function () {
+                                var input = $(this);
+                                if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                                    input.addClass('placeholder');
+                                    input.val(input.attr('placeholder'));
+                                }
+                            }).blur();
+                        }
+                    })
+                    function placeholderSupport() {
+                        return 'placeholder' in document.createElement('input');
+                    }
+                })
+
+            </script>
+        </div>
+        <div class="repertory-table-box">
+            <table class="repertory-table">
+                <thead>
+                <tr>
+                    <td style="width: 5%;">序号</td>
+                    <td style="width: 10%;">微仓退货单号</td>
+                    <td style="width: 20%;">商品名称</td>
+                    <td style="width: 10%;">商品编号</td>
+                    <td style="width: 10%;">退货数量</td>
+                    <td style="width: 15%;">所属仓库</td>
+                    <td style="width: 10%;">申请退货金额</td>
+                    <td style="width: 10%;">状态</td>
+                    <td style="width: 10%;">操作</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="width: 5%;">1</td>
+                    <td style="width: 10%;">WT0001</td>
+                    <td style="width: 20%;">澳洲(900g) 贝拉米奶粉3段</td>
+                    <td style="width: 10%;">IM142</td>
+                    <td style="width: 10%;">50</td>
+                    <td style="width: 15%;" class="r-belong">
+                        <span>深圳仓</span>
+                        <span>20</span>
+                    </td>
+                    <td style="width: 10%;">11200.00</td>
+                    <td style="width: 10%;" class="repertory-status" onclick="SalesBtn('exchange')">待审核</td>
+                    <td style="width: 10%;" class="delodr">取消退货</td>
+                </tr>
+                <tr>
+                    <td style="width: 5%;">2</td>
+                    <td style="width: 10%;">WT0001</td>
+                    <td style="width: 20%;">澳洲(900g) 贝拉米奶粉3段</td>
+                    <td style="width: 10%;">IM142</td>
+                    <td style="width: 10%;">50</td>
+                    <td style="width: 15%;" class="r-belong">
+                        <span>深圳仓</span>
+                        <span>20</span>
+                    </td>
+                    <td style="width: 10%;">11200.00</td>
+                    <td style="width: 10%;" class="repertory-status" onclick="SalesBtn('exchange')">审核不通过</td>
+                    <td style="width: 10%;" class="delodr">取消退货</td>
+                </tr>
+                <tr>
+                    <td style="width: 5%;">3</td>
+                    <td style="width: 10%;">WT0001</td>
+                    <td style="width: 20%;">澳洲(900g) 贝拉米奶粉3段</td>
+                    <td style="width: 10%;">IM142</td>
+                    <td style="width: 10%;">50</td>
+                    <td style="width: 15%;" class="r-belong">
+                        <span>深圳仓</span>
+                        <span>20</span>
+                    </td>
+                    <td style="width: 10%;">11200.00</td>
+                    <td style="width: 10%;">已取消</td>
+                    <td style="width: 10%;">------</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="hide progress-box">
+    <ul class="flow-navigator">
+        <li class="show-navigator">申请微仓退货</li>
+        <span>========</span>
+        <li>通淘处理退货申请</li>
+        <span>========</span>
+        <li>查看审核结果</li>
+        <button class="btn quitproduct" onclick="SalesBtn('hide')">返回微仓列表</button>
+    </ul>
+    <div class="clear"></div>
+    <p class="title">微仓退货申请
+        <button class="btn add-quitproduct">添加退货商品</button>
+    </p>
+    <div class="repertory-table-box">
+        <table class="repertory-table">
+            <thead>
+            <tr>
+                <td style="width: 25%;">商品名称</td>
+                <td style="width: 15%;">商品编号</td>
+                <td style="width: 15%;">退货数量</td>
+                <td style="width: 15%;">采购单价</td>
+                <td style="width: 15%;">所属仓库</td>
+                <td style="width: 15%;">操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="6"><p>请添加需要退货的商品！</p></td>
+            </tr>
+            <tr>
+                <td style="width: 25%;">澳洲(900g) 贝拉米奶粉3段</td>
+                <td style="width: 15%;">IM142</td>
+                <td style="width: 15%;">50</td>
+                <td style="width: 15%;">200.00</td>
+                <td style="width: 15%;">深圳仓</td>
+                <td style="width: 15%;"><span class="Reset-delet"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="repertory-table-box progress-list">
+        <p>
+            <span><b class="red">*</b> 退款原因：</span>
+            <select class="select-pub quit-reason">
+                <optipn>商品销量不好</optipn>
+                <optipn>假冒品牌</optipn>
+                <optipn>商品快过期</optipn>
+                <optipn>商品紧急召回</optipn>
+                <optipn>不做分销商了</optipn>
+                <optipn>客户退货量太多，遭投诉</optipn>
+                <optipn>其他（请在退款说明填写真实情况）</optipn>
+            </select>
+        </p>
+        <p>
+            <span> 退款数量：</span>
+            <span>0 <i>（退货数量不能大于微仓库存）</i></span>
+        </p>
+
+        <p>
+            <span><b class="red">*</b> 退款金额：</span>
+            <span>0<i>元</i></span>
+        </p>
+
+        <p>
+            <span> 退款说明：</span>
+            <textarea placeholder="0~200字以内"></textarea>
+        </p>
+        <button class="btn sub-quitproduct">提交退货申请</button>
+    </div>
+</div>
+<div class="hide status-box">
+    <ul class="flow-navigator">
+        <li class="show-navigator">申请微仓退货</li>
+        <span>========</span>
+        <li>通淘处理退货申请</li>
+        <span>========</span>
+        <li>查看审核结果</li>
+        <button class="btn quitproduct" onclick="SalesBtn('quit')">返回微仓售后列表</button>
+    </ul>
+    <div class="clear"></div>
+    <div class="repertory-table-box">
+        <div class="progress-status-top">
+            <h3>退款单号：<span>WT001</span></h3>
+            <h3><span>请等待通淘处理</span>，大概需要3个工作日。</h3>
+            <h3>注意：申请退货的微仓库存已被冻结。</h3>
+            <h3><span class="cuo">×</span>审核不通过</h3>
+            <h5>原因：<span>商品购买时间不足一天，防止恶意刷单</span></h5>
+        </div>
+        <div class="progress-status-content">
+            <h4>退货记录（退货单号：<span>WT0001</span>）</h4>
+            <ul class="progress-status-list">
+                <li>
+                    <div>通淘审核阶段请耐心等待</div>
+                    <span>2015-12-25 22:04:12</span>
+                </li>
+                <li>
+                    <div>
+                        <p>您发起了微仓退货申请，申请退货数量<span>5</span>个（其中：<span>广州仓<d>1</d>个</span>，<span>深圳仓<d>1</d>个</span>）</p>
+                        <p>原因：<span>商品销量不好。</span></p>
+
+                        <p>金额：<span>1400.00</span></p>
+
+                        <p>说明：<span>无</span></p>
+                    </div>
+                    <span>2015-12-25 22:04:12</span>
+                </li>
+                <li>
+                    <div>
+                        <h4>澳洲（900g）贝拉米奶粉3段</h4>
+
+                        <p>说明：<span>无</span></p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    //    tab切换
+    $(".repertory-list li").click(function () {
+        $(this).addClass("show").siblings().removeClass();
+        $("#tabs > div").hide().eq($('.repertory-list li').index(this)).show();
+    });
+
+    $(".box-right-twenty").on("click", ".delodr", function () {
+        layer.confirm('提示：确认要取消微仓库存的退货申请吗？', {
+            btn: ['确定', '取消']
+        });
+    });
+    $(".box-right-twenty").on("click", ".Reset-Password", function () {
+        layer.tips('南沙仓锁定：1', '.Reset-Password', {
+            tips: [4, '#78BA32']
+        });
+    });
+    //    申请售后
+    function SalesBtn(change) {
+        if (change == 'show') {
+            $(".progress-box").show();
+            $(".repertory-box").hide();
+        }
+        else if (change == 'hide') {
+            $(".progress-box").hide();
+            $(".repertory-box").show();
+        }
+        else if (change == 'exchange') {
+            $(".status-box").show();
+            $(".repertory-box").hide();
+        }
+        else if (change == 'quit') {
+            $(".status-box").hide();
+            $(".repertory-box").show();
+        }
+    }
+</script>

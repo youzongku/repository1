@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.DisApplyMapper">
+	<resultMap id="BaseResultMap" type="entity.timer.DisApply">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="distributor_name" property="distributorName"
+			jdbcType="VARCHAR" />
+		<result column="transfer_card" property="transferCard"
+			jdbcType="VARCHAR" />
+		<result column="transfer_time" property="transferTime"
+			jdbcType="TIMESTAMP" />
+		<result column="transfer_number" property="transferNumber"
+			jdbcType="VARCHAR" />
+		<result column="transfer_amount" property="transferAmount"
+			jdbcType="NUMERIC" />
+		<result column="distributor_telphone" property="distributorTelphone"
+			jdbcType="VARCHAR" />
+		<result column="audit_state" property="auditState" jdbcType="INTEGER" />
+		<result column="transfer_type" property="transferType"
+			jdbcType="VARCHAR" />
+		<result column="transfer_desc" property="transferDesc"
+			jdbcType="VARCHAR" />
+		<result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+		<result column="updatedate" property="updatedate" jdbcType="TIMESTAMP" />
+		<result column="is_confirm" property="isConfirm" jdbcType="BIT" />
+		<result column="distributor_email" property="email" jdbcType="VARCHAR" />
+		<result column="apply_type" property="applyType" jdbcType="VARCHAR" />
+		<result column="recipient_card_id" property="recipientId"
+			jdbcType="INTEGER" />
+
+		<result column="actual_amount" property="actualAmount"
+			jdbcType="NUMERIC" />
+		<result column="review_state" property="reviewState" jdbcType="INTEGER" />
+		<result column="screenshot_url" property="screenshotUrl"
+			jdbcType="VARCHAR" />
+		<result column="audit_reasons" property="auditReasons"
+			jdbcType="VARCHAR" />
+		<result column="receiptcard" property="receiptCard" jdbcType="VARCHAR" />
+		<result column="receiptname" property="receiptName" jdbcType="VARCHAR" />
+		<result column="actual_time" property="actualDate" jdbcType="TIMESTAMP" />
+		<result column="audit_remark" property="auditRemark" jdbcType="VARCHAR" />
+		<result column="online_apply_no" property="onlineApplyNo" jdbcType="VARCHAR" />
+		<result column="re_audit_remark" property="reAuditRemark" jdbcType="VARCHAR" />
+		<result column="apply_remark" property="applyRemark" jdbcType="VARCHAR" />
+		<result column="withdraw_account_id" property="withdrawAccountId" jdbcType="INTEGER" />
+		<result column="withdraw_amount" property="withdrawAmount" jdbcType="NUMERIC" />
+		<result column="counter_fee" property="counterFee" jdbcType="NUMERIC" />
+		<result column="apply_man" property="applyMan" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		t.id, t.distributor_name, t.transfer_card, t.transfer_time,
+		t.transfer_number,
+		t.transfer_amount,
+		t.distributor_telphone,
+		t.audit_state, t.transfer_type, t.transfer_desc, t.createdate,
+		t.is_confirm,t.distributor_email,t.apply_type,t.updatedate,t.recipient_card_id,t.actual_amount,t.review_state,t.screenshot_url,t.audit_reasons,t.actual_time,
+		t.audit_remark,online_apply_no,re_audit_remark,apply_remark, withdraw_account_id, withdraw_amount,counter_fee,apply_man
+	</sql>
+
+	<select id="findWithdrawToMsiteApply" resultMap="BaseResultMap" >
+		select toa.* from t_dis_operate_apply toa
+		inner join t_dis_withdraw_account twa
+		on toa.withdraw_account_id = twa.id
+		where 1 = 1 and toa.apply_type = '2'
+		and toa.audit_state = 0 and twa.account_type = 2
+		order by toa.createdate asc
+	</select>
+</mapper>

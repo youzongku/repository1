@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.SaleDetailMapper" >
+  <resultMap id="BaseResultMap" type="entity.timer.SaleDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="product_purchase_id" property="productPurchaseId" jdbcType="VARCHAR" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="qty" property="qty" jdbcType="INTEGER" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="inter_bar_code" property="interBarCode" jdbcType="VARCHAR" />
+    <result column="plateform_name" property="plateformName" jdbcType="VARCHAR" />
+    <result column="purchase_price" property="purchasePrice" jdbcType="DOUBLE" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="sales_order_id" property="salesOrderId" jdbcType="INTEGER" />
+    <result column="product_img" property="productImg" jdbcType="VARCHAR" />
+    <result column="sales_order_no" property="salesOrderNo" jdbcType="VARCHAR" />
+    <result column="is_deducted" property="isDeducted" jdbcType="INTEGER" />
+    <result column="market_price" property="marketPrice" jdbcType="DOUBLE" />
+    <result column="dis_profit_rate" property="disProfitRate" jdbcType="DOUBLE" />
+    <result column="dis_profit" property="disProfit" jdbcType="DOUBLE" />
+    <result column="dis_vat" property="disVat" jdbcType="DOUBLE" />
+    <result column="dis_stock_fee" property="disStockFee" jdbcType="DOUBLE" />
+    <result column="dis_shipping_type" property="disShippingType" jdbcType="VARCHAR" />
+    <result column="dis_other_cost" property="disOtherCost" jdbcType="DOUBLE" />
+    <result column="dis_total_cost" property="disTotalCost" jdbcType="DOUBLE" />
+    <result column="dis_transfer_fee" property="disTransferFee" jdbcType="DOUBLE" />
+    <result column="dis_list_fee" property="disListFee" jdbcType="DOUBLE" />
+    <result column="dis_trade_fee" property="disTradeFee" jdbcType="DOUBLE" />
+    <result column="dis_pay_fee" property="disPayFee" jdbcType="DOUBLE" />
+    <result column="dis_postal_fee" property="disPostalFee" jdbcType="DOUBLE" />
+    <result column="dis_import_tar" property="disImportTar" jdbcType="DOUBLE" />
+    <result column="dis_gst" property="disGst" jdbcType="DOUBLE" />
+    <result column="dis_insurance" property="disInsurance" jdbcType="DOUBLE" />
+    <result column="dis_total_vat" property="disTotalVat" jdbcType="DOUBLE" />
+    <result column="cost" property="cost" jdbcType="DOUBLE" />
+    <result column="dis_freight" property="disFreight" jdbcType="DOUBLE" />
+    <result column="dis_price" property="disPrice" jdbcType="DOUBLE" />
+    <result column="dis_cif_price" property="disCifPrice" jdbcType="DOUBLE" />
+    <result column="gst_rate" property="gstRate" jdbcType="DOUBLE" />
+    <result column="vat_rate" property="vatRate" jdbcType="DOUBLE" />
+    <result column="import_tar_rate" property="importTarRate" jdbcType="DOUBLE" />
+    <result column="postal_fee_rate" property="postalFeeRate" jdbcType="DOUBLE" />
+    <result column="logistic_fee" property="logisticFee" jdbcType="DOUBLE" />
+    <result column="final_selling_price" property="finalSellingPrice" jdbcType="DOUBLE" />
+    <result column="postal_rate"       property="postalRate"       jdbcType="DOUBLE" />
+    <result column="is_after_service"  property="isAfterService"   jdbcType="INTEGER" />
+    <result column="is_deducted_history"  property="isDeductedHistory"   jdbcType="INTEGER" />
+    <result column="isgift"  property="isgift"   jdbcType="BIT" />
+    <result column="giftnum"  property="giftNum"   jdbcType="INTEGER" />
+    <result column="purchase_order_no" property="purchaseOrderNo" jdbcType="VARCHAR" />
+    <result column="cap_fee" property="capFee" jdbcType="DOUBLE" />
+    <result column="arrive_ware_price" property="arriveWarePrice" jdbcType="DOUBLE" />
+    <result column="expiration_date" property="expirationDate" jdbcType="TIMESTAMP" />
+    <result column="inter_bar_code" property="interBarCode" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="Price" type="java.util.Map" >
+    <result column="platformamount" property="platformamount" jdbcType="DOUBLE" />
+    <result column="clearanceamount" property="clearanceamount" jdbcType="DOUBLE" />
+    <result column="distributortype" property="distributortype" jdbcType="INTEGER" />
+    <result column="bbcpostage" property="bbcpostage" jdbcType="DOUBLE" />
+    <result column="arrvicetotal" property="arrvicetotal" jdbcType="DOUBLE" />
+    <result column="optfee" property="optfee" jdbcType="DOUBLE" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, product_purchase_id, sku, qty, product_name, inter_bar_code, plateform_name, purchase_price, 
+    warehouse_id, warehouse_name, sales_order_id ,product_img ,sales_order_no,sales_order_no,is_deducted,
+    market_price,dis_profit_rate, dis_profit, dis_vat, dis_stock_fee, dis_shipping_type,
+    dis_other_cost, dis_total_cost, dis_transfer_fee, dis_list_fee, dis_trade_fee, dis_pay_fee, 
+    dis_postal_fee, dis_import_tar, dis_gst, dis_insurance, dis_total_vat, cost, dis_freight, 
+    dis_price, dis_cif_price,final_selling_price,postal_rate,is_after_service,
+    is_deducted_history,isgift,giftnum,gst_rate,vat_rate,import_tar_rate,postal_fee_rate,logistic_fee,
+    purchase_order_no,cap_fee,arrive_ware_price,expiration_date,inter_bar_code
+  </sql>
+  
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+      select 
+      <include refid="Base_Column_List"></include>
+      from t_product_sales_order_details where sales_order_id=#{orderId} and is_deducted_history = 0 order by purchase_price
+  </select>
+  
+  <select id="getDetails" resultType="entity.timer.SalesToB2cDetail" parameterType="java.lang.Integer" >
+	select
+		id as id,
+		product_name as ctitle,--产品名
+		sku as csku,
+		qty as iqty,--数量
+		final_selling_price as fprice,--单价
+		qty*final_selling_price as ftotalprices, --总价
+		warehouse_id as warehouseId,--仓库id
+		warehouse_name as warehousename,--仓库名
+		purchase_price as foriginalprice,--原价
+		expiration_date as expirationDate,--到期日期
+		dis_profit_rate as disProfitRate,
+		dis_profit as disProfit,
+		dis_vat as disVat,
+		dis_stock_fee as disStockFee,
+		dis_shipping_type as disShippingType,
+		dis_other_cost as disOtherCost,
+		dis_total_cost as disTotalCost,
+		dis_transfer_fee as disTransferFee,
+		dis_list_fee as disListFee,
+		dis_trade_fee as disTradeFee,
+		dis_pay_fee as disPayFee,
+		dis_postal_fee as disPostalFee,
+		dis_import_tar as disImportTar,
+		dis_gst as disGst,
+		dis_insurance as disInsurance,
+		dis_total_vat as disTotalVat,
+		cost as cost,
+		dis_freight as disFreight,
+		dis_price as disPrice,
+		dis_cif_price as disCifPrice,
+		final_selling_price as finalSellingPrice
+	from t_product_sales_order_details
+		where sales_order_id=#{orderId} and 
+		is_deducted_history = 	(
+		select case (SOURCE = 'BBC' or SOURCE is null)
+			when 'true' then 1
+			ELSE 0 END from t_product_sales_order_main 
+		where id = #{orderId})
+  </select>
+
+  <select id="getAmount" resultMap="Price" parameterType="java.lang.Integer">
+		select 
+		sum(platformamount) AS platformamount,
+		clearanceamount,
+		distributortype,
+		bbcpostage,
+		sum(arrvicetotal) AS arrvicetotal,
+		optfee
+		 from 
+		(SELECT
+			case (sod.cap_fee is null)
+			when 'true' then sum(sod.purchase_price * sod.qty)
+			ELSE sum(sod.cap_fee * sod.qty) END
+			AS platformamount,--平台收入，商品采购价总和
+			sob.order_actual_amount as clearanceamount, -- 报关金额=实付款
+			som.distributor_type as distributortype,
+			sob.bbc_postage as bbcpostage,
+			case (sod.arrive_ware_price is null)
+			when 'true' then sum(sod.purchase_price * sod.qty)
+			ELSE sum(sod.arrive_ware_price * sod.qty) END
+		    AS arrvicetotal,--到仓价总计
+			som.opt_fee AS optfee -- 操作费
+		FROM
+			t_product_sales_order_details sod
+		RIGHT JOIN t_product_sales_order_base sob ON sob.sales_order_id = sod.sales_order_id
+		RIGHT JOIN t_product_sales_order_main som ON sob.sales_order_id = som.id
+		WHERE
+			sod.sales_order_id = #{0} and sod.is_deducted_history = 1 
+			GROUP BY sob.order_actual_amount,som.distributor_type,sob.bbc_postage,sod.cap_fee,sod.arrive_ware_price,som.opt_fee
+		) t 
+		group by clearanceamount,distributortype,bbcpostage,optfee
+  </select>
+
+</mapper>

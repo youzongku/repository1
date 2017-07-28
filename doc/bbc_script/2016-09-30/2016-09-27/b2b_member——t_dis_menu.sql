@@ -1,0 +1,1 @@
+update t_dis_menu set name = '余额提现', description = '余额提现' where name = '提现审核' and level = 2 and position = 34;

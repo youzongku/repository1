@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.DisSalesmanMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.DisSalesman" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="erp" property="erp" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="work_no" property="workNo" jdbcType="VARCHAR" />
+    <result column="node_type" property="nodeType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, account, tel, erp, create_date, update_date, work_no,node_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_salesman
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByAccountAndNoName" resultMap="BaseResultMap" parameterType="entity.dismember.DisSalesman" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_salesman
+    where 1 = 1
+    <if test="account != null">
+		and account = #{account,jdbcType=VARCHAR}
+	</if>
+	<if test="name != null">
+		and name != #{name,jdbcType=VARCHAR}
+	</if>
+    order by id asc
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_salesman
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.DisSalesman" >
+    insert into t_dis_salesman (id, name, account, 
+      tel, erp, create_date, 
+      update_date, work_no)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{erp,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{workNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.DisSalesman" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    insert into t_dis_salesman
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="erp != null" >
+        erp,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="workNo != null" >
+        work_no,
+      </if>
+      <if test="nodeType != null" >
+        node_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="erp != null" >
+        #{erp,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="workNo != null" >
+        #{workNo,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeType != null" >
+        #{nodeType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.DisSalesman" >
+    update t_dis_salesman
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="erp != null" >
+        erp = #{erp,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="workNo != null" >
+        work_no = #{workNo,jdbcType=VARCHAR},
+      </if>
+       <if test="nodeType != null" >
+        node_type = #{nodeType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.DisSalesman" >
+    update t_dis_salesman
+    set name = #{name,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      erp = #{erp,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      work_no = #{workNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="querySalesmansByCondition" resultMap="BaseResultMap"
+	parameterType="java.util.Map">
+	select
+	s.id as id,
+	s.name as name,
+	s.account as account,
+	s.tel as tel,
+	s.erp as erp,
+	s.create_date as create_date,
+	s.update_date as update_date,
+	s.work_no as work_no,
+	s.node_type as nodeType
+	from
+	t_dis_header h,
+	t_dis_salesman s,
+	t_dis_header_salesman_mapper hs
+	where h.id = hs.headerid and s.id = hs.salesmanid
+	<if test="notRelation != null and notRelation == true" >
+		and s.id not in 
+		(select salesman_id from t_dis_emp_salesman_mapper)
+	</if>
+	<if test="id != null">
+		and h.id = #{id,jdbcType=INTEGER}
+	</if>
+	<if test="name != null">
+		and s.name = #{name,jdbcType=VARCHAR}
+	</if>
+	<if test="tel != null">
+		and s.tel = #{tel,jdbcType=VARCHAR}
+	</if>
+	<if test="erp != null">
+		and s.erp = #{erp,jdbcType=VARCHAR}
+	</if>
+	<if test="account != null">
+		and s.account = #{account,jdbcType=VARCHAR}
+	</if>
+	<if test="nodeType != null">
+		and s.node_type = #{nodeType,jdbcType=INTEGER}
+	</if>
+	<if test="empId != null">
+		and s.id in (
+		select salesman_id from t_dis_emp_salesman_mapper
+			where emp_id = #{empId,jdbcType=INTEGER}
+		)
+	</if>
+	<if test="salesmanId != null">
+		and hs.headerid in (
+         select oh.headerid from t_dis_organization_header_mapper oh where oh.organizationid = (
+            select nh.organizationid from t_dis_node_header_mapper nh where headerid = 
+             (select headerid from t_dis_header_salesman_mapper where salesmanid = #{salesmanId,jdbcType=INTEGER})
+       		)
+		)
+		and hs.salesmanid not in (
+         select salesmanid  from t_dis_header_salesman_mapper where headerid = 
+          (select headerid from t_dis_header_salesman_mapper where salesmanid = #{salesmanId,jdbcType=INTEGER}) 
+           and salesmanid != #{salesmanId,jdbcType=INTEGER}
+          ) 
+	</if>
+	<if test="desc != null and desc != ''">
+		AND
+		(s.name like '%'||#{desc}||'%'
+		OR
+		s.tel like '%'||#{desc}||'%'
+		OR
+		s.erp like '%'||#{desc}||'%')
+	</if>
+	order by hs.id
+	<if test="pageSize != null">
+	    LIMIT #{pageSize} OFFSET (#{currPage}-1)*#{pageSize}  
+    </if>
+</select>
+<select id="getCountByCondition" resultType="java.lang.Integer"
+	parameterType="java.util.Map">
+	select count(*)
+	from
+	t_dis_header h,
+	t_dis_salesman s,
+	t_dis_header_salesman_mapper hs
+	where h.id = hs.headerid and s.id = hs.salesmanid
+	<if test="notRelation != null and notRelation == true" >
+		and s.id not in 
+		(select salesman_id from t_dis_emp_salesman_mapper)
+	</if>
+	<if test="nodeType != null">
+		and s.node_type = #{nodeType,jdbcType=INTEGER}
+	</if>
+	<if test="id != null">
+		and h.id = #{id,jdbcType=INTEGER}
+	</if>
+	<if test="name != null">
+		and s.name = #{name,jdbcType=VARCHAR}
+	</if>
+	<if test="tel != null">
+		and s.tel = #{tel,jdbcType=VARCHAR}
+	</if>
+	<if test="erp != null">
+		and s.erp = #{erp,jdbcType=VARCHAR}
+	</if>
+	<if test="account != null">
+		and s.account = #{account,jdbcType=VARCHAR}
+	</if>
+	<if test="empId != null">
+		and s.id in (
+		select salesman_id from t_dis_emp_salesman_mapper
+			where emp_id = #{empId,jdbcType=INTEGER}
+		)
+	</if>
+	<if test="desc != null and desc != ''">
+		AND
+		(s.name like '%'||#{desc,jdbcType=VARCHAR}||'%'
+		OR
+		s.tel like '%'||#{desc,jdbcType=VARCHAR}||'%'
+		OR
+		s.erp like '%'||#{desc,jdbcType=VARCHAR}||'%')
+	</if>
+</select>
+
+<!-- add by xuse 查询业务员关联的分销商 -->
+	<select id="getRelatedMemberCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT count(1) from (
+			SELECT b.* from (
+				SELECT DISTINCT memberid from t_dis_salesman_member_mapper where 1 = 1
+				<if test="saleMans != null and saleMans.size() > 0">
+					and salesmanid in 
+					<foreach collection="saleMans" open="(" close=")" item="item" separator=",">
+						#{item}
+					</foreach>
+				</if>) a
+			LEFT JOIN t_dis_member b on b.id=a.memberid
+			LEFT JOIN t_dis_account ac on b.email = ac.email
+		) c where  c.email is not null
+		<if test="search != null and search != ''">
+			and (lower(c.user_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(c.email) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(c.telphone) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(c.nick_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			)
+		</if>
+		<if test="comsumerType != null">
+			and comsumer_type = #{comsumerType,jdbcType=INTEGER}
+		</if>
+		<if test="distributionMode != null">
+			and distribution_mode = #{distributionMode,jdbcType=INTEGER}
+		</if>
+	</select>
+	<!-- add by xuse 查询业务员关联的分销商 -->
+	<select id="getRelatedMember" resultType="dto.dismember.AdminDto" parameterType="java.util.Map">
+		SELECT 
+			c.id as id,
+			c.nick_name as nick,
+			c.real_name as realName,
+			c.email as loginName,
+			c.comsumer_type as comsumerType,
+			c.erp_account as erpAccount,
+			c.distribution_mode as distributionMode,
+			c.work_no as workNo,
+			c.email as email,
+			c.telphone as telphone,
+			c.register_invite_code as registerInviteCode,
+			c.frozen as isFrozen
+		from (
+			SELECT b.*,ac.frozen  from (
+				SELECT DISTINCT memberid from t_dis_salesman_member_mapper where 1 = 1
+				<if test="saleMans != null and saleMans.size() > 0">
+					and salesmanid in 
+					<foreach collection="saleMans" open="(" close=")" item="item" separator=",">
+						#{item}
+					</foreach>
+				</if>) a
+				LEFT JOIN t_dis_member b on b.id=a.memberid
+			LEFT JOIN t_dis_account ac on b.email = ac.email
+		) c where  c.email is not null
+		<if test="search != null and search != ''">
+			and (lower(c.user_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(c.email) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(c.telphone) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(c.nick_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			)
+		</if>
+		<if test="comsumerType != null">
+			and comsumer_type = #{comsumerType,jdbcType=INTEGER}
+		</if>
+		<if test="distributionMode != null">
+			and distribution_mode = #{distributionMode,jdbcType=INTEGER}
+		</if>
+		order by c.id desc
+		<if test="pageSize != null">
+			limit #{pageSize,jdbcType=INTEGER} offset (#{currPage,jdbcType=INTEGER} -1) * #{pageSize,jdbcType=INTEGER}
+		</if>
+	</select>		
+
+</mapper>

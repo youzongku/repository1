@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.payment.wechat.WechatRefundResultMapper" >
+  <resultMap id="BaseResultMap" type="entity.payment.wechat.WechatRefundResult" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="return_code" property="returnCode" jdbcType="VARCHAR" />
+    <result column="return_msg" property="returnMsg" jdbcType="VARCHAR" />
+    <result column="result_code" property="resultCode" jdbcType="VARCHAR" />
+    <result column="err_code" property="errCode" jdbcType="VARCHAR" />
+    <result column="err_code_des" property="errCodeDes" jdbcType="VARCHAR" />
+    <result column="appid" property="appid" jdbcType="VARCHAR" />
+    <result column="mch_id" property="mchId" jdbcType="VARCHAR" />
+    <result column="device_info" property="deviceInfo" jdbcType="VARCHAR" />
+    <result column="nonce_str" property="nonceStr" jdbcType="VARCHAR" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+    <result column="transaction_id" property="transactionId" jdbcType="VARCHAR" />
+    <result column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
+    <result column="out_refund_no" property="outRefundNo" jdbcType="VARCHAR" />
+    <result column="refund_id" property="refundId" jdbcType="VARCHAR" />
+    <result column="refund_channel" property="refundChannel" jdbcType="VARCHAR" />
+    <result column="refund_fee" property="refundFee" jdbcType="INTEGER" />
+    <result column="total_fee" property="totalFee" jdbcType="INTEGER" />
+    <result column="fee_type" property="feeType" jdbcType="VARCHAR" />
+    <result column="cash_fee" property="cashFee" jdbcType="INTEGER" />
+    <result column="cash_refund_fee" property="cashRefundFee" jdbcType="INTEGER" />
+    <result column="coupon_refund_fee" property="couponRefundFee" jdbcType="INTEGER" />
+    <result column="coupon_refund_count" property="couponRefundCount" jdbcType="INTEGER" />
+    <result column="coupon_refund_id" property="couponRefundId" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_user" property="lastUpdateUser" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, return_code, return_msg, result_code, err_code, err_code_des, appid, mch_id, 
+    device_info, nonce_str, sign, transaction_id, out_trade_no, out_refund_no, refund_id, 
+    refund_channel, refund_fee, total_fee, fee_type, cash_fee, cash_refund_fee, coupon_refund_fee, 
+    coupon_refund_count, coupon_refund_id, create_user, create_date, last_update_user, 
+    last_update_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_wechat_refund_result
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_wechat_refund_result
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.payment.wechat.WechatRefundResult" >
+    insert into t_wechat_refund_result (id, return_code, return_msg, 
+      result_code, err_code, err_code_des, 
+      appid, mch_id, device_info, 
+      nonce_str, sign, transaction_id, 
+      out_trade_no, out_refund_no, refund_id, 
+      refund_channel, refund_fee, total_fee, 
+      fee_type, cash_fee, cash_refund_fee, 
+      coupon_refund_fee, coupon_refund_count, coupon_refund_id, 
+      create_user, create_date, last_update_user, 
+      last_update_date)
+    values (#{id,jdbcType=INTEGER}, #{returnCode,jdbcType=VARCHAR}, #{returnMsg,jdbcType=VARCHAR}, 
+      #{resultCode,jdbcType=VARCHAR}, #{errCode,jdbcType=VARCHAR}, #{errCodeDes,jdbcType=VARCHAR}, 
+      #{appid,jdbcType=VARCHAR}, #{mchId,jdbcType=VARCHAR}, #{deviceInfo,jdbcType=VARCHAR}, 
+      #{nonceStr,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, #{transactionId,jdbcType=VARCHAR}, 
+      #{outTradeNo,jdbcType=VARCHAR}, #{outRefundNo,jdbcType=VARCHAR}, #{refundId,jdbcType=VARCHAR}, 
+      #{refundChannel,jdbcType=VARCHAR}, #{refundFee,jdbcType=INTEGER}, #{totalFee,jdbcType=INTEGER}, 
+      #{feeType,jdbcType=VARCHAR}, #{cashFee,jdbcType=INTEGER}, #{cashRefundFee,jdbcType=INTEGER}, 
+      #{couponRefundFee,jdbcType=INTEGER}, #{couponRefundCount,jdbcType=INTEGER}, #{couponRefundId,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateUser,jdbcType=VARCHAR}, 
+      #{lastUpdateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.payment.wechat.WechatRefundResult" >
+    insert into t_wechat_refund_result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="returnCode != null" >
+        return_code,
+      </if>
+      <if test="returnMsg != null" >
+        return_msg,
+      </if>
+      <if test="resultCode != null" >
+        result_code,
+      </if>
+      <if test="errCode != null" >
+        err_code,
+      </if>
+      <if test="errCodeDes != null" >
+        err_code_des,
+      </if>
+      <if test="appid != null" >
+        appid,
+      </if>
+      <if test="mchId != null" >
+        mch_id,
+      </if>
+      <if test="deviceInfo != null" >
+        device_info,
+      </if>
+      <if test="nonceStr != null" >
+        nonce_str,
+      </if>
+      <if test="sign != null" >
+        sign,
+      </if>
+      <if test="transactionId != null" >
+        transaction_id,
+      </if>
+      <if test="outTradeNo != null" >
+        out_trade_no,
+      </if>
+      <if test="outRefundNo != null" >
+        out_refund_no,
+      </if>
+      <if test="refundId != null" >
+        refund_id,
+      </if>
+      <if test="refundChannel != null" >
+        refund_channel,
+      </if>
+      <if test="refundFee != null" >
+        refund_fee,
+      </if>
+      <if test="totalFee != null" >
+        total_fee,
+      </if>
+      <if test="feeType != null" >
+        fee_type,
+      </if>
+      <if test="cashFee != null" >
+        cash_fee,
+      </if>
+      <if test="cashRefundFee != null" >
+        cash_refund_fee,
+      </if>
+      <if test="couponRefundFee != null" >
+        coupon_refund_fee,
+      </if>
+      <if test="couponRefundCount != null" >
+        coupon_refund_count,
+      </if>
+      <if test="couponRefundId != null" >
+        coupon_refund_id,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="returnCode != null" >
+        #{returnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="returnMsg != null" >
+        #{returnMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="resultCode != null" >
+        #{resultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errCode != null" >
+        #{errCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errCodeDes != null" >
+        #{errCodeDes,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="mchId != null" >
+        #{mchId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceInfo != null" >
+        #{deviceInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="nonceStr != null" >
+        #{nonceStr,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null" >
+        #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null" >
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="outRefundNo != null" >
+        #{outRefundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundId != null" >
+        #{refundId,jdbcType=VARCHAR},
+      </if>
+      <if test="refundChannel != null" >
+        #{refundChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="refundFee != null" >
+        #{refundFee,jdbcType=INTEGER},
+      </if>
+      <if test="totalFee != null" >
+        #{totalFee,jdbcType=INTEGER},
+      </if>
+      <if test="feeType != null" >
+        #{feeType,jdbcType=VARCHAR},
+      </if>
+      <if test="cashFee != null" >
+        #{cashFee,jdbcType=INTEGER},
+      </if>
+      <if test="cashRefundFee != null" >
+        #{cashRefundFee,jdbcType=INTEGER},
+      </if>
+      <if test="couponRefundFee != null" >
+        #{couponRefundFee,jdbcType=INTEGER},
+      </if>
+      <if test="couponRefundCount != null" >
+        #{couponRefundCount,jdbcType=INTEGER},
+      </if>
+      <if test="couponRefundId != null" >
+        #{couponRefundId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUser != null" >
+        #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.payment.wechat.WechatRefundResult" >
+    update t_wechat_refund_result
+    <set >
+      <if test="returnCode != null" >
+        return_code = #{returnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="returnMsg != null" >
+        return_msg = #{returnMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="resultCode != null" >
+        result_code = #{resultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errCode != null" >
+        err_code = #{errCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errCodeDes != null" >
+        err_code_des = #{errCodeDes,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null" >
+        appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="mchId != null" >
+        mch_id = #{mchId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceInfo != null" >
+        device_info = #{deviceInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="nonceStr != null" >
+        nonce_str = #{nonceStr,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null" >
+        transaction_id = #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null" >
+        out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="outRefundNo != null" >
+        out_refund_no = #{outRefundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundId != null" >
+        refund_id = #{refundId,jdbcType=VARCHAR},
+      </if>
+      <if test="refundChannel != null" >
+        refund_channel = #{refundChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="refundFee != null" >
+        refund_fee = #{refundFee,jdbcType=INTEGER},
+      </if>
+      <if test="totalFee != null" >
+        total_fee = #{totalFee,jdbcType=INTEGER},
+      </if>
+      <if test="feeType != null" >
+        fee_type = #{feeType,jdbcType=VARCHAR},
+      </if>
+      <if test="cashFee != null" >
+        cash_fee = #{cashFee,jdbcType=INTEGER},
+      </if>
+      <if test="cashRefundFee != null" >
+        cash_refund_fee = #{cashRefundFee,jdbcType=INTEGER},
+      </if>
+      <if test="couponRefundFee != null" >
+        coupon_refund_fee = #{couponRefundFee,jdbcType=INTEGER},
+      </if>
+      <if test="couponRefundCount != null" >
+        coupon_refund_count = #{couponRefundCount,jdbcType=INTEGER},
+      </if>
+      <if test="couponRefundId != null" >
+        coupon_refund_id = #{couponRefundId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.payment.wechat.WechatRefundResult" >
+    update t_wechat_refund_result
+    set return_code = #{returnCode,jdbcType=VARCHAR},
+      return_msg = #{returnMsg,jdbcType=VARCHAR},
+      result_code = #{resultCode,jdbcType=VARCHAR},
+      err_code = #{errCode,jdbcType=VARCHAR},
+      err_code_des = #{errCodeDes,jdbcType=VARCHAR},
+      appid = #{appid,jdbcType=VARCHAR},
+      mch_id = #{mchId,jdbcType=VARCHAR},
+      device_info = #{deviceInfo,jdbcType=VARCHAR},
+      nonce_str = #{nonceStr,jdbcType=VARCHAR},
+      sign = #{sign,jdbcType=VARCHAR},
+      transaction_id = #{transactionId,jdbcType=VARCHAR},
+      out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      out_refund_no = #{outRefundNo,jdbcType=VARCHAR},
+      refund_id = #{refundId,jdbcType=VARCHAR},
+      refund_channel = #{refundChannel,jdbcType=VARCHAR},
+      refund_fee = #{refundFee,jdbcType=INTEGER},
+      total_fee = #{totalFee,jdbcType=INTEGER},
+      fee_type = #{feeType,jdbcType=VARCHAR},
+      cash_fee = #{cashFee,jdbcType=INTEGER},
+      cash_refund_fee = #{cashRefundFee,jdbcType=INTEGER},
+      coupon_refund_fee = #{couponRefundFee,jdbcType=INTEGER},
+      coupon_refund_count = #{couponRefundCount,jdbcType=INTEGER},
+      coupon_refund_id = #{couponRefundId,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findWRRsByMap" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from t_wechat_refund_result
+    where 1 = 1
+    <if test="outTradeNo != null and outTradeNo != ''">
+      and out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

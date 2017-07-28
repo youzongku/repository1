@@ -1,0 +1,187 @@
+<script src="../../js/backstage/lib/laydate/laydate.js"></script>
+<script type="text/javascript" src="../../js/backstage/goodsmgr/product_price.js"></script>
+<div class="productPrice_box">
+    <h1>商品管理<span>---</span><span>C类商品经销价格设置</span>
+        <ul class="priceButton">
+            <li style = "display: none;">
+                <button class="defaultPrice">查看默认价格设置</button>
+            </li>
+            <li>
+                <button class="priceCheck_log display" >查看操作日志</button>
+            </li>
+        </ul>
+    </h1>
+    <ul class="search_category" style="border-top: none;">
+        <li>
+            <select name="price_categorys" id="price_brand_select" class="display">
+            </select>
+        </li>
+        <li>
+            <div class="search">
+                <input id="ctypeFlag" type="hidden" value="1">
+                <input id="price_search_key" class="searchInput" placeholder="商品编号/商品名称">
+                <input class="searchButton" id="price_search" value="搜索" type="submit">
+            </div>
+        </li>
+    </ul>
+
+    <div class="content_list">
+        <p class="set_price_line">
+        <span>
+            <label><input id="select_curr_all" type="checkbox">全选当前页所有</label>
+        </span>
+        <span>
+            <label><input id="select_all" type="checkbox">全选搜索结果所有</label>
+        </span>
+
+        <div>
+
+        </div>
+        <button class="check_ProductPrice" style="top:10px;right:300px;">筛选价格有空缺的商品</button>
+        <button class="A_set_price" onclick="one_key_price(true)" style="top:10px;right:160px;">一键设基础价格</button>
+        <button class="A_set_price" onclick="one_key_price(false)" style="top:10px">一键设置供货价格</button>
+        </p>
+        <table id="price_table">
+        </table>
+    </div>
+    <div id="price_pagination" ></div>
+</div>
+<!--默认价格设置-->
+<div class="defaultPrice_box display">
+    <h1>商品管理<span>---</span><span>商品价格</span><span>---</span><span>默认价格设置</span>
+        <ul class="priceButton">
+            <li>
+                <button class="defaultPrice_back">返回商品价格列表</button>
+            </li>
+        </ul>
+    </h1>
+    <p class="red defaultPrice_explain">
+        说明：默认价格设置表示当对应价格为空时的取值规则
+    </p>
+    <ul class="search_category">
+        <li>分类：
+            <select id="rule_cate_select">
+            </select>
+        </li>
+        <li>状态：
+            <select id="brand_status_select">
+                <option value="">所有状态</option>
+                <option value="true">应用中</option>
+                <option value="false">未应用</option>
+            </select>
+        </li>
+        <li>
+            <div class="search">
+                <input class="searchInput" id="brand_key" placeholder="分类">
+                <input class="searchButton" id="brand_search" value="搜索" type="submit">
+                <!--<button class="add_Brand_data">添加分类/品牌数据</button>-->
+                <button class="refresh_Brand_data">更新获取分类数据</button>
+            </div>
+        </li>
+    </ul>
+    <div class="content_list">
+        <table class="defaultPrice_table">
+            <thead>
+            <tr>
+                <th style="width: 7%;">分类</th>
+                <th style="width: 7%;">营销成本价系数</th>
+                <th style="width: 8%;">市场最低价系数</th>
+                <th style="width: 9%;">市场干预系数</th>
+                <th style="width: 9%;">零售价系数</th>
+                <th style="width: 9%;">经销商价格系数</th>
+                <th style="width: 9%;">自贸区经销价格系数</th>
+                <th style="width: 9%;">Bbc价格系数</th>
+                <th style="width: 9%;">KA经销价格系数</th>
+                <th style="width: 7%;">状态</th>
+                <th style="width: 17%;">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="list_content">
+            <div id="brandList"></div>
+            <p>共<span id="brandTotal" style="display:inline-block;">0</span>记录，每页显示
+                <select id="brand_pageSize">
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                </select>
+                ，共<span id="brandPages" style="display:inline-block;">0</span>页
+            </p>
+        </div>
+    </div>
+    <div id="brand_pagination" style="text-align: center; margin-top: 30px;"></div>
+    <!--添加分类/品牌数据-->
+
+
+    <!--设置系数-->
+
+
+    <!--操作日志-->
+    <!-- <div class="add_Brand_data_logPop">
+        <p>
+            <span>2016-07-27   14：44：44</span>
+            管理员<em>admin</em>将<em>XXX</em>分类<em>XXX</em>品牌市场最低价系数设置为<b class="red">1.2</b>
+        </p>
+    </div> -->
+</div>
+<div class="defaultLog_box display">
+    <h1>商品管理<span>---</span><span>商品价格</span><span>---</span><span>操作日志</span>
+        <ul class="priceButton">
+            <li>
+                <button class="defaultLog_back">返回商品价格列表</button>
+            </li>
+        </ul>
+    </h1>
+    <ul class="search_category">
+        <li>分类：
+            <select id="record_cate_select">
+            </select>
+        </li>
+        <li>操作时间：
+            <input placeholder="开始时间" class="searchInput" readonly="true" style="width:130px"
+                   id="startDate" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">至
+            <input placeholder="结束时间" class="searchInput" readonly="true" style="width:130px"
+                   id="endDate" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+        </li>
+        <li>
+            <div class="search">
+                <input class="searchInput" id="price_record_key"
+                       placeholder="商品编号/商品名称/操作管理员">
+                <input class="searchButton" id="price_record_search" value="搜索" type="submit">
+            </div>
+        </li>
+    </ul>
+    <div class="content_list">
+        <table class="defaultLog_table">
+            <thead>
+            <tr>
+                <th style="width: 10%">商品编号</th>
+                <th style="width: 20%">商品名称</th>
+                <th style="width: 10%">分类</th>
+                <th style="width: 10%">操作人</th>
+                <th style="width: 20%">操作时间</th>
+                <th style="width: 30%">操作明细</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="list_content">
+            <div id="priceList"></div>
+            <p>共<span id="priceRecordTotal" style="display:inline-block;">0</span>记录，每页显示
+                <select id="price_record_pageSize">
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                </select>
+                ，共<span id="priceRecordPages" style="display:inline-block;">0</span>页
+            </p>
+        </div>
+    </div>
+    <div id="price_record_pagination" style="text-align: center; margin-top: 30px;"></div>
+
+</div>

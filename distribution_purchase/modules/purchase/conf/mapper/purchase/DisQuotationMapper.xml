@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.purchase.DisQuotationMapper" >
+  <resultMap id="BaseResultMap" type="entity.purchase.DisQuotation" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="discount_rate" property="discountRate" jdbcType="VARCHAR" />
+    <result column="excel_name" property="excelName" jdbcType="VARCHAR" />
+    <result column="excel_info" property="excelInfo" jdbcType="VARCHAR" />
+    <result column="req_body" property="reqBody" jdbcType="VARCHAR" />
+    <result column="dis_email" property="disEmail" jdbcType="VARCHAR" />
+    <result column="bind_dis_email" property="bindDisEmail" jdbcType="TIMESTAMP" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="made_user" property="madeUser" jdbcType="VARCHAR" />
+    <result column="is_build_order" property="isBuildOrder" jdbcType="BIT" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="disname" property="disname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, discount_rate, excel_name, excel_info, req_body, dis_email, bind_dis_email, create_date, made_user, is_build_order,
+    update_date, disname
+  </sql>
+
+  <!--  查询通过id  -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_quotation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!-- 查询列表 -->
+  <select id="getRecord" resultMap="BaseResultMap" parameterType="java.util.Map">
+      SELECT * FROM t_dis_quotation
+      <where>
+        <if test="excelName != null and excelName != ''">
+          AND excel_name LIKE '%'||#{excelName,jdbcType=VARCHAR}||'%'
+        </if>
+        <if test="disEmail != null and disEmail != ''">
+          AND dis_email LIKE '%'||#{disEmail,jdbcType=VARCHAR}||'%'
+        </if>
+        <if test="disname != null and disname != '' ">
+          AND disname LIKE '%'||#{disname}||'%'
+        </if>
+        <if test="email != null and email != '' ">
+          AND dis_email = #{email}
+        </if>
+        <if test="madeUser != null and madeUser != ''">
+          AND made_user LIKE '%'||#{madeUser,jdbcType=VARCHAR}||'%'
+        </if>
+        <if test="begainDate != null and begainDate != ''">
+          <![CDATA[AND create_date >= to_date(#{begainDate},'yyyy-mm-dd') ]]>
+        </if>
+        <if test="endDate != null and endDate != ''">
+          <![CDATA[AND create_date < to_date(''||(to_date(#{endDate},'yyyy-mm-dd') + interval '1 day')||'','yyyy-mm-dd')]]>
+        </if>
+      </where>
+      ORDER BY create_date DESC
+      <if test="pageSize != null and currPage != null">
+        LIMIT #{pageSize} OFFSET (#{currPage} -1) * #{pageSize}
+      </if>
+  </select>
+
+  <!--  查询总数  -->
+  <select id="getRecordCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+    SELECT COUNT(*) FROM t_dis_quotation
+    <where>
+      <if test="excelName != null and excelName != '' ">
+        AND excel_name = #{excelName}
+      </if>
+      <if test="disEmail != null and disEmail != '' ">
+        AND dis_email LIKE '%'||#{disEmail}||'%'
+      </if>
+      <if test="disname != null and disname != '' ">
+        AND disname LIKE '%'||#{disname}||'%'
+      </if>
+      <if test="email != null and email != '' ">
+          AND dis_email = #{email}
+        </if>
+      <if test="madeUser != null and madeUser != '' ">
+        AND made_user = #{madeUser}
+      </if>
+      <if test="begainDate != null and begainDate != '' ">
+        <![CDATA[AND create_date >= to_date(#{begainDate},'yyyy-mm-dd') ]]>
+      </if>
+      <if test="endDate != null and endDate != ''">
+        <![CDATA[AND create_date < to_date(''||(to_date(#{endDate},'yyyy-mm-dd') + interval '1 day')||'','yyyy-mm-dd')]]>
+      </if>
+    </where>
+  </select>
+
+  <insert id="insert" parameterType="entity.purchase.DisQuotation" >
+    insert into t_dis_quotation (id, discount_rate, excel_name, 
+      excel_info, req_body, dis_email, bind_dis_email, create_date,
+      made_user, is_build_order, update_date, disname
+      )
+    values (#{id,jdbcType=INTEGER}, #{discountRate,jdbcType=VARCHAR}, #{excelName,jdbcType=VARCHAR}, 
+      #{excelInfo,jdbcType=VARCHAR}, #{reqBody,jdbcType=VARCHAR}, #{disEmail,jdbcType=VARCHAR},
+      #{bindDisEmail,jdbcType=TIMESTAMP}, #{createDate,jdbcType=TIMESTAMP},
+      #{madeUser,jdbcType=VARCHAR}, #{isBuildOrder,jdbcType=BIT}, #{updateDate,jdbcType=TIMESTAMP},
+      #{disname,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="entity.purchase.DisQuotation" useGeneratedKeys="true" keyProperty="id">
+    insert into t_dis_quotation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="discountRate != null" >
+        discount_rate,
+      </if>
+      <if test="excelName != null" >
+        excel_name,
+      </if>
+      <if test="excelInfo != null" >
+        excel_info,
+      </if>
+      <if test="reqBody != null" >
+        req_body,
+      </if>
+      <if test="disEmail != null" >
+        dis_email,
+      </if>
+      <if test="bindDisEmail != null" >
+        bind_dis_email,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="madeUser != null" >
+        made_user,
+      </if>
+      <if test="isBuildOrder != null" >
+        is_build_order,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="disname != null" >
+        disname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="discountRate != null" >
+        #{discountRate,jdbcType=VARCHAR},
+      </if>
+      <if test="excelName != null" >
+        #{excelName,jdbcType=VARCHAR},
+      </if>
+      <if test="excelInfo != null" >
+        #{excelInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="reqBody != null" >
+        #{reqBody,jdbcType=VARCHAR},
+      </if>
+      <if test="disEmail != null" >
+        #{disEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="bindDisEmail != null" >
+        #{bindDisEmail,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="madeUser != null" >
+        #{madeUser,jdbcType=VARCHAR},
+      </if>
+      <if test="isBuildOrder != null" >
+        #{isBuildOrder,jdbcType=BIT},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disname != null" >
+        #{disname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="entity.purchase.DisQuotation" >
+    update t_dis_quotation
+    <set >
+      <if test="discountRate != null and discountRate != '' " >
+        discount_rate = #{discountRate,jdbcType=VARCHAR},
+      </if>
+      <if test="excelName != null and excelName != '' " >
+        excel_name = #{excelName,jdbcType=VARCHAR},
+      </if>
+      <if test="excelInfo != null and excelInfo !='' " >
+        excel_info = #{excelInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="reqBody != null and reqBody !='' " >
+        req_body = #{reqBody,jdbcType=VARCHAR},
+      </if>
+      <if test="disEmail != null " >
+        dis_email = #{disEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="bindDisEmail != null and bindDisEmail != '' " >
+        bind_dis_email = #{bindDisEmail,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="madeUser != null and madeUser != '' " >
+        made_user = #{madeUser,jdbcType=VARCHAR},
+      </if>
+      <if test="isBuildOrder != null" >
+        is_build_order = #{isBuildOrder,jdbcType=BIT},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disname != null " >
+        disname = #{disname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="entity.purchase.DisQuotation" >
+    update t_dis_quotation
+    set discount_rate = #{discountRate,jdbcType=VARCHAR},
+      excel_name = #{excelName,jdbcType=VARCHAR},
+      excel_info = #{excelInfo,jdbcType=VARCHAR},
+      req_body = #{reqBody,jdbcType=VARCHAR},
+      dis_email = #{disEmail,jdbcType=VARCHAR},
+      bind_dis_email = #{bindDisEmail,jdbcType=TIMESTAMP},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      made_user = #{madeUser,jdbcType=VARCHAR},
+      is_build_order = #{isBuildOrder,jdbcType=BIT},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      disname = #{disname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

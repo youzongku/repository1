@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.PromotionActivityMapper">
+	
+	  <update id="statusEndTimerTrigger">
+	     update t_pro_act  set status = 3,last_update_time=now() where end_time<![CDATA[<=]]>now() and status not in (3,4)
+	  </update>
+	  
+	  <update id="statusStartTimerTrigger">
+	     update t_pro_act  set status = 2,last_update_time=now() where start_time<![CDATA[<=]]>now() and end_time >= now() and status not in (2,4)
+	  </update>
+
+</mapper>

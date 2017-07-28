@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.store.AttrMultivalueMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.store.AttrMultivalue" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="attr_id" property="attrId" jdbcType="INTEGER" />
+    <result column="content_text" property="contentText" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, attr_id, content_text
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_attr_multivalue
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_attr_multivalue
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="entity.product.store.AttrMultivalue" >
+    insert into t_attr_multivalue (id, attr_id, content_text
+      )
+    values (#{id,jdbcType=VARCHAR}, #{attrId,jdbcType=INTEGER}, #{contentText,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.store.AttrMultivalue" >
+    insert into t_attr_multivalue
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="attrId != null" >
+        attr_id,
+      </if>
+      <if test="contentText != null" >
+        content_text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="attrId != null" >
+        #{attrId,jdbcType=INTEGER},
+      </if>
+      <if test="contentText != null" >
+        #{contentText,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.store.AttrMultivalue" >
+    update t_attr_multivalue
+    <set >
+      <if test="attrId != null" >
+        attr_id = #{attrId,jdbcType=INTEGER},
+      </if>
+      <if test="contentText != null" >
+        content_text = #{contentText,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.store.AttrMultivalue" >
+    update t_attr_multivalue
+    set attr_id = #{attrId,jdbcType=INTEGER},
+      content_text = #{contentText,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

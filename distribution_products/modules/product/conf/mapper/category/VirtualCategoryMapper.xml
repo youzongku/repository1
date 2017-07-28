@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.category.VirtualCategoryMapper" >
+  <select id="queryByParam" resultType="entity.category.VirtualCategory" parameterType="dto.category.CategorySearchParamDto">
+		select * from t_virtual_category
+		where show = 'true'
+		<if test="paramDto != null">
+			<if test="paramDto.parentId != null and  paramDto.parentId >0">
+				and parentid = #{paramDto.parentId}
+			</if>
+			<if test="paramDto.level != null">
+				and level = #{paramDto.level}
+			</if>
+			<if test="paramDto.name != null">
+				and upper(name) = upper(#{paramDto.name})
+			</if>
+		</if>
+		order by position asc nulls last
+	</select>
+	<select id="queryAll" resultType="entity.category.VirtualCategory">
+		select * from t_virtual_category
+		where show = 'true'
+		order by position desc nulls last
+	</select>
+	<select id="getTotalByParam" resultType="Integer" parameterType="java.util.List">
+		select count(1) from t_virtual_category
+		where 1=1
+		<if test="paramDto != null">
+			<if test="paramDto.catIds != null and paramDto.catIds.size() > 0">
+				and id in 
+				<foreach collection="paramDto.catIds" open="(" separator="," close=")" item="id">
+					#{id}
+				</foreach>
+			</if>
+			<if test="paramDto.parentId != null and  paramDto.parentId >0">
+				and parentid = #{paramDto.parentId}
+			</if>
+			<if test="paramDto.level != null">
+				and level = #{paramDto.level}
+			</if>
+		</if>
+	</select>
+	
+	<insert id="insertBatch" parameterType="List">
+		INSERT INTO t_virtual_category (
+			iid,
+			cemail,
+			ccountrysn,
+			ccountry,
+			cstreetaddress,
+			ccity,
+			cprovince,
+			cpostalcode,
+			ctelephone,
+			istorageid,
+			ishippingmethodid,
+			fshippingprice,
+			fordersubtotal,
+			fextra,
+			fgrandtotal,
+			ccartid,
+			istatus,
+			ccurrency,
+			cfirstname,
+			cmiddlename,
+			clastname,
+			cpaymentid,
+			iwebsiteid,
+			corigin,
+			cmemberemail,
+			cmessage,
+			cordernumber,
+			isendtime
+		)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+				#{ item.iid },
+				#{ item.cemail }, 
+				#{ item.ccountrysn }, 
+				#{ item.ccountry }, 
+				#{ item.cstreetaddress }, 
+				#{ item.ccity }, 
+				#{ item.cprovince }, 
+				#{ item.cpostalcode }, 
+				#{ item.ctelephone }, 
+				#{ item.istorageid }, 
+				#{ item.ishippingmethodid }, 
+				#{ item.fshippingprice }, 
+				#{ item.fordersubtotal }, 
+				#{ item.fextra }, 
+				#{ item.fgrandtotal }, 
+				#{ item.ccartid }, 
+				#{ item.istatus }, 
+				#{ item.ccurrency }, 
+				#{ item.cfirstname }, 
+				#{ item.cmiddlename }, 
+				#{ item.clastname }, 
+				#{ item.cpaymentid }, 
+				#{ item.iwebsiteid }, 
+				#{ item.corigin }, 
+				#{ item.cmemberemail }, 
+				#{ item.cmessage }, 
+				#{ item.cordernumber }, 
+				#{ item.isendtime }
+			)
+		</foreach>
+	</insert>
+	
+	<update id="updateBatch" parameterType="List">
+		update t_virtual_category set
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			<if test="item.ccountry != null">
+				ccountry = #{item.ccountry}
+			</if>
+			<if test="item.ccountrysn != null">
+				ccountrysn = #{item.ccountrysn}
+			</if>
+			<if test="item.cprovince != null">
+				cprovince = #{item.cprovince}
+			</if>
+			<if test="item.ccity != null">
+				ccity = #{item.ccity}
+			</if>
+			<if test="item.ccountry != null">
+				cstreetaddress = #{item.cstreetaddress}
+			</if>
+			<if test="item.cpostalcode != null">
+				cpostalcode = #{item.cpostalcode}
+			</if>
+			<if test="item.ctelephone != null">
+				ctelephone = #{item.ctelephone}
+			</if>
+			<if test="item.fshippingprice != null">
+				fshippingprice = #{item.fshippingprice}
+			</if>
+			<if test="item.istatus != null">
+				istatus = #{item.istatus}
+			</if>
+			<if test="item.cfirstname != null">
+				cfirstname = #{item.cfirstname}
+			</if>
+			<if test="item.cpaymentid != null">
+				cpaymentid = #{item.cpaymentid}
+			</if>
+			<if test="item.cmessage != null">
+				cmessage = #{item.cmessage}
+			</if>
+			<if test="item.cordernumber != null">
+				cordernumber = #{item.cordernumber}
+			</if>
+			where iid = #{item.iid}
+		</foreach>
+	</update>
+	
+	<delete id="delete" parameterType="entity.category.VirtualCategory">
+		delete from t_virtual_category where id = #{id}
+	</delete>
+	
+	<select id="nextId" resultType="java.lang.Integer" parameterType="java.util.List">
+		SELECT nextval(#{0}) ;
+	</select>
+	
+	<select id="queryChild" resultType="java.lang.Integer" parameterType="java.util.List">
+		select id from t_virtual_category
+		where 1=1 and show='true'
+		<if test="list != null and list.size() > 0">
+			and parentid in
+			<foreach collection="list" open="(" separator="," close=")" item="id">
+				#{id,jdbcType=INTEGER}
+			</foreach>
+		</if>
+	</select>
+	
+	<select id="select" resultType="entity.category.VirtualCategory" parameterType="java.lang.Integer">
+		select * from t_virtual_category where id = #{0}
+	</select>
+	
+	<select id="allSubsByParentId" resultType="dto.category.VirCategoryDto" parameterType="java.lang.Integer">
+		WITH RECURSIVE vskus 
+		(	id, 
+			"name",
+			parentid, 
+			"position",
+			virCategoryIdTree, 
+			level
+		)  
+		AS (
+			SELECT 
+				id, 
+				"name",
+				parentid, 
+				"position",
+				ARRAY[id] AS virCategoryIdTree, 
+				1 AS level 
+			FROM t_virtual_category
+			WHERE 
+				parentid = #{0}
+			AND "show" = true
+		
+			UNION ALL
+		
+			SELECT 
+				vc.id, 
+				vc."name",
+				vc.parentid, 
+				vc."position",
+				vskus.virCategoryIdTree ||vc.id, 
+				vskus.level + 1 AS level 
+			FROM t_virtual_category vc
+			JOIN vskus ON vc.parentid = vskus.id
+		) SELECT *
+			FROM vskus
+			ORDER BY level , "position" DESC NULLS LAST
+	</select>
+	
+	
+</mapper>

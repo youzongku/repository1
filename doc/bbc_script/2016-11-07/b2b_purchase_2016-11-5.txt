@@ -1,0 +1,5 @@
+ALTER TABLE "public"."t_purchase_audit"
+ALTER COLUMN "transfer_amount" TYPE float8,
+ALTER COLUMN "order_amount" TYPE float8,
+ALTER COLUMN "received_amount" TYPE float8;
+

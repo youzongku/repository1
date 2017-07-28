@@ -1,0 +1,185 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<div class="promotion-box">
+    <h1>营销工具<span>---</span><span>优惠码</span></h1>
+    <button class="add-promotion-code">添加优惠码</button>
+    <ul class="search_category" style="height:62px;">
+        <li>添加时间：
+            <input  class="searchInput" placeholder="开始日期" name = "createStart" readonly="true"
+            style = "width:120px"
+            onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"  >&nbsp;至&nbsp;
+            <input  class="searchInput" placeholder="结束日期" name = "createEnd" readonly="true"
+            style = "width:120px"
+            onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" >
+        </li>
+        <li>
+            <div class="search">
+                <input id="activeInput" class="searchInput" placeholder="优惠码名称/添加人" style="width:180px;">
+                <input id="activeButton" class="searchButton" value="搜索" type="button" style="cursor: pointer;">
+            </div>
+        </li>
+    </ul>
+    <div class="content_list">
+        <!--<table class="promotion_recharge" id = "acitve_table">-->
+            <!--<thead>-->
+            <!--<tr class="user_recharge_header">-->
+                <!--<th width="8%">编号</th>-->
+                <!--<th width="23%">优惠码名称</th>-->
+                <!--<th width="10%">优惠码面额</th>-->
+                <!--<th width="10%">门槛金额</th>-->
+                <!--<th width="8%">发行数量</th>-->
+                <!--<th width="10%">状态</th>-->
+                <!--<th width="15%">添加时间</th>-->
+                <!--<th width="8%">添加人</th>-->
+                <!--<th width="8%">操作</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--</tbody>-->
+        <!--</table>-->
+        <!--<div class="clear"></div>-->
+        <!--<div class="list_content">-->
+            <!--<div id="goodsList"></div>-->
+            <!--<p>共<span id="activeTotal" style="display:inline-block;">0</span>记录，每页显示-->
+                <!--<select id="active_pageSize">-->
+                    <!--<option value="10" selected="selected">10</option>-->
+                    <!--<option value="30">30</option>-->
+                    <!--<option value="50">50</option>-->
+                <!--</select>-->
+                <!--，共<span id="activePages" style="display:inline-block;">0</span>页-->
+            <!--</p>-->
+        <!--</div>-->
+        <!--<div class="recharge_operation" style="display: none; padding: 0;">-->
+            <!--<ul>-->
+                <!--<li class="recharge_operation_li1"></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+
+        <table class="list_title all_table" id="active_table">
+
+        </table>
+        <div id="active_pagination" style="text-align: center; margin-top: 30px;"></div>
+    </div>
+    <!--<div id="pagination_active" style="text-align: center; margin-top: 30px;"></div>-->
+    <div class="recharge_black" style="display: none"></div>
+
+</div>
+
+<div class="promotion-charge" style="display: none">
+    <h1>营销工具<span>---</span><span>优惠码-优惠码列表</span></h1>
+    <button class="back-promotion-code">返回优惠码</button>
+    <ul class="search_category" style="height:62px;">
+        <li>使用时间：
+            <input placeholder="开始日期"  name = "usedStart" readonly="true" 
+            style = "width:120px"
+            onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"  >&nbsp;至&nbsp;
+            <input placeholder="结束日期"  name = "usedEnd" readonly="true"
+            style = "width:120px"
+            onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" >
+        </li>
+        <li>使用状态：
+            <select style="width: 100px;" name = "coupons_status">
+                <option value="" selected="selected">全部状态</option>
+                <option value="0">未使用</option>
+                <option value="1">已使用</option>
+                <option value="3">已作废</option>
+                <option value="4">已过期</option>
+            </select>
+        </li>
+        <li>
+            <div class="search">
+                <input id="couponsInput" class="searchInput" placeholder="优惠码编码/订单编号/使用人" style="width:180px;" >
+                <input id="activeId" style="display: none" />
+                <input id="couponsButton" class="searchButton" value="搜索" type="button" style="cursor: pointer;">
+                <button id="export" style="cursor: pointer;">导出excel</button>
+            </div>
+        </li>
+    </ul>
+    <p class="p-time">有效期：
+        <span id = "start"></span>至
+        <span id = "end"></span></p>
+    <div class="content_list">
+        <!--<table class="promotion_recharge" id = "coupons_table">-->
+            <!--<thead>-->
+            <!--<tr class="user_recharge_header">-->
+                <!--<th width="15%" name = "couponsNo">优惠编号</th>-->
+                <!--<th width="8%"  name = "istatus">使用状态</th>-->
+                <!--<th width="15%" name = "user">使用人</th>-->
+                <!--<th width="15%" name = "usageTimeStr">使用时间</th>-->
+                <!--<th width="15%" name = "orderNo">订单编号</th>-->
+                <!--<th width="10%" name = "orderState">订单状态</th>-->
+                <!--<th width="8%"  name = "orderAmount">订单金额</th>-->
+                <!--<th width="14%" name = "actuallyPaid">实际支付金额</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--</tbody>-->
+        <!--</table>-->
+        <!--<div class="clear"></div>-->
+        <!--<div class="list_content">-->
+            <!--<div id="goodsList"></div>-->
+            <!--<p>共<span id="couponsTotal" style="display:inline-block;">0</span>记录，每页显示-->
+                <!--<select id="coupons_pageSize">-->
+                    <!--<option value="10" selected="selected">10</option>-->
+                    <!--<option value="30">30</option>-->
+                    <!--<option value="50">50</option>-->
+                <!--</select>-->
+                <!--，共<span id="couponsPages" style="display:inline-block;">0</span>页-->
+            <!--</p>-->
+        <!--</div>-->
+        <!--<div class="recharge_operation" style="display: none; padding: 0;">-->
+            <!--<ul>-->
+                <!--<li class="recharge_operation_li1"></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+
+        <table class="list_title all_table" id="coupons_table">
+
+        </table>
+        <div id="coupons_pagination" style="text-align: center; margin-top: 30px;"></div>
+    </div>
+    <!--<div id="pagination_coupons" style="text-align: center; margin-top: 30px;"></div>-->
+    <div class="recharge_black" style="display: none"></div>
+
+</div>
+<div class="add-codepage" style="display:none">
+    <h1>营销工具<span>---</span><span>优惠码-优惠码列表</span></h1>
+    <button class="back-promotion-code">返回优惠码</button>
+    <div class="content_list">
+        <ul class="codepage-content">
+            <li>
+                <span><span class="red">*</span>优惠码名称：</span>
+                <input name = "couponsName"  maxlength = "30" tag = "val">
+            </li>
+            <li>
+                <span><span class="red">*</span>优惠码面额：</span>
+                <input name = "couponsCost" tag = "val">
+            </li>
+            <li>
+                <span><span class="red">*</span>优惠码使用门槛：</span>
+                <input name = "thresholdPrice" tag = "val">
+            </li>
+            <li>
+                <span><span class="red">*</span>优惠码使用有效期：</span>
+                <input placeholder="开始日期" id = "vaildStart" name = "vaildStart" readonly="true" 
+                style = "width:120px" tag = "val">
+                &nbsp;至&nbsp;
+                <input placeholder="结束日期" id = "vaildEnd" name = "vaildEnd" readonly="true" 
+                style = "width:120px" tag = "val">
+            </li>
+            <li>
+                <span><span class="red">*</span>优惠码发行数量：</span>
+                <input name = "publishQty" tag = "val">
+            </li>
+            <li style = "display:none">
+                <span>优惠码长度</span>
+                <input name = "couponsLenght" value = "8" >
+            </li>
+            <li>
+                <span>&nbsp;</span>
+                <button class="add-sure" onclick = "saveActive()" disabled = "disabled"
+                style = "color: rgb(0, 0, 0);background: rgb(234, 234, 234);">确认添加</button>
+                <button class="clear-setting">清空设置</button>
+            </li>
+        </ul>
+    </div>
+</div>

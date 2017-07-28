@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.DisModeMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.DisMode" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dis_mode" property="disMode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dis_mode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_mode
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_mode
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.DisMode" >
+    insert into t_dis_mode (id, dis_mode)
+    values (#{id,jdbcType=INTEGER}, #{disMode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.DisMode" >
+    insert into t_dis_mode
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="disMode != null" >
+        dis_mode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="disMode != null" >
+        #{disMode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.DisMode" >
+    update t_dis_mode
+    <set >
+      <if test="disMode != null" >
+        dis_mode = #{disMode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.DisMode" >
+    update t_dis_mode
+    set dis_mode = #{disMode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap">
+  	select  
+  	<include refid="Base_Column_List"/>
+  	from t_dis_mode ORDER BY id ASC
+  </select>
+</mapper>

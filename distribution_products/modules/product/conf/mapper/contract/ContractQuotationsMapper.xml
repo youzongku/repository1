@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.contract.ContractQuotationsMapper">
+	<resultMap id="BaseResultMap" type="entity.contract.ContractQuotations">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="contract_no" property="contractNo" jdbcType="VARCHAR" />
+		<result column="sku" property="sku" jdbcType="VARCHAR" />
+		<result column="category_id" property="categoryId" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+		<result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+		<result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+		<result column="purchase_price" property="purchasePrice" jdbcType="DOUBLE" />
+		<result column="contract_price" property="contractPrice" jdbcType="DOUBLE" />
+		<result column="arrive_ware_price" property="arriveWarePrice" jdbcType="DOUBLE" />
+		<result column="is_discount" property="isDiscount" jdbcType="BIT" />
+		<result column="discount" property="discount" jdbcType="DOUBLE" />
+		<result column="contract_start" property="contractStart" jdbcType="TIMESTAMP" />
+		<result column="contract_end" property="contractEnd" jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="inter_bar_code" property="interBarCode" jdbcType="VARCHAR" />
+
+		<result column="account" property="account" jdbcType="VARCHAR" />
+		<result column="distribution_name" property="distributionName" jdbcType="VARCHAR" />
+		<result column="bussiness_erp" property="bussinessErp" jdbcType="VARCHAR" />
+		<result column="distribution_mode" property="distributionMode" jdbcType="INTEGER" />
+
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, contract_no, sku, category_id, title, img_url, warehouse_id, warehouse_name,
+		purchase_price,
+		contract_price, arrive_ware_price, is_discount, discount, contract_start,
+		contract_end,
+		status, create_time, update_time, create_user,inter_bar_code
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_contract_quotations
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByContractNo"  resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_contract_quotations
+		<where>
+			<if test="cno != null and cno != '' ">
+				contract_no = #{cno,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+		</where>
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_contract_quotations
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insertSelective" parameterType="entity.contract.ContractQuotations" useGeneratedKeys="true" keyProperty="id">
+		insert into t_contract_quotations
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="contractNo != null">
+				contract_no,
+			</if>
+			<if test="sku != null">
+				sku,
+			</if>
+			<if test="categoryId != null">
+				category_id,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="imgUrl != null">
+				img_url,
+			</if>
+			<if test="warehouseId != null">
+				warehouse_id,
+			</if>
+			<if test="warehouseName != null">
+				warehouse_name,
+			</if>
+			<if test="purchasePrice != null">
+				purchase_price,
+			</if>
+			<if test="contractPrice != null">
+				contract_price,
+			</if>
+			<if test="arriveWarePrice != null">
+				arrive_ware_price,
+			</if>
+			<if test="isDiscount != null">
+				is_discount,
+			</if>
+			<if test="discount != null">
+				discount,
+			</if>
+			<if test="contractStart != null">
+				contract_start,
+			</if>
+			<if test="contractEnd != null">
+				contract_end,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="interBarCode != null">
+				inter_bar_code,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="contractNo != null">
+				#{contractNo,jdbcType=VARCHAR},
+			</if>
+			<if test="sku != null">
+				#{sku,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryId != null">
+				#{categoryId,jdbcType=INTEGER},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="imgUrl != null">
+				#{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="warehouseId != null">
+				#{warehouseId,jdbcType=INTEGER},
+			</if>
+			<if test="warehouseName != null">
+				#{warehouseName,jdbcType=VARCHAR},
+			</if>
+			<if test="purchasePrice != null">
+				#{purchasePrice,jdbcType=DOUBLE},
+			</if>
+			<if test="contractPrice != null">
+				#{contractPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="arriveWarePrice != null">
+				#{arriveWarePrice,jdbcType=DOUBLE},
+			</if>
+			<if test="isDiscount != null">
+				#{isDiscount,jdbcType=BIT},
+			</if>
+			<if test="discount != null">
+				#{discount,jdbcType=DOUBLE},
+			</if>
+			<if test="contractStart != null">
+				#{contractStart,jdbcType=TIMESTAMP},
+			</if>
+			<if test="contractEnd != null">
+				#{contractEnd,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="interBarCode != null">
+				#{interBarCode,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="entity.contract.ContractQuotations">
+		update t_contract_quotations
+		<set>
+			<if test="contractNo != null">
+				contract_no = #{contractNo,jdbcType=VARCHAR},
+			</if>
+			<if test="sku != null">
+				sku = #{sku,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryId != null">
+				category_id = #{categoryId,jdbcType=INTEGER},
+			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="imgUrl != null">
+				img_url = #{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="warehouseId != null">
+				warehouse_id = #{warehouseId,jdbcType=INTEGER},
+			</if>
+			<if test="warehouseName != null">
+				warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+			</if>
+			<if test="purchasePrice != null">
+				purchase_price = #{purchasePrice,jdbcType=DOUBLE},
+			</if>
+			<if test="contractPrice != null">
+				contract_price = #{contractPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="arriveWarePrice != null">
+				arrive_ware_price = #{arriveWarePrice,jdbcType=DOUBLE},
+			</if>
+			<if test="isDiscount != null">
+				is_discount = #{isDiscount,jdbcType=BIT},
+			</if>
+			<if test="discount != null">
+				discount = #{discount,jdbcType=DOUBLE},
+			</if>
+			<if test="contractStart != null">
+				contract_start = #{contractStart,jdbcType=TIMESTAMP},
+			</if>
+			<if test="contractEnd != null">
+				contract_end = #{contractEnd,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUser != null">
+				create_user = #{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="interBarCode != null">
+				inter_bar_code = #{interBarCode,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<sql id="QUOTATIONS_QUERY_CONDITIONS">
+		<where>
+			<if test="skuList!=null and skuList.size()>0">
+				q.sku in
+				<foreach collection="skuList" item="item" open="(" close=")" separator=","> 
+					#{item}
+				</foreach>
+			</if>
+			<if test="search != null and search != ''">
+	    	<![CDATA[
+				and (lower(q.contract_no) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				      or lower(q.sku) like lower('%'||#{search,jdbcType=VARCHAR}||'%') 
+				      or lower(q.title) like lower('%'||#{search,jdbcType=VARCHAR}||'%') 
+				      or lower(q.inter_bar_code) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				      or lower(c.account) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				    )
+			]]>
+			</if>
+			<if test="start != null and start != ''">
+			<![CDATA[and q.contract_end >= to_timestamp(#{start,jdbcType=VARCHAR}, 'YYYY-MM-DD')]]>
+			</if>
+			<if test="end != null and end != ''">
+			<![CDATA[and q.contract_end  <= to_timestamp(#{end,jdbcType=VARCHAR}, 'YYYY-MM-DD')]]>
+			</if>
+			<if test="categoryId != null">
+				and q.category_id = #{categoryId,jdbcType=INTEGER}
+			</if>
+			<if test="warehouseId != null">
+				and q.warehouse_id = #{warehouseId,jdbcType=INTEGER}
+			</if>
+			<if test="sku != null and sku != ''">
+				and q.sku = #{sku,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				and q.status = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="contractNo != null and contractNo != ''">
+				and q.contract_no = #{contractNo,jdbcType=VARCHAR}
+			</if>
+			<if test="account != null and account != ''">
+				and c.account = #{account,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+	<select id="select" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select
+		q.*,c.account,c.distribution_name as distributionName,c.bussiness_erp as bussinessErp,c.distribution_mode as distributionMode
+		from t_contract_quotations q LEFT JOIN t_contract c on
+		q.contract_no=c.contract_no
+		<include refid="QUOTATIONS_QUERY_CONDITIONS"/>
+		<choose>
+			<when
+				test="sidx != null and sidx != '' and sord != null and sord != ''">
+				order by ${sidx} ${sord} nulls last
+			</when>
+			<otherwise>
+				order by q.update_time desc
+			</otherwise>
+		</choose>
+		<if test="page != null and rows != null">
+			LIMIT #{rows} OFFSET (#{page}-1)*#{rows}
+		</if>
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select
+		count(1)
+		from t_contract_quotations q LEFT JOIN t_contract c on
+		q.contract_no=c.contract_no
+		<include refid="QUOTATIONS_QUERY_CONDITIONS"/>
+	</select>
+	
+	<update id="updateNotStartQuoted">
+		update t_contract_quotations set status=2,update_time=now() where contract_start <![CDATA[<=]]>now() and status = 1
+	</update>
+	<update id="updateEndedQuoted">
+		update t_contract_quotations set status=3,update_time=now() where contract_end + INTERVAL '1D' <![CDATA[<=]]>now() and status != 3
+	</update>
+	
+	<select id="productSearch" resultMap="BaseResultMap"
+	parameterType="java.util.Map">
+		SELECT * from 
+		(
+			SELECT
+				row_number() OVER (PARTITION BY q.sku ORDER BY q.contract_end asc,q.contract_start desc) as rownum,
+				q.*
+			FROM
+				t_contract_quotations q
+			LEFT JOIN t_contract C ON q.contract_no = c.contract_no
+			WHERE 1=1
+				<if test="account != null">
+					AND c.account = #{account,jdbcType=VARCHAR}
+				</if>
+				<if test="skus != null and skus.size() >0">
+					AND q.sku IN
+					<foreach collection="skus" open="(" close=")" item="sku"
+						separator=",">
+						#{sku,jdbcType=VARCHAR}
+					</foreach>
+				</if>
+				<if test="warehouseId != null">
+					AND q.warehouse_id = #{warehouseId,jdbcType=INTEGER}
+				</if>
+					AND q.contract_end >= to_timestamp(now() || '', 'YYYY-MM-DD')
+					AND q.status = 2
+		) a
+		WHERE a.rownum = 1
+	</select>
+	
+	<update id="batchUpdateCategoryId" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+			update t_contract_quotations
+			set category_id = #{item.categoryId}
+			where id = #{item.id}
+    	</foreach>
+	</update>
+</mapper>

@@ -1,0 +1,162 @@
+<style type="text/css">
+    .confirmOrderPop{
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .confirmOrderPopL span{
+        height: 20px;
+        line-height: 20px;
+    }
+    .confirmOrderPopR span:nth-child(1){
+        width: 16%;
+        vertical-align: top;
+        float: left;
+        height: 20px;
+        line-height: 20px;
+    }
+    .confirmOrderPopR span:nth-child(2){
+        width: 84%;
+        float: right;
+    }
+    .confirmOrderPopR span:nth-child(2) textarea{
+        width: 100%;
+        height: 190px;
+        line-height: 20px;
+        padding: 2px 5px;
+        box-sizing: border-box;
+    }
+</style>
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<link rel="stylesheet" href="../js/lib/jqGrid/css/jquery-ui-themes-1.12.1/themes/base/jquery-ui.min.css" />
+<h1>微仓进货<span>---</span><span>客服确认</span></h1>
+<ul class="search_category">
+    <li>下单时间：
+        <input  class="searchInput" placeholder="开始日期" id="cs_startTime" name='startTime' onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>至
+        <input  class="searchInput" placeholder="结束日期" id="cs_endTime" name='endTime' onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+    </li>
+    <li>
+        <div class="search">
+            <input onkeyup="enter_keyUp(event,this, getCSPurchaseOrderByConditions)" type="text" id="searchOrdersByCSInput" class="searchInput" placeholder="订单编号/下单分销商/录入人/业务员/名称" style="width: 250px;">
+            <input onclick="getCSPurchaseOrderByConditions()" class="searchButton" value="搜索" type="button">
+        </div>
+    </li>
+</ul>
+<div class="content_list">
+    <div id="orders_by_CS_div">
+        <table class="list_title all_table" id="orders_by_CS_table">
+            <!--<thead>
+            <tr>
+                <th class="add_list_down" style="width: 7%;">
+                </th>
+                <th class="num" name="purchaseOrderNo">订单编号</th>
+                <th class="order_time" name="sorderDate">下单时间</th>
+                <th class="order_time" name="nickName">名称</th>
+                <th class="distributor" name="email">分销商</th>
+                <th>业务员</th>
+                <th class="purchase_people">录入人</th>
+                <th>支付方式</th>
+                <th class="dose">操作</th>
+            </tr>
+            </thead>
+            <tbody id="ordersByCSList" style="overflow-y:auto;height:400px;">
+            </tbody>-->
+        </table>
+        <div id="orders_by_CS_pagination" style="text-align: center; margin-top: 30px;"></div>
+    </div>
+    <!--<div class="list_content">
+        <p>共<span id="order_by_customer_service_total" style="display:inline-block;">0</span>记录，每页显示
+            <select id="pur_pageSize_by_CS" onchange="getOrdersByCustomerService(null,null)">
+                <option value="10" selected>10</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
+            ，共<span id="orders_by_CS_pages" style="display:inline-block;">0</span>页
+        </p>
+    </div>
+    <div id="orders_by_CS_pagination" style="text-align: center; margin-top: 30px;"></div>-->
+</div>
+
+<!--确认订单-弹出窗-->
+<div id="csComfirmOrderDiv" class="confirmOrderPop" style="display: none;">
+</div>
+
+<div id="cs_auditLogs" style="display: none">
+    <table>
+        <tbody></tbody>
+    </table>
+</div>
+
+<!--采购单详情 start-->
+<div id="cs_purchaseorder_detail_div" class="sale-order-detail display">
+    <ul class="sale-order-detail-lbox">
+        <li class="currentBlue"><a>OA审批单号</a></li>
+        <li><a>录单备注信息</a></li>
+        <li><a>客服备注信息</a></li>
+        <li><a>财务备注信息</a></li>
+        <li><a>商品信息</a></li>
+    </ul>
+    <div class="sale-order-detail-rbox">
+        <h4>OA审批单号</h4>
+        <div class="sale-order-detail-rbox-cont">
+            <div>
+                <span name="oaAuditNoSpan"></span>
+            </div>
+        </div>
+        <h4>录单备注信息</h4>
+        <div class="sale-order-detail-rbox-cont" name="remarksInfoDiv">
+        </div>
+        <h4>客服备注信息</h4>
+        <div class="sale-order-detail-rbox-cont" name="csRemarksInfoDiv">
+        </div>
+        <h4>财务备注信息</h4>
+        <div class="sale-order-detail-rbox-cont" name="financeRemarksInfoDiv">
+        </div>
+        <h4 class="light-blue">商品信息</h4>
+        <div class="sale-order-detail-rbox-cont purchaseorder-detail-box">
+            <table>
+                <thead>
+                <tr>
+                    <th>商品编码</th>
+                    <th>商品名称</th>
+                    <th>到期日期</th>
+                    <th>国际条码</th>
+                    <th>所属仓库</th>
+                    <th>单价（元）</th>
+                    <th>均摊价（元）</th>
+                    <th>数量（个）</th>
+                    <th>小计（元）</th>
+                </tr>
+                </thead>
+                <tbody name="productInfoTbody">
+                </tbody>
+            </table>
+            <p class="red" name="sumInfoP">
+            </p>
+        </div>
+    </div>
+</div>
+<!--采购单详情 end-->
+
+<script>
+    $(document).ready(function() {
+//  采购单详情锚点跳转效果 start
+        var i=0;
+        $(".sale-order-detail-lbox li a").each(function(){
+            var s = ++i;
+            $(this).attr("href","#linktitle-"+s);
+        });
+        var x=0;
+        $(".sale-order-detail-rbox h4").each(function(){
+            var z = ++x;
+            $(this).attr("id","linktitle-"+z);
+        });
+        $(".sale-order-detail-lbox li a").click(function(){
+            $(this).parent().addClass("currentBlue");
+            $(this).parent().siblings().removeClass("currentBlue");
+        });
+//  采购单详情锚点跳转效果 end
+    });
+</script>
+

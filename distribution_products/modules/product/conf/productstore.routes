@@ -1,0 +1,16 @@
+
+# publish product
+GET				/test				@controllers.product.store.PublishProductController.test()
+
+# attribute
+POST            /attr/create        @controllers.product.store.AttributeController.create()
+
+POST            /attr/read        @controllers.product.store.AttributeController.read()
+
+GET             /attr/types         @controllers.product.store.AttributeController.readTypes()
+
+# attribute set
+
+# attribute group
+
+# product category

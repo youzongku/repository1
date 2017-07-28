@@ -1,0 +1,339 @@
+<link rel="stylesheet" type="text/css" href="../js/lib/webuploader/webuploader.css">
+<div class="box-orderlist">
+    <p class="title">订单导入<span class="close_detail btn" id="importClose" onclick ="toggle_menu_content(4)">返回</span></p>
+    <ul class="synchronousOder-list">
+        <li class="synchronousOder-show synchronousOder" >同步订单</li>
+        <li class="manualImport">手动导入</li>
+    </ul>
+    <!--同步订单start-->
+    <div class="synchronousOderCont order-import-content">
+        <div>
+            <span class="content-title">选择店铺：</span>
+            <select id = "import_shop" class="search-input-pub"></select>
+            <button id = "autoPullOrder" data-tab="Uhide" type="button" value="text"> 获取订单</button>
+        </div>
+        <div id="sync_date">
+            <span class="content-title">日期：</span>
+            <input class="search-input-pub" id = "import_start_time"  type="text" placeholder="请选择开始时间"  readonly = "true">至
+            <input class="search-input-pub"  id = "import_end_time"  type="text" placeholder="请选择结束时间"  readonly = "true">
+            <span>（默认7天内）</span>
+        </div>
+    </div>
+    <!--同步订单end-->
+
+    <!--手动导入start-->
+    <div class="manualImportCont" style="display: none;">
+        <ul class="importOder-list">
+            <li class="importOder-show">导入淘宝订单</li>
+            <li>导入线下订单</li>
+            <li>导入京东订单</li>
+            <li>导入有赞订单</li>
+            <li style="display: none;">导入阿里巴巴订单</li>
+            <li>导入人人店订单</li>
+        </ul>
+        <div id="tabs">
+            <div class="taobao-orderlist">
+                <ul class="import-category">
+                    <li style="display: none;">
+                        <button class="public-button orderTab" data-tab="Uhide" type="button" value="text"> 同步订单</button>
+                    </li>
+                    <li>
+                        <button class="public-button orderTab" data-tab="Ushow" type="button" value="text"> 手动导入订单</button>
+                    </li>
+                </ul>
+                <div class="order-import-content Synchronization-order" style="display: none;">
+                    <div><span class="content-title">选择店铺平台：</span>
+                        <ul class="choic-store">
+                            <li>
+                                <input type="radio" name="shop-check">
+                                <span class="store-name" type="button" value="text">淘宝网</span>
+                            </li>
+                            <li>
+                                <input type="radio" name="shop-check">
+                                <span class="store-name" type="button" value="text">京东商城</span>
+                            </li>
+                            <li>
+                                <input type="radio" name="shop-check">
+                                <span class="store-name" type="button" value="text">洋码头</span>
+                            </li>
+                            <li>
+                                <input type="radio" name="shop-check">
+                                <span class="store-name" type="button" value="text">有赞</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <span class="content-title">选择一个店铺：</span>
+                        <select class="select-store">
+                            <option>ME</option>
+                            <option>米诺</option>
+                        </select>
+                        <p class="sum-order">温馨提示：订单共 <span> 9 </span>单；已下载<span> 5 </span>单</p>
+                    </div>
+                    <div>
+                        <span class="content-title">日期：</span>
+                        <ul class="search_category">
+                            <li>
+                                <input placeholder="开始日期" class="time-input"/> 至
+                                <input placeholder="结束日期" class="time-input" style="margin-left:10px;"/>
+                                <span>默认7天内</span>
+                            </li>
+                            <li style="margin-top:30px;">
+                                <button class="public-button" type="button" value="text" onclick="getorders(this,'Ushow')">
+                                    获取订单
+                                </button>
+                                <button class="public-button get-orders" type="button" value="text">订单获取设置</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--手动导入订单-->
+                <div class="order-import-content Manual-import-orders">
+                    <div><span class="content-title">导入文件：</span>
+                        <ul class="search_category">
+                            <form>
+                                <li>
+                                    <div id="picker">选择文件</div>
+                                    <div id="thelist" class="uploader-list"></div>
+                                    <button class="public-button export-mould" data-name="淘宝订单信息模板" type="button" value="text">
+                                        淘宝订单信息模板下载
+                                    </button>
+                                    <button class="public-button export-mould" data-name="淘宝商品信息模板" type="button" value="text">
+                                        淘宝商品信息模板下载
+                                    </button>
+                                </li>
+                                <li>支持csv、xls、xlsx文件格式上传</li>
+                                <li style="margin-top:30px;">
+                                    <button id="import-excel" class="public-button" type="button" value="text">确定导入</button>
+                                    <button id="my-order" class="public-button" type="button" value="text">我的订单</button>
+                                </li>
+                            </form>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="live-orderlist hide">
+                <div class="box-orderlist">
+                    <ul class="import-category">
+                        <li style="display: none;">
+                            <button class="public-button orderTab" data-tab="Uhide" type="button" value="text">
+                                同步订单
+                            </button>
+                        </li>
+                        <li>
+                            <button class="public-button orderTab" data-tab="Ushow" type="button" value="text">
+                                手动导入订单
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="order-import-content Synchronization-order" style="display: none;">
+                        <div><span class="content-title">选择店铺平台：</span>
+                            <ul class="choic-store">
+                                <li>
+                                    <input type="radio" name="shop-check">
+                                    <span class="store-name" type="button" value="text">淘宝网</span>
+                                </li>
+                                <li>
+                                    <input type="radio" name="shop-check">
+                                    <span class="store-name" type="button" value="text">京东商城</span>
+                                </li>
+                                <li>
+                                    <input type="radio" name="shop-check">
+                                    <span class="store-name" type="button" value="text">洋码头</span>
+                                </li>
+                                <li>
+                                    <input type="radio" name="shop-check">
+                                    <span class="store-name" type="button" value="text">有赞</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <span class="content-title">选择一个店铺：</span>
+                            <select class="select-store">
+                                <option>ME</option>
+                                <option>米诺</option>
+                            </select>
+                            <p class="sum-order">温馨提示：订单共 <span> 9 </span>单；已下载<span> 5 </span>单</p>
+                        </div>
+                        <div>
+                            <span class="content-title">日期：</span>
+                            <ul class="search_category">
+                                <li>
+                                    <input placeholder="开始日期" class="time-input"/>至
+                                    <input placeholder="结束日期" class="time-input" style="margin-left:10px;"/>
+                                    <span>默认7天内</span>
+                                </li>
+                                <li style="margin-top:30px;">
+                                    <button class="public-button" type="button" value="text" onclick="getorders(this,'Ushow')">
+                                        获取订单
+                                    </button>
+                                    <button class="public-button get-orders" type="button" value="text">订单获取设置</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--手动导入订单-->
+                    <div class="order-import-content Manual-import-orders">
+                        <div><span class="content-title">导入文件：</span>
+                            <ul class="search_category">
+                                <form>
+                                    <li>
+                                        <div id="offlinePicker"> 选择文件</div>
+                                        <div id="offlineList" class="uploader-list"></div>
+                                        <button class="public-button export-mould" data-name="线下店铺订单模板" type="button"
+                                                value="text">
+                                            线下店铺订单模板下载
+                                        </button>
+                                        <button class="public-button export-mould" data-name="线下店铺商品模板" type="button" value="text">
+                                            线下店铺商品模板下载
+                                        </button>
+                                    </li>
+                                    <li>支持csv、xls、xlsx文件格式上传</li>
+                                    <li style="margin-top:30px;">
+                                        <button id="offline_import-excel" class="public-button" type="button" value="text">
+                                            确定导入
+                                        </button>
+                                        <button id="sub-my-order" class="public-button" type="button" value="text">我的订单
+                                        </button>
+                                    </li>
+                                </form>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="other-orderlist hide">
+                <div class="box-orderlist">
+                    <ul class="import-category">
+                        <li style="display: none;">
+                            <button class="public-button orderTab" data-tab="Uhide" type="button" value="text">
+                                同步订单
+                            </button>
+                        </li>
+                        <li>
+                            <button class="public-button orderTab" data-tab="Ushow" type="button" value="text">
+                                手动导入订单
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="order-import-content Synchronization-order" style="display: none;">
+                        <div><span class="content-title">选择店铺平台：</span>
+                            <ul class="choic-store">
+                                <li><input type="radio" name="shop-check">
+                                    <span class="store-name" type="button" value="text">淘宝网</span>
+                                </li>
+                                <li><input type="radio" name="shop-check">
+                                    <span class="store-name" type="button" value="text">京东商城</span>
+                                </li>
+                                <li><input type="radio" name="shop-check">
+                                    <span class="store-name" type="button" value="text">洋码头</span>
+                                </li>
+                                <li><input type="radio" name="shop-check">
+                                    <span class="store-name" type="button" value="text">有赞</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div><span class="content-title">选择一个店铺：</span>
+                            <select class="select-store">
+                                <option>ME</option>
+                                <option>米诺</option>
+                            </select>
+                            <p class="sum-order">温馨提示：订单共 <span> 9 </span>单；已下载<span> 5 </span>单</p>
+                        </div>
+                        <div><span class="content-title">日期：</span>
+                            <ul class="search_category">
+                                <li>
+                                    <input placeholder="开始日期" class="time-input"/>至
+                                    <input placeholder="结束日期" class="time-input" style="margin-left:10px;"/>
+                                    <span>默认7天内</span>
+                                </li>
+                                <li style="margin-top:30px;">
+                                    <button class="public-button" type="button" value="text" onclick="getorders(this,'Ushow')">
+                                        获取订单
+                                    </button>
+                                    <button class="public-button get-orders" type="button" value="text">订单获取设置</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--手动导入订单-->
+                    <div class="order-import-content Manual-import-orders">
+                        <div><span class="content-title">导入文件：</span>
+                            <ul class="search_category">
+                                <form>
+                                    <li>
+                                        <div id="otherPicker"> 选择文件</div>
+                                        <div id="otherList" class="uploader-list"></div>
+                                        <button id="otherExport" class="public-button export-mould" data-name="京东订单模板" type="button" value="text">
+                                            京东订单模板下载
+                                        </button>
+                                    </li>
+                                    <li>支持csv、xls、xlsx文件格式上传</li>
+                                    <li style="margin-top:30px;">
+                                        <button id="other-import-excel" eg="" class="public-button" type="button" value="text">
+                                            确定导入
+                                        </button>
+                                        <button id="other-my-order" class="public-button" type="button" value="text">
+                                            我的订单
+                                        </button>
+                                    </li>
+                                </form>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--手动导入end-->
+
+    <!--获取订单-->
+    <div class="get-orders-list" style="display: none">
+        <ul class="import-category" style="padding-left:0px;">
+            <li>
+                <button class="public-button orderinfo" id="waitingOrder" type="button" value="text" data-tab="Ushow" data-option="1">
+                    待生成信息订单
+                </button>
+            </li>
+            <li>
+                <button class="public-button orderinfo" type="button" value="text" data-tab="Uhide" data-option="0">
+                    待补全信息订单
+                </button>
+            </li>
+        </ul>
+        <!--待生成信息订单-->
+        <div class="import-list-box">
+            <ul>
+                <li style="width: 7%;display: inline-block;margin-left:19px;">
+                    <input name="selectAll" type="checkbox">全选
+                </li>
+                <li style="text-align: left;display: inline-block">
+                    <button class="public-button generateOrderBtn" type="button" value="text">生成订单</button>
+                    <button class="public-button deleteOrderBtn" type="button" value="text">删除订单</button>
+                </li>
+            </ul>
+        </div>
+        <!--待补全信息订单-->
+        <div class="completion-order-list-box" style="display: none">
+            <ul>
+                <li style="width: 7%;display: inline-block">
+                    <input type="checkbox" name="all-check">全选</li>
+                <li style="text-align: left;display: inline-block">
+                    <button class="public-button all-delete" data-status='Ushow' type="button" value="text">删除订单</button>
+                </li>
+            </ul>
+        </div>
+        <div id="pagination_order" style="text-align: center; margin-top: 30px;"></div>
+    </div>
+
+    <!--导入订单操作提示框-->
+    <div id="import_order_result_box" class="operation-log-pop-box" style="display: none">
+        <div id="import_order_result_list" class="operation-log-list">
+        </div>
+    </div>
+</div>
+<script>
+
+
+
+</script>

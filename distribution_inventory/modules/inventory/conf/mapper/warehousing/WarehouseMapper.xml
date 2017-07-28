@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.warehousing.WarehouseMapper" >
+  <resultMap id="BaseResultMap" type="entity.warehousing.Warehouse" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="warehouse_no" property="warehouseId" jdbcType="VARCHAR" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="street" property="street" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="batch_no" property="batchNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, warehouse_no, warehouse_name, created, status, last_updated, province, city, 
+    area, street, remarks, batch_no
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="entity.warehousing.Warehouse" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_warehouse
+    <where>
+      <if test="warehouseId != null">
+        warehouse_no = #{warehouseId}
+      </if>
+      <if test="id != null">
+        AND id = #{id}
+      </if>
+    </where>
+  </select>
+
+  <select id="getWaresByBatch" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_warehouse
+    where batch_no != #{0}
+  </select>
+
+  <select id="query" resultMap="BaseResultMap"
+		parameterType="forms.warehousing.WarehouseForm">
+		select
+			* from t_warehouse 
+		<where>
+			1 = 1
+			<if test="id != null">
+				and id = #{id}
+			</if>
+			<!-- 前台查询不需要查询虚拟仓 -->
+			<if test="type != null and type != ''">
+				and type != #{type,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="warehouseId != null and warehouseId !=''">
+				and warehouse_no = #{warehouseId}
+			</if>
+			<if test="warehouseName != null and warehouseName !='' ">
+				and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+			</if>
+			<if test="batchNo != null and batchNo !='' ">
+				and batch_no = #{batchNo,jdbcType=VARCHAR}
+			</if>
+		</where>
+		ORDER BY last_updated desc
+		<if test="pageNo != null and pageNo !=0">
+			limit #{pageSize} offset (#{pageNo}-1)*#{pageSize}
+		</if>
+	</select>
+	
+	<select id="getTotal" resultType="Integer"
+		parameterType="forms.warehousing.WarehouseForm">
+		select
+			count(1) from t_warehouse 
+		<where>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="warehouseName != null and warehouseName !='' ">
+				and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+			</if>
+			<if test="batchNo != null and batchNo !='' ">
+				and batch_no = #{batchNo,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_warehouse
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.warehousing.Warehouse" >
+    insert into t_warehouse (warehouse_no, warehouse_name,
+      created, status, last_updated, 
+      province, city, area, 
+      street, remarks, batch_no)
+    values (#{warehouseId,jdbcType=VARCHAR}, #{warehouseName,jdbcType=VARCHAR},
+      #{created,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{lastUpdated,jdbcType=TIMESTAMP}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
+      #{street,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{batchNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.warehousing.Warehouse" >
+    insert into t_warehouse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_no,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="street != null" >
+        street,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="batchNo != null">
+        batch_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="street != null" >
+        #{street,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.warehousing.Warehouse" >
+    update t_warehouse
+    <set >
+      <if test="warehouseId != null" >
+        warehouse_no = #{warehouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="street != null" >
+        street = #{street,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        batch_no = #{batchNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.warehousing.Warehouse" >
+    update t_warehouse
+    set warehouse_no = #{warehouseId,jdbcType=VARCHAR},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      street = #{street,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      batch_no = #{batchNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

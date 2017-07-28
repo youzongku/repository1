@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<link rel="stylesheet" href="../css/public.css" />
+	<link rel="stylesheet" href="../css/sub-details.css" />
+	<script type="text/javascript" src="/js/lib/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="/js/common.js"></script>
+	<script type="text/javascript" src="/js/layer2.0/layer.js"></script>
+	<script src="../js/backstage/lib/laydate/laydate.js"></script>
+	<title>支付结果</title>
+</head>
+
+<body>
+	<div>
+		<div class="cart-borld content">
+			<div class="success-paid sucess" style="display:none;">
+				<h1>
+					<span class="img-span"></span>支付成功，您已成功支付￥
+					<span class="money-span" style="color:#117ad4;"></span>元
+				</h1>
+				<div class="status-button">
+				</div>
+			</div>
+			<div class="success-paid suc-no-fee" style="display:none;">
+				<h1>
+					<span class="img-span"></span>恭喜你，支付成功啦！
+				</h1>
+				<div class="status-button"> 
+				</div>
+			</div>
+			<div class="success-paid fail" style="display:none;">
+				<h1><span class="img-span"></span>支付失败了!</h1>
+				<div class="status-button"></div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(function(){
+		var isok = GetQueryString("isok");
+		console.log(">>>>>>>>"+isok);
+		if(isok=='true'){
+			var transamount = GetQueryString("transamount");
+			if(transamount == null || transamount == undefined || transamount == ''){
+				$(".sucess").css("display","none");
+				$(".suc-no-fee").css("display","block");
+				$(".fail").css("display","none");
+			}else{
+				$(".money-span").text(transamount);
+				$(".sucess").css("display","block");
+				$(".suc-no-fee").css("display","none");
+				$(".fail").css("display","none");
+			}
+		}else{
+			$(".success").css("display","none");
+			$(".suc-no-fee").css("display","none");
+			$(".fail").css("display","block");
+		}
+		/*layer.msg("该页面将在15秒后关闭。", {icon: 0, time: 15000},
+			function() {
+				window.opener=null;window.close();
+			}
+		);*/
+	});
+</script>

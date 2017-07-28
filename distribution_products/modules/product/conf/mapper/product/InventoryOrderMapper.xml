@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.InventoryOrderMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.InventoryOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="qty" property="qty" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="inter_bar_code" property="interBarCode" jdbcType="VARCHAR" />
+    <result column="detail_id" property="detailId" jdbcType="INTEGER" />
+    <result column="lock_no" property="lockNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+     <result column="expiration_date" property="expirationDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_no, qty, sku, warehouse_id, warehouse_name, title, inter_bar_code, detail_id, 
+    lock_no, status, account,create_date,expiration_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_inventory_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+   <select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_inventory_order
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_inventory_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.InventoryOrder" >
+    insert into t_inventory_order (id, order_no, qty, 
+      sku, warehouse_id, warehouse_name, 
+      title, inter_bar_code, detail_id, 
+      lock_no, status, account,create_date
+      )
+    values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{qty,jdbcType=INTEGER}, 
+      #{sku,jdbcType=VARCHAR}, #{warehouseId,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{interBarCode,jdbcType=VARCHAR}, #{detailId,jdbcType=INTEGER}, 
+      #{lockNo,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.InventoryOrder" >
+    insert into t_inventory_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="qty != null" >
+        qty,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="interBarCode != null" >
+        inter_bar_code,
+      </if>
+      <if test="detailId != null" >
+        detail_id,
+      </if>
+      <if test="lockNo != null" >
+        lock_no,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="interBarCode != null" >
+        #{interBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="detailId != null" >
+        #{detailId,jdbcType=INTEGER},
+      </if>
+      <if test="lockNo != null" >
+        #{lockNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expirationDate != null" >
+        #{expirationDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.InventoryOrder" >
+    update t_inventory_order
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        qty = #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="interBarCode != null" >
+        inter_bar_code = #{interBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="detailId != null" >
+        detail_id = #{detailId,jdbcType=INTEGER},
+      </if>
+      <if test="lockNo != null" >
+        lock_no = #{lockNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.InventoryOrder" >
+    update t_inventory_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      qty = #{qty,jdbcType=INTEGER},
+      sku = #{sku,jdbcType=VARCHAR},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      inter_bar_code = #{interBarCode,jdbcType=VARCHAR},
+      detail_id = #{detailId,jdbcType=INTEGER},
+      lock_no = #{lockNo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      account = #{account,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

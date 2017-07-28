@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="shortcut icon" href="../img/favicon.ico"/>
+<link rel="stylesheet" href="../css/public.css" />
+<link rel="stylesheet" href="../css/sub-details.css" />
+<script type="text/javascript" src="/js/lib/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/cart.js"></script>
+<!--<script charset="utf-8" src="https://wpa.b.qq.com/cgi/wpa.php"></script>-->
+<script type="text/javascript">
+</script>
+<title>购物车</title>
+</head>
+
+<body>
+ <div id="div_head"></div>
+<div>
+      <div class="">
+            <!-- <div class="cart-nav-top content">
+                    <div class="cart-logo"><a href="index.html"><img src="../img/logo.png"/></a></div>
+                    <ul class="cart-nav-top-right">
+                            <li><a>您好 ！&nbsp;&nbsp;1234</a></li>
+                            <li><a>[退出]<span>|</span></a></li>
+                            <li><a>订单管理<span>|</span></a></li>
+                            <li><a>0755-83998006<span>|</span></a></li>
+                            <li><a> 在线客服<span>|</span></a></li>
+                            <li><a> 用户中心</a></li>
+                    </ul>           
+            </div>
+            <div class="cart-line"></div> -->
+            <div class="cart-borld content">
+            		<h1 class="titile">购物车</h1>
+            		<div id="cartProduct">
+            			<input type="hidden" id="cartId"/>
+	            		仓库：<select id="warehouseid">
+	            			<option value="1">广州仓</option>
+	            			<option value="2">深圳仓</option>
+	            		</select>
+	            		商品：
+	            		<select id="sku">
+	            			<option value="12">高质奶粉</option>
+	            			<option value="13">蒙牛纯牛奶</option>
+	            		</select>
+	            		数量：
+	            		<select id="qty">
+	            			<option value="12">12</option>
+	            			<option value="13">13</option>
+	            		</select>瓶
+	            		价格：15
+	            		<input type="button" onclick="addProduct()" value="添加到购物车"/>
+            		</div>
+            		<div id="cartItem"></div>
+                  <div class="shop_history">
+                       <div class="history_title_box"><span class="history_title">浏览过的商品</span><p class="history_line"></p></div>
+                       <a href="#" class="icon_left"></a>
+                       <a href="#" class="icon_right"></a>
+                        <ul class="history_cart-content">
+                                <li>
+                                     <p>MisshaB.B CREAM完美亮白抗皺BB霜 </p>
+                                     <img src="../img/buy.jpg" />
+                                     <div class="price-list">
+                                           <p class="up-price">采购包邮价:<span>￥206.05</span></p>
+                                           <p class="sub-price">市场零售价:<span>￥309.08</span></p>
+                                           <span class="add_cart">加入购物车</span>
+                                     </div>
+                                </li>
+                                <li>
+                                     <p>MisshaB.B CREAM完美亮白抗皺BB霜 </p>
+                                     <img src="../img/buy.jpg" />
+                                     <div class="price-list">
+                                           <p class="up-price">采购包邮价:<span>￥206.05</span></p>
+                                           <p class="sub-price">市场零售价:<span>￥309.08</span></p>
+                                           <span class="add_cart">加入购物车</span>
+                                     </div>
+                                </li>
+                                <li>
+                                     <p>MisshaB.B CREAM完美亮白抗皺BB霜 </p>
+                                     <img src="../img/buy.jpg" />
+                                     <div class="price-list">
+                                           <p class="up-price">采购包邮价:<span>￥206.05</span></p>
+                                           <p class="sub-price">市场零售价:<span>￥309.08</span></p>
+                                           <span class="add_cart">加入购物车</span>
+                                     </div>
+                                </li>
+                                <li>
+                                     <p>MisshaB.B CREAM完美亮白抗皺BB霜 </p>
+                                     <img src="../img/buy.jpg" />
+                                     <div class="price-list">
+                                           <p class="up-price">采购包邮价:<span>￥206.05</span></p>
+                                           <p class="sub-price">市场零售价:<span>￥309.08</span></p>
+                                           <span class="add_cart">加入购物车</span>
+                                     </div>
+                                </li>
+                                <li>
+                                     <p>MisshaB.B CREAM完美亮白抗皺BB霜 </p>
+                                     <img src="../img/buy.jpg" />
+                                     <div class="price-list">
+                                           <p class="up-price">采购包邮价:<span>￥206.05</span></p>
+                                           <p class="sub-price">市场零售价:<span>￥309.08</span></p>
+                                           <span class="add_cart">加入购物车</span>
+                                     </div>
+                                </li>
+                                <li>
+                                     <p>MisshaB.B CREAM完美亮白抗皺BB霜 </p>
+                                     <img src="../img/buy.jpg" />
+                                     <div class="price-list">
+                                           <p class="up-price">采购包邮价:<span>￥206.05</span></p>
+                                           <p class="sub-price">市场零售价:<span>￥309.08</span></p>
+                                           <span class="add_cart">加入购物车</span>
+                                     </div>
+                                </li>
+                               
+                                
+                        </ul>
+                       
+                  </div>
+            </div>
+      </div>
+      </div> 
+      <div id="div_footer" ></div>        
+</body>
+</html>

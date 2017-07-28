@@ -1,0 +1,48 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file             controllers.marketing.promotion.Assets.at(path="/public", file)
+
+#------------------------------------------------market module----------------------------------------------#
+# promotion template
+GET        /pro/load/condts    			@controllers.marketing.promotion.PromotionTypeController.loadCondtsByAttr()
+GET        /pro/load/condt/attrs    	@controllers.marketing.promotion.PromotionTypeController.loadProTypeAttrMap()
+GET        /pro/load/pvlgs     			@controllers.marketing.promotion.PromotionTypeController.loadPvlgsByAttr()
+POST       /pro/load/protypes   		@controllers.marketing.promotion.PromotionTypeController.loadAllProTypePage()
+POST       /pro/load/protype   			@controllers.marketing.promotion.PromotionTypeController.loadOneProTypeDto()
+POST       /pro/protype/rm     			@controllers.marketing.promotion.PromotionTypeController.deleteProTypeById()
+POST       /pro/protype/create  		@controllers.marketing.promotion.PromotionTypeController.addProType()
+POST       /pro/protype/update  		@controllers.marketing.promotion.PromotionTypeController.updateProType()
+POST       /pro/protype/cp  		    @controllers.marketing.promotion.PromotionTypeController.copy()
+POST       /pro/protype/name/canuse  	@controllers.marketing.promotion.PromotionTypeController.canUseThisName()
+
+# promotion activity
+GET        /pro/activities  			@controllers.marketing.promotion.PromotionController.getProActivitiesPage()
+POST       /pro/act/create  			@controllers.marketing.promotion.PromotionController.addPromotionActivity()
+POST       /pro/act/update  			@controllers.marketing.promotion.PromotionController.updatePromotionActivity()
+POST       /pro/act/time/update  		@controllers.marketing.promotion.PromotionController.updateEndTime()
+POST       /pro/act/proActInstType  	@controllers.marketing.promotion.PromotionController.getProActWithActInstsAndProTypesDto()
+POST       /pro/act/detail  			@controllers.marketing.promotion.PromotionController.getPromotionActivityById()
+POST       /pro/act/alldetail  			@controllers.marketing.promotion.PromotionController.getFullProActDtoByProActId()
+POST       /pro/act/update/notdel  		@controllers.marketing.promotion.PromotionController.updateProActNotDelete()
+POST       /pro/act/count/unsetV  		@controllers.marketing.promotion.PromotionController.getUnSetVActInstCount()
+POST       /pro/act/count/actinst  		@controllers.marketing.promotion.PromotionController.getActInstCountByProActId()
+POST       /pro/act/pause				@controllers.marketing.promotion.PromotionController.pausePromotionActivity()
+POST       /pro/act/activate			@controllers.marketing.promotion.PromotionController.activateProActPaused()
+
+# promotion activity instance
+POST       /pro/actinst/create  					@controllers.marketing.promotion.PromotionController.addActivityInstance()
+POST       /pro/actinstinst/detail  				@controllers.marketing.promotion.PromotionController.getFullActInstDtoByActInstId()
+POST       /pro/actinst/condtinst/detail  			@controllers.marketing.promotion.PromotionController.getFullCondtInstDtoByCondtInstId()
+POST       /pro/actinst/rms  						@controllers.marketing.promotion.PromotionController.deleteActInstByIds()
+POST       /pro/actinst/condtpvlg/update   			@controllers.marketing.promotion.PromotionController.updateCondtInstsAndPvlgInstsValue()
+POST       /pro/actinst/condtinst/priority/update   @controllers.marketing.promotion.PromotionController.updatePriorityByCondtInstId()
+
+
+POST       /pro/act/backexcute          @controllers.marketing.promotion.PromotionActivityController.getBackPvlg()
+POST       /pro/act/excute              @controllers.marketing.promotion.PromotionActivityController.getPvlg()
+POST       /pro/act/check               @controllers.marketing.promotion.PromotionActivityController.getExecutoryActivity()
+POST       /pro/act/savelog             @controllers.marketing.promotion.PromotionActivityController.saveActivityInformationLog()
+#POST       /pro/act/actAndPri           @controllers.marketing.promotion.PromotionActivityController.getActivityAndPvlg()

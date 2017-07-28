@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.payment.alipay.AlipayConfigMapper" >
+  <resultMap id="BaseResultMap" type="entity.payment.alipay.AlipayConfig" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="partner" property="partner" jdbcType="VARCHAR" />
+    <result column="notify_url" property="notifyUrl" jdbcType="VARCHAR" />
+    <result column="return_url" property="returnUrl" jdbcType="VARCHAR" />
+    <result column="key" property="key" jdbcType="VARCHAR" />
+    <result column="exchange_rate" property="exchangeRate" jdbcType="VARCHAR" />
+    <result column="gateway_url" property="gatewayUrl" jdbcType="VARCHAR" />
+    <result column="types" property="types" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_user" property="lastUpdateUser" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, partner, notify_url, return_url, key, exchange_rate, gateway_url, types,create_user,
+    create_date, last_update_user, last_update_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_alipay_config
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getAlipayConfig" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT
+    ID, PARTNER, NOTIFY_URL, RETURN_URL, KEY, EXCHANGE_RATE, GATEWAY_URL, types, CREATE_USER,
+    CREATE_DATE, LAST_UPDATE_USER, LAST_UPDATE_DATE
+    FROM T_ALIPAY_CONFIG
+    WHERE types=#{0}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_alipay_config
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.payment.alipay.AlipayConfig" >
+    insert into t_alipay_config (id, partner, notify_url, 
+      return_url, key, exchange_rate, 
+      gateway_url, types, create_user, create_date,
+      last_update_user, last_update_date)
+    values (#{id,jdbcType=INTEGER}, #{partner,jdbcType=VARCHAR}, #{notifyUrl,jdbcType=VARCHAR}, 
+      #{returnUrl,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, #{exchangeRate,jdbcType=VARCHAR}, 
+      #{gatewayUrl,jdbcType=VARCHAR}, #{types,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateUser,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.payment.alipay.AlipayConfig" >
+    insert into t_alipay_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="partner != null" >
+        partner,
+      </if>
+      <if test="notifyUrl != null" >
+        notify_url,
+      </if>
+      <if test="returnUrl != null" >
+        return_url,
+      </if>
+      <if test="key != null" >
+        key,
+      </if>
+      <if test="exchangeRate != null" >
+        exchange_rate,
+      </if>
+      <if test="gatewayUrl != null" >
+        gateway_url,
+      </if>
+      <if test="types != null" >
+        types,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="partner != null" >
+        #{partner,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrl != null" >
+        #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="returnUrl != null" >
+        #{returnUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="key != null" >
+        #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="exchangeRate != null" >
+        #{exchangeRate,jdbcType=VARCHAR},
+      </if>
+      <if test="gatewayUrl != null" >
+        #{gatewayUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="types != null" >
+        #{types,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUser != null" >
+        #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.payment.alipay.AlipayConfig" >
+    update t_alipay_config
+    <set >
+      <if test="partner != null" >
+        partner = #{partner,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrl != null" >
+        notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="returnUrl != null" >
+        return_url = #{returnUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="key != null" >
+        key = #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="exchangeRate != null" >
+        exchange_rate = #{exchangeRate,jdbcType=VARCHAR},
+      </if>
+      <if test="gatewayUrl != null" >
+        gateway_url = #{gatewayUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="types != null" >
+        types = #{types,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.payment.alipay.AlipayConfig" >
+    update t_alipay_config
+    set partner = #{partner,jdbcType=VARCHAR},
+      notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      return_url = #{returnUrl,jdbcType=VARCHAR},
+      key = #{key,jdbcType=VARCHAR},
+      exchange_rate = #{exchangeRate,jdbcType=VARCHAR},
+      gateway_url = #{gatewayUrl,jdbcType=VARCHAR},
+      types = #{types,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

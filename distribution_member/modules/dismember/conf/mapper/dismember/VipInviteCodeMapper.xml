@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.VipInviteCodeMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.VipInviteCode" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="invite_code" property="inviteCode" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="in_use" property="inUse" jdbcType="BIT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, invite_code, count, in_use, create_date, update_date
+  </sql>
+  <insert id="batchInsert" parameterType="java.util.List">
+		insert into t_vip_invite_code
+	(invite_code) values
+	<foreach collection="list"  item="item" index="index"
+		separator=",">
+		(
+		#{item,jdbcType=VARCHAR}
+		<!-- <![CDATA[
+			''||select array_to_string(array(select substring('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' FROM 
+		(ceil(random()*62))::int FOR 1) FROM generate_series(1,#{item,jdbcType=INTEGER} )), '')||''
+		
+		]]> -->
+		)
+	</foreach>
+</insert>
+	<select id="selectBycode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+		select
+		 <include refid="Base_Column_List" />
+		from t_vip_invite_code
+		where invite_code = #{code,jdbcType=VARCHAR}
+		and in_use = false
+		LIMIT 1 OFFSET 0
+	</select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_vip_invite_code
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_vip_invite_code
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.VipInviteCode" >
+    insert into t_vip_invite_code (id, invite_code, count, 
+      in_use, create_date, update_date
+      )
+    values (#{id,jdbcType=INTEGER}, #{inviteCode,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, 
+      #{inUse,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.VipInviteCode" >
+    insert into t_vip_invite_code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="inviteCode != null" >
+        invite_code,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="inUse != null" >
+        in_use,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="inviteCode != null" >
+        #{inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="inUse != null" >
+        #{inUse,jdbcType=BIT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.VipInviteCode" >
+    update t_vip_invite_code
+    <set >
+      <if test="inviteCode != null" >
+        invite_code = #{inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="inUse != null" >
+        in_use = #{inUse,jdbcType=BIT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.VipInviteCode" >
+    update t_vip_invite_code
+    set invite_code = #{inviteCode,jdbcType=VARCHAR},
+      count = #{count,jdbcType=INTEGER},
+      in_use = #{inUse,jdbcType=BIT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

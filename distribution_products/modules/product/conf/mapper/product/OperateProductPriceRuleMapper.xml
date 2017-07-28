@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.OperateProductPriceRuleMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.OperateProductPriceRule" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="price_classification" property="priceClassification" jdbcType="VARCHAR" />
+    <result column="price_classification_id" property="priceClassificationId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="status_desc" property="statusDesc" jdbcType="VARCHAR" />
+    <result column="operate" property="operate" jdbcType="VARCHAR" />
+    <result column="factor" property="factor" jdbcType="DOUBLE" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="category_brand_id" property="categoryBrandId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, price_classification, price_classification_id, status, status_desc, operate, 
+    factor, operate_time,category_id,category_name,brand,category_brand_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_operate_product_price_rule
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_operate_product_price_rule
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.OperateProductPriceRule" >
+    insert into t_operate_product_price_rule (id, price_classification, price_classification_id, 
+      status, status_desc, operate, 
+      factor, operate_time)
+    values (#{id,jdbcType=INTEGER}, #{priceClassification,jdbcType=VARCHAR}, #{priceClassificationId,jdbcType=INTEGER}, 
+      #{status,jdbcType=BIT}, #{statusDesc,jdbcType=VARCHAR}, #{operate,jdbcType=VARCHAR}, 
+      #{factor,jdbcType=DOUBLE}, #{operateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.OperateProductPriceRule" >
+    insert into t_operate_product_price_rule
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="priceClassification != null" >
+        price_classification,
+      </if>
+      <if test="priceClassificationId != null" >
+        price_classification_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="statusDesc != null" >
+        status_desc,
+      </if>
+      <if test="operate != null" >
+        operate,
+      </if>
+      <if test="factor != null" >
+        factor,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="categoryBrandId != null" >
+        category_brand_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="priceClassification != null" >
+        #{priceClassification,jdbcType=VARCHAR},
+      </if>
+      <if test="priceClassificationId != null" >
+        #{priceClassificationId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="statusDesc != null" >
+        #{statusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="operate != null" >
+        #{operate,jdbcType=VARCHAR},
+      </if>
+      <if test="factor != null" >
+        #{factor,jdbcType=DOUBLE},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryId != null" >
+       #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryName != null" >
+       #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+       #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryBrandId != null" >
+       #{categoryBrandId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.OperateProductPriceRule" >
+    update t_operate_product_price_rule
+    <set >
+      <if test="priceClassification != null" >
+        price_classification = #{priceClassification,jdbcType=VARCHAR},
+      </if>
+      <if test="priceClassificationId != null" >
+        price_classification_id = #{priceClassificationId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="statusDesc != null" >
+        status_desc = #{statusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="operate != null" >
+        operate = #{operate,jdbcType=VARCHAR},
+      </if>
+      <if test="factor != null" >
+        factor = #{factor,jdbcType=DOUBLE},
+      </if>
+      <if test="operateTime != null" >
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryId != null" >
+        category_id  = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryBrandId != null" >
+       category_brand_id = #{categoryBrandId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.OperateProductPriceRule" >
+    update t_operate_product_price_rule
+    set price_classification = #{priceClassification,jdbcType=VARCHAR},
+      price_classification_id = #{priceClassificationId,jdbcType=INTEGER},
+      status = #{status,jdbcType=BIT},
+      status_desc = #{statusDesc,jdbcType=VARCHAR},
+      operate = #{operate,jdbcType=VARCHAR},
+      factor = #{factor,jdbcType=DOUBLE},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getLogPages" parameterType = "dto.product.OperateRuleDto" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+   	from t_operate_product_price_rule
+   	where 1 = 1 
+   	<if test="key != null ">
+		and operate like '%'||#{key,jdbcType=VARCHAR}||'%' 
+	</if>
+	<if test="priceClassificationId != null ">
+		and price_classification_id  = #{priceClassificationId,jdbcType=INTEGER}
+	</if>
+	<if test="status != null">
+       and status =  #{status,jdbcType=BIT}
+	</if>
+	<if test="startDate != null and startDate != '' ">
+       	<![CDATA[AND operate_time >= to_timestamp(''||#{startDate}||'','yyyy-mm-dd hh24:mi:ss')]]>
+	</if>
+	<if test="endDate != null and endDate != '' ">
+        <![CDATA[AND operate_time < to_timestamp(''||#{endDate}||'','yyyy-mm-dd hh24:mi:ss')]]>
+	</if>
+	<if test="categoryBrandId != null">
+    	and category_brand_id = #{categoryBrandId,jdbcType=INTEGER}  
+    </if>
+  	order by operate_time desc 
+  	<if test="pageSize != null and pageNo != null">
+		limit #{pageSize,jdbcType=INTEGER} offset (#{pageNo,jdbcType=INTEGER} -1)
+		* #{pageSize,jdbcType=INTEGER}
+	</if>
+  </select>
+   <select id="getLogCount" parameterType = "dto.product.OperateRuleDto" resultType="java.lang.Integer">
+  	select count(*)
+   	from t_operate_product_price_rule
+   	where 1 = 1 
+   	<if test="key != null ">
+		and operate like '%'||#{key,jdbcType=VARCHAR}||'%' 
+	</if>
+	<if test="priceClassificationId != null ">
+		and price_classification_id  = #{priceClassificationId,jdbcType=INTEGER}
+	</if>
+	<if test="status != null">
+       and status = #{status,jdbcType=BIT}
+	</if>
+	<if test="startDate != null and startDate != '' ">
+       	<![CDATA[AND operate_time >= to_timestamp(''||#{startDate}||'','yyyy-mm-dd hh24:mi:ss')]]>
+	</if>
+	<if test="endDate != null and endDate != '' ">
+        <![CDATA[AND operate_time < to_timestamp(''||#{endDate}||'','yyyy-mm-dd hh24:mi:ss')]]>
+	</if>
+	<if test="categoryBrandId != null">
+    	and category_brand_id = #{categoryBrandId,jdbcType=INTEGER}  
+    </if>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+	insert into t_operate_product_price_rule
+	(price_classification, status, status_desc, operate, 
+    factor, operate_time,category_id,category_name,brand,category_brand_id)
+	values
+	<foreach collection="list" item="item" index="index" separator=",">
+		(#{item.priceClassification,jdbcType=VARCHAR},
+		#{item.status,jdbcType=BIT},
+		#{item.statusDesc,jdbcType=INTEGER},
+		#{item.operate,jdbcType=VARCHAR},
+		#{item.factor,jdbcType=DOUBLE},
+		#{item.operateTime,jdbcType=TIMESTAMP},
+		#{item.categoryId,jdbcType=INTEGER},
+		#{item.categoryName,jdbcType=VARCHAR},
+		#{item.brand,jdbcType=VARCHAR},
+		#{item.categoryBrandId,jdbcType=VARCHAR})
+	</foreach>
+   </insert>
+</mapper>

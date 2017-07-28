@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>商品列表</title>
+    <meta name="description" content="通淘国际为您提供最质优的进口奶粉,母婴用品,进口零食,进口护肤品等品类最齐全的进口商品!">
+    <meta name="keywords" content="通淘国际,进口母婴用品,进口奶粉,进口商品,通淘海外">
+    <link rel="shortcut icon" href="../img/favicon.ico"/>
+    <link rel="stylesheet" href="../css/sub-details.css"/>
+    <link type="text/css" rel="stylesheet" href="../css/style/style.css">
+    <link rel="stylesheet" href="../js/lib/laypage1.3/skin/laypage.css"/>
+    <link rel="stylesheet" href="../css/vendors/jquery.mCustomScrollbar.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../js/lib/layer2.0/skin/layer.css">
+    <script data-main="../js/product/subpage.js" src="../js/lib/requirejs/require.js"></script>
+</head>
+<body>
+<div id="div_head">
+</div>
+
+<!--正文 start-->
+<div class="content-list">
+    <div class="main">
+        <div class="crumbs">
+                <span class="crumbs-l">
+
+                </span>
+                <!--<span class="crumbs-r">-->
+                    <!--<a href="####" id="toggle">展开</a>-->
+                <!--</span>-->
+        </div>
+        <div class="classify">
+            <div class="classify-box">
+                <span class="classify-tit">类目：</span>
+                <span class="brands">
+
+                </span>
+            </div>
+            <div class="hide" id="toggleContent">
+                <div class="classify-box">
+                    <div id="moreContent">
+                        <span class="classify-tit">方式一：</span>
+                        <a href="">
+                            <label class="checklist iCheck">
+                                <input class="checkbox" type="checkbox"/>
+                                <em>001</em>
+                            </label>
+                        </a>
+                        <a href="">
+                            <label class="checklist iCheck">
+                                <input class="checkbox" type="checkbox"/>
+                                <em>001</em>
+                            </label>
+                        </a>
+                    </div>
+                    <span class="classify-btn-box">
+                        <a class="">确定</a>
+                        <a>取消</a>
+                        <a id="more">更多</a>
+                    </span>
+                </div>
+                <div class="classify-box">
+                    <div>
+                        <span class="classify-tit">方式二：</span>
+                        <a href="">
+                            <label class="checklist iCheck">
+                                <input class="checkbox" type="checkbox"/>
+                                <em>保税仓</em>
+                            </label>
+                        </a>
+                        <a href="">
+                            <label class="checklist iCheck">
+                                <input class="checkbox" type="checkbox"/>
+                                <em>直邮</em>
+                            </label>
+                        </a>
+                        <a href="">
+                            <label class="checklist iCheck">
+                                <input class="checkbox" type="checkbox"/>
+                                <em>现货</em>
+                            </label>
+                        </a>
+                    </div>
+                    <span class="classify-btn-box">
+                        <a>多选</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="search-box">
+                <span class="search-box-span search-warehouse">
+                    <span id="selectWarehouse">仓库</span>
+                    <ul id="searchWarehouse" data-mcs-theme="minimal-dark">
+
+                    </ul>
+                </span>
+                <span class="search-box-span search-price">
+                    <span class="">价格</span>
+                    <ul class="priceSort">
+                        <li data-sort="desc">从高到低</li>
+                        <li data-sort="asc">从低到高</li>
+                    </ul>
+                </span>
+                <span class="search-price-interval">
+                    <input id="priceStart" class="inp-min" type="text" placeholder="最低价"/>
+                    <span>—</span>
+                    <input id="priceEnd" class="inp-min" type="text" placeholder="最高价"/>
+                    <button id="price_search" class="btn-bule-min">确定</button>
+                </span>
+        </div>
+        <ul class="goods-category" id="product-list">
+
+        </ul>
+
+        <div id="pagination_product" style="text-align: center; padding: 30px 0"></div>
+    </div>
+</div>
+<!--正文 end-->
+
+<div id="div_footer"></div>
+</body>
+<script type="text/javascript" src="../js/lib/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../js/lib/layer2.0/layer.js" ></script>
+<script>
+        /*复选框样式 start*/
+        //判断当前复选框状态，并让label背景图与复选框同步勾选或取消
+        $(".checkbox").click(function (){
+            //判断复选框勾选状态
+            if ($(this).is(':checked')) {
+                $("label").removeClass("iCheck");    //删除未勾选选背景图
+                $("label").addClass("iCheck-ed");    //添加勾选态背景图
+                $("label").addClass("current5");
+            }else{
+                $("label").removeClass("iCheck-ed"); //删除勾选选背景图
+                $("label").addClass("iCheck");       //添加未勾选选背景图
+                $("label").removeClass("current5");
+            }
+        });
+        /*复选框样式 end*/
+
+        /*仓库筛选 start*/
+        $(".search-warehouse").click(function (){
+            $("#searchWarehouse").slideToggle();
+        });
+        /*仓库筛选 end*/
+
+        $("#toggle").click(function() {
+            $(this).text($("#toggleContent").is(":hidden") ? "收起" : "展开");
+            $("#toggleContent").slideToggle();
+        });
+        $("#more").click(function() {
+            $("#moreContent").css("height","auto");
+        });
+
+        $(".goods-category li:nth-child(5n)").css("margin-right","0");
+
+</script>
+</html>

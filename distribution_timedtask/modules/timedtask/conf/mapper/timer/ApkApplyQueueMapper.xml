@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.ApkApplyQueueMapper" >
+  <resultMap id="BaseResultMap" type="entity.timer.ApkApplyQueue" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="identifier" property="identifier" jdbcType="VARCHAR" />
+    <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+    <result column="is_success" property="isSuccess" jdbcType="BIT" />
+    <result column="has_error" property="hasError" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, account, identifier, apply_time, is_success, has_error
+  </sql>
+  
+  <select id="getPriorApply" resultMap="BaseResultMap" resultType="entity.timer.ApkApplyQueue">
+	SELECT
+	<include refid = "Base_Column_List" />
+	FROM
+		t_apk_apply_queue
+	WHERE
+		is_success = FALSE
+	AND has_error = FALSE
+	ORDER BY
+		apply_time ASC
+	LIMIT #{ 0 } OFFSET 0
+  </select>
+  
+  <select id="getApplyNeedToRebuiltBeforeYou" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT
+		COUNT (*)
+	FROM
+		t_apk_apply_queue
+	WHERE
+		is_success = FALSE
+	AND has_error = FALSE
+	<![CDATA[ and apply_time  < (select apply_time from t_apk_apply_queue where account = #{0})]]>
+	  
+  </select>
+  
+  <select id="selectByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+		<include refid = "Base_Column_List" />
+	FROM
+		t_apk_apply_queue
+	WHERE
+		account = #{0}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_apk_apply_queue
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_apk_apply_queue
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.timer.ApkApplyQueue" >
+    insert into t_apk_apply_queue (id, account, identifier, 
+      apply_time, is_success, has_error
+      )
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{identifier,jdbcType=VARCHAR}, 
+      #{applyTime,jdbcType=TIMESTAMP}, #{isSuccess,jdbcType=BIT}, #{hasError,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.timer.ApkApplyQueue" >
+    insert into t_apk_apply_queue
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="identifier != null" >
+        identifier,
+      </if>
+      <if test="applyTime != null" >
+        apply_time,
+      </if>
+      <if test="isSuccess != null" >
+        is_success,
+      </if>
+      <if test="hasError != null" >
+        has_error,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="identifier != null" >
+        #{identifier,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null" >
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isSuccess != null" >
+        #{isSuccess,jdbcType=BIT},
+      </if>
+      <if test="hasError != null" >
+        #{hasError,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.timer.ApkApplyQueue" >
+    update t_apk_apply_queue
+    <set >
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="identifier != null" >
+        identifier = #{identifier,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null" >
+        apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isSuccess != null" >
+        is_success = #{isSuccess,jdbcType=BIT},
+      </if>
+      <if test="hasError != null" >
+        has_error = #{hasError,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.timer.ApkApplyQueue" >
+    update t_apk_apply_queue
+    set account = #{account,jdbcType=VARCHAR},
+      identifier = #{identifier,jdbcType=VARCHAR},
+      apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      is_success = #{isSuccess,jdbcType=BIT},
+      has_error = #{hasError,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

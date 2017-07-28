@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="email=no" name="format-detection" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>商品搜索</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main/main.css">
+</head>
+<body id="body_ele" v-cloak>
+    <header class="posFix head">
+        <a :href="gobackUrl" class="ret-logo"></a>
+        商品搜索
+    </header>
+    <div class="conTop imporSear">
+        <p><input type="text" class="inp4" v-model="searchCondtion" placeholder="请输入商品名称或sku(，隔开可多个查询)"/></p>
+        <a @click="search">
+            <input type="submit" value="搜索" class="inp-1 btn-blue"/>
+        </a>
+        <!--<div>该搜索条件下无可选商品</div>-->
+    </div>
+    <script src="/js/lib/require.js" data-main="/js/purchaseorder/typein/searchGoods.js?time=(new Date()).getTime()"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<div class="title-line">
+	<span class="my-means blue">我的资料-修改资料</span>
+	<a href="javascript:;" class="change-msg btn">保存修改</a>
+</div>
+<form id="alter_info_form">
+	<table>
+		<tr>
+			<td class="type-name"><span class="red">*</span>名称：</td>
+			<td>
+				<input type="hidden" name="id" />
+				<input type="text" name="nickName" class="user-name" placeholder="您可以输入用户名/公司名" />
+				<span class="user-name-explain">名称设置后将不可修改，如若需要修改，请线下联系客服！</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="type-name">姓名：</td>
+			<td>
+				<input type="text" name="realName" style="width: 150px;height: 22px;margin-right: 10px; appearance: textfield; -moz-appearance: textfield; -webkit-appearance: textfield; -ms-appearance: textfield;" />
+				<span style="color:#7b7b7b;font-size:12px;display: inline-block;">请输入您的真实姓名</span>
+			</td>
+		</tr>
+		<tr style="display: none;">
+			<td class="type-name">性别：</td>
+			<td>
+				<label class="cursor">
+					<input type="radio" name="gender" value="0"/>保密
+				</label>
+				<label class="cursor">
+					<input type="radio" name="gender" value="1"/>男
+				</label>
+				<label class="cursor">
+					<input type="radio" name="gender" value="2"/>女
+				</label>
+			</td>
+		</tr>
+		<tr style="display: none;">
+			<td class="type-name">生日：</td>
+			<td id="calendar">
+				<input type="hidden" id="birthday" />
+				<select name="year" id="idYear"></select>
+				年
+				<select name="month" id="idMonth"></select>
+				月
+				<select name="day" id="idDay"></select>
+				日
+			</td>
+		</tr>
+		<tr>
+			<td class="type-name">用户账号：</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="type-name">手机：</td>
+			<td>
+				<input type="text" name="telphone" disabled="disabled" style="cursor: not-allowed; width: 150px;height: 22px;margin-right: 10px; appearance: textfield; -moz-appearance: textfield; -webkit-appearance: textfield; -ms-appearance: textfield;" />
+				<a href="javascript:toggle_menu_content(17);" class="change-phone" style="text-decoration: none; width: 80px; border-radius: 5px;height: 25px;line-height: 25px;">更换手机</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="type-name">注册邀请码：</td>
+			<td id = "registerInviteCode">
+			</td>
+		</tr>
+		<tr>
+			<td class="type-name">您的邀请码：</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td style="vertical-align: top;width:95px;">简介：</td>
+			<td>
+				<textarea name="profile" id="profile" style="height: 150px; width: 500px; padding: 5px;"></textarea>
+				<br />
+				<span id="profile_tip">字数不超过500，还可输入字数：500</span>
+			</td>
+		</tr>
+	</table>
+</form>

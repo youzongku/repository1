@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.inventory.WarehouseMapper" >
+  <resultMap id="BaseResultMap" type="entity.inventory.Warehouse" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="batch_no" property="batchNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, warehouse_name,status,batch_no
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_warehouse
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_warehouse
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.inventory.Warehouse" >
+    insert into t_warehouse (id, warehouse_name,status,batch_no)
+    values (#{id,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR},
+    #{status,jdbcType=INTEGER},#{batchNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.inventory.Warehouse" >
+    insert into t_warehouse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="batchNo != null" >
+        batch_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="batchNo != null" >
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.inventory.Warehouse" >
+    update t_warehouse
+    <set >
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="batchNo != null" >
+        batch_no = #{batchNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.inventory.Warehouse" >
+    update t_warehouse
+    set 
+	    warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+	    status = #{status,jdbcType=INTEGER},
+	    batch_no = #{batchNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="queryWarehouse" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_warehouse
+    where 1=1 
+   	<if test="batchNo != null and batchNo != ''">
+	    and batch_no != #{batchNo} or batch_no is null   	
+   	</if>
+   	<if test="wid != null">
+	    and id = #{wid}	
+   	</if>
+  </select>
+</mapper>

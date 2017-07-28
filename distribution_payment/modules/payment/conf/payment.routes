@@ -1,0 +1,70 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                  controllers.payment.Assets.at(path="/public", file)
+
+#==============================alipay module==============================#
+
+POST        /alipayGateway                 @controllers.payment.Alipay.alipayGateway()
+
+GET         /qryAlipayResult               @controllers.payment.Alipay.queryAlipayResult()
+
+GET         /receiveAlipaySyn              @controllers.payment.Alipay.receiveAlipaySyn()
+
+POST        /receiveAlipayAsy              @controllers.payment.Alipay.receiveAlipayAsy()
+
+POST        /test                          @controllers.payment.Alipay.test()
+
+POST        /applyAlipayRef                @controllers.payment.Alipay.applyAlipayRefund()
+
+#==============================wechat module==============================#
+
+POST        /wechat/getpayparam            @controllers.payment.Wechat.gainWechatPayParam()
+
+GET         /wechat/getpayresult           @controllers.payment.Wechat.gainWechatPayResult()
+
+POST        /wechat/receivenotifi          @controllers.payment.Wechat.receiveWechatPayAsyncNotifi()
+
+POST        /wechat/applyrefund            @controllers.payment.Wechat.applyWechatPayRefund()
+
+#==============================yijipay module==============================#
+
+POST        /yijipay/getpayparam           @controllers.payment.Yijipay.gainYijiPayParam()
+
+GET         /yijipay/getpayresult          @controllers.payment.Yijipay.gainYijiPayResult()
+
+GET         /yijipay/syncnotify            @controllers.payment.Yijipay.receiveSyncNotify()
+
+POST        /yijipay/asynnotify            @controllers.payment.Yijipay.receiveAsynNotify()
+
+POST        /yijipay/unionPay              @controllers.payment.Yijipay.unionPay()
+
+POST        /yijipay/yjfWx                 @controllers.payment.Yijipay.yjfWxTrade()
+
+POST        /yiji/test                     @controllers.payment.Yijipay.test()
+
+POST        /realNameQuery                 @controllers.payment.Yijipay.realNameQuery()
+
+#==============================shengpay module==============================#
+
+GET         /shengpay/test                 @controllers.payment.ShengPay.test()
+
+POST        /shengpay/applypay             @controllers.payment.ShengPay.applyPay()
+
+POST        /shengpay/applytransfer        @controllers.payment.ShengPay.applyTransfer()
+
+GET         /shengpay/querybalance         @controllers.payment.ShengPay.queryBalance()
+
+#==============================paysuccess module==============================#
+
+GET        /callback             		   @controllers.payment.InventoryControllers.callback(no : String,amount : Double,flag : String ?= null,sid:String ?= null)
+
+GET        /call             		   	   @controllers.payment.InventoryControllers.call(orderNo : String,total : String)
+
+
+
+
+
+

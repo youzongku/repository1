@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.promotion.RelPromotionTypePrivilegeConditionMapper" >
+  <resultMap id="BaseResultMap" type="entity.marketing.promotion.RelPromotionTypePrivilegeCondition" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="condt_id" property="condtId" jdbcType="INTEGER" />
+    <result column="pvlg_id" property="pvlgId" jdbcType="INTEGER" />
+    <result column="pro_type_id" property="proTypeId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <!-- 删除促销类型与优惠关系 -->
+  <delete id="deleteProTypeAndPvlgRel">
+  	delete from t_rel_type_pvlg_condt
+  	where pro_type_id=#{proTypeId} and pvlg_id=#{pvlgId}
+  </delete>
+  
+  <!-- 删除促销类型与条件关系 -->
+  <delete id="deleteProTypeAndCondtRel">
+  	delete from t_rel_type_pvlg_condt
+  	where pro_type_id=#{proTypeId} and condt_id=#{condtId}
+  </delete>
+  
+  <!-- 删除促销类型的条件和优惠 -->
+  <delete id="deleteByProTypeId" parameterType="java.lang.Integer">
+  	delete from t_rel_type_pvlg_condt
+  	where pro_type_id=#{proTypeId}
+  </delete>
+  
+  <sql id="Base_Column_List" >
+    id, condt_id, pvlg_id, pro_type_id
+  </sql>
+  
+  <select id="selectByProTypeId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_rel_type_pvlg_condt
+    where pro_type_id = #{proTypeId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_rel_type_pvlg_condt
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into t_rel_type_pvlg_condt (condt_id, pvlg_id, pro_type_id)
+    values 
+    <foreach collection="list" item="item" index="index" separator="," >
+		(#{item.condtId,jdbcType=INTEGER}, #{item.pvlgId,jdbcType=INTEGER}, #{item.proTypeId,jdbcType=INTEGER})
+	</foreach>
+  </insert>
+</mapper>

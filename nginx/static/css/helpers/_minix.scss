@@ -1,0 +1,38 @@
+@mixin borderBox{
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@mixin borderRadius($radius...) {
+  -webkit-border-radius:$radius;
+  -moz-border-radius: $radius;
+  border-radius:$radius;
+  behavior: url(../../PIE.htc);
+  position: relative;
+  z-index: 9;
+}
+
+@mixin boxShadow($Shadow...) {
+  -moz-box-sizing: $Shadow;
+  -webkit-box-sizing: $Shadow;
+  -o-box-sizing: $Shadow;
+  -ms-box-sizing: $Shadow;
+  box-shadow: $Shadow;
+}
+
+@mixin iconBg {
+  width: 24px;
+  height: 24px;
+  background: url("../../img/sprite.png");
+  display: inline-block;
+}
+
+@mixin inp{
+  height: 38px;
+  line-height: 38px;
+  border: 1px solid $cGcb;
+}
+

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.inventory.RefundDetailMapper" >
+  <resultMap id="BaseResultMap" type="entity.inventory.RefundDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="purchase_no" property="purchaseNo" jdbcType="VARCHAR" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="refund_price" property="refundPrice" jdbcType="DOUBLE" />
+    <result column="refund_qty" property="refundQty" jdbcType="INTEGER" />
+    <result column="refund_total_amount" property="refundTotalAmount" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, purchase_no, sku, refund_price, refund_qty, refund_total_amount
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_refund_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_refund_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.inventory.RefundDetail" >
+    insert into t_refund_detail (id, purchase_no, sku, 
+      refund_price, refund_qty, refund_total_amount
+      )
+    values (#{id,jdbcType=INTEGER}, #{purchaseNo,jdbcType=VARCHAR}, #{sku,jdbcType=VARCHAR}, 
+      #{refundPrice,jdbcType=DOUBLE}, #{refundQty,jdbcType=INTEGER}, #{refundTotalAmount,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.inventory.RefundDetail" >
+    insert into t_refund_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="purchaseNo != null" >
+        purchase_no,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="refundPrice != null" >
+        refund_price,
+      </if>
+      <if test="refundQty != null" >
+        refund_qty,
+      </if>
+      <if test="refundTotalAmount != null" >
+        refund_total_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseNo != null" >
+        #{purchaseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="refundPrice != null" >
+        #{refundPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="refundQty != null" >
+        #{refundQty,jdbcType=INTEGER},
+      </if>
+      <if test="refundTotalAmount != null" >
+        #{refundTotalAmount,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.inventory.RefundDetail" >
+    update t_refund_detail
+    <set >
+      <if test="purchaseNo != null" >
+        purchase_no = #{purchaseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="refundPrice != null" >
+        refund_price = #{refundPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="refundQty != null" >
+        refund_qty = #{refundQty,jdbcType=INTEGER},
+      </if>
+      <if test="refundTotalAmount != null" >
+        refund_total_amount = #{refundTotalAmount,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.inventory.RefundDetail" >
+    update t_refund_detail
+    set purchase_no = #{purchaseNo,jdbcType=VARCHAR},
+      sku = #{sku,jdbcType=VARCHAR},
+      refund_price = #{refundPrice,jdbcType=DOUBLE},
+      refund_qty = #{refundQty,jdbcType=INTEGER},
+      refund_total_amount = #{refundTotalAmount,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

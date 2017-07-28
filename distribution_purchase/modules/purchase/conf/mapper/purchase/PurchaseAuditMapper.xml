@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.purchase.PurchaseAuditMapper" >
+  <resultMap id="BaseResultMap" type="entity.purchase.PurchaseAudit" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="transfer_card" property="transferCard" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="purchase_no" property="purchaseNo" jdbcType="VARCHAR" />
+    <result column="transfer_number" property="transferNumber" jdbcType="VARCHAR" />
+    <result column="transfer_amount" property="transferAmount" jdbcType="NUMERIC" />
+    <result column="transfer_time" property="transferTime" jdbcType="TIMESTAMP" />
+    <result column="screenshot_url" property="screenshotUrl" jdbcType="VARCHAR" />
+    <result column="audit_reasons" property="auditReasons" jdbcType="VARCHAR" />
+    <result column="audit_remark" property="auditRemark" jdbcType="VARCHAR" />
+    <result column="apply_remark" property="applyRemark" jdbcType="VARCHAR" />
+    <result column="transfer_name" property="transferName" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="recipient_card_id" property="recipientCardId" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="transfer_type" property="transferType" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="order_amount" property="orderAmount" jdbcType="NUMERIC" />
+    <result column="recipient_account" property="recipientAccount" jdbcType="VARCHAR" />
+    <result column="order_date" property="orderDate" jdbcType="TIMESTAMP" />
+    <result column="received_amount" property="receivedAmount" jdbcType="NUMERIC" />
+    <result column="received_time" property="receivedTime" jdbcType="TIMESTAMP" />
+    <result column="recipient_name" property="recipientName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, transfer_card, status, purchase_no, transfer_number, transfer_amount, transfer_time, 
+    screenshot_url, audit_reasons, audit_remark, apply_remark, transfer_name, email, 
+    recipient_card_id, create_date, update_date, transfer_type, create_user, order_amount,
+    recipient_account, order_date, received_amount, received_time, recipient_name
+  </sql>
+  
+  <!-- 根据订单号批量查询 -->
+  <select id="selectByPurchaseOrderNoList" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_purchase_audit
+    where purchase_no in
+    <foreach collection="purchaseOrderNoList" item="purchaseOrderNo" open="(" close=")" separator=",">
+    	#{purchaseOrderNo}
+    </foreach>
+  </select>
+
+  <select id="selectByPurchaseOrderNo" resultMap="BaseResultMap" parameterType="string" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_purchase_audit
+    where purchase_no = #{purchaseOrderNo}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_purchase_audit
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_purchase_audit
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.purchase.PurchaseAudit" >
+    insert into t_purchase_audit (id, transfer_card, status, 
+      purchase_no, transfer_number, transfer_amount, 
+      transfer_time, screenshot_url, audit_reasons, 
+      audit_remark, apply_remark, transfer_name, 
+      email, recipient_card_id, create_date, 
+      update_date, received_amount, received_time, recipient_name)
+    values (#{id,jdbcType=INTEGER}, #{transferCard,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{purchaseNo,jdbcType=VARCHAR}, #{transferNumber,jdbcType=VARCHAR}, #{transferAmount,jdbcType=NUMERIC}, 
+      #{transferTime,jdbcType=TIMESTAMP}, #{screenshotUrl,jdbcType=VARCHAR}, #{auditReasons,jdbcType=VARCHAR}, 
+      #{auditRemark,jdbcType=VARCHAR}, #{applyRemark,jdbcType=VARCHAR}, #{transferName,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{recipientCardId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{receivedAmount,jdbcType=NUMERIC}, #{receivedTime,jdbcType=TIMESTAMP}, 
+      #{recipientName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.purchase.PurchaseAudit" >
+    insert into t_purchase_audit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="transferCard != null" >
+        transfer_card,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="purchaseNo != null" >
+        purchase_no,
+      </if>
+      <if test="transferNumber != null" >
+        transfer_number,
+      </if>
+      <if test="transferAmount != null" >
+        transfer_amount,
+      </if>
+      <if test="transferTime != null" >
+        transfer_time,
+      </if>
+      <if test="screenshotUrl != null" >
+        screenshot_url,
+      </if>
+      <if test="auditReasons != null" >
+        audit_reasons,
+      </if>
+      <if test="auditRemark != null" >
+        audit_remark,
+      </if>
+      <if test="applyRemark != null" >
+        apply_remark,
+      </if>
+      <if test="transferName != null" >
+        transfer_name,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="recipientCardId != null" >
+        recipient_card_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="transferType != null" >
+        transfer_type,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="orderAmount != null" >
+        order_amount,
+      </if>
+      <if test="recipientAccount != null" >
+        recipient_account,
+      </if>
+      <if test="orderDate != null" >
+        order_date,
+      </if>
+      <if test="receivedAmount != null" >
+        received_amount,
+      </if>
+      <if test="receivedTime != null" >
+        received_time,
+      </if>
+       <if test="recipientName != null" >
+        recipient_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="transferCard != null" >
+        #{transferCard,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseNo != null" >
+        #{purchaseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="transferNumber != null" >
+        #{transferNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="transferAmount != null" >
+        #{transferAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="transferTime != null" >
+        #{transferTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="screenshotUrl != null" >
+        #{screenshotUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="auditReasons != null" >
+        #{auditReasons,jdbcType=VARCHAR},
+      </if>
+      <if test="auditRemark != null" >
+        #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="applyRemark != null" >
+        #{applyRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="transferName != null" >
+        #{transferName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientCardId != null" >
+        #{recipientCardId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transferType != null" >
+        #{transferType,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        #{orderAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="recipientAccount != null" >
+       	#{recipientAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDate != null" >
+       	#{orderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receivedAmount != null" >
+        #{receivedAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="receivedTime != null" >
+        #{receivedTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="recipientName != null" >
+       	#{recipientName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.purchase.PurchaseAudit" >
+    update t_purchase_audit
+    <set >
+      <if test="transferCard != null" >
+        transfer_card = #{transferCard,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseNo != null" >
+        purchase_no = #{purchaseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="transferNumber != null" >
+        transfer_number = #{transferNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="transferAmount != null" >
+        transfer_amount = #{transferAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="transferTime != null" >
+        transfer_time = #{transferTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="screenshotUrl != null" >
+        screenshot_url = #{screenshotUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="auditReasons != null" >
+        audit_reasons = #{auditReasons,jdbcType=VARCHAR},
+      </if>
+      <if test="auditRemark != null" >
+        audit_remark = #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="applyRemark != null" >
+        apply_remark = #{applyRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="transferName != null" >
+        transfer_name = #{transferName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientCardId != null" >
+        recipient_card_id = #{recipientCardId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receivedAmount != null" >
+        received_amount = #{receivedAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="receivedTime != null" >
+        received_time = #{receivedTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="recipientName != null" >
+        recipient_name = #{recipientName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.purchase.PurchaseAudit" >
+    update t_purchase_audit
+    set transfer_card = #{transferCard,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      purchase_no = #{purchaseNo,jdbcType=VARCHAR},
+      transfer_number = #{transferNumber,jdbcType=VARCHAR},
+      transfer_amount = #{transferAmount,jdbcType=NUMERIC},
+      transfer_time = #{transferTime,jdbcType=TIMESTAMP},
+      screenshot_url = #{screenshotUrl,jdbcType=VARCHAR},
+      audit_reasons = #{auditReasons,jdbcType=VARCHAR},
+      audit_remark = #{auditRemark,jdbcType=VARCHAR},
+      apply_remark = #{applyRemark,jdbcType=VARCHAR},
+      transfer_name = #{transferName,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      recipient_card_id = #{recipientCardId,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      received_amount = #{receivedAmount,jdbcType=NUMERIC},
+      received_time = #{receivedTime,jdbcType=TIMESTAMP},
+      recipient_name = #{recipientName,jdbcType=VARCHAR},
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="select" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+		a.*
+    from  t_purchase_audit a
+    left  join t_purchase_order o
+    on a.purchase_no = o.purchase_order_no
+    where 1=1
+    <if test="map.search != null and map.search != ''">
+    	and (lower(a.create_user) like lower('%'||#{map.search,jdbcType=VARCHAR}||'%')
+             or lower(a.email) like lower('%'||#{map.search,jdbcType=VARCHAR}||'%')
+             or lower(a.purchase_no) like lower('%'||#{map.search,jdbcType=VARCHAR}||'%')
+             or lower(o.customer_service) like lower('%'||#{map.search,jdbcType=VARCHAR}||'%'))
+    </if> 
+    <if test="map.status != null">
+    	and a.status = #{map.status,jdbcType=INTEGER}
+    </if>	
+  	<if test="map.start != null and map.start != ''">
+  		<![CDATA[and a.order_date  > to_date(#{map.start}, 'YYYY-MM-DD')]]>
+  	</if>
+  	<if test="map.end != null and map.end != ''">
+  		<![CDATA[and a.order_date  <= (to_date(#{map.end}, 'YYYY-MM-DD') + integer '1')]]>
+  	</if>
+    order by a.order_date desc,a.id desc
+  	<if test="map.pageSize !=null and map.currPage !=null">
+		LIMIT #{map.pageSize} OFFSET (#{map.currPage}-1)*#{map.pageSize}
+	</if>
+  </select>
+  <select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	select 
+    	count(1)
+    from  t_purchase_audit a
+    left join t_purchase_order o
+    on a.purchase_no = o.purchase_order_no
+    where 1=1
+    <if test="map.search != null and map.search != ''">
+    	and (lower(a.create_user) like lower('%'||#{map.search,jdbcType=VARCHAR}||'%')
+             or lower(a.email) like lower('%'||#{map.search,jdbcType=VARCHAR}||'%')
+             or lower(a.purchase_no) like lower('%'||#{map.search,jdbcType=VARCHAR}||'%')
+             or lower(o.customer_service) like lower('%'||#{map.search,jdbcType=VARCHAR}||'%'))
+    </if> 
+    <if test="map.status != null">
+    	and a.status = #{map.status,jdbcType=INTEGER}
+    </if>	
+  	<if test="map.start != null and map.start != ''">
+  		<![CDATA[and a.order_date  > to_date(#{map.start}, 'YYYY-MM-DD')]]>
+  	</if>
+  	<if test="map.end != null and map.end != ''">
+  		<![CDATA[and a.order_date  <= (to_date(#{map.end}, 'YYYY-MM-DD') + integer '1')]]>
+  	</if>
+  </select>
+
+  <select id="getNoAuditApplyCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select count(1) from t_purchase_audit
+    where status = 1 and purchase_no = #{purchaseNo,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.ExportModelMapper">
+	 <resultMap id="BaseResultMap" type="dto.dismember.CommonExportDto" >
+	    <id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="function_id" property="functionId" jdbcType="VARCHAR" />
+	    <result column="function_param" property="functionParam" jdbcType="VARCHAR" />
+	    <result column="function_result" property="functionResult" jdbcType="VARCHAR" />
+	    <result column="excel_rows" property="excelRows" jdbcType="VARCHAR" />
+	    <result column="excel_title" property="excelTitle" jdbcType="VARCHAR" />
+	    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+	    <result column="excel_width" property="excelWidth" jdbcType="VARCHAR" />
+	    <result column="mergekey" property="mergeKey" jdbcType="VARCHAR" />
+	    <result column="rows_merge" property="rowsMerge" jdbcType="VARCHAR" />
+	 </resultMap>	
+	<select id="getExportByFunctionId" resultMap="BaseResultMap">
+		SELECT * FROM "public"."t_export_model" where function_id=#{functionId};
+	</select>
+	<select id="getExportDataBySqlFunction" resultType="java.util.Map">
+		SELECT
+		*
+		FROM
+		${param};
+	</select>
+</mapper>

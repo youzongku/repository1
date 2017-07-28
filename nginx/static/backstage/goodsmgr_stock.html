@@ -1,0 +1,74 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<h1>商品管理<span>---</span><span>商品库存</span></h1>
+<ul class="search_category" style="height:120px;">
+	<li>商品分类：
+		<select name="categorys" id="small_select">
+			<option value="0" selected>全部</option>
+		</select>
+	</li>
+	<li>商品状态：
+		<select name="" id="goods_status">
+			<option value="0" selected>所有状态</option>
+			<option value="1">在售</option>
+			<option value="2">停售</option>
+			<option value="3">下架</option>
+		</select>
+	</li>
+	<li>商品类别：
+		<select id="select-type">
+		</select>
+	</li>
+	<li>
+		<div class="search">
+			<input id="searchInput" class="searchInput" placeholder="商品编号/商品名称" onkeyup="enter_keyUp(event,this, getGoodsListByCondition_goodsmgr_stock)">
+			<input class="searchButton" value="搜索" type="submit" onclick="searchGoods_goodsmgr_stock();">
+			<input class="searchButton" style="width:90px" value="导出临期库存" type="submit" onclick="exportProduct_inventorydata();">
+		</div>
+	</li>
+	<li class="Storage-distribution">仓储分布：
+		<ul id="wareShow">
+		</ul>
+	</li>
+</ul>
+	
+<script>  //解决IEplaceholder不兼容问题
+$(document).ready(function() {
+	$(function () {
+		if (!placeholderSupport()) {
+			$('[placeholder]').focus(function () {
+				var input = $(this);
+				if (input.val() == input.attr('placeholder')) {
+					input.val('');
+					input.removeClass('placeholder');
+				}
+			}).blur(function () {
+				var input = $(this);
+				if (input.val() == '' || input.val() == input.attr('placeholder')) {
+					input.addClass('placeholder');
+					input.val(input.attr('placeholder'));
+				}
+			}).blur();
+		}
+	})
+	function placeholderSupport() {
+		return 'placeholder' in document.createElement('input');
+	}
+})
+
+</script>
+<div class="content_list" id="goods_list">
+	<table class="list_title all_table" id="goodsmgr_stock_table">
+	</table>
+
+	<div id="goodsmgr_stock_pagination" style="text-align: center; margin-top: 30px;"></div>
+</div>
+<div class="search" style="display:none" id="expirationdateselect">
+	<li>
+        <input class="searchInput" placeholder="开始日期" id="expirtion_begin"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+            至
+        <input class="searchInput" placeholder="结束日期" id="expirtion_end"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+        <input class="searchButton" value="导出" type="submit" onclick="beginExport();">
+     </li>
+</div>

@@ -1,0 +1,44 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file             controllers.discart.Assets.at(path="/public", file)
+
+GET         /api                                @controllers.api.ApiController.getResources()
+
+GET         /api/:path                          @controllers.api.ApiController.getResource(path:String)
+
+#------------------------------------------------cart module----------------------------------------------#
+
+POST        /delivery                 @controllers.discart.DisCartController.delivery()
+
+GET         /delivery/info            @controllers.discart.DisCartController.getDeliveryInfo()
+
+POST        /delivery/fee             @controllers.discart.DisCartController.getDeliveryFee()
+
+GET         /delSelected              @controllers.discart.DisCartController.delSelected()
+
+POST        /order                    @controllers.discart.DisCartController.order()
+
+GET         /getcartdata              @controllers.discart.DisCartController.getDisCartData()
+
+POST        /addDisCart               @controllers.discart.DisCartController.addDisCart()
+
+POST        /pushCart		          @controllers.discart.DisCartController.pushCart()
+
+POST        /removeitem               @controllers.discart.DisCartController.removeDisCartItem()
+
+POST        /deleteAll                @controllers.discart.DisCartController.deleteAll()
+
+POST        /updateqty                @controllers.discart.DisCartController.updateDisCartItemQty()
+
+POST        /updateSelectState        @controllers.discart.DisCartController.selectCartItems2BeOrdered()
+
+POST        /saveActiveInfo        	  @controllers.discart.DisCartController.saveActiveInfo()
+
+GET        	/delact        	  		  @controllers.discart.DisCartController.deleteActiveInfo()
+
+#------------------------------------------------php cart routes----------------------------------------------#
+
+GET         /items/count              @controllers.discart.DisCartController.getItemsCount()

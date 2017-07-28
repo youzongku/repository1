@@ -1,0 +1,6 @@
+ALTER TABLE "public"."t_dis_operate_apply"
+ALTER COLUMN "transfer_amount" TYPE float8,
+ALTER COLUMN "actual_amount" TYPE float8,
+ALTER COLUMN "withdraw_amount" TYPE float8,
+ALTER COLUMN "counter_fee" TYPE float8;
+

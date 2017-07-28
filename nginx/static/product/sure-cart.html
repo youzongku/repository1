@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="shortcut icon" href="../img/favicon.ico"/>
+    <link rel="stylesheet" href="../css/public.css"/>
+    <link rel="stylesheet" href="../css/sub-details.css"/>
+    <link rel="stylesheet" href="../js/lib/layer2.0/skin/layer.css"/>
+    <link type="text/css" rel="stylesheet" href="../css/style/style.css">
+    <script data-main="../js/product/order_sure.js" src="../js/lib/requirejs/require.js"></script>
+    <!--<script charset="utf-8" src="https://wpa.b.qq.com/cgi/wpa.php"></script>-->
+    <title>购物车-订单结算页</title>
+</head>
+<body>
+<div id="div_head"></div>
+<div>
+    <div class="cart-borld content">
+        <div class="submit-paid-message" style="display:none">
+            <p class="paid-title"><span></span>订单提交成功，请确认订单</p>
+        </div>
+        <h1 class="titile">商品列表</h1>
+
+        <div class="cart-list order-sure-product">
+            <ul class="product-list">
+                <li id="order-product_title">描述</li>
+                <li class="product_price">价格(元)</li>
+                <li class="product_number">数量(个)</li>
+                <li class="product_sum">总额(元)</li>
+            </ul>
+            <div class="product_table">
+                <div id="product_content" class="order-sure-product">
+                    <table class="product_content" id="product_list">
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="promotion_console">
+            <span class="promotion_consoleL">您已选择的促销活动：<b class="red"></b></span>
+            <div class="promotion_consoleR">
+                <div id="" class="promotion_consoleR_content">
+                </div>
+            </div>
+        </div>
+        <div class="customerRemarks">
+            <span>
+                客户备注：
+            </span>
+            <span>
+                <textarea id="remarks" placeholder="不超过500字"></textarea>
+            </span>
+        </div>
+        <div class="promotion-code-box" style="height: 110px;">
+            <div class="promotion-code" style="height: 110px;">
+                <div>
+                    <span>输入优惠码：</span>
+                    <input class="promotion-input">
+                    <label>
+                        <buton class="btn promotion-user" onclick="getCoupons()">验证并使用</buton>
+                        <span class="des-promotion">
+                            <d></d>验证通过,面值
+                            <span class="red" id="des_couponsCost">0</span>元,满
+                            <span class="red" id="threshold_price">0</span>元可使用
+                        </span>
+                    </label>
+                </div>
+                <div>
+                    <span>您还需支付：</span>
+                    <div class="promotion-price">
+                        <span class="red p-mainprice">0.00</span>元(商品总价
+                        <span class="red" id="totolPrice">0.00</span>元-优惠码抵扣
+                        <span class="red" id="couponsCost">0.00</span>元)
+                    </div>
+                    <input type="hidden" id="couponsFlag">
+                    <button id="accounts" onclick="submitOrder()">提交订单</button>
+                </div>
+                <span class="promotion-close">X</span>
+            </div>
+        </div>
+    </div>
+    <div id="div_footer"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.payment.wechat.WechatConfigMapper" >
+  <resultMap id="BaseResultMap" type="entity.payment.wechat.WechatConfig" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="appid" property="appid" jdbcType="VARCHAR" />
+    <result column="appsecret" property="appsecret" jdbcType="VARCHAR" />
+    <result column="mchid" property="mchid" jdbcType="VARCHAR" />
+    <result column="key" property="key" jdbcType="VARCHAR" />
+    <result column="unified_order_url" property="unifiedOrderUrl" jdbcType="VARCHAR" />
+    <result column="get_token_url" property="getTokenUrl" jdbcType="VARCHAR" />
+    <result column="long_to_short" property="longToShort" jdbcType="VARCHAR" />
+    <result column="get_ticket_url" property="getTicketUrl" jdbcType="VARCHAR" />
+    <result column="notify_url" property="notifyUrl" jdbcType="VARCHAR" />
+    <result column="order_query_url" property="orderQueryUrl" jdbcType="VARCHAR" />
+    <result column="spbill_create_ip" property="spbillCreateIp" jdbcType="VARCHAR" />
+    <result column="sign_type" property="signType" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_user" property="lastUpdateUser" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, appid, appsecret, mchid, key, unified_order_url, get_token_url, long_to_short, 
+    get_ticket_url, notify_url, order_query_url, spbill_create_ip, sign_type, create_user, 
+    create_date, last_update_user, last_update_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_wechat_config
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_wechat_config
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.payment.wechat.WechatConfig" >
+    insert into t_wechat_config (id, appid, appsecret, 
+      mchid, key, unified_order_url, 
+      get_token_url, long_to_short, get_ticket_url, 
+      notify_url, order_query_url, spbill_create_ip, 
+      sign_type, create_user, create_date, 
+      last_update_user, last_update_date)
+    values (#{id,jdbcType=INTEGER}, #{appid,jdbcType=VARCHAR}, #{appsecret,jdbcType=VARCHAR}, 
+      #{mchid,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, #{unifiedOrderUrl,jdbcType=VARCHAR}, 
+      #{getTokenUrl,jdbcType=VARCHAR}, #{longToShort,jdbcType=VARCHAR}, #{getTicketUrl,jdbcType=VARCHAR}, 
+      #{notifyUrl,jdbcType=VARCHAR}, #{orderQueryUrl,jdbcType=VARCHAR}, #{spbillCreateIp,jdbcType=VARCHAR}, 
+      #{signType,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{lastUpdateUser,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.payment.wechat.WechatConfig" >
+    insert into t_wechat_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="appid != null" >
+        appid,
+      </if>
+      <if test="appsecret != null" >
+        appsecret,
+      </if>
+      <if test="mchid != null" >
+        mchid,
+      </if>
+      <if test="key != null" >
+        key,
+      </if>
+      <if test="unifiedOrderUrl != null" >
+        unified_order_url,
+      </if>
+      <if test="getTokenUrl != null" >
+        get_token_url,
+      </if>
+      <if test="longToShort != null" >
+        long_to_short,
+      </if>
+      <if test="getTicketUrl != null" >
+        get_ticket_url,
+      </if>
+      <if test="notifyUrl != null" >
+        notify_url,
+      </if>
+      <if test="orderQueryUrl != null" >
+        order_query_url,
+      </if>
+      <if test="spbillCreateIp != null" >
+        spbill_create_ip,
+      </if>
+      <if test="signType != null" >
+        sign_type,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="appsecret != null" >
+        #{appsecret,jdbcType=VARCHAR},
+      </if>
+      <if test="mchid != null" >
+        #{mchid,jdbcType=VARCHAR},
+      </if>
+      <if test="key != null" >
+        #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="unifiedOrderUrl != null" >
+        #{unifiedOrderUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="getTokenUrl != null" >
+        #{getTokenUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="longToShort != null" >
+        #{longToShort,jdbcType=VARCHAR},
+      </if>
+      <if test="getTicketUrl != null" >
+        #{getTicketUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrl != null" >
+        #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="orderQueryUrl != null" >
+        #{orderQueryUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="spbillCreateIp != null" >
+        #{spbillCreateIp,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        #{signType,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUser != null" >
+        #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.payment.wechat.WechatConfig" >
+    update t_wechat_config
+    <set >
+      <if test="appid != null" >
+        appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="appsecret != null" >
+        appsecret = #{appsecret,jdbcType=VARCHAR},
+      </if>
+      <if test="mchid != null" >
+        mchid = #{mchid,jdbcType=VARCHAR},
+      </if>
+      <if test="key != null" >
+        key = #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="unifiedOrderUrl != null" >
+        unified_order_url = #{unifiedOrderUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="getTokenUrl != null" >
+        get_token_url = #{getTokenUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="longToShort != null" >
+        long_to_short = #{longToShort,jdbcType=VARCHAR},
+      </if>
+      <if test="getTicketUrl != null" >
+        get_ticket_url = #{getTicketUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrl != null" >
+        notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="orderQueryUrl != null" >
+        order_query_url = #{orderQueryUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="spbillCreateIp != null" >
+        spbill_create_ip = #{spbillCreateIp,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        sign_type = #{signType,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.payment.wechat.WechatConfig" >
+    update t_wechat_config
+    set appid = #{appid,jdbcType=VARCHAR},
+      appsecret = #{appsecret,jdbcType=VARCHAR},
+      mchid = #{mchid,jdbcType=VARCHAR},
+      key = #{key,jdbcType=VARCHAR},
+      unified_order_url = #{unifiedOrderUrl,jdbcType=VARCHAR},
+      get_token_url = #{getTokenUrl,jdbcType=VARCHAR},
+      long_to_short = #{longToShort,jdbcType=VARCHAR},
+      get_ticket_url = #{getTicketUrl,jdbcType=VARCHAR},
+      notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      order_query_url = #{orderQueryUrl,jdbcType=VARCHAR},
+      spbill_create_ip = #{spbillCreateIp,jdbcType=VARCHAR},
+      sign_type = #{signType,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findAllWCs" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_wechat_config
+  </select>
+</mapper>

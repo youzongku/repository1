@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.PackageMailLogMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.PackageMailLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="is_package_mail" property="isPackageMail" jdbcType="SMALLINT" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, member_id, is_package_mail, operator, remark, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from public.t_package_mail_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from public.t_package_mail_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.PackageMailLog" >
+    insert into public.t_package_mail_log (id, member_id, is_package_mail, 
+      operator, remark, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{isPackageMail,jdbcType=SMALLINT}, 
+      #{operator,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.PackageMailLog" >
+    insert into public.t_package_mail_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="isPackageMail != null" >
+        is_package_mail,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="isPackageMail != null" >
+        #{isPackageMail,jdbcType=SMALLINT},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.PackageMailLog" >
+    update public.t_package_mail_log
+    <set >
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="isPackageMail != null" >
+        is_package_mail = #{isPackageMail,jdbcType=SMALLINT},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.PackageMailLog" >
+    update public.t_package_mail_log
+    set member_id = #{memberId,jdbcType=INTEGER},
+      is_package_mail = #{isPackageMail,jdbcType=SMALLINT},
+      operator = #{operator,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findPackageMailLogsByMemberId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      SELECT
+      <include refid="Base_Column_List"/>
+      FROM t_package_mail_log p
+      where p.member_id = #{memberId} ORDER BY p.create_time desc
+  </select>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into t_package_mail_log
+    (member_id, is_package_mail, operator, remark)
+    values
+    <foreach collection="list" item="item" index="index"
+             separator=",">
+      (#{item.memberId,jdbcType=INTEGER},
+      #{item.isPackageMail,jdbcType=SMALLINT},
+      #{item.operator,jdbcType=VARCHAR},
+      #{item.remark,jdbcType=VARCHAR}
+      )
+    </foreach>
+  </insert>
+</mapper>

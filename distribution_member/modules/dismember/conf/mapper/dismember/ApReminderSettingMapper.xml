@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.ApReminderSettingMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.ApReminderSetting" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="enable" property="enable" jdbcType="BIT" />
+    <result column="days_ago" property="daysAgo" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_user" property="lastUpdateUser" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, account, enable, days_ago, create_date, create_user, last_update_date, last_update_user
+  </sql>
+  
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Boolean">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_ap_reminder_setting
+    <where>
+    	<if test="enabled != null">
+    		enable = #{enabled}
+    	</if>
+    </where>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_ap_reminder_setting
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByAccount" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_ap_reminder_setting
+    where account = #{account}
+  </select>
+  
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="entity.dismember.ApReminderSetting" >
+    insert into t_ap_reminder_setting
+    (account,enable,days_ago,create_user,create_date)
+    values
+    (#{account},#{enable},#{daysAgo},#{createUser},now())
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.ApReminderSetting" >
+    update t_ap_reminder_setting
+    <set >
+      <if test="enable != null" >
+        enable = #{enable},
+      </if>
+      <if test="daysAgo != null" >
+        days_ago = #{daysAgo},
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user = #{lastUpdateUser},
+        last_update_date = now()
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

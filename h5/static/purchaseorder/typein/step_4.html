@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="email=no" name="format-detection"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>已选商品</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main/main.css">
+</head>
+<body id="body_ele" v-cloak>
+<header class="posFix head">
+    <a href="step_2.html?ii={{inputId}}" class="ret-logo"></a>
+    已选商品
+    <a href="/user/index/index.html" class="home-logo"></a>
+</header>
+
+<section class="imporCon conTop">
+    <div class="impornor">
+        <label>分销商：</label>
+        <label>{{disAccount}}</label>
+    </div>
+    <div class="impornor" id="checkall">
+        <label v-if="showSelectAll"><input type="checkbox" class="mui-checkbox" v-model="selectAllChecked"/>全选</label>
+        <input v-if="showBatchDeleteBtn" @click="deleteBatch" type="button" class="btn-gray-sm" value="批量移除"/>
+    </div>
+    <div style = "margin-bottom: 50px;">
+        <!--正价商品-->
+        <div class="imporCom" v-for="pro in proList">
+            <div class="imporComL">
+                <input type="checkbox" v-model="selectedProIds" name="selectedProId" value="{{pro.id}}" class="mui-checkbox"/>
+            </div>
+            <div class="imporComR">
+                <div class="impor-img">
+                    <a><img v-bind:data-original='pro.imageUrl' src="../../img/blank.png" alt="{{pro.title}}" class="p-goods-img"/></a>
+                </div>
+                <div class="impor-tit">
+                    <h5>{{pro.title}}</h5>
+                    <div>
+                        <span>采购价：<b><i>¥</i>{{pro.price}}</b></span>
+                        <span>库存：<b class="impor-tit2">{{pro.stock}}</b></span>
+                    </div>
+                    <div>
+                        <span>
+                            采购数量：
+                            <input type="text" class="inp2" proId="{{pro.id}}" stock="{{pro.stock}}" @keyup = "checkNum()"
+                                   batchNumber="{{pro.batchNumber}}" oldValue="{{pro.qty}}" value="{{pro.qty}}" @blur="inputProQty($event)"/>
+                        </span>
+                        <span>仓库：<b class="impor-tit2">{{pro.warehouseName}}</b></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--赠品-->
+        <div class="imporCom"  v-for="gift in giftList">
+            <div class="imporComL">
+                <input type="checkbox" v-model="selectedGiftIds" name="selectedGiftId" value="{{gift.id}}" class="mui-checkbox"/>
+            </div>
+            <div class="imporComR">
+                <div class="impor-img">
+                    <a><img v-bind:data-original='gift.imageUrl' src="../../img/blank.png" alt="{{gift.title}}" class="p-goods-img"/></a>
+                </div>
+                <div class="impor-tit">
+                    <h5><span><i class="gift"></i></span>{{gift.title}}</h5>
+                    <div>
+                        <span>采购价：<b><i>¥</i>{{gift.price}}</b></span>
+                        <span>库存：<b class="impor-tit2">{{gift.stock}}</b></span>
+                    </div>
+                    <div>
+                        <span>
+                            采购数量：
+                            <input type="text" class="inp2" giftId="{{gift.id}}" stock="{{gift.stock}}" @keyup = "checkNum"
+                                          oldValue="{{gift.qty}}" value="{{gift.qty}}" @blur="inputGiftQty($event)"/>
+                        </span>
+                        <span>仓库：<b class="impor-tit2">{{gift.warehouseName}}</b></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<footer class="foot">
+    <a>
+        <input type="button" value="编辑" class="inp-3 btn-gray fl" @click="edit"/>
+        <input type="button" value="生成订单" class="inp-3 btn-blue fr" @click="createOrder"/>
+    </a>
+</footer>
+</body>
+<script src="/js/lib/require.js" data-main="/js/purchaseorder/typein/selectedGoods.js?time=(new Date()).getTime()"></script>
+</html>

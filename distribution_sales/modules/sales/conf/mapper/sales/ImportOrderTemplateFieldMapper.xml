@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.ImportOrderTemplateFieldMapper" >
+  <resultMap id="BaseResultMap" type="entity.sales.ImportOrderTemplateField" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="templatename" property="templateName" jdbcType="VARCHAR" />
+    <result column="propertyname" property="propertyName" jdbcType="VARCHAR" />
+    <result column="isnull_flag" property="isNull" jdbcType="BOOLEAN" />
+    <result column="type_flag" property="type" jdbcType="INTEGER" />
+    <result column="position_flag" property="position" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, templatename, propertyname, isnull_flag, type_flag, position_flag
+  </sql>
+  <select id="selectByType" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+      <include refid="Base_Column_List"></include>
+      from t_import_order_template_field
+      where type_flag = #{type,jdbcType=INTEGER}
+      order by position_flag
+  </select>
+</mapper>

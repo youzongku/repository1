@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.ShopPlatformMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.ShopPlatform" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="shop_platform" property="shopPlatform" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, shop_platform
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_shop_platform
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_shop_platform
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.ShopPlatform" >
+    insert into t_dis_shop_platform (id, shop_platform)
+    values (#{id,jdbcType=INTEGER}, #{shopPlatform,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.ShopPlatform" >
+    insert into t_dis_shop_platform
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="shopPlatform != null" >
+        shop_platform,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shopPlatform != null" >
+        #{shopPlatform,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.ShopPlatform" >
+    update t_dis_shop_platform
+    <set >
+      <if test="shopPlatform != null" >
+        shop_platform = #{shopPlatform,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.ShopPlatform" >
+    update t_dis_shop_platform
+    set shop_platform = #{shopPlatform,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getAllShopPlatforms" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_shop_platform
+    order by id asc
+  </select>
+</mapper>

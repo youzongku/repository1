@@ -1,0 +1,1337 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.ProductBaseMapper">
+	<select id="queryByParam" resultType="entity.product.ProductBase"
+			parameterType="java.util.List">
+		select * from t_product_base
+		<where>
+			<if test="paramDto != null">
+				<if test="paramDto.productId != null and  paramDto.productId >0">
+					and iid = #{paramDto.productId}
+				</if>
+				<if test="paramDto.listingId != null">
+					and clistingid = #{paramDto.listingId}
+				</if>
+				<if test="paramDto.sku != null">
+					and csku = #{paramDto.sku}
+				</if>
+			</if>
+		</where>
+		limit #{2} offset (#{1}-1)*#{2}
+	</select>
+
+	<select id="queryProductBase" resultType="entity.product.ProductBase">
+		select
+		pcm.icategory catId,
+		tb.*
+		from
+		t_product_base tb
+		LEFT JOIN
+		t_product_category_mapper pcm
+		on tb.csku = pcm.csku
+		<where>
+			<if test="paramDto != null">
+				<if test="paramDto.productId != null and  paramDto.productId >0">
+					and tb.iid = #{paramDto.productId}
+				</if>
+				<if test="paramDto.listingId != null and paramDto.listingId !='' ">
+					and tb.clistingid = #{paramDto.listingId}
+				</if>
+				<if test="paramDto.sku != null and paramDto.sku !='' ">
+					and tb.csku = #{paramDto.sku}
+				</if>
+			</if>
+		</where>
+		LIMIT 1 OFFSET 0
+	</select>
+
+	<select id="getProductByListingIDs" resultType="dto.product.ProductLite">
+		SELECT p.clistingid listingId,p.fweight weight,max(case when translate.ctitle is null
+		then translate_de.ctitle else translate.ctitle end) title,
+		p.fprice
+		originalPrice,p.local_ref_price localPrice,max(i.cimageurl) imageUrl, min(u.curl) url, p.csku sku,p.saleprice saleprice,p.tariff tariff,p.carriage carriage,p.product_type productType
+		FROM t_product_base p
+		INNER JOIN (select
+		curl,clistingid from t_product_url where clistingid in
+		<foreach item="item" index="index" collection="list" open="("
+				 separator="," close=")">#{item}</foreach>
+		union all select curl,clistingid from t_product_intercept_url where
+		clistingid in
+		<foreach item="item" index="index" collection="list" open="("
+				 separator="," close=")">#{item}</foreach>
+		) u on u.clistingid = p.clistingid
+		LEFT JOIN t_product_image i on
+		i.clistingid = p.clistingid AND
+		i.bbaseimage= true
+		left join
+		t_product_translate translate on
+		p.clistingid=translate.clistingid and
+		translate.ilanguageid = #{2}
+		left join t_product_translate translate_de
+		on
+		p.clistingid=translate_de.clistingid and translate_de.ilanguageid=1
+		WHERE p.clistingid IN
+		<foreach item="item" index="index" collection="list" open="("
+				 separator="," close=")">#{item}</foreach>
+		AND p.iwebsiteid = #{1}
+		group by p.clistingid ,p.local_ref_price, p.fprice , p.csku, p.fweight,p.saleprice,p.tariff,p.carriage,p.product_type;
+	</select>
+
+	<select id="nextId" resultType="java.lang.Integer"
+			parameterType="java.util.List">
+		SELECT nextval(#{0}) ;
+	</select>
+
+	<sql id="Base_Column">
+			pb.iid iid,
+			pb.istatus istatus,
+			pb.salable,
+			pb.iqty qty,
+			pb.saleprice saleprice,
+			pb.fprice originalPrice,
+			pb.local_ref_price localPrice,
+			pb.fcostprice fcostprice,
+			pb.fweight fweight,
+		    pb.pack_qty packQty,
+		    pb.product_enterprise productEnterprise,
+		    pb.component_content componentContent,
+		    pb.expiration_days expirationDays,
+		    pb.package_type packageType,
+		    pb.origin_country originCountry,
+		    pb.plug_type plugType,
+		    pb.inter_bar_code interBarCode,
+		    pb.brand brand,
+		    pb.batch_number batchNumber,
+		    pb.postal_rate postalRate,
+	</sql>
+	<sql id="Product_Price_Base">
+		pd.dis_profit_rate disProfitRate,
+	    pd.dis_profit disProfit,
+	    pd.dis_vat disVat,
+	    pd.dis_stock_fee disStockFee,
+	    pd.dis_shipping_type disShippingType,
+	    pd.dis_other_cost disOtherCost,
+	    pd.dis_total_cost disTotalCost,
+	    pd.dis_transfer_fee disTransferFee,
+	    pd.dis_list_fee disListFee,
+	    pd.dis_trade_fee disTradeFee,
+	    pd.dis_pay_fee disPayFee,
+	    pd.dis_postal_fee disPostalFee,
+	    pd.dis_import_tar disImportTar,
+	    pd.dis_gst disGst,
+		pd.dis_insurance disInsurance,
+	    pd.dis_total_vat disTotalVat,
+	    pd.cost as cost,
+	    pd.dis_freight disFreight,
+	    pd.dis_price disPrice,
+	    pd.dis_cif_price disCifPrice,
+	    pd.distributor_price distributorPrice,
+	    pd.electricity_prices electricityPrices,
+	    pd.supermarket_price supermarketPrice,
+	    pd.vip_price vipPrice,
+	    pd.proposal_retail_price proposalRetailPrice,
+	    pd.ftz_price ftzPrice,
+	    pd.gst_rate gstRate,
+	    pd.vat_rate vatRate,
+	    pd.import_tar_rate importTarRate,
+	    pd.logistic_fee logisticFee,
+	    pd.postal_fee_rate postalFeeRate,
+	    pd.type_id typeId,
+	    pd.type_name typeName,
+	    case (pd.sale_status = 20 )
+			when 'true' then (select pd.clearance_price)
+			ELSE null END
+		as 	clearancePrice
+	</sql>
+	<select id="getProductsCount" resultType="java.lang.Integer">
+		select count(1) from (
+		select
+		gi.sku csku,
+		gi.warehouse_id warehouseId,
+		gi.warehouse_name warehouseName,
+		gi.available_stock stock,
+		p.*
+		from t_goods_inventory gi LEFT JOIN (
+		SELECT
+		<include refid="Base_Column"></include>
+		u.*
+		from t_product_base pb LEFT JOIN
+		(SELECT
+		pb.clistingid clistingid,
+		pb.csku csku1,
+		pt.ctitle ctitle,
+		max(pi.cimageurl) imageUrl
+		FROM
+		t_product_base pb,
+		t_product_image pi,
+		t_product_translate pt
+		<if test="param.skuList != null and param.skuList.size() > 0">
+			,
+			<foreach item="item" index="index" collection="param.skuList" open="("
+					 separator=" union all " close=" ">select #{item} as sku</foreach>
+			union all select 'aa' as sku) skus
+		</if>
+		WHERE 1=1
+		AND	pb.clistingid = pi.clistingid
+		AND pb.clistingid = pt.clistingid
+		AND	pb.iwebsiteid = #{1}
+		AND pt.ilanguageid = #{2}
+		AND pi.bbaseimage = 'true'
+		<if test="param.skuList != null and param.skuList.size() > 0">
+			AND pb.csku = skus.sku
+		</if>
+		GROUP BY
+		pb.clistingid,
+		pb.csku,
+		pt.ctitle) u
+		ON pb.clistingid = u.clistingid and pb.csku = u.csku1
+		WHERE 1=1 and u.csku1 is not null
+		<if test="param.istatus != null">
+			and istatus = #{param.istatus,jdbcType=INTEGER}
+		</if>
+		) p on gi.sku = p.csku1 where 1=1 and p.csku1 is not null
+		<if test="param.warehouseId != null">
+			and gi.warehouse_id = #{param.warehouseId,jdbcType=INTEGER}
+		</if>
+		<!-- 查询商品时，如果不按照仓库ID查询则只展示仓库为启用状态的仓库-->
+		<if test="param.warehouseId == null">
+			and gi.warehouse_id||'' in (select warehouse_no from t_warehouse where status=1)
+		</if>
+		<if test="param.istatus != null">
+			and p.istatus is not null
+		</if>
+		) b LEFT JOIN t_product_disprice pd on b.csku=pd.sku and b.warehouseid=pd.dis_stock_id where 1=1
+		<if test="param.title != null">
+			and (b.csku like '%'||#{param.title,jdbcType=VARCHAR}||'%' or b.ctitle like '%'||#{param.title,jdbcType=VARCHAR}||'%')
+		</if>
+		<if test="param.minPrice != null">
+			and pd.electricity_prices <![CDATA[>=]]> #{param.minPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="param.maxPrice != null">
+			and pd.electricity_prices <![CDATA[<=]]> #{param.maxPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="param.iids != null and param.iids.size() > 0">
+			and b.iid in
+			<foreach item="item" index="index" collection="param.iids" open="("
+					 separator="," close=")">#{item,jdbcType=INTEGER}</foreach>
+		</if>
+	</select>
+
+	<select id="getImgUrl" resultType="java.lang.String">
+		select max(pi.cimageurl) imageUrl from t_product_image pi where csku=#{0} and pi.bbaseimage = 'true' limit 1 offset 0
+	</select>
+
+	<select id="getBrand" resultType="java.lang.String">
+		select DISTINCT brand from t_product_base where brand is not null and brand != ''
+	</select>
+	
+	<!-- 更新非卖状态 -->
+	<update id="updateSalable">
+		update t_product_base
+		set salable = #{salable}
+		<where>
+			<if test="skus!=null and skus.size()>0">
+				csku in 
+				<foreach collection="skus" item="sku" open="(" close=")" separator=",">
+					#{sku}
+				</foreach>
+			</if>
+		</where>
+	</update>
+
+	<select id="products" resultType="dto.product.ProductLite">
+		SELECT DISTINCT
+			pb.iid,
+			pb.csku,
+			pb.cparentsku,
+			pb.clistingid,
+			pb.istatus,
+			pb.salable,
+			pb.brand,
+			pb.fweight,
+			pb.iqty qty,
+			pb.bvisible,
+			pb.inter_bar_code interBarCode,
+			pb.package_type packageType,
+			pb.re_shipping_type reShippingType,
+			pb.bbc_visible bbcVisible,
+			pb.ordinary_msite_visible ordinaryMsiteVisible,
+			pb.brand_msite_visible brandMsiteVisible,
+			pb.fprice originalPrice,
+			pb.local_ref_price localPrice,
+			pb.pack_qty packQty,
+			pb.product_enterprise productEnterprise,
+			pb.package_type packageType,
+			pb.batch_number batchNumber,
+			pb.component_content componentContent,
+			pb.expiration_days expirationDays,
+			pb.origin_country originCountry,
+			pb.postal_rate postalRate,
+			case (pd.sale_status = 20 )
+			when 'true' then (select pd.clearance_price)
+			ELSE null END
+			as clearancePrice,
+			pt.ctitle,
+			pim.cimageurl imageUrl,
+			cat.iid categoryId,
+			cat.cname,
+			ci.warehouse_id warehouseId,
+			ci.warehouse_name warehouseName,
+			ci.stock totalstock,
+			ci.residue_num stock,
+			<if test="param.vCategoryId != null">
+				vskus."position",
+			</if>
+			<choose>
+		    	<when test="param.model == null">
+					pd.proposal_retail_price disPrice,
+				</when>
+				<otherwise>
+					<choose>
+						<when test="param.model == 1">
+							pd.electricity_prices disPrice,
+						</when>
+						<when test="param.model == 2">
+							pd.distributor_price disPrice,
+						</when>
+						<when test="param.model == 3">
+							pd.supermarket_price disPrice,
+						</when>
+						<when test="param.model == 4">
+							pd.ftz_price disPrice,
+						</when>
+						<when test="param.model == 5">
+							pd.vip_price disPrice,
+						</when>
+					</choose>
+				</otherwise>
+			</choose>
+			pd.proposal_retail_price proposalRetailPrice,
+ 			pd.type_id typeId,
+ 			pd.type_name typeName
+		FROM
+			t_product_base pb
+		LEFT JOIN
+			t_product_translate pt
+		ON pb.csku = pt.csku
+		AND pt.ilanguageid = 1
+
+		<if test="param.iids != null and param.iids.size() > 0">
+			AND pb.iid in
+			<foreach item="item" index="index" collection="param.iids" open="(" separator="," close=")">
+				#{item, jdbcType=INTEGER}
+			</foreach>
+		</if>
+		
+		LEFT JOIN
+		(
+			select pcm.csku, cb.iid, cn.cname  from
+				t_category_base cb,
+				t_category_name cn,
+				t_product_category_mapper pcm
+			where
+				cb.iid = pcm.icategory
+				AND cb.ilevel = 1
+				AND cb.iid = cn.icategoryid
+		) cat
+		ON pb.csku = cat.csku
+		<if test="param.vCategoryId != null">
+			INNER JOIN
+			(
+				WITH RECURSIVE vskus
+				(	id,
+					parentid,
+					"position",
+					virCategoryIdTree,
+					level
+				)
+				AS (
+					SELECT
+						id,
+						parentid,
+						"position",
+						ARRAY[id] AS virCategoryIdTree,
+						1 AS level
+					FROM t_virtual_category
+					WHERE
+						parentid is null
+
+					UNION ALL
+
+					SELECT
+						vc.id,
+						vc.parentid,
+						vc."position",
+						vskus.virCategoryIdTree ||vc.id,
+						vskus.level + 1 AS level
+					FROM t_virtual_category vc
+					JOIN vskus ON vc.parentid = vskus.id
+				) SELECT
+						pcm.sku sku2,
+						vskus."position",
+						vskus.virCategoryIdTree virCategoryIdTree
+					FROM vskus,
+						t_product_vcategory_mapper pcm
+					WHERE
+						vskus.ID  NOT IN (select parentid from t_product_vcategory_mapper)
+					AND pcm.categoryid = vskus.ID
+					AND vskus.virCategoryIdTree @> ARRAY[
+						<foreach item="item" index="index" collection="param.vCategoryId" separator=",">
+							#{item, jdbcType=INTEGER}
+						</foreach>
+					]
+					ORDER BY vskus."position" DESC NULLS LAST
+				) vskus
+			ON pb.csku = vskus.sku2
+		</if>
+		LEFT JOIN
+		(SELECT
+				pia.csku AS csku,
+				pia.cimageurl AS cimageurl
+			FROM
+				t_product_image pia,
+				(
+					SELECT
+						MAX (pim.iorder) AS iorder,
+						pim.csku AS csku
+					FROM
+						t_product_image pim
+					WHERE
+						pim.bbaseimage = TRUE
+					GROUP BY
+						pim.csku
+				) pim
+			WHERE
+				pim.csku = pia.csku
+			AND pim.iorder = pia.iorder
+		) pim ON pb.csku = pim.csku
+		LEFT JOIN t_product_disprice pd ON pb.csku = pd.sku
+		<if test="param.warehouseId != null">
+			AND pd.dis_stock_id = #{param.warehouseId,jdbcType=INTEGER}
+		</if>
+		<if test="param.typeId != null">
+			AND pd.type_id = #{param.typeId,jdbcType=INTEGER}
+		</if>
+		<choose>
+	    	<when test="param.model == null">
+				AND pd.proposal_retail_price is NOT NULL
+			</when>
+			<otherwise>
+				<choose>
+					<when test="param.model == 1">
+						AND pd.electricity_prices is NOT NULL
+					</when>
+					<when test="param.model == 2">
+						AND pd.distributor_price  is NOT NULL
+					</when>
+					<when test="param.model == 3">
+						AND pd.supermarket_price  is NOT NULL
+					</when>
+					<when test="param.model == 4">
+						AND pd.ftz_price is NOT NULL
+					</when>
+					<when test="param.model == 5">
+						AND pd.vip_price is NOT NULL
+					</when>
+				</choose>
+			</otherwise>
+		</choose>
+		<if test="param.minPrice != null">
+			AND
+			<choose>
+		    	<when test="param.model == null">
+					pd.proposal_retail_price
+				</when>
+				<otherwise>
+					<choose>
+						<when test="param.model == 1">
+							pd.electricity_prices
+						</when>
+						<when test="param.model == 2">
+							pd.distributor_price
+						</when>
+						<when test="param.model == 3">
+							pd.supermarket_price
+						</when>
+						<when test="param.model == 4">
+							pd.ftz_price
+						</when>
+						<when test="param.model == 5">
+							pd.vip_price
+						</when>
+					</choose>
+				</otherwise>
+			</choose>
+			<![CDATA[>=]]> #{param.minPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="param.maxPrice != null">
+			AND
+			<choose>
+		    	<when test="param.model == null">
+					pd.proposal_retail_price
+				</when>
+				<otherwise>
+					<choose>
+						<when test="param.model == 1">
+							pd.electricity_prices
+						</when>
+						<when test="param.model == 2">
+							pd.distributor_price
+						</when>
+						<when test="param.model == 3">
+							pd.supermarket_price
+						</when>
+						<when test="param.model == 4">
+							pd.ftz_price
+						</when>
+						<when test="param.model == 5">
+							pd.vip_price
+						</when>
+					</choose>
+				</otherwise>
+			</choose>
+			<![CDATA[<=]]> #{param.maxPrice,jdbcType=DOUBLE}
+		</if>
+		LEFT JOIN t_warehouse tw 
+		ON pd.dis_stock_id = CAST(tw.warehouse_no AS INT) 
+		INNER JOIN cloud_inventory ci ON ci.warehouse_id = pd.dis_stock_id
+		AND pd.sku = ci.sku
+		<include refid="PRODUCTS_CONDITIONS"/>
+		ORDER BY
+		<choose>
+			<when test="param.disPriceSort != null and param.disPriceSort != ''">
+				<if test="param.model == null">
+					pd.proposal_retail_price ${param.disPriceSort} nulls last
+				</if>
+				<if test="param.model == 1">
+					pd.electricity_prices ${param.disPriceSort} nulls last
+				</if>
+				<if test="param.model == 2">
+					pd.distributor_price ${param.disPriceSort} nulls last
+				</if>
+				<if test="param.model == 3">
+					pd.supermarket_price ${param.disPriceSort} nulls last
+				</if>
+				<if test="param.model == 4">
+					pd.ftz_price ${param.disPriceSort} nulls last
+				</if>
+				<if test="param.model == 5">
+					pd.vip_price ${param.disPriceSort} nulls last
+				</if>
+			</when>
+			<otherwise>
+				ci.stock DESC nulls last,ci.residue_num DESC nulls last
+				<if test="param.vCategoryId != null">
+					, vskus."position" DESC NULLS LAST
+				</if>
+				<if test="param.title != null and param.title != ''">
+					, pb.csku asc nulls last
+				</if>
+			</otherwise>
+		</choose>
+	</select>
+	<sql id="PRODUCTS_CONDITIONS">
+		<where>
+				AND tw.status = 1 
+			<if test="param.title != null">
+				AND (pb.csku like '%'||#{param.title,jdbcType=VARCHAR}||'%' or pt.ctitle like '%'||#{param.title,jdbcType=VARCHAR}||'%')
+			</if>
+			<if test="param.istatus != null">
+				AND pb.istatus = #{param.istatus,jdbcType=INTEGER}
+			</if>
+			<if test="param.salable != null">
+				AND pb.salable = #{param.salable,jdbcType=INTEGER}
+			</if>
+			<if test="param.categoryId != null">
+				AND cat.iid = #{param.categoryId}
+			</if>
+			<if test="param.wType != null and param.wType != ''">
+				AND tw.type != #{param.wType,jdbcType=VARCHAR}
+			</if> 
+			<if test="param.skuList != null and param.skuList.size() > 0">
+				AND pb.csku in
+				<foreach item="item" index="index" collection="param.skuList" open="(" separator="," close=")">
+					#{item,jdbcType=VARCHAR}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	<select id="productCount" resultType="java.lang.Integer">
+		SELECT count(1) FROM (
+		SELECT
+			DISTINCT pb.iid
+		FROM
+			t_product_base pb
+		LEFT JOIN
+			t_product_translate pt
+		ON pb.csku = pt.csku
+		AND pt.ilanguageid = 1
+		
+		<if test="param.iids != null and param.iids.size() > 0">
+			AND pb.iid in
+			<foreach item="item" index="index" collection="param.iids" open="(" separator="," close=")">
+				#{item, jdbcType=INTEGER}
+			</foreach>
+		</if>
+		LEFT JOIN
+		(
+			select pcm.csku, cb.iid, cn.cname  from 
+				t_category_base cb,
+				t_category_name cn,
+				t_product_category_mapper pcm
+			where 
+				cb.iid = pcm.icategory
+				AND cb.ilevel = 1
+				AND cb.iid = cn.icategoryid
+		) cat 
+		ON pb.csku = cat.csku
+		<if test="param.vCategoryId != null">
+			INNER JOIN
+			(
+				WITH RECURSIVE vskus 
+				(	id, 
+					parentid, 
+					"position",
+					virCategoryIdTree, 
+					level
+				)  
+				AS (
+					SELECT 
+						id, 
+						parentid, 
+						"position",
+						ARRAY[id] AS virCategoryIdTree, 
+						1 AS level 
+					FROM t_virtual_category
+					WHERE 
+						parentid is null
+			
+					UNION ALL
+			
+					SELECT 
+						vc.id, 
+						vc.parentid, 
+						vc."position",
+						vskus.virCategoryIdTree ||vc.id, 
+						vskus.level + 1 AS level 
+					FROM t_virtual_category vc
+					JOIN vskus ON vc.parentid = vskus.id
+				) SELECT 
+						pcm.sku sku2, 
+						vskus."position", 
+						vskus.virCategoryIdTree virCategoryIdTree
+					FROM vskus,
+						t_product_vcategory_mapper pcm
+					WHERE 
+						vskus.ID  NOT IN (select parentid from t_product_vcategory_mapper)
+					AND pcm.categoryid = vskus.ID
+					AND vskus.virCategoryIdTree @> ARRAY[#{param.vCategoryId}]
+				) vskus 
+			ON pb.csku = vskus.sku2
+		</if>
+		LEFT JOIN
+		(SELECT
+				pia.csku AS csku,
+				pia.cimageurl AS cimageurl
+			FROM
+				t_product_image pia,
+				(
+					SELECT
+						MAX (pim.iorder) AS iorder,
+						pim.csku AS csku
+					FROM
+						t_product_image pim
+					WHERE
+						pim.bbaseimage = TRUE
+					GROUP BY
+						pim.csku
+				) pim
+			WHERE
+				pim.csku = pia.csku
+			AND pim.iorder = pia.iorder
+		) pim ON pb.csku = pim.csku
+		LEFT JOIN t_product_disprice pd ON pb.csku = pd.sku
+		<if test="param.warehouseId != null">
+			AND pd.dis_stock_id = #{param.warehouseId,jdbcType=INTEGER}
+		</if>
+		<if test="param.typeId != null">
+			AND pd.type_id = #{param.typeId,jdbcType=INTEGER}
+		</if>
+		<choose>
+	    	<when test="param.model == null">
+				AND pd.proposal_retail_price is NOT NULL
+			</when>
+			<otherwise>
+				<choose>
+					<when test="param.model == 1">
+						AND pd.electricity_prices is NOT NULL
+					</when>
+					<when test="param.model == 2">
+						AND pd.distributor_price  is NOT NULL
+					</when>
+					<when test="param.model == 3">
+						AND pd.supermarket_price  is NOT NULL
+					</when>
+					<when test="param.model == 4">
+						AND pd.ftz_price is NOT NULL
+					</when>
+					<when test="param.model == 5">
+						AND pd.vip_price is NOT NULL
+					</when>
+				</choose>
+			</otherwise>
+		</choose>
+		<if test="param.minPrice != null">
+			AND 
+			<choose>
+		    	<when test="param.model == null">
+					pd.proposal_retail_price 
+				</when>
+				<otherwise>
+					<choose>
+						<when test="param.model == 1">
+							pd.electricity_prices 
+						</when>
+						<when test="param.model == 2">
+							pd.distributor_price 
+						</when>
+						<when test="param.model == 3">
+							pd.supermarket_price 
+						</when>
+						<when test="param.model == 4">
+							pd.ftz_price  
+						</when>
+						<when test="param.model == 5">
+							pd.vip_price 
+						</when>
+					</choose>
+				</otherwise>
+			</choose>
+			<![CDATA[>=]]> #{param.minPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="param.maxPrice != null">
+			AND 
+			<choose>
+		    	<when test="param.model == null">
+					pd.proposal_retail_price 
+				</when>
+				<otherwise>
+					<choose>
+						<when test="param.model == 1">
+							pd.electricity_prices 
+						</when>
+						<when test="param.model == 2">
+							pd.distributor_price 
+						</when>
+						<when test="param.model == 3">
+							pd.supermarket_price 
+						</when>
+						<when test="param.model == 4">
+							pd.ftz_price  
+						</when>
+						<when test="param.model == 5">
+							pd.vip_price 
+						</when>
+					</choose>
+				</otherwise>
+			</choose>
+			<![CDATA[<=]]> #{param.maxPrice,jdbcType=DOUBLE}
+		</if>
+		LEFT JOIN t_warehouse tw 
+		ON pd.dis_stock_id = CAST(tw.warehouse_no AS INT) 
+		INNER JOIN cloud_inventory ci ON ci.warehouse_id = pd.dis_stock_id
+		AND pd.sku = ci.sku
+		<include refid="PRODUCTS_CONDITIONS"/>
+		) fx
+	</select>
+	
+
+	<!-- 注释掉旧的products查询 -->
+	<!--
+        <select id="products" resultType="dto.product.ProductLite">
+            select * from (
+                select
+                    DISTINCT length(base.csku),
+                    //gi.totalstock,
+                    //gi.warehouseName,
+                    tw.warehouse_name as warehouseName,
+                    tdesc.ctitle,
+                    image.imageUrl, base.*,
+                    <choose>
+                        <when test=" param.queryStr != null and param.queryStr != '' ">
+                            price.${param.queryStr},
+                            price.${param.queryStr} as disPrice,
+                        </when>
+                        <otherwise>
+                            price.proposalRetailPrice as disPrice,
+                        </otherwise>
+                    </choose>
+                    price.proposalRetailPrice,
+                    price.typeId,
+                    price.warehouseId,
+                    price.disShippingType,
+                    price.typeName
+                    <if test="param.proVList != null and param.proVList.size() > 0">
+                        ,vskus.*
+                    </if>
+                from
+                <if test="param.proVList != null and param.proVList.size() > 0">
+                    <foreach item="item" index="index" collection="param.proVList" open="(" separator=" union all " close=")">
+                        select #{item.sku,jdbcType=VARCHAR} as sku2,#{item.position,jdbcType=INTEGER} as sort
+                    </foreach> vskus
+                LEFT JOIN
+                </if>
+                <if test="param.skuList != null and param.skuList.size() > 0">
+                    <foreach item="item" index="index" collection="param.skuList" open="(" separator=" union all " close=" ">
+                        select #{item} as sku1
+                    </foreach>
+                        union all
+                        select 'aa' as sku1) skus
+                LEFT JOIN
+                </if>
+                (
+                    select
+                        <include refid="Base_Column"></include>
+                        pb.csku csku, pb.bbc_visible visible
+                    from
+                        t_product_base pb
+                ) base
+                <if test="param.skuList != null and param.skuList.size() > 0">
+                    on base.csku=skus.sku1
+                </if>
+                <if test="param.proVList != null and param.proVList.size() > 0">
+                    on base.csku = vskus.sku2
+                </if>
+                LEFT JOIN
+                (
+                    select
+                        pd.sku skup,
+                        pd.dis_stock_id warehouseId,
+                        <include refid="Product_Price_Base"></include>
+                     from
+                         t_product_disprice pd
+                ) price on base.csku = price.skup
+                LEFT JOIN
+                (
+                    select
+                        trans.ctitle as ctitle,trans.csku as skut
+                    from
+                        t_product_translate trans
+                ) tdesc on base.csku = tdesc.skut
+                LEFT JOIN
+                (
+                    select
+                        min(image.cimageurl) as imageUrl,image.csku as skui
+                    from
+                        t_product_image image
+                    where
+                        image.bbaseimage='true'
+                    group by
+                        image.csku
+                ) image on base.csku = image.skui
+                LEFT JOIN
+                    t_warehouse  tw
+                    on price.warehouseid||'' = tw.warehouse_no
+                ) d
+                where d.imageUrl is not null and d.visible='true'
+                <if test="param.istatus != null">
+                    and d.istatus = #{param.istatus,jdbcType=INTEGER}
+                </if>
+                <if test="param.istatus == null">
+                    and d.istatus is not null
+                </if>
+                <if test="param.warehouseId != null">
+                    and d.warehouseid = #{param.warehouseId,jdbcType=INTEGER}
+                </if>
+                //查询商品时，如果不按照仓库ID查询则只展示仓库为启用状态的仓库
+                <if test="param.warehouseId == null">
+                    and d.warehouseid||'' in (
+                        select warehouse_no from t_warehouse where status=1
+                    )
+                </if>
+                <if test="param.title != null">
+                    and (
+                        d.csku like '%'||#{param.title,jdbcType=VARCHAR}||'%'
+                        or d.ctitle like '%'||#{param.title,jdbcType=VARCHAR}||'%'
+                    )
+                </if>
+                <if test="param.minPrice != null and param.queryStr != null">
+                    and d.${param.queryStr} <![CDATA[>=]]> #{param.minPrice,jdbcType=DOUBLE}
+                </if>
+                <if test="param.maxPrice != null and param.queryStr != null">
+                    and d.${param.queryStr} <![CDATA[<=]]> #{param.maxPrice,jdbcType=DOUBLE}
+                </if>
+                <if test="param.iids != null and param.iids.size() > 0">
+                    and d.iid in
+                    <foreach item="item" index="index" collection="param.iids" open="(" separator="," close=")">
+                        #{item,jdbcType=INTEGER}
+                    </foreach>
+                </if>
+                <if test="param.queryStr != null and param.queryStr != ''">
+                    and d.${param.queryStr} is not null
+                </if>
+                <if test="param.typeId != null">
+                    and d.typeId = #{param.typeId,jdbcType=INTEGER}
+                </if>
+                <choose>
+                    <when test="param.title != null and param.title != ''">
+                        order by length asc,csku asc nulls last
+                    </when>
+                    <when test="param.proVList != null and param.proVList.size() > 0">
+                        order by sort desc nulls last
+                    </when>
+                    <otherwise>
+                        order by csku asc nulls last
+                    </otherwise>
+                </choose>
+                <if test="param.pageSize != null">
+                    limit #{param.pageSize} offset (#{param.currPage} -1) * #{param.pageSize}
+                </if>
+        </select>
+     -->
+	
+	<select id="queryStock" parameterType="java.util.List" resultType="entity.product.StockEntity">
+		SELECT
+		b.sku,
+		b.warehouse_id warehouseId,
+		b.available_stock - (
+		SELECT
+		COALESCE (SUM(total_stock), 0)
+		FROM
+		t_micro_goods_inventory mi
+		WHERE
+		mi.warehouse_id = b.warehouse_id
+		AND mi.sku = b.sku
+		) stock
+		<if test="email != null and email != ''">
+			,(
+			SELECT
+			COALESCE (SUM(available_stock), 0)
+			FROM
+			t_micro_goods_inventory mic
+			WHERE
+			mic.warehouse_id = b.warehouse_id
+			AND mic.sku = b.sku
+			AND mic.mwarehouse_name = #{email,jdbcType=VARCHAR}
+			) microStock
+		</if>
+		FROM
+		(
+		<foreach collection="list" index="index" open="" separator=" union all " close="" item="item">
+			SELECT #{item.sku,jdbcType=VARCHAR} AS sku,#{item.warehouseId,jdbcType=INTEGER} AS warehouseId
+		</foreach>
+		union all SELECT 'xx' AS sku,'0' AS warehouseId
+		) ware
+		LEFT JOIN t_goods_inventory b ON ware.sku = b.sku
+		AND CAST (ware.warehouseId AS INT) = b.warehouse_id where b.sku is not null
+	</select>
+
+	<select id="inventoryGoods" resultType="dto.product.ProductLite">
+		select * from (
+		select
+		mgi.warehouseId as wid,
+		mgi.*,
+		image.imageUrl,
+		<include refid="Base_Column"></include>
+		<choose>
+			<when test=" param.queryStr != null and param.queryStr != '' ">
+				price.${param.queryStr},
+				price.${param.queryStr} as disPrice,
+			</when>
+			<otherwise>
+				price.proposalRetailPrice as disPrice,
+			</otherwise>
+		</choose>
+		price.proposalRetailPrice,
+		price.typeId,
+		price.warehouseId,
+		price.disShippingType,
+		price.typeName
+		from
+		<if test="param.skuList != null and param.skuList.size() > 0">
+			<foreach item="item" index="index" collection="param.skuList" open="("
+					 separator=" union all " close=" ">select #{item} as sku1</foreach>
+			union all select 'aa' as sku1) skus
+			LEFT JOIN
+		</if>
+		(
+		select
+		sku csku,warehouse_id warehouseId,product_title ctitle,warehouse_name warehouseName,sum(available_stock) microStock
+		from t_micro_goods_inventory
+		where mwarehouse_name=#{param.email,jdbcType=VARCHAR} and available_stock > 0
+		<if test="param.title != null">
+			and (sku like '%'||#{param.title,jdbcType=VARCHAR}||'%' or product_title like '%'||#{param.title,jdbcType=VARCHAR}||'%')
+		</if>
+		<if test="param.warehouseId != null">
+			and warehouse_id = #{param.warehouseId,jdbcType=INTEGER}
+		</if>
+		GROUP BY csku,warehouseId,ctitle,warehouseName
+		) mgi
+		<if test="param.skuList != null and param.skuList.size() > 0">
+			on skus.sku1=mgi.csku
+		</if>
+		LEFT JOIN
+		(
+		select
+		pd.sku skup,
+		pd.dis_stock_id warehouseId,
+		<include refid="Product_Price_Base"></include>
+		from t_product_disprice pd
+		) price on mgi.csku=price.skup and mgi.warehouseId=price.warehouseId
+		LEFT JOIN t_product_base pb on mgi.csku=pb.csku
+		LEFT JOIN
+		(
+		select min(i.cimageurl) as imageUrl,i.csku as skui from t_product_image i where i.bbaseimage='true' group by i.csku
+		) image on mgi.csku = image.skui) d
+		where d.wid is not null
+		<if test="param.minPrice != null and param.queryStr != null">
+			and d.${param.queryStr} is not null
+			and d.${param.queryStr} <![CDATA[>=]]> #{param.minPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="param.maxPrice != null and param.queryStr != null">
+			and d.${param.queryStr} is not null
+			and d.${param.queryStr} <![CDATA[<=]]> #{param.maxPrice,jdbcType=DOUBLE}
+		</if>
+		ORDER BY d.microStock desc
+		<if test="param.pageSize != null">
+			limit #{param.pageSize} offset (#{param.currPage} -1) * #{param.pageSize}
+		</if>
+	</select>
+
+	<select id="inventoryGoodsCount" resultType="java.lang.Integer">
+		select count(1) from (
+		select
+		mgi.warehouseId as wid,
+		mgi.*,
+		image.imageUrl,
+		<include refid="Base_Column"></include>
+		<choose>
+			<when test=" param.queryStr != null and param.queryStr != '' ">
+				price.${param.queryStr},
+				price.${param.queryStr} as disPrice,
+			</when>
+			<otherwise>
+				price.proposalRetailPrice as disPrice,
+			</otherwise>
+		</choose>
+		price.proposalRetailPrice,
+		price.typeId,
+		price.warehouseId,
+		price.disShippingType,
+		price.typeName
+		from
+		<if test="param.skuList != null and param.skuList.size() > 0">
+			<foreach item="item" index="index" collection="param.skuList" open="("
+					 separator=" union all " close=" ">select #{item} as sku1</foreach>
+			union all select 'aa' as sku1) skus
+			LEFT JOIN
+		</if>
+		(
+		select
+		sku csku,warehouse_id warehouseId,product_title ctitle,warehouse_name warehouseName,sum(available_stock) microStock
+		from t_micro_goods_inventory
+		where mwarehouse_name=#{param.email,jdbcType=VARCHAR} and available_stock > 0
+		<if test="param.title != null">
+			and (sku like '%'||#{param.title,jdbcType=VARCHAR}||'%' or product_title like '%'||#{param.title,jdbcType=VARCHAR}||'%')
+		</if>
+		<if test="param.warehouseId != null">
+			and warehouse_id = #{param.warehouseId,jdbcType=INTEGER}
+		</if>
+		GROUP BY csku,warehouseId,ctitle,warehouseName
+		) mgi
+		<if test="param.skuList != null and param.skuList.size() > 0">
+			on skus.sku1=mgi.csku
+		</if>
+		LEFT JOIN
+		(
+		select
+		pd.sku skup,
+		pd.dis_stock_id warehouseId,
+		<include refid="Product_Price_Base"></include>
+		from t_product_disprice pd
+		) price on mgi.csku=price.skup and mgi.warehouseId=price.warehouseId
+		LEFT JOIN t_product_base pb on mgi.csku=pb.csku
+		LEFT JOIN
+		(
+		select min(i.cimageurl) as imageUrl,i.csku as skui from t_product_image i where i.bbaseimage='true' group by i.csku
+		) image on mgi.csku = image.skui) d
+		where d.wid is not null
+		<if test="param.minPrice != null and param.queryStr != null">
+			and d.${param.queryStr} is not null
+			and d.${param.queryStr} <![CDATA[>=]]> #{param.minPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="param.maxPrice != null and param.queryStr != null">
+			and d.${param.queryStr} is not null
+			and d.${param.queryStr} <![CDATA[<=]]> #{param.maxPrice,jdbcType=DOUBLE}
+		</if>
+	</select>
+
+	<select id="getProductsCatTree" resultType="component.elasticsearch.ProductLiteDoc">
+		WITH RECURSIVE T 
+			(id, 
+				parentid, 
+				categoryIdTree, 
+				categoryNameTree, 
+				level
+			)  
+		AS (
+				SELECT 
+					t_category_base.iid, 
+					iparentid, 
+					ARRAY[t_category_base.iid] AS categoryIdTree, 
+					'(' || cname || ')' AS categoryNameTree,
+					1 AS level 
+				FROM t_category_base, t_category_name
+				WHERE 
+					iparentid = -1
+				AND t_category_base.iid = t_category_name.icategoryid
+				AND t_category_name.ilanguageid = 1
+		
+				UNION ALL
+		
+				SELECT 
+					cb.iid, 
+					cb.iparentid, 
+					T.categoryIdTree ||cb.iid, 
+					T.categoryNameTree || '(' || cb.cname || ')',
+					T.level + 1 AS level 
+				FROM (
+					SELECT  cb.iid, cb.iparentid, cn.cname
+					FROM t_category_base cb, t_category_name cn
+					WHERE cb.iid = cn.icategoryid
+					AND cn.ilanguageid = 1
+				) cb
+				JOIN T ON cb.iparentid = T.id
+		) select pcm.csku, T.categoryIdTree categoryIdTree, T.categoryNameTree categoryNameTree FROM T,
+			t_product_category_mapper pcm
+		where 
+			T.ID  NOT IN (select iparentid from t_category_base)
+		AND pcm.icategory = T.ID
+	</select>
+	
+	<select id="getProductsVirCatTree" resultType="component.elasticsearch.ProductLiteDoc">
+		WITH RECURSIVE T 
+			(	id, 
+				parentid, 
+				"position",
+				virCategoryIdTree, 
+				virCategoryNameTree, 
+				level
+			)  
+		AS (
+			SELECT 
+				id, 
+				parentid, 
+				"position",
+				ARRAY[id] AS virCategoryIdTree, 
+				'(' || name || ')' AS virCategoryNameTree,
+				1 AS level 
+			FROM t_virtual_category
+			WHERE 
+				parentid is null
+	
+			UNION ALL
+	
+			SELECT 
+				vc.id, 
+				vc.parentid, 
+				vc."position",
+				T.virCategoryIdTree ||vc.id, 
+				T.virCategoryNameTree || '(' || vc.name || ')',
+				T.level + 1 AS level 
+			FROM t_virtual_category vc
+			JOIN T ON vc.parentid = T.id
+		) SELECT 
+				pcm.sku csku, 
+				T."position", 
+				T.virCategoryIdTree virCategoryIdTree, 
+				T.virCategoryNameTree virCategoryNameTree 
+		FROM T,
+				t_product_vcategory_mapper pcm
+			where 
+				T.ID  NOT IN (select parentid from t_product_vcategory_mapper)
+			AND pcm.categoryid = T.ID
+	</select>
+	
+	<select id="getProductsInfo" resultType="component.elasticsearch.ProductLiteDoc">
+		SELECT DISTINCT
+			pb.iid,
+			pb.csku,
+			pb.cparentsku,
+			pb.clistingid,
+			pb.istatus,
+			pb.salable,
+			pb.brand,
+			pb.fweight,
+			pb.iqty qty,
+			pb.bvisible,
+			pb.inter_bar_code interBarCode,
+			pb.package_type packageType,
+			pb.re_shipping_type reShippingType,
+			pb.bbc_visible bbcVisible,
+			pb.ordinary_msite_visible ordinaryMsiteVisible,
+			pb.brand_msite_visible brandMsiteVisible,
+			pb.fprice originalPrice,
+			pb.local_ref_price localPrice,
+			pb.pack_qty packQty,
+			pb.product_enterprise productEnterprise,
+			pb.package_type packageType,
+			pb.batch_number batchNumber,
+			pb.component_content componentContent,
+			pb.expiration_days expirationDays,
+			pb.origin_country originCountry,
+			pb.postal_rate postalRate,
+			pt.ctitle,
+			pim.cimageurl imageUrl,
+			cat.iid categoryId,
+			cat.cname,
+			ci.warehouse_id warehouseId,
+			ci.warehouse_name warehouseName,
+			ci.stock totalstock,
+			ci.residue_num stock,
+			pd.proposal_retail_price proposalRetailPrice, 
+			pd.electricity_prices	electricityPrices,
+			pd.supermarket_price	supermarketPrice,
+			pd.ftz_price			ftzPrice,
+			pd.vip_price			vipPrice,
+			pd.distributor_price    distributorPrice,
+ 			pd.type_id typeId,
+ 			pd.type_name typeName
+		FROM
+			t_product_base pb
+		LEFT JOIN
+			t_product_translate pt
+		ON pb.csku = pt.csku
+		AND pt.ilanguageid = 1
+		AND pb.istatus = 1
+		LEFT JOIN
+		(
+			select pcm.csku, cb.iid, cn.cname  from 
+				t_category_base cb,
+				t_category_name cn,
+				t_product_category_mapper pcm
+			where 
+				cb.iid = pcm.icategory
+				AND cb.ilevel = 1
+				AND cb.iid = cn.icategoryid
+		) cat 
+		ON pb.csku = cat.csku
+		LEFT JOIN
+		(SELECT
+				pia.csku AS csku,
+				pia.cimageurl AS cimageurl
+			FROM
+				t_product_image pia,
+				(
+					SELECT
+						MAX (pim.iorder) AS iorder,
+						pim.csku AS csku
+					FROM
+						t_product_image pim
+					WHERE
+						pim.bbaseimage = TRUE
+					GROUP BY
+						pim.csku
+				) pim
+			WHERE
+				pim.csku = pia.csku
+			AND pim.iorder = pia.iorder
+		) pim ON pb.csku = pim.csku
+		LEFT JOIN t_product_disprice pd ON pb.csku = pd.sku
+		INNER JOIN cloud_inventory ci ON ci.warehouse_id = pd.dis_stock_id
+		AND pd.sku = ci.sku
+	</select>
+	<select id="productInventoryDataExport" resultType="dto.ProdcutInventoryDataExportDto">
+		SELECT
+		outsku AS sku,
+		outname AS productName,
+		out_ex_date as expirationTime,
+		out_pack_qty as packQty,
+		out_plug_type as plugType,
+		out_package_qty as packageQty,
+		out_ex_date_qty as expirationTimeQty,
+		out_ex_date_qty_sum as expirationTimeSum
+		FROM
+		exportInventoryDataWithDate (#{beginTime},#{endTime});
+	</select>
+	<select id="export" resultType="java.util.Map">
+		SELECT
+		*
+		FROM
+		${param};
+	</select>
+	<select id="getProductAndStock" resultType="java.util.Map">
+		SELECT
+		out_cname AS ctitle,
+		out_sku AS csku,
+		out_catename AS cname,
+		out_typename AS typeName,
+		out_status as istatus,
+		out_warehousename as warehouseName,
+		out_warehouseid as warehouseId,
+		COALESCE(out_micro_stock_total,'0') as microTotal,
+		COALESCE(out_cloud_stock_total,'0') as cloudTotal,
+		COALESCE(out_ka_lock_total,'0') as kaLockTotal,
+		COALESCE(out_available_stock,'0') as availableStock,
+		COALESCE(out_total_record_count,0) as totalCount
+		FROM
+			product_inventory_list (
+				<choose>
+			        <when test="status !=null">
+			            #{status,jdbcType=VARCHAR},
+			        </when>
+			        <otherwise>
+			            '',
+			        </otherwise>
+			    </choose>
+			    <choose>
+			        <when test="categoryId !=null">
+			            #{categoryId,jdbcType=VARCHAR},
+			        </when>
+			        <otherwise>
+			            '',
+			        </otherwise>
+			    </choose>
+			    <choose>
+			        <when test="typeId !=null">
+			            #{typeId,jdbcType=VARCHAR},
+			        </when>
+			        <otherwise>
+			            '',
+			        </otherwise>
+			    </choose>
+			    <choose>
+			        <when test="title !=null">
+			            #{title,jdbcType=VARCHAR},
+			        </when>
+			        <otherwise>
+			            '',
+			        </otherwise>
+			    </choose>
+			    <choose>
+			        <when test="warehouseId !=null">
+			            #{warehouseId,jdbcType=VARCHAR},
+			        </when>
+			        <otherwise>
+			            '',
+			        </otherwise>
+			    </choose>
+			    <choose>
+			        <when test="currPage !=null">
+			            #{currPage,jdbcType=INTEGER},
+			        </when>
+			        <otherwise>
+			            1,
+			        </otherwise>
+			    </choose>
+			    <choose>
+			        <when test="warehouseId !=null">
+			            #{pageSize,jdbcType=INTEGER}
+			        </when>
+			        <otherwise>
+			            30
+			        </otherwise>
+			    </choose>
+			)
+	</select>
+</mapper>

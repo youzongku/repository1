@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.CreditOperationRecordMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.CreditOperationRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="operator_email" property="operatorEmail" jdbcType="VARCHAR" />
+    <result column="comments" property="comments" jdbcType="VARCHAR" />
+    <result column="operator_time" property="operatorTime" jdbcType="TIMESTAMP" />
+    <result column="operator_type" property="operatorType" jdbcType="INTEGER" />
+    <result column="operator_result" property="operatorResult" jdbcType="INTEGER" />
+    <result column="credit" property="credit" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_email, operator_email, comments, operator_time, operator_type, operator_result,credit
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_credit_operator_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getRecordsByEmail" resultMap="BaseResultMap">
+   select 
+   <include refid="Base_Column_List" />
+   from t_credit_operator_record
+   where user_email = #{email,jdbcType=VARCHAR} and operator_type = #{operateType,jdbcType=INTEGER} order by operator_time desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_credit_operator_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByEmail" parameterType="java.lang.String" >
+    delete from t_credit_operator_record
+    where user_email = #{email,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.DisCredit" >
+    insert into t_credit_operator_record (id, user_email, operator_email, 
+      comments, operator_time, operator_type, 
+      operator_result,credit
+      )
+    values (#{id,jdbcType=INTEGER}, #{userEmail,jdbcType=VARCHAR}, #{operatorEmail,jdbcType=VARCHAR}, 
+      #{comments,jdbcType=VARCHAR}, #{operatorTime,jdbcType=TIMESTAMP}, #{operatorType,jdbcType=INTEGER}, 
+      #{operatorResult,jdbcType=INTEGER},#{credit,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.CreditOperationRecord" >
+    insert into t_credit_operator_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userEmail != null" >
+        user_email,
+      </if>
+      <if test="operatorEmail != null" >
+        operator_email,
+      </if>
+      <if test="comments != null" >
+        comments,
+      </if>
+      <if test="operatorTime != null" >
+        operator_time,
+      </if>
+      <if test="operatorType != null" >
+        operator_type,
+      </if>
+      <if test="operatorResult != null" >
+        operator_result,
+      </if>
+      <if test="credit != null" >
+        credit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorEmail != null" >
+        #{operatorEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorTime != null" >
+        #{operatorTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorType != null" >
+        #{operatorType,jdbcType=INTEGER},
+      </if>
+      <if test="operatorResult != null" >
+        #{operatorResult,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+      	#{credit,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.CreditOperationRecord" >
+    update t_credit_operator_record
+    <set >
+      <if test="userEmail != null" >
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="operator_email != null" >
+        operator_email = #{operatorEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null" >
+        comments = #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorTime != null" >
+        operator_time = #{operatorTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorType != null" >
+        operator_type = #{operatorType,jdbcType=INTEGER},
+      </if>
+      <if test="operatorResult != null" >
+        operator_result = #{operatorResult,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+      	credit = #{credit,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.CreditOperationRecord" >
+    update t_credit_operator_record
+    set user_email = #{userEmail,jdbcType=VARCHAR},
+      operator_email = #{operatorEmail,jdbcType=VARCHAR},
+      comments = #{comments,jdbcType=VARCHAR},
+      operator_time = #{operatorTime,jdbcType=TIMESTAMP},
+      operator_result = #{operatorResult,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

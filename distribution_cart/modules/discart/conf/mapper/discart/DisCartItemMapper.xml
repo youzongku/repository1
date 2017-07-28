@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.discart.DisCartItemMapper" >
+  <resultMap id="BaseResultMap" type="entity.discart.DisCartItem" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cartid" property="cartId" jdbcType="INTEGER" />
+    <result column="csku" property="csku" jdbcType="VARCHAR" />
+    <result column="iqty" property="iqty" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="publicimg" property="publicImg" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="isorder" property="isOrder" jdbcType="INTEGER" />
+    <result column="isremove" property="isRemove" jdbcType="INTEGER" />
+    <result column="createtime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="bselected" property="bselected" jdbcType="BIT" />
+	<result column="category_id" property="categoryId" jdbcType="INTEGER" />
+	<result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+	<result column="inter_bar_code" property="interBarCode" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, cartid, csku, iqty,warehouse_id,publicimg,title,isorder,isremove,createtime,
+     bselected,warehouse_name,category_id,category_name,inter_bar_code
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_cart_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_cart_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByIdList" parameterType="java.util.List">
+  	delete from t_dis_cart_detail
+    where id in
+    <foreach collection="idList" item="id" open="(" close=")" separator=",">
+    	#{id}
+    </foreach>
+  </delete>
+  
+  <insert id="insert" parameterType="entity.discart.DisCartItem" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into t_dis_cart_detail 
+    (
+    	cartid,csku,iqty,warehouse_id,warehouse_name,publicimg,title,
+		isorder,isremove,category_id,category_name,inter_bar_code
+    )
+    values 
+    (
+    	#{item.cartId,jdbcType=INTEGER},#{item.csku,jdbcType=VARCHAR},
+		#{item.iqty,jdbcType=INTEGER},#{item.warehouseId,jdbcType=INTEGER},
+		#{item.warehouseName,jdbcType=INTEGER},#{item.publicImg,jdbcType=VARCHAR},
+		#{item.title,jdbcType=VARCHAR},0,0,
+		#{item.categoryId},#{item.categoryName},#{item.interBarCode}
+    )
+  </insert>
+  
+  <insert id="batchInsert" parameterType="java.util.List">
+	insert into t_dis_cart_detail
+	(
+		cartid,csku,iqty,warehouse_id,warehouse_name,publicimg,title,
+		isorder,isremove,category_id,category_name,inter_bar_code
+	)
+	values
+	<foreach collection="disCartItemList" item="item" separator="," >
+		(
+			#{item.cartId,jdbcType=INTEGER},#{item.csku,jdbcType=VARCHAR},
+			#{item.iqty,jdbcType=INTEGER},#{item.warehouseId,jdbcType=INTEGER},
+			#{item.warehouseName,jdbcType=INTEGER},#{item.publicImg,jdbcType=VARCHAR},
+			#{item.title,jdbcType=VARCHAR},0,0,
+			#{item.categoryId},#{item.categoryName},#{item.interBarCode}
+		)
+	</foreach>
+  </insert>
+  
+  <insert id="insertSelective" parameterType="entity.discart.DisCartItem" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into t_dis_cart_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cartId != null" >
+        cartid,
+      </if>
+      <if test="csku != null" >
+        csku,
+      </if>
+      <if test="iqty != null" >
+        iqty,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="publicImg != null" >
+        publicimg,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+        isorder,
+        isremove,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cartId != null" >
+        #{cartId},
+      </if>
+      <if test="csku != null" >
+        #{csku},
+      </if>
+      <if test="iqty != null" >
+        #{iqty},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName},
+      </if>
+      <if test="publicImg != null" >
+        #{publicImg},
+      </if>
+      <if test="title != null" >
+        #{title},
+      </if>
+        0,
+        0,
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.discart.DisCartItem" >
+    update t_dis_cart_detail
+    <set>
+		<if test="cartId != null">
+			cartid = #{cartId},
+		</if>
+		<if test="csku != null and csku != '' ">
+			csku = #{csku},
+		</if>
+		<if test="iqty != null">
+			iqty = #{iqty},
+		</if>
+		<if test="warehouseId != null">
+			warehouse_id = #{warehouseId},
+		</if>
+		<if test="warehouseName != null and warehouseName != '' ">
+			warehouse_name = #{warehouseName},
+		</if>
+		<if test="publicImg != null and publicImg != '' ">
+			publicimg=#{publicImg},
+		</if>
+		<if test="title != null and title != '' ">
+			title=#{title},
+		</if>
+		<if test="isOrder != null">
+			isorder = #{isOrder},
+		</if>
+		<if test="isRemove != null">
+			isremove = #{isRemove},
+		</if>
+		<if test="bselected != null">
+			bselected = #{bselected},
+		</if>
+	</set>
+    where id = #{id}
+  </update>
+  
+  <update id="batchUpdateByPrimaryKeySelective" parameterType="java.util.List" >
+    <foreach collection="disCartItemList" item="item" separator=";">
+		update t_dis_cart_detail
+	    <set>
+			<if test="item.cartId != null">
+				cartid = #{item.cartId},
+			</if>
+			<if test="item.csku != null and item.csku != '' ">
+				csku = #{item.csku},
+			</if>
+			<if test="item.iqty != null">
+				iqty = #{item.iqty},
+			</if>
+			<if test="item.warehouseId != null">
+				warehouse_id = #{item.warehouseId},
+			</if>
+			<if test="item.warehouseName != null and item.warehouseName != '' ">
+				warehouse_name = #{item.warehouseName},
+			</if>
+			<if test="item.publicImg != null and item.publicImg != '' ">
+				publicimg=#{item.publicImg},
+			</if>
+			<if test="item.title != null and item.title != '' ">
+				title=#{item.title},
+			</if>
+			<if test="item.isOrder != null">
+				isorder = #{item.isOrder},
+			</if>
+			<if test="item.isRemove != null">
+				isremove = #{item.isRemove},
+			</if>
+			<if test="item.bselected != null">
+				bselected = #{item.bselected},
+			</if>
+		</set>
+	    where id = #{item.id}
+    </foreach>
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="entity.discart.DisCartItem" >
+    update t_dis_cart_detail
+    <set >
+      <if test="cartId != null" >
+        cartid = #{cartId},
+      </if>
+      <if test="csku != null" >
+        csku = #{csku},
+      </if>
+      <if test="iqty != null" >
+        iqty = #{iqty},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName},
+      </if>
+      <if test="publicImg != null" >
+        publicimg=#{publicImg},
+      </if>
+      <if test="title != null" >
+        title=#{title},
+      </if>
+      <if test="isOrder != null" >
+        isorder = #{isOrder},
+      </if>
+      <if test="isRemove != null" >
+        isremove = #{isRemove},
+      </if>
+      <if test="bselected != null" >
+        bselected = #{bselected},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <select id="getDisCartItemsByCartId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_cart_detail
+    where isorder = 0 and isremove = 0
+    and cartid = #{cartId} order by createtime desc
+  </select>
+
+    <select id="getDisCartItemsCountByCartId" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+        select
+            count(*)
+        from t_dis_cart_detail
+        where isorder = 0 and isremove = 0
+        and cartid = #{cartId}
+    </select>
+  
+  <select id="getDisCartItemByMultiParam" resultMap="BaseResultMap">
+  	select
+    <include refid="Base_Column_List" />
+    from t_dis_cart_detail
+    where 1=1
+    and csku = #{sku}
+    and cartid = #{cartId}
+    and warehouse_id = #{wareId}
+  </select>
+  
+  <select id="getCartItembyProductSkuAndWareId" resultMap="BaseResultMap">
+  	select
+    <include refid="Base_Column_List" />
+    from t_dis_cart_detail
+    where 1=1
+    and csku = #{csku}
+    and warehouse_id = #{wareId}
+  </select>
+  
+  <update id="deleteDisCartItemsByCartId" parameterType="java.lang.Integer" >
+    update t_dis_cart_detail
+    set isremove = 1
+    where cartid = #{cartId}
+  </update>
+  
+  <update id="deleteDisCartItemsByEmail" parameterType="java.lang.String" >
+    delete from t_dis_cart_detail
+    where cartid in (select id from t_dis_cart where email=#{email})
+  </update>
+  
+  <update id="batchUpdateSelectState" >
+    update t_dis_cart_detail
+    set bselected = #{select}
+    where cartid = #{cartId} and isorder = 0
+  </update>
+</mapper>

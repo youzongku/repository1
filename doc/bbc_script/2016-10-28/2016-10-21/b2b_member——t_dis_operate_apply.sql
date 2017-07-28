@@ -1,0 +1,1 @@
+alter table t_dis_operate_apply alter column screenshot_url type varchar(200);

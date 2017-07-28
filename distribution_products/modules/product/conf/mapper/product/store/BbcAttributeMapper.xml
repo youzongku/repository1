@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.store.BbcAttributeMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.store.BbcAttribute" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="attr_name" property="attrName" jdbcType="VARCHAR" />
+    <result column="attr_key" property="attrKey" jdbcType="VARCHAR" />
+    <result column="attr_desc" property="attrDesc" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="attr_type" property="attrType" jdbcType="VARCHAR" />
+    <result column="type_id" property="typeId" jdbcType="INTEGER" />
+    <result column="is_null" property="isNull" jdbcType="BIT" />
+    <result column="is_show" property="isShow" jdbcType="BIT" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="update_time" property="updateTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, attr_name, attr_key, attr_desc, status, attr_type, type_id, is_null, is_show, 
+    create_user, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_bbc_attribute
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+   <select id="queryPage" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_bbc_attribute
+    where 1 = 1
+    <if test="key != null">
+    	and (attr_name like '%'||#{key,jdbcType=VARCHAR}||'%' 
+    		or attr_key like '%'||#{key,jdbcType=VARCHAR}||'%')
+    </if>
+    <if test="status != null">
+    	and status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="isNull != null">
+    	and is_null = #{isNull,jdbcType=BIT}
+    </if>
+    <if test="status != null">
+    	and is_show = #{isShow,jdbcType=BIT}
+    </if>
+    <if test="pageSize != null and currPage != null">
+    	limit #{pageSize} offset (#{currPage} -1) * #{pageSize}
+    </if>
+  </select>
+  <select id="queryCount" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    select 
+		count(*)
+    from t_bbc_attribute
+    where 1 = 1
+    <if test="key != null">
+    	and (attr_name like '%'||#{key,jdbcType=VARCHAR}||'%' 
+    		or attr_key like '%'||#{key,jdbcType=VARCHAR}||'%')
+    </if>
+    <if test="status != null">
+    	and status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="isNull != null">
+    	and is_null = #{isNull,jdbcType=BIT}
+    </if>
+    <if test="status != null">
+    	and is_show = #{isShow,jdbcType=BIT}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_bbc_attribute
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.store.BbcAttribute" >
+    insert into t_bbc_attribute (id, attr_name, attr_key, 
+      attr_desc, status, attr_type, 
+      type_id, is_null, is_show, create_user, 
+      create_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{attrName,jdbcType=VARCHAR}, #{attrKey,jdbcType=VARCHAR}, 
+      #{attrDesc,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{attrType,jdbcType=VARCHAR}, 
+      #{typeId,jdbcType=INTEGER}, #{isNull,jdbcType=BIT}, #{isShow,jdbcType=BIT}, #{createUser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.store.BbcAttribute" >
+    insert into t_bbc_attribute
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="attrName != null" >
+        attr_name,
+      </if>
+      <if test="attrKey != null" >
+        attr_key,
+      </if>
+      <if test="attrDesc != null" >
+        attr_desc,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="attrType != null" >
+        attr_type,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="isNull != null" >
+        is_null,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="attrName != null" >
+        #{attrName,jdbcType=VARCHAR},
+      </if>
+      <if test="attrKey != null" >
+        #{attrKey,jdbcType=VARCHAR},
+      </if>
+      <if test="attrDesc != null" >
+        #{attrDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="attrType != null" >
+        #{attrType,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="isNull != null" >
+        #{isNull,jdbcType=BIT},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=BIT},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.store.BbcAttribute" >
+    update t_bbc_attribute
+    <set >
+      <if test="attrName != null" >
+        attr_name = #{attrName,jdbcType=VARCHAR},
+      </if>
+      <if test="attrKey != null" >
+        attr_key = #{attrKey,jdbcType=VARCHAR},
+      </if>
+      <if test="attrDesc != null" >
+        attr_desc = #{attrDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="attrType != null" >
+        attr_type = #{attrType,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="isNull != null" >
+        is_null = #{isNull,jdbcType=BIT},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=BIT},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.store.BbcAttribute" >
+    update t_bbc_attribute
+    set attr_name = #{attrName,jdbcType=VARCHAR},
+      attr_key = #{attrKey,jdbcType=VARCHAR},
+      attr_desc = #{attrDesc,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      attr_type = #{attrType,jdbcType=VARCHAR},
+      type_id = #{typeId,jdbcType=INTEGER},
+      is_null = #{isNull,jdbcType=BIT},
+      is_show = #{isShow,jdbcType=BIT},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      update_time = #{updateTime,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.DisHeaderSalesmanMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.DisHeaderSalesman" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="headerid" property="headerid" jdbcType="INTEGER" />
+    <result column="salesmanid" property="salesmanid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, headerid, salesmanid
+  </sql>
+  <select id="getHeaderSalesmanMapper" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List" />
+    from t_dis_header_salesman_mapper
+    order by id asc
+  </select>
+   <select id="selectBySalesmanId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_header_salesman_mapper
+    where salesmanid = #{salesmanId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_header_salesman_mapper
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.DisHeaderSalesman" >
+    insert into t_dis_header_salesman_mapper (id, headerid, salesmanid
+      )
+    values (#{id,jdbcType=INTEGER}, #{headerid,jdbcType=INTEGER}, #{salesmanid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.DisHeaderSalesman" >
+    insert into t_dis_header_salesman_mapper
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="headerid != null" >
+        headerid,
+      </if>
+      <if test="salesmanid != null" >
+        salesmanid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="headerid != null" >
+        #{headerid,jdbcType=INTEGER},
+      </if>
+      <if test="salesmanid != null" >
+        #{salesmanid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.DisHeaderSalesman" >
+    update t_dis_header_salesman_mapper
+    <set >
+      <if test="headerid != null" >
+        headerid = #{headerid,jdbcType=INTEGER},
+      </if>
+      <if test="salesmanid != null" >
+        salesmanid = #{salesmanid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.DisHeaderSalesman" >
+    update t_dis_header_salesman_mapper
+    set headerid = #{headerid,jdbcType=INTEGER},
+      salesmanid = #{salesmanid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByConditon" parameterType="entity.dismember.DisHeaderSalesman">
+	delete from t_dis_header_salesman_mapper
+	where 1 = 1
+	<if test="headerid != null">
+		AND headerid = #{headerid,jdbcType=INTEGER}
+	</if>
+	<if test="salesmanid != null">
+		AND salesmanid = #{salesmanid,jdbcType=INTEGER}
+	</if>
+</delete>
+</mapper>

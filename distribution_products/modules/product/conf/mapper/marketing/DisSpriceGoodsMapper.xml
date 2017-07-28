@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.DisSpriceGoodsMapper" >
+  <resultMap id="BaseResultMap" type="entity.marketing.DisSpriceGoods" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="limited_purchase" property="limitedPurchase" jdbcType="BIT" />
+    <result column="limited_pnum" property="limitedPnum" jdbcType="INTEGER" />
+    <result column="special_price" property="specialPrice" jdbcType="DOUBLE" />
+    <result column="predis_number" property="predisNumber" jdbcType="VARCHAR" />
+    <result column="predis_unit" property="predisUnit" jdbcType="VARCHAR" />
+    <result column="predis_profit_rate" property="predisProfitRate" jdbcType="DOUBLE" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, activity_id, sku, warehouse_id, limited_purchase, limited_pnum, special_price, 
+    predis_number, predis_unit, predis_profit_rate, create_user, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_sprice_goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_sprice_goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.marketing.DisSpriceGoods" >
+    insert into t_dis_sprice_goods (id, activity_id, sku, 
+      warehouse_id, limited_purchase, limited_pnum, 
+      special_price, predis_number, predis_unit, 
+      predis_profit_rate, create_user, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{sku,jdbcType=VARCHAR}, 
+      #{warehouseId,jdbcType=INTEGER}, #{limitedPurchase,jdbcType=BIT}, #{limitedPnum,jdbcType=INTEGER}, 
+      #{specialPrice,jdbcType=DOUBLE}, #{predisNumber,jdbcType=VARCHAR}, #{predisUnit,jdbcType=VARCHAR}, 
+      #{predisProfitRate,jdbcType=DOUBLE}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.marketing.DisSpriceGoods" >
+    insert into t_dis_sprice_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="limitedPurchase != null" >
+        limited_purchase,
+      </if>
+      <if test="limitedPnum != null" >
+        limited_pnum,
+      </if>
+      <if test="specialPrice != null" >
+        special_price,
+      </if>
+      <if test="predisNumber != null" >
+        predis_number,
+      </if>
+      <if test="predisUnit != null" >
+        predis_unit,
+      </if>
+      <if test="predisProfitRate != null" >
+        predis_profit_rate,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="limitedPurchase != null" >
+        #{limitedPurchase,jdbcType=BIT},
+      </if>
+      <if test="limitedPnum != null" >
+        #{limitedPnum,jdbcType=INTEGER},
+      </if>
+      <if test="specialPrice != null" >
+        #{specialPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="predisNumber != null" >
+        #{predisNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="predisUnit != null" >
+        #{predisUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="predisProfitRate != null" >
+        #{predisProfitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.marketing.DisSpriceGoods" >
+    update t_dis_sprice_goods
+    <set >
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="limitedPurchase != null" >
+        limited_purchase = #{limitedPurchase,jdbcType=BIT},
+      </if>
+      <if test="limitedPnum != null" >
+        limited_pnum = #{limitedPnum,jdbcType=INTEGER},
+      </if>
+      <if test="specialPrice != null" >
+        special_price = #{specialPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="predisNumber != null" >
+        predis_number = #{predisNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="predisUnit != null" >
+        predis_unit = #{predisUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="predisProfitRate != null" >
+        predis_profit_rate = #{predisProfitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.marketing.DisSpriceGoods" >
+    update t_dis_sprice_goods
+    set activity_id = #{activityId,jdbcType=INTEGER},
+      sku = #{sku,jdbcType=VARCHAR},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      limited_purchase = #{limitedPurchase,jdbcType=BIT},
+      limited_pnum = #{limitedPnum,jdbcType=INTEGER},
+      special_price = #{specialPrice,jdbcType=DOUBLE},
+      predis_number = #{predisNumber,jdbcType=VARCHAR},
+      predis_unit = #{predisUnit,jdbcType=VARCHAR},
+      predis_profit_rate = #{predisProfitRate,jdbcType=DOUBLE},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findGoodsByCondition" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_sprice_goods
+    where 1 = 1
+    <if test="activityId != null">
+      and activity_id = #{activityId,jdbcType=INTEGER}
+    </if>
+    <if test="sku != null">
+      and sku = #{sku,jdbcType=VARCHAR}
+    </if>
+    <if test="warehouseId != null">
+      and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+    </if>
+  </select>
+
+  <select id="getGoodsByCondition" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_sprice_goods
+    where 1 = 1
+    <if test="activityId != null">
+      and activity_id = #{activityId,jdbcType=INTEGER}
+    </if>
+    <if test="sku != null">
+      and sku = #{sku,jdbcType=VARCHAR}
+    </if>
+    <if test="warehouseId != null">
+      and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+    </if>
+    limit 1 offset 0
+  </select>
+
+  <select id="getOpendActGoodsCount" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    select count(ext.*)
+    from (
+      select dsg.*
+      from t_dis_sprice_goods dsg
+      left join t_dis_sprice_activity dsa
+      on dsg.activity_id = dsa.id
+      where dsa.activity_status = 2
+      and dsg.sku = #{sku,jdbcType=VARCHAR}
+      and dsg.warehouse_id = #{warehouseId,jdbcType=INTEGER}
+    ) ext
+  </select>
+
+  <select id="getRelatedActGoodsCount" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    select count(ext.*)
+    from (
+    select dsg.*
+    from t_dis_sprice_goods dsg
+    left join t_dis_sprice_activity dsa
+    on dsg.activity_id = dsa.id
+    where
+    (dsa.activity_status = 1 or dsa.activity_status = 2)
+    and dsg.sku = #{sku,jdbcType=VARCHAR}
+    and dsg.warehouse_id = #{warehouseId,jdbcType=INTEGER}
+    and dsg.activity_id != #{activityId,jdbcType=INTEGER}
+    and (
+      <![CDATA[dsa.start_time >= to_date(#{endTime,jdbcType=VARCHAR},'yyyy-mm-dd')]]>
+      or <![CDATA[dsa.end_time <= (to_date(#{startTime,jdbcType=VARCHAR},'yyyy-mm-dd') + integer '1')]]>
+    )
+    ) ext
+  </select>
+
+	<!-- 获取做活动的SKU -->
+	<select id="findActivitySkus" resultMap="BaseResultMap"
+		parameterType="java.util.List">
+		SELECT
+		*
+		FROM
+		t_dis_sprice_goods pp
+		WHERE
+		pp.activity_id IN (
+		SELECT
+		ID
+		FROM
+		t_dis_sprice_activity pa
+		WHERE
+		pa.activity_status = 2
+		) and pp.sku in 
+		<foreach collection="list" item="sku" open="(" separator="," close=")">
+			#{sku}
+		</foreach>
+	</select>
+
+</mapper>

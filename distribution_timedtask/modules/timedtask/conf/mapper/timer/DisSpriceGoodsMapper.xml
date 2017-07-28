@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.DisSpriceGoodsMapper" >
+  <resultMap id="BaseResultMap" type="entity.timer.DisSpriceGoods" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="limited_purchase" property="limitedPurchase" jdbcType="BIT" />
+    <result column="limited_pnum" property="limitedPnum" jdbcType="INTEGER" />
+    <result column="special_price" property="specialPrice" jdbcType="DOUBLE" />
+    <result column="predis_number" property="predisNumber" jdbcType="VARCHAR" />
+    <result column="predis_unit" property="predisUnit" jdbcType="VARCHAR" />
+    <result column="predis_profit_rate" property="predisProfitRate" jdbcType="DOUBLE" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, activity_id, sku, warehouse_id, limited_purchase, limited_pnum, special_price, 
+    predis_number, predis_unit, predis_profit_rate, create_user, create_time
+  </sql>
+
+  <select id="findGoodsByCondition" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_sprice_goods
+    where 1 = 1
+    <if test="activityId != null">
+      and activity_id = #{activityId,jdbcType=INTEGER}
+    </if>
+    <if test="sku != null">
+      and sku = #{sku,jdbcType=VARCHAR}
+    </if>
+    <if test="warehouseId != null">
+      and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+    </if>
+  </select>
+
+</mapper>

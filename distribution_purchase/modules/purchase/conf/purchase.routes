@@ -1,0 +1,144 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                       controllers.purchase.Assets.at(path="/public", file)
+#---------------------------api modoule-----------------------------------------#
+
+GET         /api                                @controllers.api.ApiController.getResources()
+
+GET         /api/:path                          @controllers.api.ApiController.getResource(path:String)
+
+#------------------------------------------------purchase module----------------------------------------------#
+
+GET         /orderLock 							@controllers.purchase.PurchaseOrderController.orderLock(od:String)
+
+GET	        /allAuditLogs                       @controllers.purchase.PurchaseOrderController.orderOperateRecord(purchaseNo : String)
+
+POST        /totalAWPrice                       @controllers.purchase.PurchaseOrderController.getTotalArriveWarehousePrice()
+
+POST        /viewpurchase                       @controllers.purchase.PurchaseOrderController.viewPurchase()
+POST        /viewpurchasenew                    @controllers.purchase.PurchaseOrderController.viewPurchaseNew()
+
+POST        /manViewPurchase	                @controllers.purchase.PurchaseOrderManagerController.viewPurchase()
+
+POST        /returninfo			                @controllers.purchase.PurchaseOrderManagerController.getReturnInfo4PurchaseOrder()
+
+POST        /simpleInfo                         @controllers.purchase.PurchaseOrderController.getPurchaseSimpleInfo()
+
+POST        /viewPurchaseOrderDetail            @controllers.purchase.PurchaseOrderController.viewPurchaseOrderDetailById()
+
+POST        /order                              @controllers.purchase.PurchaseOrderController.orderPurchase()
+
+POST        /cancel                             @controllers.purchase.PurchaseOrderController.cancelPurchaseOrder()
+
+POST        /cash                                @controllers.purchase.PurchaseOrderController.payedByCash()
+
+POST        /viewManagerPurchaseOrder           @controllers.purchase.PurchaseOrderManagerController.viewManagerPurchaseOrder()
+
+POST        /getByNo                            @controllers.purchase.PurchaseOrderController.getInfoByPurchaseOrderNo()
+
+POST        /getDeByNo                          @controllers.purchase.PurchaseOrderController.getPurchaseDetail()
+
+POST        /isValiPayDate                      @controllers.purchase.PurchaseOrderController.isValiPayDate()
+
+POST        /getAmount                          @controllers.purchase.PurchaseOrderController.statisPurchaseOrder()
+
+POST        /getOrderById                       @controllers.purchase.PurchaseOrderController.getOrderById()
+
+GET         /getActive                          @controllers.purchase.PurchaseOrderController.getActive(orderno : String)
+
+POST        /addGift                            @controllers.purchase.PurchaseOrderController.addGift()
+
+POST        /batchUpdateOrders                  @controllers.purchase.PurchaseOrderController.updateOrders()
+
+GET         /dealOrder                          @controllers.purchase.PurchaseOrderController.dealInvalidOrders()
+
+POST        /auditByCS                          @controllers.purchase.PurchaseOrderController.auditByCustomerService()
+
+POST        /auditByFinance                     @controllers.purchase.PurchaseOrderController.auditByFinance()
+
+POST        /latestauditlog                     @controllers.purchase.PurchaseOrderController.getOrderAuditLastestLog()
+
+POST        /submitAudit                        @controllers.purchase.PurchaseOrderController.submitAudit()
+
+POST        /backAudit                        	@controllers.purchase.PurchaseOrderController.backStageAudit()
+
+#POST        /applys                             @controllers.purchase.PurchaseOrderController.getApplyOnLine()
+
+GET         /getApplyImage                		@controllers.purchase.PurchaseOrderController.getApplyImage()
+
+POST        /changeOrderPrice                   @controllers.purchase.PurchaseOrderController.changeOrderPrice()
+
+POST        /changeNickName                     @controllers.purchase.PurchaseOrderController.changeNickName()
+
+POST        /changeFreight                      @controllers.purchase.PurchaseOrderController.changeFreight()
+
+#-------------------------------------------------type in purchase order---------------------------------------------------#
+POST        /ti/main/addUpdt                    @controllers.purchase.TypeInController.addOrUpdateMain()
+POST        /ti/pros/add                        @controllers.purchase.TypeInController.addProducts()
+POST        /ti/pros/addAllMatched              @controllers.purchase.TypeInController.addAllMatched2Prdoucts()
+POST        /ti/pros/checked                    @controllers.purchase.TypeInController.getCheckedInputPros()
+POST        /ti/gifts/add                       @controllers.purchase.TypeInController.addGifts()
+POST        /ti/gifts/addAllMatched             @controllers.purchase.TypeInController.addAllMatched2Gifts()
+POST        /ti/Inputorder/user                 @controllers.purchase.TypeInController.getPurchaseOrderInputDtoByInputUser()
+POST        /ti/Inputorder/id                   @controllers.purchase.TypeInController.getPurchaseOrderInputDtoByInputId()
+POST        /ti/Inputorder/simpleinput          @controllers.purchase.TypeInController.getPurchaseOrderInputByInputUser()
+POST        /ti/pro/qty/update                  @controllers.purchase.TypeInController.updateProQty()
+POST        /ti/pro/checked/update              @controllers.purchase.TypeInController.updateChecked()
+POST        /ti/pro/unchecked/update            @controllers.purchase.TypeInController.updateCheckecUnchecked()
+POST        /ti/gift/qty/update                 @controllers.purchase.TypeInController.updateGiftQty()
+POST        /ti/pro/rm                          @controllers.purchase.TypeInController.deleteProsByIds()
+POST        /ti/gift/rm                         @controllers.purchase.TypeInController.deleteGiftsByIds()
+POST        /ti/rmall                           @controllers.purchase.TypeInController.deleteAllProsAndGiftsByInputId()
+
+#------------------------------------------------export----------------------------------------------#
+
+GET         /exportPurchase                     @controllers.purchase.PurchaseOrderController.export()
+
+GET         /getMaketAct                        @controllers.purchase.PurchaseOrderManagerController.getMaketAct(orderNo : String)
+
+POST        /importPurchase                     @controllers.purchase.PurchaseOrderManagerController.importOrder()
+
+POST        /getImportOrder                     @controllers.purchase.PurchaseOrderManagerController.getImportOrder()
+
+POST        /inputOrder                         @controllers.purchase.PurchaseOrderManagerController.inputOrder()
+
+POST        /deliverDutyPaidGoods               @controllers.purchase.PurchaseOrderManagerController.deliverDutyPaidGoods()
+
+POST        /imporProUpd                        @controllers.purchase.PurchaseOrderManagerController.proUpdate()
+
+POST        /imporGiftUpd                       @controllers.purchase.PurchaseOrderManagerController.giftUpdate()
+
+POST        /balancePaymentBackStage            @controllers.purchase.PurchaseOrderManagerController.balancePaymentBackStage()
+
+POST        /savePurchaseSaleOut                @controllers.purchase.PurchaseOrderManagerController.savePurchaseSaleOut()
+
+#--------------------------------------------------quotation module--------------------------------------------------#
+POST        /gainquotrecord                     @controllers.purchase.DisQuotationController.getRecord()
+
+POST        /savequotrecord                     @controllers.purchase.DisQuotationController.saveRecord()
+
+POST        /buildOrder                         @controllers.purchase.DisQuotationController.buildOrder()
+
+POST        /copyDisQuo                         @controllers.purchase.DisQuotationController.copyDisQuo()
+
+POST        /uploadquotation                    @controllers.purchase.DisQuotationController.uploadQuotationExcelFile()
+
+GET         /exportquotation                    @controllers.purchase.DisQuotationController.exportQuotation()
+#-------------------------------------------------return order module------------------------------------------------------
+POST        /returnod/audit                     @controllers.purchase.returnod.ReturnOrderController.audit()
+POST        /returnod/audit/batch               @controllers.purchase.returnod.ReturnOrderController.batchAudit()
+POST        /returnod/expectReturnAmount        @controllers.purchase.returnod.ReturnOrderController.calculateExpectReturnAmount()
+POST        /returnod/manager/list              @controllers.purchase.returnod.ReturnOrderController.getReturnOrdersBackstage()
+POST        /returnod/manager/totalUserExpectReturnAmounts    @controllers.purchase.returnod.ReturnOrderController.getTotalUserExpectReturnAmount4MatchedConditions()
+POST        /returnod/manager/list/tobeaudit    @controllers.purchase.returnod.ReturnOrderController.get2BeAuditedReturnOrdersBackstage()
+POST        /returnod/list                      @controllers.purchase.returnod.ReturnOrderController.getReturnOrders()
+POST        /returnod/get                       @controllers.purchase.returnod.ReturnOrderController.getReturnOrder()
+POST        /returnod/apply                     @controllers.purchase.returnod.ReturnOrderController.applyReturnOrder()
+POST        /returnod/cancel                    @controllers.purchase.returnod.ReturnOrderController.cancelReturnOrderApplication()
+POST        /returnod/coefficient/set           @controllers.purchase.returnod.ReturnAmountCoefficientController.setProductsCoefficients()
+POST        /returnod/coefficient/get           @controllers.purchase.returnod.ReturnAmountCoefficientController.getProductCoefficients()
+POST        /returnod/coefficient/list          @controllers.purchase.returnod.ReturnAmountCoefficientController.getCoefficientsOfProducts()
+POST        /returnod/coefficient/setlogs       @controllers.purchase.returnod.ReturnAmountCoefficientController.getSetCoefficientLogs()

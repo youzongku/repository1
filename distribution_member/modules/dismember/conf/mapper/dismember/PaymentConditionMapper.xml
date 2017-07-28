@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.PaymentConditionMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.PaymentCondition" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="model" property="model" jdbcType="INTEGER" />
+    <result column="dis_type" property="disType" jdbcType="INTEGER" />
+    <result column="backstage" property="backstage" jdbcType="BIT" />
+    <result column="purpose" property="purpose" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="foreground" property="foreground" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, model, dis_type, backstage, purpose, create_time, update_time, create_user, foreground
+  </sql>
+  <select id="selectByParma" resultMap="BaseResultMap" parameterType="dto.dismember.PaymentMethodDto">
+  	select
+  	<include refid="Base_Column_List"/>
+  	from t_payment_condition
+  	where 1 = 1
+  	<if test="model != null">
+		and model = #{model,jdbcType=INTEGER} 	
+  	</if>
+  	<if test="disType != null">
+		and dis_type = #{disType,jdbcType=INTEGER} 	
+  	</if>
+  	<if test="backstage != null">
+		and backstage = #{backstage,jdbcType=BIT} 	
+  	</if>
+  	<if test="purpose != null">
+		and purpose = #{purpose,jdbcType=INTEGER} 	
+  	</if>
+  	<if test="foreground != null">
+		and foreground = #{foreground,jdbcType=BIT} 	
+  	</if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_payment_condition
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_payment_condition
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.PaymentCondition" useGeneratedKeys="true"  keyProperty="id">
+    insert into t_payment_condition (id, model, dis_type, 
+      backstage, purpose, create_time, 
+      update_time, create_user, foreground
+      )
+    values (#{id,jdbcType=INTEGER}, #{model,jdbcType=INTEGER}, #{disType,jdbcType=INTEGER}, 
+      #{backstage,jdbcType=BIT}, #{purpose,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, #{foreground,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.PaymentCondition" useGeneratedKeys="true" keyProperty="id">
+    insert into t_payment_condition
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="model != null" >
+        model,
+      </if>
+      <if test="disType != null" >
+        dis_type,
+      </if>
+      <if test="backstage != null" >
+        backstage,
+      </if>
+      <if test="purpose != null" >
+        purpose,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="foreground != null" >
+        foreground,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=INTEGER},
+      </if>
+      <if test="disType != null" >
+        #{disType,jdbcType=INTEGER},
+      </if>
+      <if test="backstage != null" >
+        #{backstage,jdbcType=BIT},
+      </if>
+      <if test="purpose != null" >
+        #{purpose,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="foreground != null" >
+        #{foreground,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.PaymentCondition" >
+    update t_payment_condition
+    <set >
+      <if test="model != null" >
+        model = #{model,jdbcType=INTEGER},
+      </if>
+      <if test="disType != null" >
+        dis_type = #{disType,jdbcType=INTEGER},
+      </if>
+      <if test="backstage != null" >
+        backstage = #{backstage,jdbcType=BIT},
+      </if>
+      <if test="purpose != null" >
+        purpose = #{purpose,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="foreground != null" >
+        foreground = #{foreground,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.PaymentCondition" >
+    update t_payment_condition
+    set model = #{model,jdbcType=INTEGER},
+      dis_type = #{disType,jdbcType=INTEGER},
+      backstage = #{backstage,jdbcType=BIT},
+      purpose = #{purpose,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      foreground = #{foreground,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

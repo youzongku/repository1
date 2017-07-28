@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.MarketingOrderDetailMapper" >
+  <resultMap id="BaseResultMap" type="entity.marketing.MarketingOrderDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="marketing_order_id" property="marketingOrderId" jdbcType="INTEGER" />
+    <result column="marketing_order_no" property="marketingOrderNo" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="inter_bar_code" property="interBarCode" jdbcType="VARCHAR" />
+    <result column="product_img" property="productImg" jdbcType="VARCHAR" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="qty" property="qty" jdbcType="INTEGER" />
+    <result column="dis_price" property="disPrice" jdbcType="DOUBLE" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+
+    <result column="expiration_date" property="expirationDate" jdbcType="VARCHAR" />
+    <result column="arrive_ware_price" property="arriveWarePrice" jdbcType="DOUBLE" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, marketing_order_id, marketing_order_no, product_name, inter_bar_code,
+    product_img, sku, qty, dis_price,
+    warehouse_id, warehouse_name,category_id,category_name,arrive_ware_price,
+    product_img, sku, qty, dis_price, warehouse_id, warehouse_name, category_id,
+    category_name, expiration_date
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_marketing_order_details
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByMoIdList" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_marketing_order_details
+    where marketing_order_id in
+    <foreach collection="moIdList" item="moId" open="(" separator="," close=")">  
+    	#{moId}  
+    </foreach>
+  </select>
+  
+  <select id="getDetailsByNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_marketing_order_details
+    where marketing_order_no = #{orderNo,jdbcType=VARCHAR}
+  </select>
+  
+  <insert id="insert" parameterType="entity.marketing.MarketingOrderDetail" >
+    insert into t_marketing_order_details (marketing_order_id, marketing_order_no, 
+      product_name, inter_bar_code, product_img, sku, qty, dis_price, warehouse_id, 
+      warehouse_name, expiration_date, arrive_ware_price
+      )
+    values (#{marketingOrderId,jdbcType=INTEGER}, #{marketingOrderNo,jdbcType=VARCHAR}, 
+      #{productName,jdbcType=VARCHAR}, #{interBarCode}, #{productImg,jdbcType=VARCHAR}, 
+      #{sku,jdbcType=VARCHAR}, #{qty,jdbcType=INTEGER}, #{disPrice} 
+      #{warehouseId,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR},
+      #{expirationDate}, #{arriveWarePrice}
+      )
+  </insert>
+  
+  <!-- 批量插入 -->
+  <insert id="insertBatch" parameterType="java.util.List">
+	insert into t_marketing_order_details (marketing_order_id, marketing_order_no, 
+      product_name, inter_bar_code, product_img, sku, qty, dis_price, warehouse_id,
+      warehouse_name, category_id,category_name, expiration_date, arrive_ware_price)
+	values
+	<foreach collection="list" item="item" index="index" separator="," >
+	(#{item.marketingOrderId}, #{item.marketingOrderNo}, #{item.productName}, #{item.interBarCode},
+		#{item.productImg}, #{item.sku}, #{item.qty}, #{item.disPrice},
+      	#{item.warehouseId}, #{item.warehouseName}, #{item.categoryId},
+    	#{item.categoryName}, #{item.expirationDate}, #{item.arriveWarePrice}
+      )
+	</foreach>
+  </insert>
+  
+  <insert id="insertSelective" parameterType="entity.marketing.MarketingOrderDetail" >
+    insert into t_marketing_order_details
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="marketingOrderId != null" >
+        marketing_order_id,
+      </if>
+      <if test="marketingOrderNo != null" >
+        marketing_order_no,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="interBarCode != null" >
+        inter_bar_code,
+      </if>
+      <if test="productImg != null" >
+        product_img,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="qty != null" >
+        qty,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date,
+      </if>
+      <if test="arriveWarePrice != null" >
+        arrive_ware_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="marketingOrderId != null" >
+        #{marketingOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="marketingOrderNo != null" >
+        #{marketingOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="interBarCode != null" >
+        #{interBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productImg != null" >
+        #{productImg,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationDate != null" >
+        #{expirationDate,jdbcType=VARCHAR},
+      </if>
+      <if test="arriveWarePrice != null" >
+        #{arriveWarePrice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.marketing.MarketingOrderDetail" >
+    update t_marketing_order_details
+    <set >
+      <if test="marketingOrderId != null" >
+        marketing_order_id = #{marketingOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="marketingOrderNo != null" >
+        marketing_order_no = #{marketingOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="interBarCode != null" >
+        inter_bar_code = #{interBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productImg != null" >
+        product_img = #{productImg,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        qty = #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.store.PriceMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.store.Price" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="entity_id" property="entityId" jdbcType="INTEGER" />
+    <result column="price_key" property="priceKey" jdbcType="VARCHAR" />
+    <result column="price_value" property="priceValue" jdbcType="DOUBLE" />
+  </resultMap>
+  <insert id="insert" parameterType="entity.product.store.Price" >
+    insert into t_price (id, entity_id, price_key, 
+      price_value)
+    values (#{id,jdbcType=VARCHAR}, #{entityId,jdbcType=INTEGER}, #{priceKey,jdbcType=VARCHAR}, 
+      #{priceValue,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.store.Price" >
+    insert into t_price
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="entityId != null" >
+        entity_id,
+      </if>
+      <if test="priceKey != null" >
+        price_key,
+      </if>
+      <if test="priceValue != null" >
+        price_value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="entityId != null" >
+        #{entityId,jdbcType=INTEGER},
+      </if>
+      <if test="priceKey != null" >
+        #{priceKey,jdbcType=VARCHAR},
+      </if>
+      <if test="priceValue != null" >
+        #{priceValue,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="email=no" name="format-detection" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/main/main.css">
+</head>
+<body id="pay_card" v-cloak>
+<header class="posFix head">
+    <a href="/user/index/index.html" class="ret-logo"></a>
+    线下转账
+</header>
+<form enctype="multipart/form-data" method = "post" action = "/purchase/backAudit" id = "audit_form" >
+<section class="imporCon conTop" style="height: auto;">
+    
+        <div class="impornor invonor" style="text-align: center">
+            <select  name="recipientId" id = "rec_sel" class="inp4"  style="width: 80%">
+                <option value = "">请选择</option>
+                <option value = "{{rec.id}}" v-for="rec in recList" tag = "{{rec.account}},{{rec.payee}}" >{{rec.bankName}}</option>
+            </select>
+        </div>
+        <div class="impornor invonor">
+            <label>收款账户：</label>
+            <input type="text" name="receiptAccount" value = "{{recAccount}}" style="border: 0;background-color: #fff;" readonly="true">
+        </div>
+        <input type = "hidden" name="email" />
+        <input type = "hidden" name="purno" />
+        <div class="impornor invonor">
+            <label>收款人：</label>
+            <label id = "receipt_payee">{{recPayee}}</label>
+            <input type="hidden" name="receiptName" value = "{{recPayee}}"/>
+        </div>
+        <div class="impornor invonor">
+            <label><b class="red-start">*</b>付款账户：</label>
+            <label><input name="transferCard" type="text" class="inp4"/></label>
+        </div>
+        <div class="impornor invonor">
+            <label><b class="red-start">*</b>付款人：</label>
+            <label><input name="distributorName" type="text" class="inp4"/></label>
+        </div>
+        <div class="impornor invonor">
+            <label><b class="red-start">*</b>付款金额：</label>
+            <label><input name="transferAmount"  type="text" class="inp4" style="width: 90%;"/>元</label>
+        </div>
+        <div class="impornor invonor">
+            <label><b class="red-start">*</b>付款流水号：</label>
+            <label><input name="transferNumber" type="text" class="inp4"/></label>
+        </div>
+        <div class="impornor invonor">
+            <label>充值备注：</label>
+            <label>
+                <textarea name = "applyRemark" maxLength = "299"; class="inp4 texta"  placeholder="300字以内"></textarea>
+            </label>
+        </div>
+        <div class="impornor invonor">
+            <label>付款截图：</label>
+            <label class="btn-file">
+                选择文件
+                <input class="blue" name = "image" type = "file" id="bigImg"/>
+            </label>
+
+        </div>
+        <div class="impornor invonor">
+            <label><b class="red-start"></b>实际付款时间：</label>
+            <label><input type="text"   name = "transferTime" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss',max:laydate.now()});" class="inp4"/></label>
+        </div>
+</section>
+<footer class="foot">
+    <a href="javascript:void(0);">
+        <input type="button" @click="cancel()" value="取消" class="inp-3 btn-gray fl"/>
+        <input type="button" @click="sumbit()" value="确定" class="inp-3 btn-blue fr confirmBtn"/>
+    </a>
+</footer>
+ </form>
+</body>
+
+<link type="text/css" rel="stylesheet" href="/css/laydate/skins/molv/laydate.css" id="LayDateSkin">
+<script src="/js/lib/require.js" data-main="/js/purchaseorder/typein/online-apply.js?time=(new Date()).getTime()"></script>
+</html>

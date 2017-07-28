@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.ContractQuotationsMapper">
+	
+	<update id="updateNotStartQuoted">
+		update t_contract_quotations set status=2,update_time=now() where contract_start <![CDATA[<=]]>now() and status != 2
+	</update>
+	<update id="updateEndedQuoted">
+		update t_contract_quotations set status=3,update_time=now() where contract_end <![CDATA[<=]]>now() and status != 3
+	</update>
+	
+</mapper>

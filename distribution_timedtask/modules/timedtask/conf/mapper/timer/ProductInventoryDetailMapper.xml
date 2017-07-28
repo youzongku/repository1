@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.ProductInventoryDetailMapper" >
+  <resultMap id="BaseResultMap" type="entity.timer.ProductInventoryDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="expiration_date" property="expirationDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sku, stock, warehouse_id, warehouse_name, update_time, create_time, expiration_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from public.t_product_inventory_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByParam" resultMap="BaseResultMap" parameterType="entity.timer.ProductInventoryDetail">
+  	select 
+    <include refid="Base_Column_List" />
+    from public.t_product_inventory_detail
+    <where>
+   	 1=1
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="stock != null" >
+        and stock = #{stock,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseName != null" >
+        and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+      </if>
+      <if test="updateTime != null" >
+        and update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createTime != null" >
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="expirationDate != null" >
+        and expiration_date = #{expirationDate,jdbcType=DATE}
+      </if>
+    </where>
+  </select>
+  <select id="selectinventoryDetailListByParam" resultMap="BaseResultMap" parameterType="entity.timer.ProductInventoryDetail">
+  	select 
+    <include refid="Base_Column_List" />
+    from public.t_product_inventory_detail
+    <where>
+   	 stock>0
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="stock != null" >
+        and stock = #{stock,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseName != null" >
+        and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+      </if>
+      <if test="updateTime != null" >
+        and update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createTime != null" >
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="expirationDate != null" >
+        and expiration_date = #{expirationDate,jdbcType=DATE}
+      </if>
+    </where>
+    order by expiration_date asc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from public.t_product_inventory_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteBySkuAndWarehouseId">
+    delete from public.t_product_inventory_detail
+    where sku = #{sku,jdbcType=VARCHAR}
+    and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.timer.ProductInventoryDetail" >
+    insert into public.t_product_inventory_detail (id, sku, stock, 
+      warehouse_id, warehouse_name, update_time, 
+      create_time, expiration_date)
+    values (#{id,jdbcType=INTEGER}, #{sku,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, 
+      #{warehouseId,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{expirationDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.timer.ProductInventoryDetail" >
+    insert into public.t_product_inventory_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expirationDate != null" >
+        #{expirationDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.timer.ProductInventoryDetail" >
+    update public.t_product_inventory_detail
+    <set >
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date = #{expirationDate,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.timer.ProductInventoryDetail" >
+    update public.t_product_inventory_detail
+    set sku = #{sku,jdbcType=VARCHAR},
+      stock = #{stock,jdbcType=INTEGER},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      expiration_date = #{expirationDate,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="list" resultMap="BaseResultMap" parameterType="entity.timer.ProductInventoryDetail">
+    select
+    <include refid="Base_Column_List" />
+    from public.t_product_inventory_detail
+    <where>
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="stock != null" >
+        and stock = #{stock,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseName != null" >
+        and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+      </if>
+      <if test="updateTime != null" >
+        and update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createTime != null" >
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="expirationDate != null" >
+        and expiration_date = #{expirationDate,jdbcType=DATE}
+      </if>
+    </where>
+    order by expiration_date asc
+  </select>
+</mapper>

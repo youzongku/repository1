@@ -1,0 +1,129 @@
+.box{
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  .login{
+    .logo{
+      padding: 40px 0 20px;
+      text-align: center;
+      background-color: #90ddff;
+      .logo-login{
+        display: inline-block;
+        width: 166px;
+        height: 50px;
+        background: url(../../img/spirit.png) no-repeat;
+        background-position: -102px 0;
+        background-size: 640px;
+      }
+    }
+    p{
+      text-align: center;
+      background-color: #90ddff;
+      color: #fff;
+      padding-bottom: 20px;
+    }
+  }
+  .logo-box{
+    padding: 20px;
+    .logo-log{
+      max-width: 640px;
+      margin: 0 auto 10px;
+      background: #eefaff;
+      padding: 8px 0;
+      position: relative;
+      input{
+        background: #eefaff;
+        margin-left: 40px;
+        border-left: 1px solid #fff;
+        text-indent: 6px;
+      }
+      b{
+        @include imgPos;
+        background-color: #eefaff;
+        left: 8px;
+        top: 0;
+      }
+      .logo-log-name{
+        background-position: 0 -102.4px;
+      }
+      .logo-log-psd{
+        background-position: 0 -128px;
+      }
+    }
+    .logo-log-btn{
+      max-width: 640px;
+      margin: 0 auto;
+      a{
+        input{
+          width: 100%;
+          height: 38px;
+          font-size: 1rem;
+          color: #fff;
+          background-color: #90ddff;
+          border-radius: 44px;
+          text-align: center;
+          margin: 30px 0 10px;
+        }
+      }
+    }
+    .logo-npsw{
+      font-size: 0.75rem;
+      text-align: right;
+      line-height: 0;
+      padding: 10px 10px 25px;
+      a{
+        color: #ccc;
+      }
+    }
+    .logo-reg {
+      text-align: center;
+      a {
+        input {
+          width: 180px;
+          height: 38px;
+          font-size: 1rem;
+          color: #90ddff;
+          background-color: #fff;
+          border: 1px solid #90ddff;
+          border-radius: 44px;
+          text-align: center;
+          margin: 25px 0 0;
+        }
+      }
+    }
+    .logo-or{
+      position: relative;
+      line-height: 44px;
+      .logo-hr{
+        border-top: 1px solid #eee;
+        border-bottom: none;
+        border-left: none;
+        border-right: none;
+      }
+      .logo-or-ft{
+        position: absolute;
+        width: 60px;
+        height: 38px;
+        background: #fff;
+        left: 50%;
+        margin-left: -30px;
+        top: 50%;
+        margin-top: -25px;
+        text-align: center;
+        color: #969696;
+      }
+    }
+  }
+}
+.rem-psd{
+  font-size: 14px;
+  padding: 0 5px;
+  max-width: 640px;
+  margin: 0 auto;
+  input{
+    vertical-align: middle;
+    margin-bottom: 3px;
+    margin-right: 10px;
+  }
+}
+

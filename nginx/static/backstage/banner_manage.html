@@ -1,0 +1,34 @@
+<!--banner管理-->
+<link rel="stylesheet" type="text/css" href="../js/lib/webuploader/webuploader.css">
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<div class="banner_management">
+    <h1>系统配置<span>---</span><span>banner管理</span></h1>
+    <button class="add_banner" id="add_banner_manage">添加+</button>
+    <ul class="search_category">
+        <li>状态：
+            <select id="selectStatus">
+                <option value="0">默认所有状态</option>
+                <option value="1" >启用</option>
+                <option value="2">禁止</option>
+            </select>
+        </li>
+    </ul>
+    <div class="content_list">
+
+        <table class="list_title all_table" id="banner_manage_table">
+        </table>
+
+        <div id="banner_manage_pagination" style="text-align: center; margin-top: 30px;"></div>
+    </div>
+</div>
+<!--删除-->
+<div class="banner_del_pop">
+    <p>您确定要删除该banner图吗？</p>
+</div>
+<!--编辑-->
+<!--
+<div class="banner_edit_pop" id="editBanner">
+</div>
+&lt;!&ndash;添加banner&ndash;&gt;
+<div class="banner_add_pop" id="addBanner">
+</div>-->

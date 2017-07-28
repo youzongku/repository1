@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.purchase.PurchaseOrderAuditLogMapper" >
+  <resultMap id="BaseResultMap" type="entity.purchase.PurchaseOrderAuditLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="purchase_no" property="purchaseNo" jdbcType="VARCHAR" />
+    <result column="json_value" property="jsonValue" jdbcType="VARCHAR" />
+    <result column="audit_user" property="auditUser" jdbcType="VARCHAR" />
+    <result column="audit_date" property="auditDate" jdbcType="TIMESTAMP" />
+    <result column="audit_type" property="auditType" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, status, purchase_no, json_value, audit_user, audit_date, audit_type
+  </sql>
+ 
+  <insert id="insertOrderAuditLog" parameterType="entity.purchase.PurchaseOrderAuditLog"  useGeneratedKeys="true" keyProperty="id">
+  	insert into t_purchase_order_audit_logs
+  	<trim prefix="(" suffix=")" suffixOverrides=",">
+  		<if test="status != null">
+  			status,
+  		</if>
+  		<if test="purchaseNo != null">
+  			purchase_no,
+  		</if>
+  		<if test="jsonValue != null">
+  			json_value,
+  		</if>
+  		<if test="auditUser != null">
+  			audit_user,
+  		</if>
+  		<if test="auditDate != null">
+  			audit_date,
+  		</if>
+  		<if test="auditType != null">
+  			audit_type,
+  		</if>
+  	</trim>
+  	<trim prefix="values (" suffix=")" suffixOverrides="," >
+  		<if test="status != null">
+  			#{status,jdbcType=INTEGER},
+  		</if>
+  		<if test="purchaseNo != null">
+  			#{purchaseNo,jdbcType=VARCHAR},
+  		</if>
+  		<if test="jsonValue != null">
+  			#{jsonValue,jdbcType=VARCHAR},
+  		</if>
+  		<if test="auditUser != null">
+  			#{auditUser,jdbcType=VARCHAR},
+  		</if>
+  		<if test="auditDate != null">
+  			#{auditDate,jdbcType=TIMESTAMP},
+  		</if>
+  		<if test="auditType != null">
+  			#{auditType,jdbcType=VARCHAR},
+  		</if>
+  	</trim>
+  </insert>
+  
+  
+  
+  <!-- 根据审核类型获取一个单的审核记录 -->
+  <select id="selectAOrderAllLogsByAuditType" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from t_purchase_order_audit_logs
+  	<where>
+  		purchase_no = #{purchaseNo}
+  		<if test="auditType!=null">
+  			and audit_type = #{auditType}
+  		</if>
+  	</where>
+  	order by audit_date desc
+  </select>
+  
+  <select id="selectAllLogsByAuditType" parameterType="java.util.List" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from t_purchase_order_audit_logs
+  	<where>
+  		<if test="purchaseOrderNoList!=null and purchaseOrderNoList.size()>0">
+  			purchase_no in
+  			<foreach collection="purchaseOrderNoList" separator="," close=")" open="(" item="purchaseNo">
+  				#{purchaseNo}
+  			</foreach>
+  		</if>
+  		<if test="auditType!=null">
+  			and audit_type = #{auditType}
+  		</if>
+  	</where>
+  	order by audit_date desc
+  </select>
+  
+  <!-- 获取一个单的最新那条审核记录 -->
+  <select id="selectAOrderLastestLog" parameterType="string" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from t_purchase_order_audit_logs
+  	where 
+  	purchase_no = #{purchaseNo}
+  	order by audit_date desc
+  	limit 1
+  </select>
+  
+  <select id="getOperateRecord" parameterType="string" resultType="entity.purchase.OrderOperateRecord">
+	  	SELECT * FROM (
+			SELECT
+				oa. ID AS ID,
+				oa.purchase_no AS purchaseNo,
+				oa.audit_user AS auditUser,
+				oa.json_value AS jsonValue,
+				oa.audit_date as auditDate,
+				oa.audit_type as auditType,
+				oa.status as status,
+				1 as type
+			FROM
+				t_purchase_order_audit_logs oa
+			UNION ALL
+				SELECT
+					og. ID,
+					og.purchase_no AS purchaseNo,
+					og.operator_email AS auditUser,
+					(
+						'添加赠品' || og.sku || ',数量' || og.qty
+					) AS jsonValue,
+					og.operate_time as auditDate,
+					null as auditType,
+					null as status,
+					2 as type
+				FROM
+					t_purchase_gift_op_record og
+			) x  
+		WHERE x.purchaseNo = #{purchaseNo,jdbcType=VARCHAR} order by x.auditDate desc
+  </select>
+    
+</mapper>

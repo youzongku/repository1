@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.inventory.RefundMapper" >
+  <resultMap id="BaseResultMap" type="entity.inventory.Refund" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="refund_date" property="refundDate" jdbcType="TIMESTAMP" />
+    <result column="refund_total_amount" property="refundTotalAmount" jdbcType="DOUBLE" />
+    <result column="refund_no" property="refundNo" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, email, refund_date, refund_total_amount, refund_no, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_refund
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_refund
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.inventory.Refund" >
+    insert into t_refund (id, email, refund_date, 
+      refund_total_amount, refund_no, remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{refundDate,jdbcType=TIMESTAMP}, 
+      #{refundTotalAmount,jdbcType=DOUBLE}, #{refundNo,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.inventory.Refund" >
+    insert into t_refund
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="refundDate != null" >
+        refund_date,
+      </if>
+      <if test="refundTotalAmount != null" >
+        refund_total_amount,
+      </if>
+      <if test="refundNo != null" >
+        refund_no,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="refundDate != null" >
+        #{refundDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundTotalAmount != null" >
+        #{refundTotalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="refundNo != null" >
+        #{refundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.inventory.Refund" >
+    update t_refund
+    <set >
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="refundDate != null" >
+        refund_date = #{refundDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundTotalAmount != null" >
+        refund_total_amount = #{refundTotalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="refundNo != null" >
+        refund_no = #{refundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.inventory.Refund" >
+    update t_refund
+    set email = #{email,jdbcType=VARCHAR},
+      refund_date = #{refundDate,jdbcType=TIMESTAMP},
+      refund_total_amount = #{refundTotalAmount,jdbcType=DOUBLE},
+      refund_no = #{refundNo,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

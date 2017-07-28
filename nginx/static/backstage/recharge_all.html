@@ -1,0 +1,147 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<h1>充值提现<span>---</span><span>充值提现记录</span></h1>
+<div class="recharge_tab">
+    <ul class="recharge_ul">
+        <li class="recharge_current" tab="1">线下充值</li>
+        <li tab="2">线上充值</li>
+        <li tab="3">提现记录</li>
+    </ul>
+</div>
+
+<div id="recharge_offline">
+    <!--搜索部分-->
+    <div id="offline_area">
+        <ul class="search_category" style="width: 1099px;margin-bottom: 10px;">
+            <li>初审状态：
+                <select id="audit_state" name="audit_state" style="width: 100px;" onchange="">
+                    <option value="" selected="selected">全部状态</option>
+                    <option value="0">待审核</option>
+                    <option value="1">审核不通过</option>
+                    <option value="2">审核通过</option>
+                    <option value="3">审核异常</option>
+                </select>
+            </li>
+            <li>复审状态：
+                <select id="reaudit_state" name="reaudit_state" style="width: 100px;">
+                    <option value="" selected="selected">全部状态</option>
+                    <option value="4">待复审</option>
+                    <option value="3">审核异常</option>
+                    <option value="2">审核通过</option>
+                    <option value="1">审核不通过</option>
+                </select>
+            </li>
+            <li>收款渠道：
+                <select id="receipt_mode" style="width: 120px;" name="receipt_mode">
+                    <option value="" selected="selected">全部渠道</option>
+                </select>
+            </li>
+            <li>转账时间：
+                <select id="transfer_time" name="transfer_time" style="width: 100px;">
+                    <option value="" selected="selected">请选择</option>
+                    <option value="1">1个月以内</option>
+                    <option value="3">3个月以内</option>
+                    <option value="6">6个月以内</option>
+                    <option value="9">9个月以内</option>
+                    <option value="12">12个月以内</option>
+                </select>
+            </li>
+            <li>
+                <div class="search">
+                    <input id="searchInput" style = "width: 166px"
+                           class="searchInput" placeholder="录入人/用户名/付款人">
+                    <input id="searchButton" class="searchButton" value="搜索" type="button" style="cursor: pointer;">
+                    <input id="export_apply_1" tabid="recharge_offline_record" class="searchButton" value="导出Excel" type="button" style="cursor: pointer; width: 80px;">
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!--表格内容-->
+    <table id="recharge_offline_record"></table>
+    <!--分页-->
+    <div id="recharge_offline_pager"></div>
+</div>
+<div id="recharge_online" style="display: none">
+    <!--搜索部分-->
+    <div id="offline_area">
+        <ul class="search_category" style="width: 1099px;margin-bottom: 10px;">
+            <li>支付状态：
+                <select id="online_pay_status" name="online_pay_status" style="width: 100px;">
+                    <option value="" selected="selected">请选择</option>
+                    <option value="100">未支付</option>
+                    <option value="101">支付成功</option>
+                </select>
+            </li>
+            <li>支付时间：
+                <select id="online_pay_date" name="online_pay_date" style="width: 100px;">
+                    <option value="" selected="selected">请选择</option>
+                    <option value="1">1个月以内</option>
+                    <option value="3">3个月以内</option>
+                    <option value="6">6个月以内</option>
+                    <option value="9">9个月以内</option>
+                    <option value="12">12个月以内</option>
+                </select>
+            </li>
+            <li>
+                <div class="search">
+                    <input id="onlineSearchInput" class="searchInput" placeholder="用户名">
+                    <input id="onlineSearchButton" class="searchButton" value="搜索" type="button" style="cursor: pointer;">
+                </div>
+            </li>
+            <li>
+                <input id="export_apply" tabid="recharge_online_record" class="searchButton" value="导出Excel" type="button" style="cursor: pointer; width: 80px;">
+            </li>
+        </ul>
+    </div>
+    <!--表格内容-->
+    <table id="recharge_online_record"></table>
+    <!--分页-->
+    <div id="recharge_online_pager"></div>
+</div>
+<div id="withdraw" style="display: none">
+    <!--搜索部分-->
+    <div id="withdraw_area">
+        <ul class="search_category" style="margin-bottom: 10px;">
+            <li>状态：
+                <select id="withdraw_auditstate_select" style="width: 100px;">
+                    <option value="" selected="selected">默认所有</option>
+                    <option value="0">处理中</option>
+                    <option value="2">已完成</option>
+                    <option value="1">处理失败</option>
+                </select>
+            </li>
+            <li>申请时间：
+                <select id="withdraw_applytime_select" style="width: 100px;">
+                    <option value="" selected="selected">请选择</option>
+                    <option value="1">1个月以内</option>
+                    <option value="3">3个月以内</option>
+                    <option value="6">6个月以内</option>
+                    <option value="9">9个月以内</option>
+                    <option value="12">12个月以内</option>
+                </select>
+            </li>
+            <li>处理时间：
+                <select id="withdraw_audittime_select" style="width: 100px;">
+                    <option value="" selected="selected">请选择</option>
+                    <option value="1">1个月以内</option>
+                    <option value="3">3个月以内</option>
+                    <option value="6">6个月以内</option>
+                    <option value="9">9个月以内</option>
+                    <option value="12">12个月以内</option>
+                </select>
+            </li>
+            <li class="">
+                <div class="search">
+                    <input id="withdraw_search_input" class="searchInput" placeholder="用户名/开户姓名/收款方式/提现单号" style="width: 300px;">
+                    <input id="withdraw_search_btn" class="searchButton" value="搜索" type="button" style="cursor: pointer;">
+                </div>
+            </li>
+            <li>
+                <input id="withdraw_export_btn" class="searchButton" value="导出Excel" type="button" style="cursor: pointer; width: 80px;">
+            </li>
+        </ul>
+    </div>
+    <!--表格内容-->
+    <table id="withdraw_record"></table>
+    <!--分页-->
+    <div id="withdraw_pager"></div>
+</div>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.payment.yijipay.CheckedRealNameMapper">
+  <resultMap id="BaseResultMap" type="entity.payment.yijipay.CheckedRealName">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, real_name, id_card, create_date
+  </sql>
+
+  <!-- 通过用户名，身份证号休息会 -->
+  <select id="getByNameIdCard" parameterType="java.util.Map" resultMap="BaseResultMap">
+      SELECT * FROM t_checked_realname
+      WHERE real_name = #{realName}
+      AND id_card = #{idCard}
+  </select>
+
+  <!-- 保存 -->
+  <insert id="save" parameterType="entity.payment.yijipay.CheckedRealName">
+      INSERT INTO t_checked_realname
+      (real_name, id_card, create_date)
+      VALUES
+      (#{realName}, #{idCard}, #{createDate})
+  </insert>
+</mapper>

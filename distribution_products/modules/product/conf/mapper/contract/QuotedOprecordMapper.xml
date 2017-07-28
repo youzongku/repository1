@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.contract.QuotedOprecordMapper" >
+  <resultMap id="BaseResultMap" type="entity.contract.QuotedOprecord" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="qid" property="qid" jdbcType="INTEGER" />
+    <result column="opuser" property="opuser" jdbcType="VARCHAR" />
+    <result column="opdate" property="opdate" jdbcType="TIMESTAMP" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryRecord" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  		select * from t_quoted_oprecord where qid=#{0} order by opdate desc
+  </select>
+  <insert id="insertSelective" parameterType="entity.contract.QuotedOprecord" >
+    insert into t_quoted_oprecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="qid != null" >
+        qid,
+      </if>
+      <if test="opuser != null" >
+        opuser,
+      </if>
+      <if test="opdate != null" >
+        opdate,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="qid != null" >
+        #{qid,jdbcType=INTEGER},
+      </if>
+      <if test="opuser != null" >
+        #{opuser,jdbcType=VARCHAR},
+      </if>
+      <if test="opdate != null" >
+        #{opdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

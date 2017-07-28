@@ -1,0 +1,54 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<h1>用户管理<span>---</span><span>角色设置</span></h1>
+<ul class="search_category">
+    <li>
+        <div class="search">
+            <button class="Add-Roles" type="button">新增角色</button>
+            <button class="permission-setting" type="button" onclick="rolesetting(this,'Ushow')">权限设置</button>
+        </div>
+    </li>
+</ul>
+
+<div class="content_list">
+    <table id="role_table">
+      <!--  <thead>
+        <tr>
+            <th style="width: 10%;">编号</th>
+            <th style="width: 20%;">角色名称</th>
+            <th style="width: 30%;">创建人</th>
+            <th style="width: 40%;">操作</th>
+        </tr>
+        </thead>
+        <tbody class="list_content role-list-content">
+
+        </tbody>-->
+    </table>
+    <!--<div class="list_content">
+        <p>共<span id="count" style="display: inline-block; color: #55ccc8;">0</span>记录，每页显示
+            <select>
+                <option value="10">10</option>
+                <option value="20" selected="selected">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
+            ，共<span id="page_count" style="display: inline-block; color: #55ccc8;">0</span>页
+        </p>
+    </div>-->
+
+    <div id="role_pagination"></div>
+
+
+    <!--权限设置-->
+    <div class="role-permission-setting" style="display: none;">
+        <div class="permission-setting-box">
+            <div class="p-box-top">
+                <p>选择角色类型：
+                    <select style="width:120px;height:20px;border:1px solid #ccc;">
+                    </select>
+                </p>
+        </div>
+        <div class="clear"></div>
+            <ul id="tree" class="ztree" style="width:470px; overflow:auto; height: 450px;margin-top: 20px;"></ul>
+        </div>
+    </div>
+</div>

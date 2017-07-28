@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.payment.yijipay.YijiOrderMapper" >
+  <resultMap id="BaseResultMap" type="entity.payment.yijipay.YijiOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="out_order_no" property="outOrderNo" jdbcType="VARCHAR" />
+    <result column="out_order_id" property="outOrderId" jdbcType="VARCHAR" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="total_fee" property="totalFee" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, out_order_no, out_order_id, currency, total_fee, order_no, create_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_yijifu_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_yijifu_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.payment.yijipay.YijiOrder" >
+    insert into t_yijifu_order (id, out_order_no, out_order_id,
+      currency, total_fee, order_no, 
+      create_date)
+    values (#{id,jdbcType=INTEGER}, #{outOrderNo,jdbcType=VARCHAR}, #{outOrderId,jdbcType=VARCHAR}, 
+      #{currency,jdbcType=VARCHAR}, #{totalFee,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.payment.yijipay.YijiOrder" >
+    insert into t_yijifu_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="outOrderNo != null" >
+        out_order_no,
+      </if>
+      <if test="outOrderId != null" >
+        out_order_id,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+      <if test="totalFee != null" >
+        total_fee,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="outOrderNo != null" >
+        #{outOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="outOrderId != null" >
+        #{outOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null" >
+        #{totalFee,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.payment.yijipay.YijiOrder" >
+    update t_yijifu_order
+    <set >
+      <if test="outOrderNo != null" >
+        out_order_no = #{outOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="outOrderId != null" >
+        out_order_id = #{outOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null" >
+        total_fee = #{totalFee,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.payment.yijipay.YijiOrder" >
+    update t_yijifu_order
+    set out_order_no = #{outOrderNo,jdbcType=VARCHAR},
+      out_order_id = #{outOrderId,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      total_fee = #{totalFee,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getYijiOrderByCondition" resultMap="BaseResultMap" parameterType="entity.payment.yijipay.YijiOrder" >
+    select
+    <include refid="Base_Column_List" />
+    from t_yijifu_order
+    where 1 = 1
+    <if test="outOrderNo != null" >
+      and out_order_no = #{outOrderNo,jdbcType=VARCHAR}
+    </if>
+    <if test="outOrderId != null" >
+      and out_order_id = #{outOrderId,jdbcType=VARCHAR}
+    </if>
+    <if test="orderNo != null" >
+      and order_no = #{orderNo,jdbcType=VARCHAR}
+    </if>
+    order by create_date desc
+    limit 1 offset 0
+  </select>
+</mapper>

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.ShopSiteMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.ShopSite" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="disemail" property="disemail" jdbcType="VARCHAR" />
+    <result column="mastersite" property="mastersite" jdbcType="VARCHAR" />
+    <result column="applydate" property="applydate" jdbcType="TIMESTAMP" />
+    <result column="reviewer" property="reviewer" jdbcType="VARCHAR" />
+    <result column="reviewdate" property="reviewdate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="siteurl" property="siteurl" jdbcType="VARCHAR" />
+    <result column="reviewreason" property="reviewreason" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="shopid" property="shopid" jdbcType="INTEGER" />
+    <result column="distribution_mode" property="distributionMode" jdbcType="INTEGER" />
+    <result column="is_usable" jdbcType="BIT" property="isUsable" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, disemail, mastersite, applydate, reviewer, reviewdate, status, siteurl, reviewreason, 
+    remark, shopid,distribution_mode,is_usable
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_shop_site
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCondition" resultMap="BaseResultMap"
+	parameterType="entity.dismember.ShopSite">
+	select
+	<include refid="Base_Column_List" />
+	from t_shop_site
+	where 1=1
+	<if test="id != null">
+		and id = #{id,jdbcType=INTEGER}
+	</if>
+	<if test="disemail != null and disemail != '' ">
+		and disemail = #{disemail,jdbcType=VARCHAR}
+	</if>
+	<if test="mastersite != null and mastersite != '' ">
+		and mastersite = #{mastersite,jdbcType=VARCHAR}
+	</if>
+	<if test="applydate != null">
+		and applydate = #{applydate,jdbcType=TIMESTAMP}
+	</if>
+	<if test="reviewer != null and reviewer != ''">
+		and reviewer = #{reviewer,jdbcType=VARCHAR}
+	</if>
+	<if test="reviewdate != null">
+		and reviewdate = #{reviewdate,jdbcType=TIMESTAMP}
+	</if>
+	<if test="status != null">
+		and status = #{status,jdbcType=INTEGER}
+	</if>
+	<if test="siteurl != null and siteurl != ''">
+		and siteurl = #{siteurl,jdbcType=VARCHAR}
+	</if>
+	<if test="reviewreason != null and reviewreason != ''">
+		and reviewreason = #{reviewreason,jdbcType=VARCHAR}
+	</if>
+	<if test="remark != null and remark != ''">
+		and remark = #{remark,jdbcType=VARCHAR}
+	</if>
+	<if test="shopid != null">
+		and shopid = #{shopid,jdbcType=INTEGER}
+	</if>
+	<if test="distributionMode != null">
+		and distribution_mode = #{distributionMode,jdbcType=INTEGER}
+	</if>
+	<if test="isUsable != null">
+		and is_usable = #{isUsable,jdbcType=BIT}
+	</if>
+	order by applydate desc
+	limit 1 offset 0
+</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_shop_site
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.ShopSite" >
+    insert into t_shop_site (id, disemail, mastersite, 
+      applydate, reviewer, reviewdate, 
+      status, siteurl, reviewreason, 
+      remark, shopid)
+    values (#{id,jdbcType=INTEGER}, #{disemail,jdbcType=VARCHAR}, #{mastersite,jdbcType=VARCHAR}, 
+      #{applydate,jdbcType=TIMESTAMP}, #{reviewer,jdbcType=VARCHAR}, #{reviewdate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{siteurl,jdbcType=VARCHAR}, #{reviewreason,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{shopid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.ShopSite" >
+    insert into t_shop_site
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="disemail != null" >
+        disemail,
+      </if>
+      <if test="mastersite != null" >
+        mastersite,
+      </if>
+      <if test="applydate != null" >
+        applydate,
+      </if>
+      <if test="reviewer != null" >
+        reviewer,
+      </if>
+      <if test="reviewdate != null" >
+        reviewdate,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="siteurl != null" >
+        siteurl,
+      </if>
+      <if test="reviewreason != null" >
+        reviewreason,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="shopid != null" >
+        shopid,
+      </if>
+      <if test="distributionMode != null" >
+        distribution_mode,
+      </if>
+      <if test="isUsable != null" >
+        is_usable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="disemail != null" >
+        #{disemail,jdbcType=VARCHAR},
+      </if>
+      <if test="mastersite != null" >
+        #{mastersite,jdbcType=VARCHAR},
+      </if>
+      <if test="applydate != null" >
+        #{applydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviewer != null" >
+        #{reviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewdate != null" >
+        #{reviewdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="siteurl != null" >
+        #{siteurl,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewreason != null" >
+        #{reviewreason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="shopid != null" >
+        #{shopid,jdbcType=INTEGER},
+      </if>
+      <if test="distributionMode != null" >
+        #{distributionMode,jdbcType=INTEGER},
+      </if>
+      <if test="isUsable != null" >
+        #{isUsable,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.ShopSite" >
+    update t_shop_site
+    <set >
+      <if test="disemail != null" >
+        disemail = #{disemail,jdbcType=VARCHAR},
+      </if>
+      <if test="mastersite != null" >
+        mastersite = #{mastersite,jdbcType=VARCHAR},
+      </if>
+      <if test="applydate != null" >
+        applydate = #{applydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviewer != null" >
+        reviewer = #{reviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewdate != null" >
+        reviewdate = #{reviewdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="siteurl != null" >
+        siteurl = #{siteurl,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewreason != null" >
+        reviewreason = #{reviewreason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="shopid != null" >
+        shopid = #{shopid,jdbcType=INTEGER},
+      </if>
+      <if test="distributionMode != null" >
+        distribution_mode = #{distributionMode,jdbcType=INTEGER},
+      </if>
+      <if test="isUsable != null" >
+        is_usable = #{isUsable,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByEmail" parameterType="entity.dismember.ShopSite" >
+    update t_shop_site
+    <set >
+      <if test="mastersite != null" >
+        mastersite = #{mastersite,jdbcType=VARCHAR},
+      </if>
+      <if test="applydate != null" >
+        applydate = #{applydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviewer != null" >
+        reviewer = #{reviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewdate != null" >
+        reviewdate = #{reviewdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="siteurl != null" >
+        siteurl = #{siteurl,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewreason != null" >
+        reviewreason = #{reviewreason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="shopid != null" >
+        shopid = #{shopid,jdbcType=INTEGER},
+      </if>
+      <if test="distributionMode != null" >
+        distribution_mode = #{distributionMode,jdbcType=INTEGER},
+      </if>
+      <if test="isUsable != null" >
+        is_usable = #{isUsable,jdbcType=BIT},
+      </if>
+    </set>
+    where disemail = #{disemail,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.ShopSite" >
+    update t_shop_site
+    set disemail = #{disemail,jdbcType=VARCHAR},
+      mastersite = #{mastersite,jdbcType=VARCHAR},
+      applydate = #{applydate,jdbcType=TIMESTAMP},
+      reviewer = #{reviewer,jdbcType=VARCHAR},
+      reviewdate = #{reviewdate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      siteurl = #{siteurl,jdbcType=VARCHAR},
+      reviewreason = #{reviewreason,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      shopid = #{shopid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

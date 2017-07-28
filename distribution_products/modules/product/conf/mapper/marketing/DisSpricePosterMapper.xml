@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.DisSpricePosterMapper" >
+  <resultMap id="BaseResultMap" type="entity.marketing.DisSpricePoster" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="image_name" property="imageName" jdbcType="VARCHAR" />
+    <result column="image_size" property="imageSize" jdbcType="VARCHAR" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="image_width" property="imageWidth" jdbcType="INTEGER" />
+    <result column="image_height" property="imageHeight" jdbcType="INTEGER" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, activity_id, image_name, image_size, image_url, image_width, image_height, create_user, 
+    create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_sprice_poster
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_sprice_poster
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.marketing.DisSpricePoster" >
+    insert into t_dis_sprice_poster (id, activity_id, image_name, 
+      image_size, image_url, image_width, 
+      image_height, create_user, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{imageName,jdbcType=VARCHAR}, 
+      #{imageSize,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, #{imageWidth,jdbcType=INTEGER}, 
+      #{imageHeight,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.marketing.DisSpricePoster" >
+    insert into t_dis_sprice_poster
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="imageName != null" >
+        image_name,
+      </if>
+      <if test="imageSize != null" >
+        image_size,
+      </if>
+      <if test="imageUrl != null" >
+        image_url,
+      </if>
+      <if test="imageWidth != null" >
+        image_width,
+      </if>
+      <if test="imageHeight != null" >
+        image_height,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="imageName != null" >
+        #{imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="imageSize != null" >
+        #{imageSize,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null" >
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imageWidth != null" >
+        #{imageWidth,jdbcType=INTEGER},
+      </if>
+      <if test="imageHeight != null" >
+        #{imageHeight,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.marketing.DisSpricePoster" >
+    update t_dis_sprice_poster
+    <set >
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="imageName != null" >
+        image_name = #{imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="imageSize != null" >
+        image_size = #{imageSize,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null" >
+        image_url = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imageWidth != null" >
+        image_width = #{imageWidth,jdbcType=INTEGER},
+      </if>
+      <if test="imageHeight != null" >
+        image_height = #{imageHeight,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.marketing.DisSpricePoster" >
+    update t_dis_sprice_poster
+    set activity_id = #{activityId,jdbcType=INTEGER},
+      image_name = #{imageName,jdbcType=VARCHAR},
+      image_size = #{imageSize,jdbcType=VARCHAR},
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      image_width = #{imageWidth,jdbcType=INTEGER},
+      image_height = #{imageHeight,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findPosterByCondition" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_sprice_poster
+    where 1 = 1
+    <if test="activityId != null">
+      and activity_id = #{activityId,jdbcType=INTEGER}
+    </if>
+  </select>
+
+</mapper>

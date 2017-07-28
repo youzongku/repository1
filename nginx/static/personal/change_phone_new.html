@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+	<link type="text/css" rel="stylesheet" href="../css/public.css" />
+	<link type="text/css" rel="stylesheet" href="/css/personal.css" />
+	<link type="text/css" rel="stylesheet" href="/css/style/style.css" />
+	<!--<script charset="utf-8" src="https://wpa.b.qq.com/cgi/wpa.php"></script>-->
+	<title>修改手机 - TOMTOP Supply Chain</title>
+</head>
+<body>
+
+
+<div id="div_head"></div>
+<div class="title-line">
+	<span class="chang-p-n" style="margin-left: 360px;font: 600 18px Microsoft Yahei;position: absolute;background-color: #fff;padding: 3px 5px; color: #4a7cc7; margin-top:24px;">我的资料-修改资料-更换手机</span>
+</div>
+
+<!--邮箱跳转页面-->
+<form id="reset_phone_form" style="display: block;padding-top: 50px;margin-left: 360px;">
+	<table>
+		<tr>
+			<td class="type-name">请输入新手机号码：</td>
+			<td>
+				<input type="text" name="cell" style="width: 230px;height: 25px;margin-right: 10px; appearance: textfield; -moz-appearance: textfield; -webkit-appearance: textfield; -ms-appearance: textfield;" />
+			</td>
+			<td>
+				<button type="button" class="send-message-b" style="width: 120px;">发送短信验证码</button>
+			</td>
+		</tr>
+		<tr>
+			<td class="type-name">请输入短信验证码：</td>
+			<td>
+				<input type="text" name="smsc" style="width: 230px;height: 25px;margin-right: 10px; appearance: textfield; -moz-appearance: textfield; -webkit-appearance: textfield; -ms-appearance: textfield;" />
+			</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="type-name">请输入验证码：</td>
+			<td>
+				<input type="text" name="captcha" style="width: 230px;height: 25px;margin-right: 10px; appearance: textfield; -moz-appearance: textfield; -webkit-appearance: textfield; -ms-appearance: textfield;" />
+			</td>
+			<td>
+				<img id="captchaImg" src="/member/getcaptcha" onclick="this.src='/member/getcaptcha?' + Math.random();">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button type="button" class="phone-change">确定</button>
+			</td>
+		</tr>
+	</table>
+</form>
+<div class="clear"></div>
+<!--主要内容部分-->
+<div id="div_footer"></div>
+</body>
+
+<script data-main="../js/personal/alterphone.js" src="../js/lib/requirejs/require.js"></script>
+
+</html>

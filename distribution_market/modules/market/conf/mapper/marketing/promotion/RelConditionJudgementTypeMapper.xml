@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.promotion.RelConditionJudgementTypeMapper" >
+  <resultMap id="BaseResultMap" type="entity.marketing.promotion.RelConditionJudgementType" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="condt_jgmnt_type_id" property="condtJgmntTypeId" jdbcType="INTEGER" />
+    <result column="condt_id" property="condtId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <delete id="deleteRel">
+  	delete from t_rel_condt_jgmnt_type
+  	where condt_jgmnt_type_id=#{condtJgmntTypeId} and condt_id=#{condtId}
+  </delete>
+  
+  <sql id="Base_Column_List" >
+    id, condt_jgmnt_type_id, condt_id
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_rel_condt_jgmnt_type
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 根据条件id获取判断 -->
+  <select id="selectByCondtId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_rel_condt_jgmnt_type
+    where condt_id = #{condtId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_rel_condt_jgmnt_type
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="entity.marketing.promotion.RelConditionJudgementType" >
+    insert into t_rel_condt_jgmnt_type (id, condt_jgmnt_type_id, condt_id)
+    values (#{id,jdbcType=INTEGER}, #{condtJgmntTypeId,jdbcType=INTEGER}, #{condtId,jdbcType=INTEGER})
+  </insert>
+  
+</mapper>

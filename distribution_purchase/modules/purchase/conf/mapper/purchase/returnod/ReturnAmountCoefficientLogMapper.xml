@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.purchase.returnod.ReturnAmountCoefficientLogMapper" >
+  <resultMap id="BaseResultMap" type="entity.purchase.returnod.ReturnAmountCoefficientLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="coefficient_id" property="coefficientId" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="log_value" property="logValue" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, coefficient_id, sku, warehouse_id, log_value, create_time, create_user
+  </sql>
+  
+  <select id="selectByCoefficientId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_return_amount_coefficient_logs
+    where coefficient_id = #{coefficientId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectBySkuAndWarehouseId" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_return_amount_coefficient_logs
+    where sku=#{sku} and warehouse_id=#{warehouseId}
+  </select>
+  
+  <insert id="insert" parameterType="entity.purchase.returnod.ReturnAmountCoefficientLog" >
+    insert into t_return_amount_coefficient_logs 
+    (coefficient_id, sku, warehouse_id, log_value, create_time, create_user)
+    values 
+    (#{coefficientId}, #{sku}, #{warehouseId}, #{logValue}, now(), #{createUser})
+  </insert>
+  
+  <insert id="batchInsert" useGeneratedKeys="true" parameterType="java.util.List">
+	insert into t_return_amount_coefficient_logs 
+    (coefficient_id, sku, warehouse_id, log_value, create_time, create_user)
+	values
+	<foreach collection="list" item="item" index="index" separator="," >
+		(#{item.coefficientId}, #{item.sku}, #{item.warehouseId}, #{item.logValue}, now(), #{item.createUser})
+	</foreach>
+  </insert>
+  
+</mapper>

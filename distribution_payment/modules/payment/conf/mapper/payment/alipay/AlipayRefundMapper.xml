@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.payment.alipay.AlipayRefundMapper" >
+  <resultMap id="BaseResultMap" type="entity.payment.alipay.AlipayRefund" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="out_return_no" property="outReturnNo" jdbcType="VARCHAR" />
+    <result column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
+    <result column="return_amount" property="returnAmount" jdbcType="VARCHAR" />
+    <result column="return_rmb_amount" property="returnRmbAmount" jdbcType="VARCHAR" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="gmt_return" property="gmtReturn" jdbcType="VARCHAR" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="is_success" property="isSuccess" jdbcType="VARCHAR" />
+    <result column="error" property="error" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_user" property="lastUpdateUser" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, out_return_no, out_trade_no, return_amount, return_rmb_amount, currency, gmt_return, 
+    reason, is_success, error, create_user, create_date, last_update_user, last_update_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_alipay_refund
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_alipay_refund
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.payment.alipay.AlipayRefund" >
+    insert into t_alipay_refund (id, out_return_no, out_trade_no, 
+      return_amount, return_rmb_amount, currency, 
+      gmt_return, reason, is_success, 
+      error, create_user, create_date, 
+      last_update_user, last_update_date)
+    values (#{id,jdbcType=INTEGER}, #{outReturnNo,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=VARCHAR}, 
+      #{returnAmount,jdbcType=VARCHAR}, #{returnRmbAmount,jdbcType=VARCHAR}, #{currency,jdbcType=VARCHAR}, 
+      #{gmtReturn,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR}, #{isSuccess,jdbcType=VARCHAR}, 
+      #{error,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{lastUpdateUser,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.payment.alipay.AlipayRefund" >
+    insert into t_alipay_refund
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="outReturnNo != null" >
+        out_return_no,
+      </if>
+      <if test="outTradeNo != null" >
+        out_trade_no,
+      </if>
+      <if test="returnAmount != null" >
+        return_amount,
+      </if>
+      <if test="returnRmbAmount != null" >
+        return_rmb_amount,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+      <if test="gmtReturn != null" >
+        gmt_return,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="isSuccess != null" >
+        is_success,
+      </if>
+      <if test="error != null" >
+        error,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="outReturnNo != null" >
+        #{outReturnNo,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null" >
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="returnAmount != null" >
+        #{returnAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="returnRmbAmount != null" >
+        #{returnRmbAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtReturn != null" >
+        #{gmtReturn,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="isSuccess != null" >
+        #{isSuccess,jdbcType=VARCHAR},
+      </if>
+      <if test="error != null" >
+        #{error,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUser != null" >
+        #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.payment.alipay.AlipayRefund" >
+    update t_alipay_refund
+    <set >
+      <if test="outReturnNo != null" >
+        out_return_no = #{outReturnNo,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null" >
+        out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="returnAmount != null" >
+        return_amount = #{returnAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="returnRmbAmount != null" >
+        return_rmb_amount = #{returnRmbAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtReturn != null" >
+        gmt_return = #{gmtReturn,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="isSuccess != null" >
+        is_success = #{isSuccess,jdbcType=VARCHAR},
+      </if>
+      <if test="error != null" >
+        error = #{error,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.payment.alipay.AlipayRefund" >
+    update t_alipay_refund
+    set out_return_no = #{outReturnNo,jdbcType=VARCHAR},
+      out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      return_amount = #{returnAmount,jdbcType=VARCHAR},
+      return_rmb_amount = #{returnRmbAmount,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      gmt_return = #{gmtReturn,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR},
+      is_success = #{isSuccess,jdbcType=VARCHAR},
+      error = #{error,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

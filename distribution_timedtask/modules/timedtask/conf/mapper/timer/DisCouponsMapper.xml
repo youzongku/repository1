@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.DisCouponsMapper">
+	<resultMap id="BaseResultMap" type="entity.timer.DisCoupons">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="active_id" property="activeId" jdbcType="INTEGER" />
+		<result column="coupons_no" property="couponsNo" jdbcType="VARCHAR" />
+		<result column="istatus" property="istatus" jdbcType="INTEGER" />
+		<result column="user_name" property="user" jdbcType="VARCHAR" />
+		<result column="usage_time" property="usageTime" jdbcType="TIMESTAMP" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+		<result column="order_amount" property="orderAmount" jdbcType="NUMERIC" />
+		<result column="actually_paid" property="actuallyPaid" jdbcType="NUMERIC" />
+		<result column="coupons_cost" property="couponsCost" jdbcType="NUMERIC" />
+		<result column="actually_paid" property="actuallyPaid" jdbcType="NUMERIC" />
+		<result column="usage_time_str" property="usageTimeStr" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, active_id, coupons_no, istatus, user_name, usage_time, order_no,
+		order_status, order_amount,
+		actually_paid,usage_time as usage_time_str
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_dis_coupons
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_dis_coupons
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="entity.timer.DisCoupons">
+		insert into t_dis_coupons (id, active_id, coupons_no,
+		istatus, user_name, usage_time,
+		order_no, order_status, order_amount,
+		actually_paid)
+		values (#{id,jdbcType=INTEGER}, #{activeId,jdbcType=INTEGER},
+		#{couponsNo,jdbcType=VARCHAR},
+		#{istatus,jdbcType=INTEGER}, #{user,jdbcType=VARCHAR}, #{usageTime,jdbcType=TIMESTAMP},
+		#{orderNo,jdbcType=VARCHAR}, #{orderStatus,jdbcType=INTEGER},
+		#{orderAmount,jdbcType=NUMERIC},
+		#{actuallyPaid,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="entity.timer.DisCoupons">
+		insert into t_dis_coupons
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="activeId != null">
+				active_id,
+			</if>
+			<if test="couponsNo != null">
+				coupons_no,
+			</if>
+			<if test="istatus != null">
+				istatus,
+			</if>
+			<if test="user != null">
+				user_name,
+			</if>
+			<if test="usageTime != null">
+				usage_time,
+			</if>
+			<if test="orderNo != null">
+				order_no,
+			</if>
+			<if test="orderStatus != null">
+				order_status,
+			</if>
+			<if test="orderAmount != null">
+				order_amount,
+			</if>
+			<if test="actuallyPaid != null">
+				actually_paid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="activeId != null">
+				#{activeId,jdbcType=INTEGER},
+			</if>
+			<if test="couponsNo != null">
+				#{couponsNo,jdbcType=VARCHAR},
+			</if>
+			<if test="istatus != null">
+				#{istatus,jdbcType=INTEGER},
+			</if>
+			<if test="user != null">
+				#{user,jdbcType=VARCHAR},
+			</if>
+			<if test="usageTime != null">
+				#{usageTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderNo != null">
+				#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderStatus != null">
+				#{orderStatus,jdbcType=INTEGER},
+			</if>
+			<if test="orderAmount != null">
+				#{orderAmount,jdbcType=NUMERIC},
+			</if>
+			<if test="actuallyPaid != null">
+				#{actuallyPaid,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="entity.timer.DisCoupons">
+		update t_dis_coupons
+		<set>
+			<if test="activeId != null">
+				active_id = #{activeId,jdbcType=INTEGER},
+			</if>
+			<if test="couponsNo != null">
+				coupons_no = #{couponsNo,jdbcType=VARCHAR},
+			</if>
+			<if test="istatus != null">
+				istatus = #{istatus,jdbcType=INTEGER},
+			</if>
+			<if test="user != null">
+				user_name = #{user,jdbcType=VARCHAR},
+			</if>
+			<if test="usageTime != null">
+				usage_time = #{usageTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderNo != null">
+				order_no = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderStatus != null">
+				order_status = #{orderStatus,jdbcType=INTEGER},
+			</if>
+			<if test="orderAmount != null">
+				order_amount = #{orderAmount,jdbcType=NUMERIC},
+			</if>
+			<if test="actuallyPaid != null">
+				actually_paid = #{actuallyPaid,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="entity.timer.DisCoupons">
+		update t_dis_coupons
+		set active_id = #{activeId,jdbcType=INTEGER},
+		coupons_no = #{couponsNo,jdbcType=VARCHAR},
+		istatus = #{istatus,jdbcType=INTEGER},
+		user_name = #{user,jdbcType=VARCHAR},
+		usage_time = #{usageTime,jdbcType=TIMESTAMP},
+		order_no = #{orderNo,jdbcType=VARCHAR},
+		order_status = #{orderStatus,jdbcType=INTEGER},
+		order_amount = #{orderAmount,jdbcType=NUMERIC},
+		actually_paid = #{actuallyPaid,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<insert id="batchSaveCoupons" parameterType="java.util.List">
+		insert into t_dis_coupons
+		(active_id,coupons_no) values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.activeId,jdbcType=INTEGER},#{item.couponsNo,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	<select id="queryPageCoupons" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select
+		c.*,a.coupons_cost as coupons_cost
+		from t_dis_coupons  c
+		JOIN t_dis_active a
+		ON c.active_id = a.id
+		where 1=1
+		<if test="param.status !=null">
+			and c.istatus = #{param.status,jdbcType=INTEGER}
+		</if>
+		<if test="param.usedStartDate !=null and param.usedStartDate !=''">
+               <![CDATA[and c.usage_time  >= to_timestamp(#{param.usedStartDate}, 'YYYY-MM-DD HH24:MI:SS')]]>
+		</if>
+		<if test="param.usedEndDate !=null and param.usedEndDate !=''">
+               <![CDATA[and c.usage_time  <= to_timestamp(#{param.usedEndDate}, 'YYYY-MM-DD HH24:MI:SS')]]>
+		</if>
+		<if test="param.activeId !=null">
+			and c.active_id = #{param.activeId,jdbcType=INTEGER}
+		</if>
+		<if test="param.seachSpan !=null and param.seachSpan !=''">
+               <![CDATA[
+               and (
+               		c.coupons_no like '%'||#{param.seachSpan,jdbcType=VARCHAR}||'%'
+                   	or lower(c.order_no) like lower('%'||#{param.seachSpan,jdbcType=VARCHAR}||'%')
+                   	or lower(c.user_name) like lower('%'||#{param.seachSpan,jdbcType=VARCHAR}||'%')
+                    )
+              ]]>
+              
+		</if> 
+		order by usage_time desc nulls last
+		<if test="param.pageSize !=null and param.currPage !=null">
+			LIMIT #{param.pageSize} OFFSET (#{param.currPage}-1)*#{param.pageSize}
+		</if>
+	</select>
+	<select id="queryTotalCount" resultType="Integer"
+		parameterType="java.util.Map">
+		select
+		count(*)
+		from t_dis_coupons
+		where 1=1
+		<if test="param.status !=null">
+			and istatus = #{param.status,jdbcType=INTEGER}
+		</if>
+		<if test="param.usedStartDate !=null and param.usedStartDate !=''">
+               <![CDATA[and usage_time  >= to_timestamp(#{param.usedStartDate}, 'YYYY-MM-DD HH24:MI:SS')]]>
+		</if>
+		<if test="param.usedEndDate !=null and param.usedEndDate !=''">
+               <![CDATA[and usage_time  <= to_timestamp(#{param.usedEndDate}, 'YYYY-MM-DD HH24:MI:SS')]]>
+		</if>
+		<if test="param.activeId !=null">
+			and active_id = #{param.activeId,jdbcType=INTEGER}
+		</if>
+		<if test="param.seachSpan !=null and param.seachSpan !=''">
+               <![CDATA[
+               and (
+               		lower(coupons_no) like lower('%'||#{param.seachSpan,jdbcType=VARCHAR}||'%')
+                    or lower(order_no) like lower('%'||#{param.seachSpan,jdbcType=VARCHAR}||'%')
+                    or lower(user_name) like lower('%'||#{param.seachSpan,jdbcType=VARCHAR}||'%'))
+              ]]>
+		</if>
+	</select>
+	<select id="getCoupons" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_dis_coupons
+		where lower(coupons_no) = lower(#{couponsNo,jdbcType=VARCHAR})
+	</select>
+	<update id="updateCoupons" parameterType="entity.timer.DisCoupons">
+		update t_dis_coupons
+		<set>
+			<if test="activeId != null">
+				active_id = #{activeId,jdbcType=INTEGER},
+			</if>
+			<if test="couponsNo != null">
+				coupons_no = #{couponsNo,jdbcType=VARCHAR},
+			</if>
+			<if test="istatus != null">
+				istatus = #{istatus,jdbcType=INTEGER},
+			</if>
+			<if test="user != null">
+				user_name = #{user,jdbcType=VARCHAR},
+			</if>
+			<if test="usageTime != null">
+				usage_time = #{usageTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderNo != null">
+				order_no = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderStatus != null">
+				order_status = #{orderStatus,jdbcType=INTEGER},
+			</if>
+			<if test="orderAmount != null">
+				order_amount = #{orderAmount,jdbcType=NUMERIC},
+			</if>
+			<if test="actuallyPaid != null">
+				actually_paid = #{actuallyPaid,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where lower(coupons_no) = lower(#{couponsNo,jdbcType=VARCHAR})
+	</update>
+	<update id="updateState" parameterType="entity.timer.DisActive">
+		update t_dis_coupons set istatus = #{status,jdbcType=INTEGER} where 
+		active_id = #{id,jdbcType=INTEGER}
+		<if test="status != null and status == 4"> 
+			and istatus = 0
+		</if>
+	</update>
+</mapper>

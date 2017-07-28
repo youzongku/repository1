@@ -1,0 +1,390 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<div id="input_purchase_order_div">
+    <!--录入采购单-->
+    <div class="record_purchaseList_box">
+        <h1><span id="input_purchase_order_category_title">微仓进货</span><span>---</span><span>采购单录入</span>
+        <span class="record_purchaseList_do">
+            <!--<button id = "import_generator">生成订单</button>-->
+            <button onclick="placeOrder()">生成订单</button>
+        </span>
+        </h1>
+        <ul class="record_purchaseList_tab">
+            <li class="recharge_current">手动录入</li>
+            <li>手动导入</li>
+        </ul>
+        <div class="record_purchaseList_content" style="overflow: hidden">
+            <!--手动录入start-->
+            <div id="type_in_div">
+                <div>
+                    <div class="commodity_attribute_title">
+                        <h2>第一步：选择分销商</h2>
+                    </div>
+                    <div class="record_purchaseList_choice">
+                        <p>
+                            <span>分销商：</span>
+                            <input type="text" id="type_in_distributor_input" readonly>
+                            <input type="hidden" id="inputId_hidden">
+                            <!--分销商模式(1,电商 2，经销商 3 ,商超 4，进口专营)-->
+                            <input type="hidden" id="distributionMode_hidden">
+                            <button id="type_in_choice_disturb">选择</button>
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <div class="commodity_attribute_title">
+                        <h2>
+                            第二步：选择商品
+                        </h2>
+                    </div>
+                    <div>
+                        <p class="secondStep_choice">
+                            <button class="add_normalProduct" id="addNormalProducts_btn">添加正价商品</button>
+                            <button class="add_gift" id="addDonations_btn">添加赠品</button>
+                            <button id="sw_erpsto">查看ERP库存</button>
+                            <button onclick="removeAllProductsTypedIn()">清除所有商品</button>
+                        </p>
+                        <!--正价商品与赠品-->
+                        <table class="record_purchaseList_table">
+                            <thead>
+                            <tr>
+                                <th style="width: 25%;">商品名称</th>
+                                <th style="width: 12%;">国际条码</th>
+                                <th style="width: 8%;">商品编号</th>
+                                <th style="width: 10%;">所属仓库</th>
+                                <th style="width: 10%;">到期日期</th>
+                                <th style="width: 10%;">云仓库存(个)</th>
+                                <th style="width: 10%;">分销价(元)</th>
+                                <th style="width: 10%;">数量(个)</th>
+                                <th style="width: 10%;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <div class="clerk_total">
+                            <b>商品总数：<em id="type_in_qtyTotal">0</em>个</b>
+                            <b>总计：<em class="red" id="type_in_priceTotal">0.00</em>元</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--手动录入end-->
+            <!--导入start-->
+            <div class="display">
+                <div class="record_purchaseList_choice">
+                    <p>
+                        <span>选择导入文件：</span>
+                        <span id = "picker" >选择文件</span>
+                        <span id="thelist" class="uploader-list"></span>
+                        <a href="../files/通淘国际采购订单模板.xlsx" class="pageDown">点击下载采购单导入模板</a>
+                    </p>
+                    <p>
+                        <span>分销商：</span>
+                        <input type="text" disabled = "disabled" id = "im_dis_acc">
+                        <button id = "import-excel" class="import_order">确定导入</button>
+                    </p>
+                </div>
+                <div class="commodity_attribute_title">
+                    <h2>已导入商品</h2>
+                </div>
+                <div>
+                    <p class="secondStep_choice">
+                        <button id="sw_erpsto">查看ERP库存</button>
+                    </p>
+                    <table class="import_purchaseList_table">
+                        <thead>
+                        <tr>
+                            <th style="width: 30%;">商品名称</th>
+                            <th style="width: 8%;">商品编号</th>
+                            <th style="width: 8%;">所属仓库</th>
+                            <th style="width: 8%;">到期日期</th>
+                            <th style="width: 8%;">云仓库存(个)</th>
+                            <th style="width: 8%;">分销价(元)</th>
+                            <th style="width: 8%;">实际价格(元)</th>
+                            <th style="width: 8%;">箱规(个)</th>
+                            <th style="width: 7%;">箱数</th>
+                            <th style="width: 7%;">数量(个)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="clerk_total">
+                    <b>商品总数：<em id = "import_total">0.00</em>个</b>
+                    <b>总计：<em class="red" id = "import_sumPrice">0.00</em>元</b>
+                </div>
+            </div>
+            <!--导入end-->
+        </div>
+        <!--生成订单-->
+        <span class="record_purchaseList_do">
+            <!--<button id = "import_generator">生成订单</button>-->
+            <!-- zuoting 12/7-->
+            <button onclick="placeOrder()">生成订单</button>
+        </span>
+    </div>
+
+    <!--选择分销商start-->
+    <div class="disturb_choice_pop display" id="disturb_choice_pop_div">
+        <p class="">
+            <input onkeyup="enter_keyUp(event,this, gain_distribution_list_data)" id="search_disturb_input"  type="text">
+            <button id="search_disturb_btn">搜索</button>
+        </p>
+        <table>
+            <thead>
+            <tr>
+                <th>勾选</th>
+                <th>分销商账号</th>
+                <th>名称</th>
+                <th>手机号</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div id="distributions_pagination"></div>
+    </div>
+    <!--选择分销商end-->
+
+    <!--添加正价商品start-->
+    <div id="add_normalProduct_div" class="add_normalProduct_pop display">
+        <ul class="search_category" style="min-width:600px;">
+            <li>商品分类：
+                <select name="product_category_id" onchange="searchProducts(1)">
+                </select>
+            </li>
+            <li>所属仓库：
+                <select name="warehouse_id" onchange="searchProducts(1)">
+                </select>
+            </li>
+            <li>
+                <div class="search">
+                    <input onkeyup="enter_keyUp(event,this, searchProducts)" class="searchInput" id="search_product_input" placeholder="商品名称/SKU(，隔开可多个查询)" style="width: 220px;">
+                    <input class="searchButton" onclick="searchProducts(1)" value="搜索" type="submit">
+                </div>
+            </li>
+        </ul>
+        <div class="normalProduct_select">
+            <span><input type="checkbox" name="products_match_condition">选中符合搜索/筛选条件的所有商品</span>
+            <!--<button class="normalProduct_sureAdd">确定添加</button>-->
+            <!--此3个隐藏域是用来实现翻页选择的-->
+            <input type="hidden" id="temp_selected_skus" />
+            <input type="hidden" id="temp_selected_warehouseIds" />
+            <input type="hidden" id="temp_selected_qties" />
+        </div>
+        <table id="normalProduct_table">
+            <thead>
+            <tr>
+                <th style="width:8%">全选<input type="checkbox" onchange="checkbox_selectAll(this)"></th>
+                <th style="width:10%">商品编号</th>
+                <th style="width:32%">商品名称</th>
+                <th style="width:20%">国际条码</th>
+                <th style="width:10%">所属仓库</th>
+                <th style="width:10%">云仓库存</th>
+                <th style="width:10%">分销价(元)</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <input type = "hidden" id = "forword"/>
+        <div id="normalProduct_pagination"></div>
+    </div>
+    <!--添加正价商品end-->
+</div>
+
+<!--线下转账start-->
+<div id="transfer_offline_div" class="details_one_con" style="display: none;">
+    <h1>采购单录入<span>---</span><span>线下转账</span></h1>
+    <button class="back_zone viewDetails_return" onclick="transferofflineReturn()">返回</button>
+    <div>
+        <table class="offline_transfer all_table">
+            <thead>
+            <th style="width: 20%;">订单编号</th>
+            <th style="width: 20%;">分销商</th>
+            <th style="width: 20%;">订单金额</th>
+            <th style="width: 20%;">运费</th>
+            <th style="width: 20%;">总金额</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <form enctype="multipart/form-data" method="post" action="/purchase/backAudit" id="audit_form">
+            <ul class="offline_transfer_ul zone_examine_about">
+                <li>
+                    <input type="hidden" id="pno" name="purno"/>
+                    <input type="hidden" id="email_hidden" name="email"/>
+                    <span><b class="red">*</b>收款渠道：</span>
+                    <div>
+                        <select name="recipientId" class="login-select">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <span>收款账户：</span>
+                    <div id="receiptAccount"></div>
+                    <input type="hidden" name="receiptAccount"/>
+                </li>
+                <li>
+                    <span>收款人：</span>
+                    <div id="receipt_payee"></div>
+                    <input type="hidden" name="receiptName"/>
+                </li>
+                <li>
+                    <span><b class="red">*</b>付款账户：</span>
+                    <div><input type="text" class="sendApply-user login-button" name="transferCard" tag="validate"/></div>
+                </li>
+                <li>
+                    <span><b class="red">*</b>付款人：</span>
+                    <div><input type="text" name="distributorName" class="login-button" tag="validate"/></div>
+                </li>
+                <li>
+                    <span><b class="red">*</b>付款金额：</span>
+                    <div><input type="text" name="transferAmount" class="login-button" tag="validate"/>元</div>
+                </li>
+                <li>
+                    <span><b class="red">*</b>付款流水号：</span>
+                    <div><input type="text" name="transferNumber" maxlength="50" class="login-button"/></div>
+                </li>
+                <li>
+                    <span style="vertical-align: middle;">付款截图：</span>
+                    <input type="file" name="image" onchange="readImg(this)" style="text-indent: 0;border: none;vertical-align: top;"/>
+                </li>
+                <li>
+                    <span style="vertical-align: top;">图片预览：</span>
+                    <div>
+                        <img id="preview" class="preview-img" alt="暂无图片" title="点击预览大图" onclick="previewImg(this)" />
+                    </div>
+                </li>
+                <li>
+                    <span><b class="red"></b>实际付款日期：</span>
+                    <div><input name="transferTime" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss',max:laydate.now()})" class="login-button" style="width: 150px;"/>
+                    </div>
+                </li>
+                <li style="text-align: center">
+                    <button class="top-up-submit btn btn-gray" onclick="transferofflineCancel()" id="go_purchase_list"  type="button">取消</button>
+                    <button class="top-up-submit btn" onclick="submitFormTransferOffline()" id="submit_po_transferOffline" type="button">提交</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+<!--线下转账end-->
+
+<!--生成订单start-->
+<div class="details_one_con place_order display">
+    <h1>采购单录入</h1>
+    <div>
+     <form>
+        <p class="place_order_p">
+            <span id="qtyTotal_span">商品总数：<em>0</em>个</span>
+            <span id="priceTotal_span">总计：￥<em>0.00</em></span>
+            <span id="bbcPostage_span">运费：￥<em>0.00</em></span>
+        </p>
+        <ul class="offline_transfer_ul zone_examine_about">
+            <!--生成方式-->
+            <li>
+                <span><b class="red">*</b>生成方式：</span>
+                <div>
+                    <select class="login-select micro-capsule" id="po_generateType" onchange="po_generateType_onchange(this)">
+                    </select>
+                </div>
+            </li>
+            <!--支付方式-->
+            <li>
+                <span><b class="red">*</b>支付方式：</span>
+                <div>
+                    <select class="login-select cash-payment" id="po_payType" onchange="po_payType_onchange(this)">
+                    </select>
+                </div>
+                <h4 class="cashPayment">
+                    <br/>
+                    <span></span>
+                    <div style="padding-top: 10px;">
+                        <input type="text" class="login-button" style="font-size: 12px" placeholder="请输入金额"/>
+                    </div>
+                </h4>
+            </li>
+
+            <li class="microCapsule">
+                <span>自动匹配地址：</span>
+                <div>
+                    <select id="address-template">
+                        <option value="0">请选择地址格式</option>
+                        <option value="1">淘宝千牛格式</option>
+                        <option value="2">淘宝网页格式</option>
+                    </select>
+                </div>
+                <div style="padding-top: 10px; margin-left: 433px;">
+                    <input name="waitInfo" type="text" class="login-button" style="font-size: 12px"/>
+                    <button id="sure-match" type="button" onclick="sureMatchInfo(this)">确定添加</button>
+                </div>
+            </li>
+
+            <!--完税仓商品发货start-->
+            <li class="microCapsule">
+                <span><b class="red">*</b>收货人姓名：</span>
+                <div><input type="text" class="login-button" name="receiver"/></div>
+            </li>
+            <li class="microCapsule">
+                <span><b class="red">*</b>手机号码：</span>
+                <div><input type="tel" class="login-button" name="telephone"/></div>
+            </li>
+            <li class="microCapsule">
+                <span><b class="red">*</b>收货地址：</span>
+                <div>
+                    <select name="sale-province" style="width: 98px;" onchange="getCities()">
+                    </select>
+                    <select name="sale-city" style="width: 98px;" onchange="getAreas()">
+                    </select>
+                    <select name="sale-region" style="width: 98px;">
+                    </select>
+                </div>
+                <br/>
+                <span></span>
+                <div style="padding-top: 10px;">
+                    <input name="address-detail" type="text" class="login-button" style="font-size: 12px" placeholder="无需重复填写省市区，必须大于5个字符，小于120字"/>
+                </div>
+            </li>
+            <li class="microCapsule">
+                <span>邮政编码：</span>
+                <div><input type="text" class="login-button" name="post-code" value=""/></div>
+            </li>
+            <li class="microCapsule">
+                <span>运送方式：</span>
+                <div>
+                    <select class="login-select" name="shippingMethod" onchange="getFreight4AProvince()">
+                    </select>
+                </div>
+            </li>
+            <!--完税仓商品发货end-->
+
+            <li>
+                <span>待付款金额：</span><!--包含运费的-->
+                <div id="money2Paid_div">
+                    <input type="text" class="login-button red" readonly value="0.00"/>
+                    <label></label>
+                </div>
+            </li>
+            <li>
+                <span>OA审批单号：</span>
+                <div><input type="text" class="login-button" id="oa_auditNo"/></div>
+            </li>
+            <li>
+                <span style="vertical-align: top;">业务备注：</span>
+                <div>
+                    <textarea id="buseness_remarks" class="recharge-textarea" placeholder="非必填，不超过500字"></textarea>
+                </div>
+            </li>
+
+            <li style="text-align: center">
+                <button class="top-up-submit btn btn-gray" onclick="callOff()"  type="button">取消</button>
+                <button class="top-up-submit btn" type="button" id="order_sure_btn">确定</button>
+            </li>
+         </ul>
+     </form>
+    </div>
+</div>
+<!--生成订单end-->

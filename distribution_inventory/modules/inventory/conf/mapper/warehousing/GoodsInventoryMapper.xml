@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.warehousing.GoodsInventoryMapper">
+	<resultMap id="BaseResultMap" type="dto.warehousing.GoodsInventoryListDto">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="sku" property="sku" jdbcType="VARCHAR" />
+		<result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+		<result column="warehouse_name" property="warehouseName"
+			jdbcType="VARCHAR" />
+		<result column="total_stock" property="totalStock" jdbcType="INTEGER" />
+		<result column="frozen_stock" property="frozenStock" jdbcType="INTEGER" />
+		<result column="available_stock" property="availableStock"
+			jdbcType="INTEGER" />
+		<result column="costprice" property="costprice" jdbcType="DOUBLE" />
+		<result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+		<result column="product_title" property="productTitle"
+			jdbcType="VARCHAR" />
+		<result column="category_i" property="categoryI" jdbcType="INTEGER" />
+		<result column="category_ii" property="categoryII" jdbcType="INTEGER" />
+		<result column="category_iii" property="categoryIII" jdbcType="INTEGER" />
+		<result column="category_i_name" property="categoryIName"
+			jdbcType="VARCHAR" />
+		<result column="category_ii_name" property="categoryIIName"
+			jdbcType="VARCHAR" />
+		<result column="category_iii_name" property="categoryIIIName"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, sku, warehouse_id, warehouse_name, total_stock,
+		frozen_stock,
+		available_stock,
+		costprice, last_updated, product_title,
+		category_i, category_ii, category_iii, category_i_name,
+		category_ii_name, category_iii_name
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="entity.warehousing.GoodsInventory">
+		select
+		<include refid="Base_Column_List" />
+		from t_goods_inventory
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+			<if test="sku != null and sku != '' ">
+				and sku = #{sku}
+			</if>
+			<if test="warehouseId != null">
+				and warehouse_id = #{warehouseId}
+			</if>
+		</where>
+	</select>
+
+	<select id="getGoodsInvens" parameterType="dto.warehousing.GoodsInventorySearchDto"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		,tpt.ctitle cProducttitle,tcn.cname cCategoryname,tcn.icategoryid iCategoryid, (
+		SELECT
+			SUM (total_stock)
+		FROM
+			t_micro_goods_inventory mi
+		WHERE
+			mi.warehouse_id = t_goods_inventory.warehouse_id
+		    and mi.sku = t_goods_inventory.sku
+			) as mTotalStock
+		FROM
+			t_goods_inventory 
+		LEFT JOIN "public"."t_product_category_mapper" tpcm  on tpcm.csku=t_goods_inventory.sku
+		LEFT JOIN t_product_translate tpt on tpcm.csku=tpt.csku
+		LEFT JOIN t_category_base tcb on tcb.iid=tpcm.icategory
+		LEFT JOIN t_category_name tcn on  tcn.icategoryid=tcb.iid
+		<where>
+			tcb.ilevel=1 <!--  一级商品类目   -->
+			<if test="paramDto.id != null">
+				and id = #{paramDto.id}
+			</if>
+			<if test="paramDto.sku != null and paramDto.sku != '' ">
+				and sku = #{paramDto.sku}
+			</if>
+			<if test="paramDto.warehouseId != null">
+				and warehouse_id = #{paramDto.warehouseId}
+			</if>
+			<if test="paramDto.categoryI != null">
+				<!-- and category_i = #{paramDto.categoryI} -->
+				and tcn.icategoryid = #{paramDto.categoryI}
+			</if>
+			<if test="paramDto.key != null and paramDto.key != '' ">
+				and (sku like '%'||#{paramDto.key}||'%' or tpt.ctitle
+				like '%'||#{paramDto.key}||'%')
+			</if>
+		</where>
+		ORDER BY sku asc
+		<if test="paramDto.pageNo != null and paramDto.pageNo !=0">
+			limit #{paramDto.pageSize} offset ((#{paramDto.pageNo})-1)
+			* #{paramDto.pageSize}
+		</if>
+	</select>
+	
+	<select id="getCloudGoodsInvens" parameterType="dto.warehousing.GoodsInventorySearchDto"
+		resultMap="BaseResultMap">
+		select
+			ti.id, ti.sku, ti.warehouse_id, ti.warehouse_name, ti.frozen_stock,
+			ti.costprice, ti.last_updated, ti.product_title, ti.category_i, ti.category_ii, 
+			ti.category_iii, ti.category_i_name, ti.category_ii_name, ti.category_iii_name,
+			ti.total_stock -(
+				SELECT
+					COALESCE(SUM (total_stock),0)
+				FROM
+					t_micro_goods_inventory mi
+				WHERE
+					mi.warehouse_id = ti.warehouse_id
+		        AND mi.sku = ti.sku
+			) total_stock,
+			ti.available_stock -(
+				SELECT
+					COALESCE(SUM (available_stock),0)
+				FROM
+					t_micro_goods_inventory mi
+				WHERE
+					mi.warehouse_id = ti.warehouse_id
+		        AND mi.sku = ti.sku
+			) available_stock
+		FROM
+					t_goods_inventory ti
+		INNER JOIN
+					t_warehouse tw 
+		ON 	cast(ti.warehouse_id as varchar(50))=tw.warehouse_no
+		AND tw.status = 1
+		<where>
+			1 = 1
+			<if test="paramDto.id != null">
+				and ti.id = #{paramDto.id}
+			</if>
+			<if test="paramDto.sku != null and paramDto.sku != '' ">
+				and ti.sku = #{paramDto.sku}
+			</if>
+			<if test="paramDto.warehouseId != null">
+				and ti.warehouse_id = #{paramDto.warehouseId}
+			</if>
+			<if test="paramDto.categoryI != null">
+				and ti.category_i = #{paramDto.categoryI}
+			</if>
+			<if test="paramDto.key != null and paramDto.key != '' ">
+				and (ti.sku like '%'||#{paramDto.key}||'%' or ti.product_title
+				like '%'||#{paramDto.key}||'%')
+			</if>
+			<if test= "paramDto.skuList !=null and paramDto.skuList.size() > 0">
+			    and ti.sku in 
+			    <foreach collection="paramDto.skuList" index="index" item="item" open="(" separator="," close=")">
+			     #{item}
+			    </foreach>
+			</if>
+		</where>
+		ORDER BY ti.sku asc
+		<if test="paramDto.pageNo != null and paramDto.pageNo !=0">
+			limit #{paramDto.pageSize} offset ((#{paramDto.pageNo})-1)
+			* #{paramDto.pageSize}
+		</if>
+	</select>
+
+	<select id="getCloudTotal" parameterType="dto.warehousing.GoodsInventorySearchDto"
+		resultType="Integer">
+		select count(ti.id)	
+		
+		FROM
+					t_goods_inventory ti
+		INNER JOIN
+					t_warehouse tw 
+		ON 	cast(ti.warehouse_id as varchar(50))=tw.warehouse_no
+		AND tw.status = 1
+		<where>
+			1 = 1
+			<if test="paramDto.id != null">
+				and ti.id = #{paramDto.id}
+			</if>
+			<if test="paramDto.sku != null and paramDto.sku != '' ">
+				and ti.sku = #{paramDto.sku}
+			</if>
+			<if test="paramDto.warehouseId != null">
+				and ti.warehouse_id = #{paramDto.warehouseId}
+			</if>
+			<if test="paramDto.categoryI != null">
+				and ti.category_i = #{paramDto.categoryI}
+			</if>
+			<if test="paramDto.key != null and paramDto.key != '' ">
+				and (ti.sku like '%'||#{paramDto.key}||'%' or ti.product_title
+				like '%'||#{paramDto.key}||'%')
+			</if>
+			<if test= "paramDto.skuList !=null and paramDto.skuList.size() > 0">
+			    and ti.sku in 
+			    <foreach collection="paramDto.skuList" index="index" item="item" open="(" separator="," close=")">
+			     #{item}
+			    </foreach>
+			</if>
+		</where>
+	</select>
+	
+	<select id="getTotal" parameterType="dto.warehousing.GoodsInventorySearchDto"
+		resultType="Integer">
+		select
+		count(*)
+		FROM
+			t_goods_inventory 
+		LEFT JOIN "public"."t_product_category_mapper" tpcm  on tpcm.csku=t_goods_inventory.sku
+		LEFT JOIN t_product_translate tpt on tpcm.csku=tpt.csku
+		LEFT JOIN t_category_base tcb on tcb.iid=tpcm.icategory
+		LEFT JOIN t_category_name tcn on  tcn.icategoryid=tcb.iid
+		<where>
+			tcb.ilevel=1 <!--  一级商品类目   -->
+			<if test="paramDto.id != null">
+				and id = #{paramDto.id}
+			</if>
+			<if test="paramDto.sku != null and paramDto.sku != '' ">
+				and sku = #{paramDto.sku}
+			</if>
+			<if test="paramDto.warehouseId != null">
+				and warehouse_id = #{paramDto.warehouseId}
+			</if>
+			<if test="paramDto.categoryI != null">
+				<!-- and category_i = #{paramDto.categoryI} -->
+				and tcn.icategoryid = #{paramDto.categoryI}
+			</if>
+			<if test="paramDto.key != null and paramDto.key != '' ">
+				and (sku like '%'||#{paramDto.key}||'%' or tpt.ctitle
+				like '%'||#{paramDto.key}||'%')
+			</if>
+		</where>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_goods_inventory
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="entity.warehousing.GoodsInventory">
+		insert into t_goods_inventory
+		(id, sku, warehouse_id,
+		warehouse_name, total_stock, frozen_stock,
+		available_stock, costprice, last_updated
+		)
+		values
+		(#{id,jdbcType=INTEGER}, #{sku,jdbcType=VARCHAR},
+		#{warehouseId,jdbcType=INTEGER},
+		#{warehouseName,jdbcType=VARCHAR},
+		#{totalStock,jdbcType=INTEGER}, #{frozenStock,jdbcType=INTEGER},
+		#{availableStock,jdbcType=INTEGER}, #{costprice,jdbcType=DOUBLE},
+		#{lastUpdated,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="entity.warehousing.GoodsInventory">
+		insert into t_goods_inventory
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="sku != null">
+				sku,
+			</if>
+			<if test="warehouseId != null">
+				warehouse_id,
+			</if>
+			<if test="warehouseName != null">
+				warehouse_name,
+			</if>
+			<if test="totalStock != null">
+				total_stock,
+			</if>
+			<if test="frozenStock != null">
+				frozen_stock,
+			</if>
+			<if test="availableStock != null">
+				available_stock,
+			</if>
+			<if test="costprice != null">
+				costprice,
+			</if>
+			<if test="lastUpdated != null">
+				last_updated,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="sku != null">
+				#{sku,jdbcType=VARCHAR},
+			</if>
+			<if test="warehouseId != null">
+				#{warehouseId,jdbcType=INTEGER},
+			</if>
+			<if test="warehouseName != null">
+				#{warehouseName,jdbcType=VARCHAR},
+			</if>
+			<if test="totalStock != null">
+				#{totalStock,jdbcType=INTEGER},
+			</if>
+			<if test="frozenStock != null">
+				#{frozenStock,jdbcType=INTEGER},
+			</if>
+			<if test="availableStock != null">
+				#{availableStock,jdbcType=INTEGER},
+			</if>
+			<if test="costprice != null">
+				#{costprice,jdbcType=DOUBLE},
+			</if>
+			<if test="lastUpdated != null">
+				#{lastUpdated,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="entity.warehousing.GoodsInventory">
+		update t_goods_inventory
+		<set>
+			<if test="sku != null">
+				sku = #{sku,jdbcType=VARCHAR},
+			</if>
+			<if test="warehouseId != null">
+				warehouse_id = #{warehouseId,jdbcType=INTEGER},
+			</if>
+			<if test="warehouseName != null">
+				warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+			</if>
+			<if test="totalStock != null">
+				total_stock = #{totalStock,jdbcType=INTEGER},
+			</if>
+			<if test="frozenStock != null">
+				frozen_stock = #{frozenStock,jdbcType=INTEGER},
+			</if>
+			<if test="availableStock != null">
+				available_stock = #{availableStock,jdbcType=INTEGER},
+			</if>
+			<if test="costprice != null">
+				costprice = #{costprice,jdbcType=DOUBLE},
+			</if>
+			<if test="lastUpdated != null">
+				last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="entity.warehousing.GoodsInventory">
+		update
+		t_goods_inventory
+		set sku = #{sku,jdbcType=VARCHAR},
+		warehouse_id =
+		#{warehouseId,jdbcType=INTEGER},
+		warehouse_name =
+		#{warehouseName,jdbcType=VARCHAR},
+		total_stock =
+		#{totalStock,jdbcType=INTEGER},
+		frozen_stock =
+		#{frozenStock,jdbcType=INTEGER},
+		available_stock =
+		#{availableStock,jdbcType=INTEGER},
+		costprice =
+		#{costprice,jdbcType=DOUBLE},
+		last_updated =
+		#{lastUpdated,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

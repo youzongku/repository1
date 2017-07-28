@@ -1,0 +1,138 @@
+<div id="purchase_list">	
+	<p class="title">我的进货记录</p>
+	<ul class="purchase-order-list">
+		<li onclick="timeSelected(this)" value="" class="purchase-current">所有订单</li>
+        <li onclick="timeSelected(this)" value="0">未付款</li>
+        <li onclick="timeSelected(this)" value="4,6">待确认</li>
+		<li onclick="timeSelected(this)" value="1">已完成</li>
+        <li onclick="timeSelected(this)" value="2,3">已取消</li>
+	</ul>
+	<div class="order-input">
+		<ul>
+			<li class="order-date">
+				下单时间：
+				<select name="" id="timeSelected" class="select-pub">
+                    <option value="" disabled>请选择你所需要查询的时间段</option>	                     
+                    <option value="3" selected>最近3个月</option>
+                	<option value="6">最近半年</option>
+                    <option value="12">最近一年</option>
+                </select>
+			</li>
+			<li class="order-search">
+				<input type="text" class="search-input-pub" placeholder="采购订单号/商品名称" id="seachInput">
+                <span id="seachSpan" class="search-btn-pub" onclick="seachSpan()">搜索</span>
+                <script> //解决IEplaceholder不兼容问题
+                    $(document).ready(function() {
+                        $(function () {
+                            if (!placeholderSupport()) {
+                                $('[placeholder]').focus(function () {
+                                    var input = $(this);
+                                    if (input.val() == input.attr('placeholder')) {
+                                        input.val('');
+                                        input.removeClass('placeholder');
+                                    }
+                                }).blur(function () {
+                                    var input = $(this);
+                                    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                                        input.addClass('placeholder');
+                                        input.val(input.attr('placeholder'));
+                                    }
+                                }).blur();
+                            }
+                        })
+                        function placeholderSupport() {
+                            return 'placeholder' in document.createElement('input');
+                        }
+                    })
+                </script>
+			</li>
+		</ul>
+	</div>
+	<div class="order-product-detail"></div>
+	<div id="pagination_order" style="text-align: center; margin-top: 30px;"></div>
+</div>
+
+<!--订单信息详情彈出窗-->
+<div class="order_detail_alert" style="display:none;">
+    <div class="alert_span">
+        <h2>采购进货-订单详情<span class="close_detail btn" id="goback_purchaseorderlist_btn">返回</span></h2>
+        <ul class="order_detail_line">
+            <li class="sure_down">
+                <div class="line-title-box">
+                    <div><span class="line-title">拍下</span></div>
+                    <p class="order-detail-time" id="orderDate_"></p>
+                </div>
+            </li>
+            <li>
+                <span class="dashed-line">>>>>>>>></span>
+            </li>
+            <li class="sure_pay">
+                <div class="line-title-box">
+                    <div><span class="line-title">付款</span></div>
+                    <p class="order-detail-time" id="payDate_">
+                    	<!-- 2015-11-16<span>12.00</span> -->
+                    </p>
+                </div>
+            </li>
+            <li>
+                <span class="dashed-line">>>>>>>>></span>
+            </li>
+            <li class="sure_depart">
+                <div class="line-title-box">
+                    <div><span class="line-title">分配微仓库存</span></div>
+                    <p class="order-detail-time">
+                    </p>
+                </div>
+            </li>
+            <li>
+                <span class="dashed-line">>>>>>>>></span>
+            </li>
+            <li class="sure_send">
+                <div class="line-title-box">
+                    <div><span class="line-title">销售发货</span></div>
+                    <p class="order-detail-time">
+                    	<!-- 2015-11-16<span>12.00</span> -->
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="alert_span">
+        <h2>订单信息</h2>
+        <ul class="order-message">
+            <li>订单号：<p id="detail_no"></p></li>
+            <li style="display: none;">审核理由：<p id="reason" title="" style="cursor: pointer;"></p></li>
+            <li>
+                订单状态：
+                <p><lable id="detail_stat">未付款</lable>
+                    <span class="ma-pay btn">立即支付</span></p></li>
+            <li style="display: none;">满减金额：<p class="red" id="deductionAmount"></p></li>
+        </ul>
+        <p>商品列表</p>
+        <div>
+            <ul class="product-list-title">
+                <li style="width: 30%">基本信息</li>
+                <li style="width: 15%">商品编号</li>
+                <li style="width: 15%">仓库</li>
+                <li style="width: 13%">单价(元)</li>
+                <li style="width: 13%">数量(个)</li>
+                <li style="width: 14%">小计(元)</li>
+            </ul>
+            <table class="product-list-detail">
+            </table>
+            <p class="total-price">订单金额：<span id="detail_total"></span>元</p>
+            <p class="total-price" id="bbcPostage" style="margin-right: 20px;display:none">运费：
+                <span></span>元
+            </p>
+        </div>
+    </div>
+    <div class="customer-remarks">
+        <h4>客户备注信息</h4>
+        <div>
+            <p>备注时间：<span id="remarkTime"></span></p>
+            <p>备注：<span id="remark"></span></p>
+        </div>
+    </div>
+</div>
+<div  id = "winxin_content" class="modal fade in"></div>

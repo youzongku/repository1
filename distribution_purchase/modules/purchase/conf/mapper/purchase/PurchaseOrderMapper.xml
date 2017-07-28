@@ -1,0 +1,863 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.purchase.PurchaseOrderMapper" >
+  <resultMap id="BaseResultMap" type="entity.purchase.PurchaseOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="purchase_order_no" property="purchaseOrderNo" jdbcType="VARCHAR" />
+    <result column="cart_id" property="cartId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="payment_id" property="paymentId" jdbcType="VARCHAR" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="transaction_id" property="transactionId" jdbcType="VARCHAR" />
+    <result column="payer_ip" property="payerIp" jdbcType="VARCHAR" />
+    <result column="pay_date" property="payDate" jdbcType="TIMESTAMP" />
+    <result column="pay_host" property="payHost" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="purchase_total_amount" property="purchaseTotalAmount" jdbcType="DOUBLE" />
+    <result column="validable_pay_date" property="validablePayDate" jdbcType="TIMESTAMP" />
+    <result column="purchase_date" property="purchaseDate" jdbcType="TIMESTAMP" />
+    <result column="payer_idcard" property="payerIdcard" jdbcType="VARCHAR" />
+    <result column="payer_name" property="payerName" jdbcType="VARCHAR" />
+    <result column="purchase_type" property="purchaseType" jdbcType="SMALLINT" />
+    <result column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="purchase_discount_amout" property="purchaseDiscountAmount" jdbcType="DOUBLE" />
+    <result column="discount" property="discount" jdbcType="DOUBLE" />
+    <result column="cancel_date" property="cancelDate" jdbcType="TIMESTAMP" />
+    <!-- 销售单缺货采购实付金额 -->
+    <result column="sales_amount" property="salesAmount" jdbcType="DOUBLE" />
+    <!-- 分销商平台运费 -->
+    <result column="bbc_postage" jdbcType="DOUBLE" property="bbcPostage" />
+     <!-- 物流方式 -->
+    <result column="logistics_mode" jdbcType="VARCHAR" property="logisticsMode" />
+    <!-- 优惠码 -->
+    <result column="coupons_code" jdbcType="VARCHAR" property="couponsCode" />
+    <!-- 优惠码面额 -->
+    <result column="coupons_amount" jdbcType="DOUBLE" property="couponsAmount" />
+    <!-- 分销商类型 -->
+    <result column="distributor_type" jdbcType="INTEGER" property="distributorType" />
+    <!-- 分销商类型 -->
+    <result column="deduction_amount" jdbcType="DOUBLE" property="deductionAmount" />
+    <result column="ispro" property="isPro" jdbcType="BIT" />
+    <result column="ischoose" property="isChoose" jdbcType="BIT" />
+    <result column="input_user" property="inputUser" jdbcType="VARCHAR" />
+    <result column="offline_money" property="offlineMoney" jdbcType="DOUBLE" />
+    <result column="finance_money" property="financeMoney" jdbcType="DOUBLE" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="customer_service" property="customerService" jdbcType="VARCHAR" />
+    <result column="reduce_price" property="reducePrice" jdbcType="DOUBLE" />
+    <result column="tawprice" property="tAWPrice" jdbcType="DOUBLE" />
+    <result column="oa_audit_no" property="oaAuditNo" jdbcType="VARCHAR" />
+    <result column="buseness_remarks" property="busenessRemarks" jdbcType="VARCHAR" />
+    <result column="back_in" property="backIn" jdbcType="BIT" />
+     <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+     <result column="rejected_by_finance" property="rejectedByFinance" jdbcType="BIT" />
+     <result column="immediate_delivery" property="immediateDelivery" jdbcType="BIT" />
+     <result column="immediate_delivery" property="immediateDelivery" jdbcType="BIT" />
+     <result column="attribution_type" property="attributionType" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, email, purchase_order_no, cart_id, status, payment_id, currency, transaction_id, payer_ip,
+    pay_date, pay_host, remarks, purchase_total_amount, validable_pay_date, purchase_date, 
+    payer_idcard, payer_name, purchase_type ,sid,purchase_discount_amout,discount,sales_amount,
+    cancel_date,bbc_postage,logistics_mode,coupons_code,coupons_amount,distributor_type,
+    deduction_amount,ispro,isChoose,input_user,offline_money,has_associated_orders,
+    finance_money,remark,reason,customer_service,reduce_price,tawprice,oa_audit_no,buseness_remarks
+    ,back_in,nick_name,immediate_delivery,attribution_type
+  </sql>
+  
+  <select id="selectCountByOAAuditNo" resultType="java.lang.Integer" parameterType="string">
+		select count(*)
+		from t_purchase_order
+		where oa_audit_no = #{oaAuditNo}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_purchase_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getOrderByNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_purchase_order
+    where purchase_order_no = #{1,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectOrder" resultMap="BaseResultMap" parameterType="entity.purchase.PurchaseOrder" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM t_purchase_order
+    <where>
+      <if test="id != null">
+        id = #{id}
+      </if>
+      <if test="purchaseOrderNo != null and purchaseOrderNo != '' ">
+        AND purchase_order_no = #{purchaseOrderNo}
+      </if>
+      <if test="status != null">
+        AND status = #{status}
+      </if>
+    </where>
+    ORDER BY id DESC
+  </select>
+
+  <select id="selectOrders" resultMap="BaseResultMap" parameterType="entity.purchase.PurchaseOrder">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM t_purchase_order
+    <where>
+      <if test="email != null and email != '' ">
+        AND email = #{email}
+      </if>
+    </where>
+    ORDER BY id DESC
+  </select>
+  
+  <select id="selectOrdersByIdList" resultMap="BaseResultMap" parameterType="java.util.List">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM t_purchase_order
+    where id in
+    <foreach collection="list" item="id" open="(" separator="," close=")">  
+    	#{id}  
+    </foreach>
+    ORDER BY id DESC
+  </select>
+  
+  <select id="getPurchaseList" resultType="entity.purchase.PurchaseOrder" parameterType="java.util.Map">
+    SELECT 
+    DISTINCT
+    o.id id,
+    o.email email,
+    o.purchase_order_no purchaseOrderNo,
+    o.cart_id cartId,
+    o.status status,
+    o.payment_id paymentId,
+    o.currency currency,
+    o.transaction_id transactionId,
+    o.payer_ip payerIp,
+    o.pay_date payDate,
+   	o.pay_host payHost,
+    o.remarks remarks,
+    o.purchase_total_amount purchaseTotalAmount,
+    o.validable_pay_date validablePayDate,
+    o.purchase_date purchaseDate,
+    o.payer_idcard payerIdcard,
+    o.payer_name payerName,
+    o.purchase_type purchaseType,
+    o.sid sid,
+    o.purchase_discount_amout purchaseDiscountAmount,
+    o.discount discount,
+    o.sales_amount salesAmount,
+    o.cancel_date cancelDate,
+    o.bbc_postage bbcPostage,
+    o.logistics_mode logisticsMode,
+    o.coupons_code couponsCode,
+    o.coupons_amount couponsAmount,
+    o.distributor_type distributorType,
+    o.ispro isPro,
+    o.ischoose isChoose,
+    o.input_user inputUser,
+    o.offline_money offlineMoney,
+    o.finance_money financeMoney,
+    o.remark remark,
+    o.oa_audit_no oaAuditNo,
+    o.reason reason,
+    o.customer_service customerService,
+    o.reduce_price reducePrice,
+    o.tawprice tAWPrice,
+    o.buseness_remarks busenessRemarks,
+    o.back_in backIn,
+    o.nick_name nickName
+    from t_purchase_order o 
+    <if test="seachFlag != null and seachFlag !='' ">
+		LEFT JOIN t_purchase_order_detail d ON o.id = d.purchase_id
+    </if>
+    <where>
+      <if test="email != null and email != '' ">
+        and o.email = #{email}
+      </if>
+       <if test="nickName != null and nickName != '' ">
+        and o.nick_name = #{nickName,jdbcType=VARCHAR}
+      </if>
+      <if test="accounts != null and accounts.size() > 0 ">
+      	and o.email in
+        <foreach collection="accounts" open="(" close=")" item="item" separator=",">
+        	#{item}
+        </foreach>
+      </if>
+      <!--
+      <if test="status != null">
+        AND o.status = #{status}
+      </if>
+       -->
+      <if test="statusList!=null and statusList.size()>0">
+      	AND o.status in
+        <foreach collection="statusList" open="(" close=")" item="item" separator=",">
+        	#{item}
+        </foreach>
+      </if>
+      <!-- 现金支付与线下转账都有待审核状态，单数据列表分开2个栏目，所有增加该条件，待优化 -->
+      <if test="paytype != null and paytype != ''">
+        AND (o.payment_id = #{paytype,jdbcType=VARCHAR} or o.payment_id is null)
+      </if>
+      <if test="isPro != null ">
+        AND o.isPro = #{isPro}
+      </if>
+      <if test="isBack != null ">
+        AND o.purchase_type = 1
+      </if>
+      <if test="isChoose != null ">
+        AND o.isChoose = #{isChoose}
+      </if>
+      <if test="orderDate != null ">
+        <if test="orderDate == 3 ">
+          <![CDATA[AND o.purchase_date < to_date(''||(now() + interval '1 day')||'','yyyy-mm-dd')  AND purchase_date >= to_date(''||(now() - interval '3 month')||'','yyyy-mm-dd')]]>
+        </if>
+        <if test="orderDate == 6 ">
+          <![CDATA[AND o.purchase_date < to_date(''||(now() + interval '1 day')||'','yyyy-mm-dd')  AND purchase_date >= to_date(''||(select now() - interval '6 month')||'','yyyy-mm-dd')]]>
+        </if>
+        <if test="orderDate == 12 ">
+          <![CDATA[AND o.purchase_date < to_date(''||(now() + interval '1 day')||'','yyyy-mm-dd')  AND purchase_date >= to_date(''||(select now() - interval '1 year')||'','yyyy-mm-dd')]]>
+        </if>
+      </if>
+      <if test="seachFlag != null and seachFlag !='' ">
+        AND  (o.purchase_order_no like '%'||#{seachFlag,jdbcType=VARCHAR}||'%' 
+        	 OR o.email like '%'||#{seachFlag,jdbcType=VARCHAR}||'%' 
+        	 OR o.input_user = #{seachFlag,jdbcType=VARCHAR}
+        	 OR d.product_name like '%'||#{seachFlag,jdbcType=VARCHAR}||'%' 
+        	 OR d.sku like #{seachFlag,jdbcType=VARCHAR}
+        	 OR o.customer_service = #{seachFlag,jdbcType=VARCHAR}
+        	 OR o.nick_name = #{seachFlag,jdbcType=VARCHAR})
+      </if>
+      <if test="sorderDate != null and sorderDate != '' ">
+        <![CDATA[AND o.purchase_date >= to_date(''||#{sorderDate}||'','yyyy-mm-dd')]]>
+      </if>
+      <if test="eorderDate != null and eorderDate != '' ">
+        <![CDATA[AND o.purchase_date < to_date(''||#{eorderDate}||'','yyyy-mm-dd')]]>
+      </if>
+      <if test="spaydate != null and spaydate != '' ">
+        <![CDATA[AND o.pay_date >= to_date(''||#{spaydate}||'','yyyy-mm-dd')]]>
+      </if>
+      <if test="epaydate != null and epaydate != '' ">
+        <![CDATA[AND o.pay_date < to_date(''||#{epaydate}||'','yyyy-mm-dd')]]>
+      </if>
+    </where>
+    <choose>
+    	<when test="filter != null and sort != null and sort != ''">
+			order by ${sort} ${filter} nulls last
+		</when>
+		<otherwise>
+			ORDER BY o.purchase_date DESC
+		</otherwise>
+    </choose>
+     
+    <if test="pageSize != null">
+    	LIMIT #{pageSize} OFFSET #{pageNow}    
+    </if>
+  </select>
+
+  <select id="getPurchaseCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    SELECT COUNT(DISTINCT o.id)
+    from t_purchase_order o
+    <if test="seachFlag != null and seachFlag !='' ">
+		LEFT JOIN t_purchase_order_detail d ON o.id = d.purchase_id
+    </if> 
+    <where>
+      <if test="email != null and email != '' ">
+        and o.email = #{email}
+      </if>
+       <if test="nickName != null and nickName != '' ">
+        and o.nick_name = #{nickName,jdbcType=VARCHAR}
+      </if>
+      <if test="accounts != null and accounts.size() > 0 ">
+      	and o.email in
+        <foreach collection="accounts" open="(" close=")" item="item" separator=",">
+        	#{item}
+        </foreach>
+      </if>
+      <!-- 
+      <if test="status != null and status != 9 ">
+        AND o.status = #{status}
+      </if>
+       -->
+      <if test="statusList!=null and statusList.size()>0">
+      	AND o.status in
+        <foreach collection="statusList" open="(" close=")" item="item" separator=",">
+        	#{item}
+        </foreach>
+      </if>
+      
+      <!-- 现金支付与线下转账都有待审核状态，单数据列表分开2个栏目，所有增加该条件，待优化 -->
+      <if test="paytype != null and paytype != ''">
+        AND (o.payment_id = #{paytype,jdbcType=VARCHAR} or o.payment_id is null)
+      </if>
+      <if test="isPro != null ">
+        AND o.isPro = #{isPro}
+      </if>
+       <if test="isBack != null ">
+        AND o.purchase_type = 1
+      </if>
+      <if test="isChoose != null ">
+        AND o.isChoose = #{isChoose}
+      </if>
+      <if test="orderDate != null ">
+        <if test="orderDate == 3 ">
+          <![CDATA[AND o.purchase_date < to_date(''||(now() + interval '1 day')||'','yyyy-mm-dd')  AND purchase_date >= to_date(''||(now() - interval '3 month')||'','yyyy-mm-dd')]]>
+        </if>
+        <if test="orderDate == 6 ">
+          <![CDATA[AND o.purchase_date < to_date(''||(now() + interval '1 day')||'','yyyy-mm-dd')  AND purchase_date >= to_date(''||(select now() - interval '6 month')||'','yyyy-mm-dd')]]>
+        </if>
+        <if test="orderDate == 12 ">
+          <![CDATA[AND o.purchase_date < to_date(''||(now() + interval '1 day')||'','yyyy-mm-dd')  AND purchase_date >= to_date(''||(select now() - interval '1 year')||'','yyyy-mm-dd')]]>
+        </if>
+      </if>
+      <if test="seachFlag != null and seachFlag !='' ">
+         AND  (o.purchase_order_no like '%'||#{seachFlag,jdbcType=VARCHAR}||'%' 
+        	 OR o.email like '%'||#{seachFlag,jdbcType=VARCHAR}||'%' 
+        	 OR o.input_user = #{seachFlag,jdbcType=VARCHAR}
+        	 OR d.product_name like '%'||#{seachFlag,jdbcType=VARCHAR}||'%' 
+        	 OR d.sku like #{seachFlag,jdbcType=VARCHAR}
+        	 OR o.customer_service = #{seachFlag,jdbcType=VARCHAR}
+        	 OR o.nick_name = #{seachFlag,jdbcType=VARCHAR})
+      </if>
+      <if test="sorderDate != null and sorderDate != '' ">
+        <![CDATA[AND o.purchase_date >= to_date(''||#{sorderDate}||'','yyyy-mm-dd')]]>
+      </if>
+      <if test="eorderDate != null and eorderDate != '' ">
+        <![CDATA[AND o.purchase_date < to_date(''||#{eorderDate}||'','yyyy-mm-dd')]]>
+      </if>
+      <if test="spaydate != null and spaydate != '' ">
+        <![CDATA[AND o.pay_date >= to_date(''||#{spaydate}||'','yyyy-mm-dd')]]>
+      </if>
+      <if test="epaydate != null and epaydate != '' ">
+        <![CDATA[AND o.pay_date < to_date(''||#{epaydate}||'','yyyy-mm-dd')]]>
+      </if>
+    </where>
+  </select>
+  
+  <select id="getAmountByDate" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(*) FROM t_purchase_order
+    WHERE email = #{email}
+    <![CDATA[AND purchase_date < to_date(''||(now() + interval '1 day')||'','yyyy-mm-dd')  AND purchase_date >= to_date(''||(select now() - interval '30 day')||'','yyyy-mm-dd')]]>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_purchase_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="entity.purchase.PurchaseOrder" >
+    insert into t_purchase_order (id, email, purchase_order_no,
+      cart_id, status, payment_id, currency, transaction_id, payer_ip, 
+      pay_date, pay_host, remarks, purchase_total_amount, validable_pay_date, 
+      purchase_date, payer_idcard, payer_name, purchase_type,purchase_discount_amout,
+      discount,sales_amount,cancel_date,tawprice, buseness_remarks)
+    values (#{id,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{purchaseOrderNo,jdbcType=VARCHAR},
+      #{cartId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{paymentId,jdbcType=VARCHAR}, 
+      #{currency,jdbcType=VARCHAR}, #{transactionId,jdbcType=VARCHAR}, #{payerIp,jdbcType=VARCHAR}, 
+      #{payDate,jdbcType=TIMESTAMP}, #{payHost,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{purchaseTotalAmount,jdbcType=DOUBLE}, #{validablePayDate,jdbcType=TIMESTAMP}, 
+      #{purchaseDate,jdbcType=TIMESTAMP}, #{payerIdcard,jdbcType=VARCHAR}, #{payerName,jdbcType=VARCHAR}, 
+      #{purchaseType,jdbcType=SMALLINT},#{purchaseDiscountAmount,jdbcType=DOUBLE},#{discount,jdbcType=DOUBLE},
+      #{salesAmount,jdbcType=DOUBLE},#{cancelDate,jdbcType=TIMESTAMP},#{tAWPrice},#{busenessRemarks})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="entity.purchase.PurchaseOrder" useGeneratedKeys="true" keyProperty="id">
+    insert into t_purchase_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="purchaseOrderNo != null" >
+        purchase_order_no,
+      </if>
+      <if test="cartId != null" >
+        cart_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="paymentId != null" >
+        payment_id,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+      <if test="transactionId != null" >
+        transaction_id,
+      </if>
+      <if test="payerIp != null" >
+        payer_ip,
+      </if>
+      <if test="payDate != null" >
+        pay_date,
+      </if>
+      <if test="payHost != null" >
+        pay_host,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="purchaseTotalAmount != null" >
+        purchase_total_amount,
+      </if>
+      <if test="validablePayDate != null" >
+        validable_pay_date,
+      </if>
+      <if test="purchaseDate != null" >
+        purchase_date,
+      </if>
+      <if test="payerIdcard != null" >
+        payer_idcard,
+      </if>
+      <if test="payerName != null" >
+        payer_name,
+      </if>
+      <if test="purchaseType != null" >
+        purchase_type,
+      </if>
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="purchaseDiscountAmount != null" >
+        purchase_discount_amout,
+      </if>
+      <if test="discount != null" >
+        discount,
+      </if>
+      <if test="salesAmount != null" >
+        sales_amount,
+      </if>
+      <if test="cancelDate !=null">
+      	cancel_date,
+      </if>
+      <if test="bbcPostage !=null">
+      	bbc_postage,
+      </if>
+      <if test="logisticsMode !=null">
+      	logistics_mode,
+      </if>
+      <if test="couponsCode !=null">
+      	coupons_code,
+      </if>
+      <if test="couponsAmount !=null">
+      	coupons_amount,
+      </if>
+      <if test="distributorType !=null">
+      	distributor_type,
+      </if>
+      <if test="deductionAmount !=null">
+      	deduction_amount,
+      </if>
+      <if test="isPro != null ">
+        ispro,
+      </if>
+      <if test="isChoose != null ">
+        ischoose,
+      </if>
+       <if test="inputUser != null ">
+        input_user,
+      </if>
+      <if test="offlineMoney != null ">
+        offline_money,
+      </if>
+      <if test="financeMoney != null ">
+        finance_money,
+      </if>
+      <if test="remark != null ">
+        remark,
+      </if>
+      <if test="reason != null ">
+        reason,
+      </if>
+      <if test="customerService != null ">
+        customer_service,
+      </if>
+      <if test="tAWPrice != null ">
+        tawprice,
+      </if>
+      <if test="oaAuditNo != null ">
+        oa_audit_no,
+      </if>
+      <if test="busenessRemarks != null ">
+        buseness_remarks,
+      </if>
+      <if test="backIn != null ">
+        back_in,
+      </if>
+      <if test="nickName != null ">
+        nick_name,
+      </if>
+      <if test="immediateDelivery != null ">
+        immediate_delivery,
+      </if>
+      <if test="attributionType != null ">
+        attribution_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseOrderNo != null" >
+        #{purchaseOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cartId != null" >
+        #{cartId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="paymentId != null" >
+        #{paymentId,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null" >
+        #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="payerIp != null" >
+        #{payerIp,jdbcType=VARCHAR},
+      </if>
+      <if test="payDate != null" >
+        #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payHost != null" >
+        #{payHost,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseTotalAmount != null" >
+        #{purchaseTotalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="validablePayDate != null" >
+        #{validablePayDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseDate != null" >
+        #{purchaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payerIdcard != null" >
+        #{payerIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="payerName != null" >
+        #{payerName,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseType != null" >
+        #{purchaseType,jdbcType=SMALLINT},
+      </if>
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseDiscountAmount != null" >
+        #{purchaseDiscountAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=DOUBLE},
+      </if>
+      <if test="salesAmount != null" >
+        #{salesAmount,jdbcType=DOUBLE},
+      </if>
+       <if test="cancelDate !=null">
+      	#{cancelDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bbcPostage !=null">
+      	#{bbcPostage,jdbcType=DOUBLE},
+      </if>
+      <if test="logisticsMode !=null">
+      	#{logisticsMode,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsCode !=null">
+        #{couponsCode,jdbcType=VARCHAR},
+      </if>
+       <if test="couponsAmount !=null">
+       #{couponsAmount,jdbcType=DOUBLE},
+      </if>
+       <if test="distributorType !=null">
+       #{distributorType,jdbcType=INTEGER},
+      </if>
+      <if test="deductionAmount !=null">
+      	#{deductionAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="isPro != null ">
+       #{isPro,jdbcType=BIT},
+      </if>
+      <if test="isChoose != null ">
+       #{isChoose,jdbcType=BIT},
+      </if>
+      <if test="inputUser != null ">
+       #{inputUser,jdbcType=VARCHAR},
+      </if>
+      <if test="offlineMoney != null" >
+        #{offlineMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="financeMoney != null" >
+        #{financeMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="customerService != null" >
+        #{customerService,jdbcType=VARCHAR},
+      </if>
+      <if test="tAWPrice != null" >
+        #{tAWPrice},
+      </if>
+      <if test="oaAuditNo != null" >
+        #{oaAuditNo},
+      </if>
+      <if test="busenessRemarks != null" >
+        #{busenessRemarks},
+      </if>
+      <if test="backIn != null ">
+        #{backIn,jdbcType=BIT},
+      </if>
+      <if test="nickName != null ">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="immediateDelivery != null ">
+        #{immediateDelivery,jdbcType=BIT},
+      </if>
+      <if test="attributionType != null ">
+        #{attributionType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.purchase.PurchaseOrder" >
+    update t_purchase_order
+    <set >
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseOrderNo != null" >
+        purchase_order_no = #{purchaseOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cartId != null" >
+        cart_id = #{cartId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="paymentId != null" >
+        payment_id = #{paymentId,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null" >
+        transaction_id = #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="payerIp != null" >
+        payer_ip = #{payerIp,jdbcType=VARCHAR},
+      </if>
+      <if test="payDate != null" >
+        pay_date = #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payHost != null" >
+        pay_host = #{payHost,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseTotalAmount != null" >
+        purchase_total_amount = #{purchaseTotalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="validablePayDate != null" >
+        validable_pay_date = #{validablePayDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseDate != null" >
+        purchase_date = #{purchaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payerIdcard != null" >
+        payer_idcard = #{payerIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="payerName != null" >
+        payer_name = #{payerName,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseType != null" >
+        purchase_type = #{purchaseType,jdbcType=SMALLINT},
+      </if>
+      <if test="purchaseDiscountAmount != null" >
+       purchase_discount_amout = #{purchaseDiscountAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=DOUBLE},
+      </if>
+      <if test="salesAmount != null" >
+        sales_amount = #{salesAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="cancelDate !=null">
+      	cancel_date = #{cancelDate,jdbcType=TIMESTAMP},
+      </if>
+       <if test="isPro != null ">
+        ispro = #{isPro,jdbcType=BIT},
+      </if>
+      <if test="isChoose != null ">
+        ischoose = #{isChoose,jdbcType=BIT},
+      </if>
+      <if test="offlineMoney != null" >
+        offline_money = #{offlineMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="financeMoney != null" >
+        finance_money = #{financeMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="bbcPostage != null" >
+        bbc_postage = #{bbcPostage,jdbcType=DOUBLE},
+      </if>
+      <if test="reducePrice != null" >
+        reduce_price = #{reducePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="tAWPrice != null" >
+        tawprice = #{tAWPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="sid != null" >
+        sid = #{sid}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="entity.purchase.PurchaseOrder" >
+    update t_purchase_order
+    set email = #{email,jdbcType=VARCHAR},
+      purchase_order_no = #{purchaseOrderNo,jdbcType=VARCHAR},
+      cart_id = #{cartId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      payment_id = #{paymentId,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      transaction_id = #{transactionId,jdbcType=VARCHAR},
+      payer_ip = #{payerIp,jdbcType=VARCHAR},
+      pay_date = #{payDate,jdbcType=TIMESTAMP},
+      pay_host = #{payHost,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      purchase_total_amount = #{purchaseTotalAmount,jdbcType=DOUBLE},
+      validable_pay_date = #{validablePayDate,jdbcType=TIMESTAMP},
+      purchase_date = #{purchaseDate,jdbcType=TIMESTAMP},
+      payer_idcard = #{payerIdcard,jdbcType=VARCHAR},
+      payer_name = #{payerName,jdbcType=VARCHAR},
+      purchase_type = #{purchaseType,jdbcType=SMALLINT},
+      purchase_discount_amout = #{purchaseDiscountAmount,jdbcType=DOUBLE},
+      discount = #{discount,jdbcType=DOUBLE},
+      sales_amount = #{salesAmount,jdbcType=DOUBLE},
+      cancel_date = #{cancelDate,jdbcType=TIMESTAMP},
+      ispro = #{isPro,jdbcType=BIT},
+      ischoose = #{isChoose,jdbcType=BIT},
+      bbc_postage = #{bbcPostage,jdbcType=DOUBLE},
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- add by xuse -->
+  <insert id="insertActivities" parameterType="entity.purchase.PurchaseActive">
+		insert into t_purchase_active
+		(activeid,priviledgeid,orderno)
+		values
+		(
+		#{activeid,jdbcType=INTEGER},
+		#{priviledgeid,jdbcType=VARCHAR},
+		#{orderno,jdbcType=VARCHAR}
+		)
+	</insert>
+	<resultMap type="entity.purchase.PurchaseActive" id="Active_Map">
+		<id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="activeid" property="activeid" jdbcType="INTEGER" />
+	    <result column="priviledgeid" property="priviledgeid" jdbcType="VARCHAR" />
+	    <result column="orderno" property="orderno" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getActive" parameterType="java.lang.String" resultMap="Active_Map">
+		select * from t_purchase_active where orderno = #{0}
+	</select>
+	<update id="updateSelect" parameterType="java.lang.Integer">
+		update t_purchase_order set ischoose = 'true' where id = #{0}
+	</update>
+	<select id="getInvalidOrders" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from t_purchase_order where status = 0
+		and   <![CDATA[validable_pay_date <= now()]]>
+	</select>
+	<update id="batchUpdate" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index"
+			separator=";">
+			update 
+			t_purchase_order set 
+			<trim suffix="" suffixOverrides=",">
+				<if test="item.status != null">
+					status = #{item.status,jdbcType=INTEGER},
+				</if>
+				<if test="item.financeMoney != null">
+					finance_money = #{item.financeMoney,jdbcType=DOUBLE},
+				</if>
+				<if test="item.remark != null">
+					remark = #{item.remark,jdbcType=VARCHAR},
+				</if>
+				<if test="item.reason != null">
+					reason = #{item.reason,jdbcType=VARCHAR},
+				</if>
+				<if test="item.payDate != null">
+					pay_date = #{item.payDate,jdbcType=TIMESTAMP},
+				</if>
+			</trim>
+			where id = #{item.id,jdbcType=INTEGER}
+		</foreach>
+	</update>
+	
+	<update id="updateSelective" parameterType="entity.purchase.PurchaseOrder">
+		update 
+			t_purchase_order set 
+			<trim suffix="" suffixOverrides=",">
+				<if test="status != null">
+					status = #{status,jdbcType=INTEGER},
+				</if>
+				<if test="financeMoney != null">
+					finance_money = #{financeMoney,jdbcType=DOUBLE},
+				</if>
+				<if test="remark != null">
+					remark = #{remark,jdbcType=VARCHAR},
+				</if>
+				<if test="reason != null">
+					reason = #{reason,jdbcType=VARCHAR},
+				</if>
+				<if test="payDate != null">
+					pay_date = #{payDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="rejectedByFinance != null">
+					rejected_by_finance = #{rejectedByFinance},
+				</if>
+			</trim>
+			<where>
+				<if test="id != null">
+					id = #{id,jdbcType=INTEGER}
+				</if>
+				<if test="purchaseOrderNo != null">
+					and purchase_order_no = #{purchaseOrderNo}
+				</if>
+			</where>
+	</update>
+	<update id="updateNickNameByEmail" parameterType="entity.purchase.PurchaseOrder">
+		update t_purchase_order set nick_name = #{nickName,jdbcType=VARCHAR} 
+			where email = #{email,jdbcType=VARCHAR}
+	</update>
+</mapper>

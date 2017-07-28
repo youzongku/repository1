@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="email=no" name="format-detection" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>通淘供应链</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main/main.css">
+</head>
+<body id = "body_index" v-cloak>
+<header class="posFix head">
+    <a href="####" class="set-out">退出</a>
+    通淘供应链
+    <a href="/user/index/reset_pwd.html" class="set-logo"></a>
+</header>
+<nav class="conTop indexNav">
+        <span>
+            <p>{{wa_count}}</p>
+            <p>发货单待审核</p>
+        </span>
+</nav>
+<section id="menu">
+    <ul>
+        <li class="menu1" v-for="menu in menus">
+            <a href='javascript:void(0);'>{{menu.menuName}}<span>+</span></a>
+            <ul>
+                <li v-for = "child in menu.childMenus" @click = "load($event)">
+                    <a href='javascript:void(0);' position = "{{child.position}}">
+                        {{child.menuName}}</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</section>
+<script src="/js/lib/require.js" data-main="/js/user/index/index.js">
+</script>
+</body>
+</html>

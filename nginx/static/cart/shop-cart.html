@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="shortcut icon" href="../img/favicon.ico"/>
+    <link rel="stylesheet" href="../css/public.css"/>
+    <link rel="stylesheet" href="../css/sub-details.css"/>
+    <link rel="stylesheet" href="../js/lib/layer2.0/skin/layer.css"/>
+    <link type="text/css" rel="stylesheet" href="../../css/style/style.css">
+    <script type="text/javascript" src="/js/lib/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../js/lib/layer2.0/layer.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/cart.js"></script>
+    <!--<script charset="utf-8" src="https://wpa.b.qq.com/cgi/wpa.php"></script>-->
+    <title>购物车</title>
+</head>
+
+<body>
+<div id="div_head"></div>
+<div class="is-clear clear-suc" style="display: none"><span></span><b>删除成功！</b></div>
+<div class="is-clear clear-fail" style="display: none"><span></span><b>删除失败！</b></div>
+<div>
+    <div class="cart-borld content">
+        <h1 class="titile">购物车</h1>
+        <div class="cart_promotion_line">
+            <span class="promotion_line_icon"><em>促销</em></span>
+            <div class="promotion_line_detail red">
+            </div>
+        </div>
+        <div class="cart-list">
+            <ul class="product-list">
+                <li class="sale_save_select" style="width: 5%;">
+                    <input type="checkbox" class="checkbox-top" onclick="cart_select_all(this);" style="vertical-align:middle;margin-right: 5px;"/>全选
+                </li>
+                <li id="product_title">商品名</li>
+                <li class="product_price" style="width: 13%;">所属仓库</li>
+                <li class="product_price" style="width: 12%;">价格（元）</li>
+                <li class="product_number" style="width: 12%;">数量(个)</li>
+                <li class="product_sum" style="width: 13%;">总额(元)</li>
+                <li class="product_del" style="width: 5%;">操作</li>
+            </ul>
+            <div class="product_table">
+                <table id="product_content" class="product_content">
+                </table>
+            </div>
+        </div>
+        <div class="gift_promotion">
+        </div>
+        <div class="promotion_condition">
+            <span class="promotion_conditionL">恭喜您满足多个活动的促销条件，请选择促销优惠：</span>
+            <div class="promotion_conditionR">
+                <p id="active_0"><label><input tag="0" type="radio" name="active_type">不参与优惠活动</label></p>
+            </div>
+        </div>
+        <div class="settle_accounts">
+            <button id="cart-num" type="text" onclick="window.location.href ='../personal/personal.html?emnunum=3'">
+                继续购物
+            </button>
+            <p class="num_pro">已选：<span class="product_num">0</span>个商品</p>
+            <p class="promotion_discount">活动优惠：<span class="red promotion_price">-0.00</span>元</p>
+            <p class="sum_price">总计：<span class="all_price red">0.00</span>元</p>
+            <button id="accounts" onclick="settlement()">结算</button>
+        </div>
+    </div>
+</div>
+<div id="div_footer"></div>
+</body>
+</html>

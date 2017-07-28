@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.warehousing.InventoryChangeHistoryMapper">
+	<resultMap id="BaseResultMap" type="forms.warehousing.InventoryChangeHistoryForm">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+		<result column="warehouse_name" property="warehouseName"
+			jdbcType="VARCHAR" />
+		<result column="sku" property="sku" jdbcType="VARCHAR" />
+		<result column="product_name" property="productName" jdbcType="VARCHAR" />
+		<result column="num" property="num" jdbcType="INTEGER" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="change_time" property="changeTime" jdbcType="TIMESTAMP" />
+		<result column="operator" property="operator" jdbcType="VARCHAR" />
+		<result column="is_effective" property="isEffective" jdbcType="VARCHAR" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="dis_member_email" property="disMemberEmail"
+			jdbcType="BOOLEAN" />
+		<result column="order_type" property="orderType" jdbcType="VARCHAR" />
+
+		<result column="dis_profit_rate" property="disProfitRate"
+			jdbcType="DOUBLE" />
+		<result column="dis_profit" property="disProfit" jdbcType="DOUBLE" />
+		<result column="dis_vat" property="disVat" jdbcType="DOUBLE" />
+		<result column="dis_stock_fee" property="disStockFee" jdbcType="DOUBLE" />
+		<result column="dis_shipping_type" property="disShippingType"
+			jdbcType="VARCHAR" />
+		<result column="dis_other_cost" property="disOtherCost"
+			jdbcType="DOUBLE" />
+		<result column="dis_total_cost" property="disTotalCost"
+			jdbcType="DOUBLE" />
+		<result column="dis_transfer_fee" property="disTransferFee"
+			jdbcType="DOUBLE" />
+		<result column="dis_list_fee" property="disListFee" jdbcType="DOUBLE" />
+		<result column="dis_trade_fee" property="disTradeFee" jdbcType="DOUBLE" />
+		<result column="dis_pay_fee" property="disPayFee" jdbcType="DOUBLE" />
+		<result column="dis_postal_fee" property="disPostalFee"
+			jdbcType="DOUBLE" />
+		<result column="dis_import_tar" property="disImportTar"
+			jdbcType="DOUBLE" />
+		<result column="dis_gst" property="disGst" jdbcType="DOUBLE" />
+		<result column="dis_insurance" property="disInsurance"
+			jdbcType="DOUBLE" />
+		<result column="dis_total_vat" property="disTotalVat" jdbcType="DOUBLE" />
+		<result column="cost" property="cost" jdbcType="DOUBLE" />
+		<result column="dis_freight" property="disFreight" jdbcType="DOUBLE" />
+		<result column="dis_price" property="disPrice" jdbcType="DOUBLE" />
+		<result column="dis_cif_price" property="disCifPrice" jdbcType="DOUBLE" />
+		<result column="purchase_price" property="purchasePrice"
+			jdbcType="DOUBLE" />
+		<result column="capfee" property="capFee" jdbcType="DOUBLE" />	
+		<result column="arrive_ware_price" property="arriveWarePrice" jdbcType="DOUBLE" />	
+		<result column="isgift"  property="isgift"   jdbcType="BIT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, warehouse_id, warehouse_name, sku, product_name, num,
+		type,
+		change_time,order_type,
+		operator,is_effective,order_no,dis_member_email,
+		dis_profit_rate,
+		dis_profit, dis_vat, dis_stock_fee, dis_shipping_type,
+		dis_other_cost,
+		dis_total_cost, dis_transfer_fee, dis_list_fee, dis_trade_fee,
+		dis_pay_fee,
+		dis_postal_fee, dis_import_tar, dis_gst, dis_insurance,
+		dis_total_vat, cost,
+		dis_freight,
+		dis_price,
+		dis_cif_price,purchase_price,capFee,arrive_ware_price,isgift
+	</sql>
+	<insert id="insert" parameterType="entity.warehousing.InventoryChangeHistory">
+		insert into
+		t_inventory_change_history (id, order_type,warehouse_id,
+		warehouse_name,
+		sku, product_name, num,
+		type, change_time, operator,
+		is_effective, order_no, dis_member_email,
+		mwarehouse_id,
+		mwarehouse_name,
+		dis_profit_rate, dis_profit,
+		dis_vat, dis_stock_fee,
+		dis_shipping_type,
+		dis_other_cost, dis_total_cost, dis_transfer_fee,
+		dis_list_fee, dis_trade_fee, dis_pay_fee,
+		dis_postal_fee,
+		dis_import_tar, dis_gst,
+		dis_insurance, dis_total_vat, cost,
+		dis_freight, dis_price, dis_cif_price,purchase_price,capfee
+		)
+		values
+		(#{id,jdbcType=INTEGER},
+		#{orderType,jdbcType=VARCHAR},#{warehouseId,jdbcType=INTEGER},
+		#{warehouseName,jdbcType=VARCHAR},
+		#{sku,jdbcType=VARCHAR},
+		#{productName,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER},
+		#{type,jdbcType=SMALLINT}, #{changeTime,jdbcType=TIMESTAMP},
+		#{operator,jdbcType=VARCHAR},
+		#{isEffective,jdbcType=BIT},
+		#{orderNo,jdbcType=VARCHAR}, #{disMemberEmail,jdbcType=VARCHAR},
+		#{mwarehouseId,jdbcType=INTEGER}, #{mwarehouseName,jdbcType=VARCHAR},
+		#{disProfitRate,jdbcType=DOUBLE}, #{disProfit,jdbcType=DOUBLE},
+		#{disVat,jdbcType=DOUBLE}, #{disStockFee,jdbcType=DOUBLE},
+		#{disShippingType,jdbcType=VARCHAR},
+		#{disOtherCost,jdbcType=DOUBLE},
+		#{disTotalCost,jdbcType=DOUBLE}, #{disTransferFee,jdbcType=DOUBLE},
+		#{disListFee,jdbcType=DOUBLE}, #{disTradeFee,jdbcType=DOUBLE},
+		#{disPayFee,jdbcType=DOUBLE},
+		#{disPostalFee,jdbcType=DOUBLE},
+		#{disImportTar,jdbcType=DOUBLE}, #{disGst,jdbcType=DOUBLE},
+		#{disInsurance,jdbcType=DOUBLE}, #{disTotalVat,jdbcType=DOUBLE},
+		#{cost,jdbcType=DOUBLE},
+		#{disFreight,jdbcType=DOUBLE},
+		#{disPrice,jdbcType=DOUBLE},
+		#{disCifPrice,jdbcType=DOUBLE},#{purchasePrice,jdbcType=DOUBLE},
+		#{capFee,jdbcType=DOUBLE}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="entity.warehousing.InventoryChangeHistory">
+		insert into t_inventory_change_history
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="warehouseId != null">
+				warehouse_id,
+			</if>
+			<if test="warehouseName != null">
+				warehouse_name,
+			</if>
+			<if test="sku != null">
+				sku,
+			</if>
+			<if test="productName != null">
+				product_name,
+			</if>
+			<if test="num != null">
+				num,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="changeTime != null">
+				change_time,
+			</if>
+			<if test="operator != null">
+				operator,
+			</if>
+			<if test="isEffective != null">
+				is_effective,
+			</if>
+			<if test="orderNo != null">
+				order_no,
+			</if>
+			<if test="disMemberEmail != null">
+				dis_member_email,
+			</if>
+			<if test="orderType != null">
+				order_type,
+			</if>
+			<if test="mwarehouseId != null">
+				mwarehouse_id,
+			</if>
+			<if test="mwarehouseName != null">
+				mwarehouse_name,
+			</if>
+			<if test="disProfitRate != null">
+				dis_profit_rate,
+			</if>
+			<if test="disProfit != null">
+				dis_profit,
+			</if>
+			<if test="disVat != null">
+				dis_vat,
+			</if>
+			<if test="disStockFee != null">
+				dis_stock_fee,
+			</if>
+			<if test="disShippingType != null">
+				dis_shipping_type,
+			</if>
+			<if test="disOtherCost != null">
+				dis_other_cost,
+			</if>
+			<if test="disTotalCost != null">
+				dis_total_cost,
+			</if>
+			<if test="disTransferFee != null">
+				dis_transfer_fee,
+			</if>
+			<if test="disListFee != null">
+				dis_list_fee,
+			</if>
+			<if test="disTradeFee != null">
+				dis_trade_fee,
+			</if>
+			<if test="disPayFee != null">
+				dis_pay_fee,
+			</if>
+			<if test="disPostalFee != null">
+				dis_postal_fee,
+			</if>
+			<if test="disImportTar != null">
+				dis_import_tar,
+			</if>
+			<if test="disGst != null">
+				dis_gst,
+			</if>
+			<if test="disInsurance != null">
+				dis_insurance,
+			</if>
+			<if test="disTotalVat != null">
+				dis_total_vat,
+			</if>
+			<if test="cost != null">
+				cost,
+			</if>
+			<if test="disFreight != null">
+				dis_freight,
+			</if>
+			<if test="disPrice != null">
+				dis_price,
+			</if>
+			<if test="disCifPrice != null">
+				dis_cif_price,
+			</if>
+			<if test="purchasePrice != null">
+				purchase_price,
+			</if>
+			<if test="capFee != null">
+				capfee,
+			</if>
+			<if test="isgift != null">
+				isgift,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="warehouseId != null">
+				#{warehouseId,jdbcType=INTEGER},
+			</if>
+			<if test="warehouseName != null">
+				#{warehouseName,jdbcType=VARCHAR},
+			</if>
+			<if test="sku != null">
+				#{sku,jdbcType=VARCHAR},
+			</if>
+			<if test="productName != null">
+				#{productName,jdbcType=VARCHAR},
+			</if>
+			<if test="num != null">
+				#{num,jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=SMALLINT},
+			</if>
+			<if test="changeTime != null">
+				#{changeTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operator != null">
+				#{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="isEffective != null">
+				#{isEffective,jdbcType=BIT},
+			</if>
+			<if test="orderNo != null">
+				#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="disMemberEmail != null">
+				#{disMemberEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="orderType != null">
+				#{orderType,jdbcType=VARCHAR},
+			</if>
+			<if test="mwarehouseId != null">
+				#{mwarehouseId,jdbcType=INTEGER},
+			</if>
+			<if test="mwarehouseName != null">
+				#{mwarehouseName,jdbcType=VARCHAR},
+			</if>
+			<if test="disProfitRate != null">
+				#{disProfitRate,jdbcType=DOUBLE},
+			</if>
+			<if test="disProfit != null">
+				#{disProfit,jdbcType=DOUBLE},
+			</if>
+			<if test="disVat != null">
+				#{disVat,jdbcType=DOUBLE},
+			</if>
+			<if test="disStockFee != null">
+				#{disStockFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disShippingType != null">
+				#{disShippingType,jdbcType=VARCHAR},
+			</if>
+			<if test="disOtherCost != null">
+				#{disOtherCost,jdbcType=DOUBLE},
+			</if>
+			<if test="disTotalCost != null">
+				#{disTotalCost,jdbcType=DOUBLE},
+			</if>
+			<if test="disTransferFee != null">
+				#{disTransferFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disListFee != null">
+				#{disListFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disTradeFee != null">
+				#{disTradeFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disPayFee != null">
+				#{disPayFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disPostalFee != null">
+				#{disPostalFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disImportTar != null">
+				#{disImportTar,jdbcType=DOUBLE},
+			</if>
+			<if test="disGst != null">
+				#{disGst,jdbcType=DOUBLE},
+			</if>
+			<if test="disInsurance != null">
+				#{disInsurance,jdbcType=DOUBLE},
+			</if>
+			<if test="disTotalVat != null">
+				#{disTotalVat,jdbcType=DOUBLE},
+			</if>
+			<if test="cost != null">
+				#{cost,jdbcType=DOUBLE},
+			</if>
+			<if test="disFreight != null">
+				#{disFreight,jdbcType=DOUBLE},
+			</if>
+			<if test="disPrice != null">
+				#{disPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="disCifPrice != null">
+				#{disCifPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="purchasePrice != null">
+				#{purchasePrice,jdbcType=DOUBLE},
+			</if>
+			<if test="capFee != null">
+				#{capFee,jdbcType=DOUBLE},
+			</if>
+			<if test="capFee != null">
+				#{capFee,jdbcType=DOUBLE},
+			</if>
+			<if test="isgift != null">
+				#{isgift,jdbcType=BIT},
+			</if>
+		</trim>
+	</insert>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from
+		t_inventory_change_history
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<select id="selectByParamDto" parameterType="dto.warehousing.InventoryChangeHistoryDto"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_inventory_change_history
+		<where>
+			<if test="paramDto.id != null and sku != '' ">
+				id = #{paramDto.id}
+			</if>
+			<if test="paramDto.sku != null and paramDto.sku != '' ">
+				and sku = #{paramDto.sku}
+			</if>
+			<if test="paramDto.warehouseId != null">
+				and warehouse_id = #{paramDto.warehouseId}
+			</if>
+			<if test="paramDto.warehouseName != null">
+				and warehouse_name = #{paramDto.warehouseName}
+			</if>
+			<if test="paramDto.mwarehouseName != null">
+				and mwarehouse_name = #{paramDto.mwarehouseName}
+			</if>
+			<if test="paramDto.type != null">
+				and type = #{paramDto.type}
+			</if>
+			<if test="paramDto.orderType != null">
+				and order_type != #{paramDto.orderType}::varchar
+			</if>
+		</where>
+		<if test="paramDto.changeTimeDesc != null ">
+			<if test="paramDto.changeTimeDesc  == 0 ">
+				order by change_time asc
+			</if>
+			<if test="paramDto.changeTimeDesc  == 1 ">
+				order by change_time desc
+			</if>
+		</if>
+		<if test="paramDto.pageSize != null ">
+			limit #{paramDto.pageSize} offset
+			(#{paramDto.curPage}-1)*#{paramDto.pageSize}
+		</if>
+
+	</select>
+
+	<select id="queryByParam" parameterType="dto.warehousing.WarehouseChangeRecordDto"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from (SELECT ich.*,mgi.warehouse_id as
+		swarehouse_id,mgi.warehouse_name as swarehouse_name FROM
+		t_inventory_change_history ich
+		LEFT JOIN t_micro_goods_inventory mgi
+		on
+		ich.mwarehouse_id = mgi.mwarehouse_id and ich.sku=mgi.sku) as record
+		<where>
+			1=1
+			<if test="param.warehouseType == 0">
+				<if test="param.warehouseId != null">
+					and (swarehouse_id = #{param.warehouseId} or
+					warehouse_id = #{param.warehouseId})
+				</if>
+			</if>
+			<if test="param.warehouseType == 1">
+				and swarehouse_id is not null
+				<if test="param.warehouseId != null">
+					and swarehouse_id = #{param.warehouseId}
+				</if>
+			</if>
+			<if test="param.warehouseType == 2">
+				and warehouse_id is not null
+				<if test="param.warehouseId != null">
+					and warehouse_id = #{param.warehouseId}
+				</if>
+			</if>
+			<if test="param.key != null and param.key != ''">
+				and (sku like '%'||#{param.key}||'%' or product_name
+				like
+				'%'||#{param.key}||'%')
+			</if>
+			<!-- <if test="param.warehouseType == 1"> and mwarehouse_id is not null 
+				and mwarehouse_name is not null </if> <if test="param.warehouseType == 2"> 
+				and warehouse_id is not null and warehouse_name is not null </if> -->
+		</where>
+		order by change_time desc
+		<if test="param.pageNo != null and param.pageNo !=0">
+			limit #{param.pageSize} offset
+			(#{param.pageNo}-1)*#{param.pageSize}
+		</if>
+	</select>
+	<select id="getTotal" resultType="Integer"
+		parameterType="dto.warehousing.WarehouseChangeRecordDto">
+		select
+		count(*)
+		from (SELECT ich.*,mgi.warehouse_id as
+		swarehouse_id,mgi.warehouse_name as swarehouse_name FROM
+		t_inventory_change_history ich
+		LEFT JOIN t_micro_goods_inventory mgi
+		on
+		ich.mwarehouse_id = mgi.mwarehouse_id and ich.sku=mgi.sku) as record
+		<where>
+			1=1
+			<if test="param.warehouseType == 0">
+				<if test="param.warehouseId != null">
+					and (swarehouse_id = #{param.warehouseId} or
+					warehouse_id = #{param.warehouseId})
+				</if>
+			</if>
+			<if test="param.warehouseType == 1">
+				and swarehouse_id is not null
+				<if test="param.warehouseId != null">
+					and swarehouse_id = #{param.warehouseId}
+				</if>
+			</if>
+			<if test="param.warehouseType == 2">
+				and warehouse_id is not null
+				<if test="param.warehouseId != null">
+					and warehouse_id = #{param.warehouseId}
+				</if>
+			</if>
+			<if test="param.key != null and param.key != ''">
+				and (sku like '%'||#{param.key}||'%' or product_name
+				like
+				'%'||#{param.key}||'%')
+			</if>
+			<!-- <if test="param.warehouseType == 1"> and mwarehouse_id is not null 
+				and mwarehouse_name is not null </if> <if test="param.warehouseType == 2"> 
+				and warehouse_id is not null and warehouse_name is not null </if> -->
+		</where>
+	</select>
+
+	<update id="update" parameterType="entity.warehousing.InventoryChangeHistory">
+		update t_inventory_change_history
+		<set>
+			<if test="warehouseId != null">
+				warehouse_id = #{warehouseId,jdbcType=INTEGER},
+			</if>
+			<if test="warehouseName != null">
+				warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+			</if>
+			<if test="sku != null">
+				sku = #{sku,jdbcType=VARCHAR},
+			</if>
+			<if test="productName != null">
+				product_name=#{productName,jdbcType=INTEGER},
+			</if>
+			<if test="num != null">
+				num=#{num,jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				type=#{type,jdbcType=INTEGER},
+			</if>
+			<if test="changeTime != null">
+				change_time=#{changeTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operator != null">
+				operator=#{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="isEffective != null">
+				is_effective=#{isEffective,jdbcType=BOOLEAN},
+			</if>
+			<if test="orderNo != null">
+				order_no=#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="disMemberEmail != null">
+				dis_member_email=#{disMemberEmail,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="entity.warehousing.InventoryChangeHistory">
+		update
+		t_inventory_change_history
+		set sku = #{sku,jdbcType=VARCHAR},
+		warehouse_id = #{warehouseId,jdbcType=INTEGER},
+		warehouse_name =
+		#{warehouseName,jdbcType=VARCHAR},
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<select id="getStockOutTotalQty" resultType="Integer">
+		SELECT
+		CASE WHEN SUM (num) is null THEN 0 ELSE SUM (num) END
+		FROM
+		t_inventory_change_history
+		WHERE
+		type = 0
+		AND sku = #{0}
+		AND warehouse_id = #{1}
+	</select>
+
+	<select id="selectByParam" parameterType="dto.warehousing.InventoryChangeHistoryDto"
+			resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_inventory_change_history
+		<where>
+			<if test="paramDto.sku != null and paramDto.sku != '' ">
+				and sku = #{paramDto.sku}
+			</if>
+			<if test="paramDto.warehouseId != null">
+				and warehouse_id = #{paramDto.warehouseId}
+			</if>
+			<if test="paramDto.type != null">
+				and type = #{paramDto.type}
+			</if>
+			<if test="paramDto.morderType != null">
+				and order_type = #{paramDto.morderType}
+			</if>
+			<if test="paramDto.operator != null">
+				and operator = #{paramDto.operator}
+			</if>
+		</where>
+		<if test="paramDto.changeTimeDesc != null ">
+			<if test="paramDto.changeTimeDesc  == 0 ">
+				order by change_time asc
+			</if>
+			<if test="paramDto.changeTimeDesc  == 1 ">
+				order by change_time desc
+			</if>
+		</if>
+		<if test="paramDto.pageSize != null ">
+			limit #{paramDto.pageSize} offset
+			(#{paramDto.curPage}-1)*#{paramDto.pageSize}
+		</if>
+
+	</select>
+
+	<select id="query" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		t_inventory_change_history
+		WHERE
+		sku = #{sku}
+		AND order_no LIKE 'CG%'
+		AND mwarehouse_name = #{account}
+		AND warehouse_id = #{warehouseId}
+		ORDER BY
+		change_time DESC
+	</select>
+</mapper>

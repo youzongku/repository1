@@ -1,0 +1,255 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<!--促销类型管理-->
+<div class="promotion_category">
+    <h1>促销管理<span>---</span><span>促销类型管理</span></h1>
+    <button class="add_promotion_category">添加促销类型</button>
+    <ul class="search_category">
+        <li>促销类型名称：
+            <input onkeyup="enter_keyUp(event,this, getList_promotion_category)" id="promotion_name" class="searchInput" />
+        </li>
+        <li>添加时间：
+            <input placeholder="选择日期" id="seachTime0" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                   class="searchInput"/>
+        </li>
+        <li>条件属性：
+            <select id="search_attr_select"></select>
+        </li>
+        <li>状态：
+            <select id="search_used_select">
+                <option value="">请选择状态</option>
+                <option value="true">已应用</option>
+                <option value="false">未应用</option>
+            </select>
+        </li>
+        <li>
+            <input class="searchButton" value="查&nbsp;询" id="searchProTypeBtn" type="submit">
+        </li>
+    </ul>
+    <script>  //解决IEplaceholder不兼容问题
+    $(document).ready(function () {
+        $(function () {
+            if (!placeholderSupport()) {
+                $('[placeholder]').focus(function () {
+                    var input = $(this);
+                    if (input.val() == input.attr('placeholder')) {
+                        input.val('');
+                        input.removeClass('placeholder');
+                    }
+                }).blur(function () {
+                    var input = $(this);
+                    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                        input.addClass('placeholder');
+                        input.val(input.attr('placeholder'));
+                    }
+                }).blur();
+            }
+        });
+        function placeholderSupport() {
+            return 'placeholder' in document.createElement('input');
+        }
+    })
+    </script>
+    <!--复制到弹出窗-->
+    <div class="category_copy_box display">
+        <div>
+            <em>促销活动名称：</em>
+
+            <div>
+                <input type="text" id="newProTypeName" class="promotion_input">
+            </div>
+        </div>
+    </div>
+    <div class="content_list">
+        <!--<table class="category_table" id="category_table">-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th style="width:5%">序号</th>-->
+                <!--<th style="width:15%">促销名称</th>-->
+                <!--<th style="width:30%">促销类型描述</th>-->
+                <!--<th style="width:8%">条件属性</th>-->
+                <!--<th style="width:5%">状态</th>-->
+                <!--<th style="width:12%" class="schedule_time">添加时间</th>-->
+                <!--<th style="width:10%">添加人</th>-->
+                <!--<th style="width:15%">操作</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--</tbody>-->
+        <!--</table>-->
+        <!--<div class="clear"></div>-->
+        <!--<div class="list_content">-->
+            <!--<div></div>-->
+            <!--<p>共<span id="proTypeTotal" style="display:inline-block;">0</span>记录，每页显示-->
+                <!--<select id="proType_pageSize" id>-->
+                    <!--<option value="10" selected="selected">10</option>-->
+                    <!--<option value="30">30</option>-->
+                    <!--<option value="50">50</option>-->
+                <!--</select>-->
+                <!--，共<span id="proTypePages" style="display:inline-block;">0</span>页-->
+            <!--</p>-->
+        <!--</div>-->
+
+        <table class="list_title all_table" id="promotion_category_table">
+        </table>
+
+        <div id="promotion_category_pagination" style="text-align: center; margin-top: 30px;"></div>
+    </div>
+    <!--<div id="proType_pagination" style="text-align: center; margin-top: 30px;"></div>-->
+</div>
+
+<!--添加促销类型-->
+<div class="add_promotion_box">
+    <h1>促销管理<span>---</span><span>促销类型管理</span></h1>
+    <ul class="button_line">
+        <li>
+            <button class="back_promotion_category">返回促销类型列表</button>
+        </li>
+        <li>
+            <button class="save_promotion_category">保存</button>
+        </li>
+        <li>
+            <button class="reset_promotion_category">重置</button>
+        </li>
+    </ul>
+    <div class="commodity_attribute_content">
+        <div>
+            <em>促销类型名称:</em>
+            <div>
+                <input type="text" id="pro_type_name" class="promotion_input"/>
+                <input type="hidden" id="pro_type_id"/>
+            </div>
+        </div>
+        <div>
+            <em>请选择促销属性:</em>
+            <div>
+                <ul class="commodity_attribute_tab">
+                    <li attr="1" class="attribute_tab"><label><i></i></label>商品属性</li>
+                    <li attr="2"><label><i></i></label>购物车属性</li>
+                    <!--
+                    <li attr="3"><label><i></i></label>条件属性</li>
+                    -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="commodity_attribute">
+        <!--商品条件优惠start-->
+        <div style="display: block">
+            <div class="commodity_attribute_top">
+                <div class="commodity_attribute_title">
+                    <h2>配置条件及优惠方式</h2>
+                    <p class="">
+                        <button class="promotion_button add_goods_condition_button">添加条件</button>
+                        <!--
+                        <button class="promotion_button add_goods_discount_button">添加优惠</button>
+                        -->
+                    </p>
+                </div>
+                <div class="add_condition_p" id="add_goods_condition_div">
+
+                </div>
+                <div class="add_discount_p" id="add_goods_discount_div">
+                    <p>
+                        <em>获得优惠:</em>
+                        <span>
+                           <select onchange="createGoodsPrivilegeDescriptions()" class="promotion_select" id="default_goods_discount_select"></select>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="commodity_attribute_bottom">
+                <div class="commodity_attribute_title">
+                    <h2>以下是对设置的促销条件模板描述：</h2>
+                    <p class="">
+                        <em>条件:</em>
+                        <span id="goods_condition_description"></span>
+                    </p>
+                    <p class="">
+                        <em>优惠:</em>
+                        <span id="goods_privilege_description"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--商品条件优惠end-->
+        <!--购物车条件优惠start-->
+        <div>
+            <div class="commodity_attribute_top">
+                <div class="commodity_attribute_title">
+                    <h2>配置条件及优惠方式</h2>
+                    <p class="">
+                        <button class="promotion_button add_shopping_cart_condition_button">添加条件</button>
+                        <!--
+                        <button class="promotion_button add_shopping_cart_discount_button">添加优惠</button>
+                        -->
+                    </p>
+                </div>
+                <div class="add_condition_p" id="add_shopping_cart_condition_div">
+
+                </div>
+                <div class="add_discount_p" id="add_shopping_cart_discount_div">
+                    <p>
+                        <em>获得优惠:</em>
+                        <span>
+                           <select onchange="createShoppingCartPrivilegeDescriptions()" class="promotion_select" id="default_shopping_cart_discount_select"> </select>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="commodity_attribute_bottom">
+                <div class="commodity_attribute_title">
+                    <h2>以下是对设置的促销条件模板描述：</h2>
+                    <p class="">
+                        <em>条件:</em>
+                        <span id="shopping_cart_condition_description"></span>
+                    </p>
+                    <p class="">
+                        <em>优惠:</em>
+                        <span id="shopping_cart_privilege_description"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--购物车条件优惠end-->
+        <!--用户条件优惠start-->
+        <!--
+        <div>
+            <div class="commodity_attribute_top">
+                <div class="commodity_attribute_title">
+                    <h2>配置条件及优惠方式</h2>
+                </div>
+                <div class="add_user_p">
+                    <p>
+                        <em>用户后续加上:</em>
+                    <span>
+                       <select class="promotion_select">
+                           <option>用户属性</option>
+                           <option>普通分销商</option>
+                           <option>合营分销商</option>
+                           <option>内部分销商</option>
+                           <option>第一次购物用户</option>
+                           <option>新注册用户</option>
+                           <option>三月内未购物用户</option>
+                       </select>
+                    </span>
+                    </p>
+                </div>
+            </div>
+            <div class="commodity_attribute_bottom">
+                <div class="commodity_attribute_title">
+                    <h2>以下是对设置的促销条件模板描述：</h2>
+                    <p class="">
+                        <em>条件:</em>
+                        <span>指定商品,指定商品数量</span>
+                    </p>
+                    <p class="">
+                        <em>优惠:</em>
+                        <span>赠品</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        -->
+        <!--用户条件优惠end-->
+    </div>
+</div>

@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.ShOrderMapper" >
+  <resultMap id="BaseResultMap" type="entity.sales.ShOrder" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="sh_order_no" property="shOrderNo" jdbcType="VARCHAR" />
+    <result column="xs_order_no" property="xsOrderNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="dis_mode" property="disMode" jdbcType="INTEGER" />
+    <result column="dis_name" property="disName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="business_erp" property="businessErp" jdbcType="VARCHAR" />
+    <result column="order_amount" property="orderAmount" jdbcType="DOUBLE" />
+    <result column="demand_amount" property="demandAmount" jdbcType="DOUBLE" />
+    <result column="actual_amount" property="actualAmount" jdbcType="DOUBLE" />
+    <result column="qa_desc" property="qaDesc" jdbcType="VARCHAR" />
+    <result column="demand_qty" property="demandQty" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="product_img" property="productImg" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="is_product_return" property="isProductReturn" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="express_code" property="expressCode" jdbcType="VARCHAR" />
+    <result column="finance_confirm_time" property="financeConfirmTime" jdbcType="TIMESTAMP" />
+    <result column="send_product_time" property="sendProductTime" jdbcType="TIMESTAMP" />
+    <result column="received_product_time" property="receivedProductTime" jdbcType="TIMESTAMP" />
+    <result column="detail_order_id" property="detailOrderId" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, sh_order_no,xs_order_no,status,email,dis_mode,dis_name,create_time,update_time,
+    business_erp,order_amount,demand_amount,actual_amount,qa_desc,demand_qty,warehouse_id,warehouse_name,product_img,product_name,sku,is_product_return,company,express_code,finance_confirm_time,send_product_time,received_product_time
+  </sql>
+
+  <insert id="insert" parameterType="entity.sales.ShOrder" >
+    insert into public.t_sh_order (id, sh_order_no, xs_order_no, 
+      status, email, dis_mode, 
+      dis_name, create_time, update_time, 
+      business_erp, order_amount, demand_amount, 
+      actual_amount, qa_desc)
+    values (#{id,jdbcType=INTEGER}, #{shOrderNo,jdbcType=VARCHAR}, #{xsOrderNo,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{disMode,jdbcType=INTEGER}, 
+      #{disName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{businessErp,jdbcType=VARCHAR}, #{orderAmount,jdbcType=DOUBLE}, #{demandAmount,jdbcType=DOUBLE}, 
+      #{actualAmount,jdbcType=DOUBLE}, #{qaDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.sales.ShOrder" useGeneratedKeys="true" keyProperty="id">
+    insert into public.t_sh_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="shOrderNo != null" >
+        sh_order_no,
+      </if>
+      <if test="xsOrderNo != null" >
+        xs_order_no,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="disMode != null" >
+        dis_mode,
+      </if>
+      <if test="disName != null" >
+        dis_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="businessErp != null" >
+        business_erp,
+      </if>
+      <if test="orderAmount != null" >
+        order_amount,
+      </if>
+      <if test="demandAmount != null" >
+        demand_amount,
+      </if>
+      <if test="actualAmount != null" >
+        actual_amount,
+      </if>
+      <if test="qaDesc != null" >
+        qa_desc,
+      </if>
+      <if test="demandQty != null" >
+        demand_qty,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="productImg != null" >
+        product_img,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="isProductReturn != null" >
+        is_product_return,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="expressCode != null" >
+        express_code,
+      </if>
+      <if test="financeConfirmTime != null" >
+        finance_confirm_time,
+      </if>
+      <if test="sendProductTime != null" >
+        send_product_time,
+      </if>
+      <if test="receivedProductTime != null" >
+        received_product_time,
+      </if>
+      <if test="detailOrderId != null" >
+        detail_order_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shOrderNo != null" >
+        #{shOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="xsOrderNo != null" >
+        #{xsOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="disMode != null" >
+        #{disMode,jdbcType=INTEGER},
+      </if>
+      <if test="disName != null" >
+        #{disName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="businessErp != null" >
+        #{businessErp,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        #{orderAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="demandAmount != null" >
+        #{demandAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="actualAmount != null" >
+        #{actualAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="qaDesc != null" >
+        #{qaDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="demandQty != null" >
+        #{demandQty,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="productImg != null" >
+        #{productImg,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="isProductReturn != null" >
+        #{isProductReturn,jdbcType=INTEGER},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="expressCode != null" >
+        #{expressCode,jdbcType=VARCHAR},
+      </if>
+      <if test="financeConfirmTime != null" >
+        #{financeConfirmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendProductTime != null" >
+        #{sendProductTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receivedProductTime != null" >
+        #{receivedProductTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detailOrderId != null" >
+        #{detailOrderId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+
+  <select id="selectShSaleOrderList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    t_sh_order a
+    where
+    1 =1
+    <if test="email != null and email != ''">
+      and a.email = #{email,jdbcType=VARCHAR}
+    </if>
+    <if test="shOrderNo != null and shOrderNo != ''">
+      and a.sh_order_no like '%'||#{shOrderNo}||'%'
+    </if>
+    ORDER BY a.create_time DESC
+    LIMIT #{pageSize} OFFSET (#{currPage}-1)*#{pageSize}
+  </select>
+
+  <select id="selectShSaleOrderListCount" resultType="java.lang.Integer">
+    select count(id) from t_sh_order
+    where
+    1 =1
+    <if test="email != null and email != ''">
+      and email = #{email,jdbcType=VARCHAR}
+    </if>
+    <if test="shOrderNo != null and shOrderNo != ''">
+      and sh_order_no like '%'||#{shOrderNo}||'%'
+    </if>
+  </select>
+
+
+  <select id="selectAllAfterSaleOrder" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from t_sh_order m
+    where 1=1
+    <if test="status !=null and status != '' and status != '0'">
+      and m.status = #{status}
+    </if>
+    <if test="isProductReturn !=null and isProductReturn != '' and isProductReturn != '0'">
+      and m.is_product_return = #{isProductReturn}
+    </if>
+    <if test="orderStartDate !=null and orderStartDate != ''">
+      <![CDATA[and m.create_time  >= to_timestamp(#{orderStartDate}, 'YYYY-MM-DD HH24:MI:SS')]]>
+    </if>
+    <if test="orderEndDate !=null and orderEndDate != ''">
+      <![CDATA[and m.create_time  <= to_timestamp(#{orderEndDate}, 'YYYY-MM-DD HH24:MI:SS')]]>
+    </if>
+    <if test="accounts != null and accounts.size() > 0 ">
+      and m.email in
+      <foreach collection="accounts" open="(" close=")" item="item"
+               separator=",">
+        #{item}
+      </foreach>
+    </if>
+    <if test="shOrderIdList != null and shOrderIdList.size() > 0 ">
+      and m.id in
+      <foreach collection="shOrderIdList" open="(" close=")" item="item"
+               separator=",">
+        #{item}
+      </foreach>
+    </if>
+    <if test="searchSpan !=null and searchSpan !=''">
+      <![CDATA[
+	                and (lower(m.email) like lower('%'||#{searchSpan,jdbcType=VARCHAR}||'%')
+	                    or lower(m.sh_order_no) like lower('%'||#{searchSpan,jdbcType=VARCHAR}||'%')
+	                    or lower(m.xs_order_no) like lower('%'||#{searchSpan,jdbcType=VARCHAR}||'%')
+	                    or lower(m.dis_name) like lower('%'||#{searchSpan,jdbcType=VARCHAR}||'%')
+	                    or lower(m.business_erp) like lower('%'||#{searchSpan,jdbcType=VARCHAR}||'%'))
+	              ]]>
+    </if>
+    <choose>
+      <when test="sort != null and sort == 'asc' ">
+        order by id asc
+      </when>
+      <otherwise>
+        order by id desc
+      </otherwise>
+    </choose>
+    LIMIT #{pageSize} OFFSET (#{currPage}-1)*#{pageSize}
+  </select>
+
+  <select id="selectAllAfterSaleOrderCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+    select
+    count(*)
+    from t_sh_order m
+    where 1=1
+    <if test="status !=null and status != '' and status != '0'">
+      and m.status = #{status}
+    </if>
+    <if test="isProductReturn !=null and isProductReturn != '' and isProductReturn != '0'">
+      and m.is_product_return = #{isProductReturn}
+    </if>
+    <if test="orderStartDate !=null and orderStartDate != ''">
+      <![CDATA[and m.create_time  >= to_timestamp(#{orderStartDate}, 'YYYY-MM-DD HH24:MI:SS')]]>
+    </if>
+    <if test="orderEndDate !=null and orderEndDate != ''">
+      <![CDATA[and m.create_time  <= to_timestamp(#{orderEndDate}, 'YYYY-MM-DD HH24:MI:SS')]]>
+    </if>
+    <if test="accounts != null and accounts.size() > 0 ">
+      and m.email in
+      <foreach collection="accounts" open="(" close=")" item="item"
+               separator=",">
+        #{item}
+      </foreach>
+    </if>
+    <if test="searchSpan !=null and searchSpan !=''">
+      <![CDATA[
+	                and (lower(m.email) like lower('%'||#{searchSpan,jdbcType=VARCHAR}||'%')
+	                    or lower(m.sh_order_no) like lower('%'||#{searchSpan,jdbcType=VARCHAR}||'%')
+	                    or lower(m.xs_order_no) like lower('%'||#{searchSpan,jdbcType=VARCHAR}||'%')
+	                    or lower(m.dis_name) like lower('%'||#{searchSpan,jdbcType=VARCHAR}||'%')
+	                    or lower(m.business_erp) like lower('%'||#{searchSpan,jdbcType=VARCHAR}||'%'))
+	              ]]>
+    </if>
+  </select>
+
+  <select id="getAfterSaleOrderDtoById" resultType="dto.sales.ShOrderDto">
+    SELECT
+    a.id id,
+    b.product_name productName,
+    b.sku,
+    b.product_img productImg,
+    b.qty,
+    b.warehouse_id warehouseId,
+    b.warehouse_name as warehouseName,
+    a.status,
+    to_char(a.create_time, 'YYYY-MM-DD HH24:MI:SS') as createTime,
+    a.email,
+    a.sh_order_no orderNo,
+    a.demand_amount demandAmount,
+    a.qa_desc qaDesc,
+    a.xs_order_no saleOrderNo
+    FROM
+    "public"."t_sh_order" a
+    left JOIN t_sh_order_detail b
+    on a."id" = b.sh_order_id
+    where a.id = #{orderId}
+  </select>
+
+  <select id="getSalesOrderRefundsById" parameterType="int" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    t_sh_order a
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+  <update id="updateSelective" parameterType="entity.sales.ShOrder">
+    update public.t_sh_order
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shOrderNo != null" >
+        sh_order_no = #{shOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="xsOrderNo != null" >
+        xs_order_no = #{xsOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="disMode != null" >
+        dis_mode = #{disMode,jdbcType=INTEGER},
+      </if>
+      <if test="disName != null" >
+        dis_name = #{disName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="businessErp != null" >
+        business_erp = #{businessErp,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        order_amount = #{orderAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="demandAmount != null" >
+        demand_amount = #{demandAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="actualAmount != null" >
+        actual_amount = #{actualAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="qaDesc != null" >
+        qa_desc = #{qaDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="demandQty != null" >
+        demand_qty = #{demandQty,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="productImg != null" >
+        product_img = #{productImg,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="isProductReturn != null" >
+        is_product_return = #{isProductReturn,jdbcType=INTEGER},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="expressCode != null" >
+        express_code = #{expressCode,jdbcType=VARCHAR},
+      </if>
+      <if test="financeConfirmTime != null" >
+        finance_confirm_time = #{financeConfirmTime,jdbcType=TIMESTAMP},
+      </if><if test="sendProductTime != null" >
+        send_product_time = #{sendProductTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receivedProductTime != null" >
+        received_product_time = #{receivedProductTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+
+  <select id="selectEffectiveShOrder" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_sh_order where sku = #{sku} and xs_order_no = #{xsOrderNo}
+  </select>
+
+  <select id="selectEffectiveShOrderByDetailOrderId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_sh_order where detail_order_id = #{id}
+  </select>
+
+
+</mapper>

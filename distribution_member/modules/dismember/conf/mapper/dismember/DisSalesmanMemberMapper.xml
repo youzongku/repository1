@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.DisSalesmanMemberMapper">
+	<resultMap id="BaseResultMap" type="entity.dismember.DisSalesmanMember">
+		<id column="id" property="id" jdbcType="INTEGER" />   
+		<result column="salesmanid" property="salesmanid" jdbcType="INTEGER" />
+		<result column="memberid" property="memberid" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, salesmanid, memberid
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_dis_salesman_member_mapper
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_dis_salesman_member_mapper
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="entity.dismember.DisSalesmanMember">
+		insert into
+		t_dis_salesman_member_mapper (id, salesmanid, memberid
+		)
+		values
+		(#{id,jdbcType=INTEGER}, #{salesmanid,jdbcType=INTEGER},
+		#{memberid,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="entity.dismember.DisSalesmanMember">
+		insert into t_dis_salesman_member_mapper
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="salesmanid != null">
+				salesmanid,
+			</if>
+			<if test="memberid != null">
+				memberid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="salesmanid != null">
+				#{salesmanid,jdbcType=INTEGER},
+			</if>
+			<if test="memberid != null">
+				#{memberid,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="entity.dismember.DisSalesmanMember">
+		update t_dis_salesman_member_mapper
+		<set>
+			<if test="salesmanid != null">
+				salesmanid = #{salesmanid,jdbcType=INTEGER},
+			</if>
+			<if test="memberid != null">
+				memberid = #{memberid,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="entity.dismember.DisSalesmanMember">
+		update
+		t_dis_salesman_member_mapper
+		set salesmanid =
+		#{salesmanid,jdbcType=INTEGER},
+		memberid = #{memberid,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="getDisSalesmanMember" resultMap="BaseResultMap"
+	parameterType="entity.dismember.DisSalesmanMember">
+	select
+	<include refid="Base_Column_List" />
+	from t_dis_salesman_member_mapper
+	where 1=1
+	<if test="salesmanid != null">
+		and salesmanid = #{salesmanid,jdbcType=INTEGER}
+	</if>
+	<if test="memberid != null">
+		and memberid = #{memberid,jdbcType=INTEGER}
+	</if>
+	order by id
+	</select>
+	<select id="getCountByCondition" resultType="java.lang.Integer" parameterType="entity.dismember.DisSalesmanMember">
+		select 
+			count(*)
+		from 
+			t_dis_salesman_member_mapper sm
+		LEFT JOIN t_dis_member m on m.id = sm.memberid
+	where m.email is not null
+	<if test="salesmanid != null">
+		and salesmanid = #{salesmanid,jdbcType=INTEGER}
+	</if>
+	<if test="memberid != null">
+		and memberid = #{memberid,jdbcType=INTEGER},
+	</if>
+</select>
+<delete id="deleteByCondition" parameterType="java.lang.Integer">
+	delete from
+	t_dis_salesman_member_mapper
+	where 1=1
+	<if test="salesmanid != null">
+		and salesmanid = #{salesmanid,jdbcType=INTEGER}
+	</if>
+	<if test="memberid != null">
+		and memberid = #{memberid,jdbcType=INTEGER}
+	</if>
+</delete>
+</mapper>

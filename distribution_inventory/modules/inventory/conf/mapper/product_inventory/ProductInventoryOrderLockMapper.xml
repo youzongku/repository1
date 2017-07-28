@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product_inventory.ProductInventoryOrderLockMapper" >
+  <resultMap id="BaseResultMap" type="entity.product_inventory.ProductInventoryOrderLock" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="stock_locked" property="stockLocked" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="is_effective" property="isEffective" jdbcType="SMALLINT" />
+    <result column="container_number" property="containerNumber" jdbcType="VARCHAR" />
+    <result column="storage_location" property="storageLocation" jdbcType="VARCHAR" />
+    <result column="expiration_date" property="expirationDate" jdbcType="DATE" />
+    <result column="last_checktime" property="lastCheckTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_no, sku, stock_locked, warehouse_id, warehouse_name, is_effective, container_number, 
+    storage_location, expiration_date, create_time, update_time, last_checktime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from public.t_product_inventory_order_lock
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByParam" resultMap="BaseResultMap" parameterType="entity.product_inventory.ProductInventoryOrderLock">
+  	select 
+    <include refid="Base_Column_List" />
+    from public.t_product_inventory_order_lock
+    <where>
+    1=1
+      <if test="orderNo != null" >
+       and order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="stockLocked != null" >
+        and stock_locked = #{stockLocked,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseName != null" >
+        and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+      </if>
+      <if test="isEffective != null" >
+        and is_effective = #{isEffective,jdbcType=SMALLINT}
+      </if>
+      <if test="containerNumber != null" >
+        and container_number = #{containerNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="storageLocation != null" >
+        and storage_location = #{storageLocation,jdbcType=VARCHAR}
+      </if>
+      <if test="expirationDate != null" >
+        and expiration_date = #{expirationDate,jdbcType=DATE}
+      </if>
+      <if test="lastCheckTime != null" >
+        and last_checktime = #{lastCheckTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createTime != null" >
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateTime != null" >
+        and update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <select id="selectInventoryLockListByParams" resultMap="BaseResultMap" parameterType="entity.product_inventory.ProductInventoryOrderLock">
+  	select 
+    <include refid="Base_Column_List" />
+    from public.t_product_inventory_order_lock
+    <where>
+    1=1
+      <if test="orderNo != null" >
+       and order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="stockLocked != null" >
+        and stock_locked = #{stockLocked,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseName != null" >
+        and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+      </if>
+      <if test="isEffective != null" >
+        and is_effective = #{isEffective,jdbcType=SMALLINT}
+      </if>
+      <if test="containerNumber != null" >
+        and container_number = #{containerNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="storageLocation != null" >
+        and storage_location = #{storageLocation,jdbcType=VARCHAR}
+      </if>
+      <if test="expirationDate != null" >
+        and expiration_date = #{expirationDate,jdbcType=DATE}
+      </if>
+      <if test="lastCheckTime != null" >
+        and last_checktime = #{lastCheckTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createTime != null" >
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateTime != null" >
+        and update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <select id="selectInventoryEffectiveLockListByParams" resultMap="BaseResultMap" parameterType="entity.product_inventory.ProductInventoryOrderLock">
+  	select 
+    <include refid="Base_Column_List" />
+    from public.t_product_inventory_order_lock
+    <where>
+      <if test="orderNo != null" >
+       and order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="stockLocked != null" >
+        and stock_locked = #{stockLocked,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseName != null" >
+        and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+      </if>
+      <if test="isEffective != null" >
+        and (is_effective = -1 or is_effective = 1)
+      </if>
+      <if test="containerNumber != null" >
+        and container_number = #{containerNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="storageLocation != null" >
+        and storage_location = #{storageLocation,jdbcType=VARCHAR}
+      </if>
+      <if test="expirationDate != null" >
+        and expiration_date = #{expirationDate,jdbcType=DATE}
+      </if>
+      <if test="lastCheckTime != null" >
+        and last_checktime = #{lastCheckTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createTime != null" >
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateTime != null" >
+        and update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  
+  <select id="selectEffectiveListByParamsAndExpirationDateIsNull" resultMap="BaseResultMap" parameterType="entity.product_inventory.ProductInventoryOrderLock">
+  	select 
+    <include refid="Base_Column_List" />
+    from public.t_product_inventory_order_lock
+    <where>
+    	expiration_date is null
+      <if test="orderNo != null" >
+       and order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="stockLocked != null" >
+        and stock_locked = #{stockLocked,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseName != null" >
+        and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+      </if>
+      <if test="isEffective != null" >
+        and (is_effective = -1 or is_effective = 1)
+      </if>
+    </where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from public.t_product_inventory_order_lock
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product_inventory.ProductInventoryOrderLock" >
+    insert into public.t_product_inventory_order_lock (id, order_no, sku, 
+      stock_locked, warehouse_id, warehouse_name, 
+      is_effective, container_number, storage_location, 
+      expiration_date, create_time, update_time, last_checktime
+      )
+    values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{sku,jdbcType=VARCHAR}, 
+      #{stockLocked,jdbcType=INTEGER}, #{warehouseId,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR}, 
+      #{isEffective,jdbcType=SMALLINT}, #{containerNumber,jdbcType=VARCHAR}, #{storageLocation,jdbcType=VARCHAR}, 
+      #{expirationDate,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{lastCheckTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product_inventory.ProductInventoryOrderLock" >
+    insert into public.t_product_inventory_order_lock
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="stockLocked != null" >
+        stock_locked,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="isEffective != null" >
+        is_effective,
+      </if>
+      <if test="containerNumber != null" >
+        container_number,
+      </if>
+      <if test="storageLocation != null" >
+        storage_location,
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date,
+      </if>
+      <if test="lastCheckTime != null" >
+        last_checktime,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="stockLocked != null" >
+        #{stockLocked,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="isEffective != null" >
+        #{isEffective,jdbcType=SMALLINT},
+      </if>
+      <if test="containerNumber != null" >
+        #{containerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="storageLocation != null" >
+        #{storageLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationDate != null" >
+        #{expirationDate,jdbcType=DATE},
+      </if>
+      <if test="lastCheckTime != null" >
+        #{lastCheckTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product_inventory.ProductInventoryOrderLock" >
+    update public.t_product_inventory_order_lock
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="stockLocked != null" >
+        stock_locked = #{stockLocked,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="isEffective != null" >
+        is_effective = #{isEffective,jdbcType=SMALLINT},
+      </if>
+      <if test="containerNumber != null" >
+        container_number = #{containerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="storageLocation != null" >
+        storage_location = #{storageLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date = #{expirationDate,jdbcType=DATE},
+      </if>
+      <if test="lastCheckTime != null" >
+        last_checktime = #{lastCheckTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product_inventory.ProductInventoryOrderLock" >
+    update public.t_product_inventory_order_lock
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      sku = #{sku,jdbcType=VARCHAR},
+      stock_locked = #{stockLocked,jdbcType=INTEGER},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      is_effective = #{isEffective,jdbcType=SMALLINT},
+      container_number = #{containerNumber,jdbcType=VARCHAR},
+      storage_location = #{storageLocation,jdbcType=VARCHAR},
+      expiration_date = #{expirationDate,jdbcType=DATE},
+      last_checktime = #{lastCheckTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="listBySkuAndWarehouseIdEffective" resultMap="BaseResultMap">
+      select * from t_product_inventory_order_lock where sku = #{sku} and warehouse_id = #{warehouseId} and is_effective != 0 and stock_locked > 0
+  </select>
+  
+  <select id="selectOtherOrderInventoryEffectiveLockListByParams" resultMap="BaseResultMap" parameterType="entity.product_inventory.ProductInventoryOrderLock">
+  	select 
+    <include refid="Base_Column_List" />
+    from public.t_product_inventory_order_lock
+    <where>
+      <if test="orderNo != null" >
+       and order_no != #{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="isEffective != null" >
+        and (is_effective = -1 or is_effective = 1)
+      </if>
+      <if test="expirationDate != null" >
+        and expiration_date = #{expirationDate,jdbcType=DATE}
+      </if>
+    </where>
+  </select>
+  <select id="selectTotalLockNumByInventoryDetail" parameterType="entity.product_inventory.ProductInventoryDetail">
+	SELECT
+	SUM (stock_locked)
+	FROM
+		t_product_inventory_order_lock
+	<where>
+	(is_effective=1 OR is_effective=-1)
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="expirationDate != null" >
+        and expiration_date = #{expirationDate,jdbcType=DATE}
+      </if>
+    </where>
+  </select>
+  <select id="getOrderLackBySkuAndWarhouseId" resultMap="BaseResultMap">
+  	SELECT
+	*
+	FROM
+		t_product_inventory_order_lock
+	WHERE
+		sku = #{sku,jdbcType=VARCHAR}
+	AND warehouse_id = #{warehouseId,jdbcType=INTEGER}
+	AND is_effective =#{isEffective,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByOrderNo"  parameterType="java.lang.String">
+  	delete from public.t_product_inventory_order_lock
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </delete>
+</mapper>

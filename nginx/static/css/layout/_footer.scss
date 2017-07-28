@@ -1,0 +1,127 @@
+/*footer start*/
+.footer{
+  width: 100%;
+  height: auto;
+  color: $cW;
+  background: $cB5;
+  overflow: hidden;
+  .footer-top{
+    width: 100%;
+    font-size: $f18;
+    padding: 30px 0;
+    border-bottom: 1px solid $cB7;
+    display: inline-block;
+    li{
+      float: left;
+      padding-right: 54px;
+      i{
+        @include iconBg;
+        width: 32px;
+        height: 32px;
+        vertical-align: middle;
+      }
+      .self-support{
+        background-position: -4px -50px;
+      }
+      .province{
+        background-position: -4px -87px;
+      }
+      .rapid{
+        background-position: -2px -124px;
+        margin-right: 6px;
+      }
+      .globalize{
+        background-position: -2px -161px;
+        margin-right: 6px;
+      }
+      .whole-category{
+        background-position: -2px -198px;
+        margin-right: 6px;
+      }
+      .multi-channel{
+        background-position: -2px -235px;
+        margin-right: 6px;
+      }
+      .low-pin{
+        background-position: -2px -272px;
+        margin-right: 5px;
+      }
+    }
+    .low-pin-box{
+      padding-right: 0;
+    }
+  }
+  .footer-bottom{
+    width: 100%;
+    padding: 40px 0 50px 0;
+    font-size: $f0;
+    .footer-bottom-l{
+      width: 554px;
+      height: auto;
+      border-right: 1px solid $cB7;
+      overflow: hidden;
+      display: inline-block;
+      @include borderBox;
+      dl{
+        width: 138px;
+        float: left;
+        dt{
+          font-weight: bold;
+          font-size: $f14;
+        }
+        dd{
+          padding-top: 34px;
+          font-size: $f14;
+          a{
+            color:nth($linkColor,4);
+            &:hover{
+              color:nth($linkColor,2);
+            }
+          }
+        }
+      }
+    }
+    .footer-bottom-r{
+      width: 646px;
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: top;
+      .contact-w{
+        width: 346px;
+        float: left;
+        a{
+          display: block;
+          margin: 0 0 40px 77px;
+        }
+      }
+      .QR-code{
+        width: 300px;
+        display: inline-block;
+        a{
+          font-size: $f0;
+          color: $cW;
+          margin-left: 30px;
+          display: inline-block;
+          text-align: center;
+          p{
+            font-size: $f14;
+            padding: 14px 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+/*footer end*/
+
+/*page-foot start*/
+.page-foot{
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  color: $cW;
+  background: $cB4;
+  text-align: center;
+}
+/*page-foot end*/

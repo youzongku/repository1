@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.purchase.PurchaseOrderInputGiftMapper">
+	<resultMap id="BaseResultMap" type="entity.purchase.PurchaseOrderInputGift">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="input_id" property="inputId" jdbcType="INTEGER" />
+		<result column="serial_number" property="serialNumber"
+			jdbcType="INTEGER" />
+		<result column="sku" property="sku" jdbcType="VARCHAR" />
+		<result column="carton" property="carton" jdbcType="INTEGER" />
+		<result column="unit_type" property="unitType" jdbcType="INTEGER" />
+		<result column="qty" property="qty" jdbcType="INTEGER" />
+		<result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+		<result column="expiration_date" property="expirationDate"
+			jdbcType="VARCHAR" />
+		<result column="need_expiration_date" property="needExpirationDate"
+			jdbcType="BOOLEAN" />
+		<!-- <result column="pro_ids" property="proIds" jdbcType="VARCHAR" /> -->
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, input_id, serial_number,sku, carton, unit_type,
+		warehouse_id, qty,
+		expiration_date, need_expiration_date
+	</sql>
+
+	<delete id="deleteByIdList" parameterType="java.util.List">
+		delete from t_purchase_order_input_gift
+		where id in
+		<foreach collection="list" index="index" item="item" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<delete id="deleteByInputId" parameterType="java.lang.Integer">
+		delete from
+		t_purchase_order_input_gift
+		where input_id = #{inputId}
+	</delete>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_purchase_order_input_gift
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectByInputId" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_purchase_order_input_gift
+		where input_id =
+		#{inputId,jdbcType=INTEGER}
+		order by id desc
+	</select>
+
+	<!-- <select id="selectByProIds" resultMap="BaseResultMap" parameterType="java.lang.String" 
+		> select <include refid="Base_Column_List" /> from t_purchase_order_input_gift 
+		where pro_ids = #{proIds} order by id desc </select> -->
+
+	<select id="selectByIdList" resultMap="BaseResultMap"
+		parameterType="java.util.List">
+		select
+		<include refid="Base_Column_List" />
+		from t_purchase_order_input_gift
+		where id in
+		<foreach collection="list" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+		order by id desc
+	</select>
+
+	<insert id="insert" parameterType="entity.purchase.PurchaseOrderInputGift">
+		insert into
+		t_purchase_order_input_gift (input_id, serial_number,
+		sku,
+		warehouse_id, carton, unit_type, qty, expiration_date, need_expiration_date)
+		values
+		(#{inputId,jdbcType=INTEGER}, #{serialNumber,jdbcType=INTEGER},
+		#{sku,jdbcType=VARCHAR}, #{warehouseId}, #{carton,jdbcType=INTEGER},
+		#{unitType,jdbcType=INTEGER},
+		#{qty,jdbcType=INTEGER},
+		#{expirationDate}, #{needExpirationDate})
+	</insert>
+
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into t_purchase_order_input_gift (input_id, serial_number,
+		sku,
+		warehouse_id, carton, unit_type, qty, expiration_date, need_expiration_date)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.inputId,jdbcType=INTEGER},
+			#{item.serialNumber,jdbcType=INTEGER},
+			#{item.sku,jdbcType=VARCHAR},
+			#{item.warehouseId}, #{item.carton,jdbcType=INTEGER},
+			#{item.unitType,jdbcType=INTEGER}, #{item.qty,jdbcType=INTEGER},
+			#{item.expirationDate}, #{item.needExpirationDate})
+		</foreach>
+	</insert>
+
+	<insert id="insertSelective" parameterType="entity.purchase.PurchaseOrderInputGift"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_purchase_order_input_gift
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="inputId != null">
+				input_id,
+			</if>
+			<if test="serialNumber != null">
+				serial_number,
+			</if>
+			<if test="sku != null">
+				sku,
+			</if>
+			<if test="carton != null">
+				carton,
+			</if>
+			<if test="unitType != null">
+				unit_type,
+			</if>
+			<if test="qty != null">
+				qty,
+			</if>
+			<if test="warehouseId != null">
+				warehouse_id
+			</if>
+			<if test="expirationDate != null">
+				expiration_date
+			</if>
+			<if test="needExpirationDate != null">
+				need_expiration_date
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="inputId != null">
+				#{inputId,jdbcType=INTEGER},
+			</if>
+			<if test="serialNumber != null">
+				#{serialNumber,jdbcType=INTEGER},
+			</if>
+			<if test="sku != null">
+				#{sku,jdbcType=VARCHAR},
+			</if>
+			<if test="carton != null">
+				#{carton,jdbcType=INTEGER},
+			</if>
+			<if test="unitType != null">
+				#{unitType,jdbcType=INTEGER},
+			</if>
+			<if test="qty != null">
+				#{qty,jdbcType=INTEGER},
+			</if>
+			<if test="warehouseId != null">
+				#{warehouseId,jdbcType=INTEGER}
+			</if>
+			<if test="expirationDate != null">
+				#{expirationDate,jdbcType=INTEGER}
+			</if>
+			<if test="needExpirationDate != null">
+				#{needExpirationDate,jdbcType=INTEGER}
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="entity.purchase.PurchaseOrderInputGift">
+		update t_purchase_order_input_gift
+		<set>
+			<if test="inputId != null">
+				input_id = #{inputId,jdbcType=INTEGER},
+			</if>
+			<if test="serialNumber != null">
+				serial_number = #{serialNumber,jdbcType=INTEGER},
+			</if>
+			<if test="sku != null">
+				sku = #{sku,jdbcType=VARCHAR},
+			</if>
+			<if test="carton != null">
+				carton = #{carton,jdbcType=INTEGER},
+			</if>
+			<if test="unitType != null">
+				unit_type = #{unitType,jdbcType=INTEGER},
+			</if>
+			<if test="qty != null">
+				qty = #{qty,jdbcType=INTEGER},
+			</if>
+			<if test="warehouseId != null">
+				warehouse_id = #{warehouseId,jdbcType=INTEGER}
+			</if>
+			<!-- <if test="proIds != null"> pro_ids = #{proIds,jdbcType=VARCHAR}, 
+				</if> -->
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateGiftQty">
+		update t_purchase_order_input_gift set qty=#{qty}
+		where id = #{id}
+	</update>
+
+	<update id="batchUpdateGiftQtyAndNeedExpirationDate">
+		<foreach collection="list" index="index" item="item"
+			separator=";">
+			update t_purchase_order_input_gift
+			set qty=#{item.qty},
+			need_expiration_date=#{item.needExpirationDate}
+			where
+			id = #{item.id}
+		</foreach>
+	</update>
+
+	<update id="batchUpdateWarehouse" parameterType="java.util.List">
+		<foreach collection="list" index="index" item="item"
+			separator=";">
+			update t_purchase_order_input_gift
+			set warehouse_id =
+			#{item.warehouseId,jdbcType=INTEGER}
+			where id =
+			#{item.id,jdbcType=INTEGER}
+		</foreach>
+	</update>
+</mapper>

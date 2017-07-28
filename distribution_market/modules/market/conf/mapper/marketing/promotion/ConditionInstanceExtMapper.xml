@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.promotion.ConditionInstanceExtMapper" >
+  <resultMap id="BaseResultMap" type="entity.marketing.promotion.ConditionInstanceExt" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="act_inst_id" property="actInstId" jdbcType="INTEGER" />
+    <result column="condt_inst_id" property="condtInstId" jdbcType="INTEGER" />
+    <result column="specify_attr_value" property="specifyAttrValue" jdbcType="VARCHAR" />
+    <result column="stepped" property="stepped" jdbcType="BOOLEAN" />
+    <result column="double_up" property="doubleUp" jdbcType="BOOLEAN" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, act_inst_id, condt_inst_id, specify_attr_value, stepped, double_up
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_condt_inst_ext
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByActInstId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_condt_inst_ext
+    where act_inst_id = #{actInstId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByCondtInstId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_condt_inst_ext
+    where condt_inst_id = #{condtInstId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByCondtInstIdList" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_condt_inst_ext
+    where condt_inst_id in
+    <foreach collection="list" item="condtInstId" open="(" separator="," close=")">  
+    	#{condtInstId}  
+    </foreach>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_condt_inst_ext
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="entity.marketing.promotion.ConditionInstanceExt" >
+    insert into t_condt_inst_ext (act_inst_id, condt_inst_id, specify_attr_value, stepped, double_up)
+    values (#{actInstId,jdbcType=INTEGER}, #{condtInstId}, #{specifyAttrValue,jdbcType=VARCHAR}, #{stepped}, #{doubleUp})
+  </insert>
+  
+  <insert id="insertBatch" parameterType="java.util.List">
+  	insert into t_condt_inst_ext (act_inst_id, condt_inst_id, specify_attr_value, stepped, double_up)
+    values
+  	<foreach collection="list" item="item" index="index" separator="," >
+		(#{item.actInstId,jdbcType=INTEGER}, #{item.condtInstId}, #{item.specifyAttrValue,jdbcType=VARCHAR}, #{item.stepped}, #{item.doubleUp})
+	</foreach>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.marketing.promotion.ConditionInstanceExt" >
+    update t_condt_inst_ext
+    <set >
+      <if test="specifyAttrValue != null" >
+        specify_attr_value = #{specifyAttrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="stepped != null" >
+        stepped = #{stepped},
+      </if>
+      <if test="doubleUp != null" >
+        double_up = #{doubleUp},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

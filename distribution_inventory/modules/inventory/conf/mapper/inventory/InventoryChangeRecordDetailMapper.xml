@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.inventory.InventoryChangeRecordDetailMapper">
+  <resultMap id="BaseResultMap" type="entity.inventory.InventoryChangeRecordDetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sku" jdbcType="VARCHAR" property="sku" />
+    <result column="qty" jdbcType="INTEGER" property="qty" />
+    <result column="change_record_id" jdbcType="INTEGER" property="changeRecordId" />
+    <result column="warehouse_id" jdbcType="INTEGER" property="warehouseId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sku, qty, change_record_id, warehouse_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_inventory_change_record_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_inventory_change_record_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.inventory.InventoryChangeRecordDetail">
+    insert into t_inventory_change_record_detail (id, sku, qty, 
+      change_record_id, warehouse_id)
+    values (#{id,jdbcType=INTEGER}, #{sku,jdbcType=VARCHAR}, #{qty,jdbcType=INTEGER}, 
+      #{changeRecordId,jdbcType=INTEGER}, #{warehouseId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.inventory.InventoryChangeRecordDetail">
+    insert into t_inventory_change_record_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sku != null">
+        sku,
+      </if>
+      <if test="qty != null">
+        qty,
+      </if>
+      <if test="changeRecordId != null">
+        change_record_id,
+      </if>
+      <if test="warehouseId != null">
+        warehouse_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null">
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null">
+        #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="changeRecordId != null">
+        #{changeRecordId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null">
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.inventory.InventoryChangeRecordDetail">
+    update t_inventory_change_record_detail
+    <set>
+      <if test="sku != null">
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null">
+        qty = #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="changeRecordId != null">
+        change_record_id = #{changeRecordId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null">
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.inventory.InventoryChangeRecordDetail">
+    update t_inventory_change_record_detail
+    set sku = #{sku,jdbcType=VARCHAR},
+      qty = #{qty,jdbcType=INTEGER},
+      change_record_id = #{changeRecordId,jdbcType=INTEGER},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.category.ProductVcategoryMapMapper">
+	
+	<resultMap id="productListInfoMap" type="dto.product.ProductListInfoDto">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="sku" property="sku" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="listing_id" property="listingId" jdbcType="VARCHAR" />
+		<result column="iqty" property="qty" jdbcType="INTEGER" />
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+		<result column="link_url" property="linkUrl" jdbcType="VARCHAR" />
+		<result column="cat_id" property="catId" jdbcType="VARCHAR" />
+		<result column="cat_title" property="catTitle" jdbcType="INTEGER" />
+		<result column="base_price" property="basePrice" jdbcType="DOUBLE" />
+		<result column="cost_price" property="costPrice" jdbcType="DOUBLE" />
+		<result column="sale_price" property="salePrice" jdbcType="DOUBLE" />
+		<result column="local_ref_price" property="localRefPrice" jdbcType="DOUBLE" />
+		<result column="foreign_ref_price" property="foreignRefPrice" jdbcType="DOUBLE" />
+		<result column="free_shipping_price" property="freeShippingPrice" jdbcType="DOUBLE" />
+		<result column="discount" property="discount" jdbcType="DOUBLE" />
+		<result column="discount_price" property="discountPrice" jdbcType="DOUBLE" />
+		<result column="short_desc" property="shortDesc" jdbcType="VARCHAR" />
+		<result column="istatus" property="istatus" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="category_product_base">
+		SELECT
+				pb.iid id,
+				pb.csku sku,
+				pt.ctitle title,
+				pb.clistingid listing_id,
+				pb.iqty qty,
+				pb.istatus istatus,
+				ti.cimageurl img_url,
+				tu.curl link_url,
+				vc.id cat_id,
+				vc.name cat_title,
+				pb.fprice base_price,
+				pb.fcostprice cost_price,
+				pb.saleprice sale_price,
+				pb.local_ref_price local_ref_price,
+				pb.saleprice foreign_ref_price,
+				pb.saleprice free_shipping_price,
+				pt.cshortdescription short_desc
+			FROM
+				t_virtual_category vc, t_product_vcategory_mapper vm, t_product_base pb, t_product_translate pt, 
+				t_product_image ti, t_product_url tu
+	</sql>
+	
+	<select id="getProductList" resultMap="productListInfoMap" parameterType="dto.category.CategorySearchParamDto">
+		<include refid="category_product_base"></include>
+		WHERE
+			vc."id"= vm.categoryid
+			and vm.sku = pb.csku
+			and pb.bvisible = true
+			and vm.sku = pt.csku
+			and vm.sku = ti.csku
+			and vm.sku = tu.csku
+			and ti.iid = (select iid from t_product_image where csku = vm.sku and bbaseimage = true LIMIT 1)
+			and pt.ilanguageid = 1
+			<if test="paramDto.catIds != null and paramDto.catIds.size() > 0">
+				and vc.id in 
+				<foreach collection="paramDto.catIds" open="(" separator="," close=")" item="id">
+					#{id}
+				</foreach>
+			</if>
+			<if test="paramDto.title != null and paramDto.title != ''">
+				and (pb.csku = #{paramDto.title,jdbcType=VARCHAR} or pt.ctitle like '%'||#{paramDto.title,jdbcType=VARCHAR}||'%')
+			</if>
+			<if test="paramDto.istatus != null">
+				and pb.istatus = #{paramDto.istatus,jdbcType=INTEGER}
+			</if>
+		ORDER BY vc.position DESC
+		limit #{paramDto.pageSize} offset (#{paramDto.pageNo}-1)* #{paramDto.pageSize}
+	</select>
+	
+	<select id="getProductListTotal" resultType="Integer" parameterType="dto.category.CategorySearchParamDto">
+		SELECT COUNT(1)
+		FROM
+			t_virtual_category vc, t_product_vcategory_mapper vm, t_product_base pb, t_product_translate pt, 
+			t_product_image ti, t_product_url tu
+		WHERE
+			vc."id"= vm.categoryid
+			and vm.sku = pb.csku
+			and pb.bvisible = true
+			and vm.sku = pt.csku
+			and vm.sku = ti.csku
+			and vm.sku = tu.csku
+			and ti.iid = (select iid from t_product_image where csku = vm.sku and bbaseimage = true LIMIT 1)
+			and pt.ilanguageid = 1
+			<if test="paramDto.catIds != null and paramDto.catIds.size() > 0">
+				and vc.id in 
+				<foreach collection="paramDto.catIds" open="(" separator="," close=")" item="id">
+					#{id}
+				</foreach>
+			</if>
+			<if test="paramDto.title != null and paramDto.title != ''">
+				and (pb.csku = #{paramDto.title,jdbcType=VARCHAR} or pt.ctitle like '%'||#{paramDto.title,jdbcType=VARCHAR}||'%')
+			</if>
+			<if test="paramDto.istatus != null">
+				and pb.istatus = #{paramDto.istatus,jdbcType=INTEGER}
+			</if>
+	</select>
+	<select id="getSkuLists" resultType="java.lang.String"  parameterType="java.util.List">
+		SELECT
+				pb.csku sku
+		FROM
+				t_virtual_category vc, t_product_vcategory_mapper vm, t_product_base pb, t_product_translate pt, 
+				t_product_image ti, t_product_url tu
+		WHERE
+			vc."id"= vm.categoryid
+			and vm.sku = pb.csku
+			and pb.bvisible = true
+			and vm.sku = pt.csku
+			and vm.sku = ti.csku
+			and vm.sku = tu.csku
+			and pb.istatus = 1
+			and ti.iid = (select iid from t_product_image where csku = vm.sku and bbaseimage = true LIMIT 1)
+			and pt.ilanguageid = 1
+			<if test="list != null and list.size() > 0">
+				and vc.id in 
+				<foreach collection="list" open="(" separator="," close=")" item="id">
+					#{id,jdbcType=INTEGER}
+				</foreach>
+			</if>
+		order by vm.position desc nulls last
+	</select>
+	
+	<select id="getProVcategory" resultType="entity.category.ProductVcategoryMapper"  parameterType="java.util.List">
+		SELECT
+				pb.csku as sku,vm.position as position 
+		FROM
+				t_virtual_category vc, t_product_vcategory_mapper vm, t_product_base pb, t_product_translate pt, 
+				t_product_image ti
+		WHERE
+			vc."id"= vm.categoryid
+			and vm.sku = pb.csku
+			and pb.bvisible = true
+			and vm.sku = pt.csku
+			and vm.sku = ti.csku
+			and pb.istatus = 1
+			and ti.iid = (select iid from t_product_image where csku = vm.sku and bbaseimage = true LIMIT 1)
+			and pt.ilanguageid = 1
+			<if test="list != null and list.size() > 0">
+				and vc.id in 
+				<foreach collection="list" open="(" separator="," close=")" item="id">
+					#{id,jdbcType=INTEGER}
+				</foreach>
+			</if>
+	</select>
+</mapper>

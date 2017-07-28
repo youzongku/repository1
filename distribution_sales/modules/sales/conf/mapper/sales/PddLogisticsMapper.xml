@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.PddLogisticsMapper" >
+  <resultMap id="BaseResultMap" type="entity.sales.PddLogistics" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="logistics_id" property="logisticsId" jdbcType="INTEGER" />
+    <result column="logistics_company" property="logisticsCompany" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, logistics_id, logistics_company
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from public.t_pdd_logistics
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from public.t_pdd_logistics
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.sales.PddLogistics" >
+    insert into public.t_pdd_logistics (id, logistics_id, logistics_company
+      )
+    values (#{id,jdbcType=INTEGER}, #{logisticsId,jdbcType=INTEGER}, #{logisticsCompany,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.sales.PddLogistics" >
+    insert into public.t_pdd_logistics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="logisticsId != null" >
+        logistics_id,
+      </if>
+      <if test="logisticsCompany != null" >
+        logistics_company,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsId != null" >
+        #{logisticsId,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsCompany != null" >
+        #{logisticsCompany,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.sales.PddLogistics" >
+    update public.t_pdd_logistics
+    <set >
+      <if test="logisticsId != null" >
+        logistics_id = #{logisticsId,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsCompany != null" >
+        logistics_company = #{logisticsCompany,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.sales.PddLogistics" >
+    update public.t_pdd_logistics
+    set logistics_id = #{logisticsId,jdbcType=INTEGER},
+      logistics_company = #{logisticsCompany,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findPddLogisticsByCompanyName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from t_pdd_logistics
+    where logistics_company = #{companyName}
+  </select>
+</mapper>

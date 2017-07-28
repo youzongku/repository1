@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="email=no" name="format-detection" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>通淘供应链</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main/main.css">
+</head>
+<body>
+    <header class="posFix head">
+        <a href="####" class="set-out">退出</a>
+        通淘供应链
+        <a href="####" class="set-logo"></a>
+    </header>
+    <nav class="conTop indexNav">
+        <span>
+            <p>1000</p>
+            <p>发货单待审核</p>
+        </span>
+    </nav>
+    <section class="imporCon">
+         <p v-for="menu in menus" >
+            <a href="####">
+                <span>{{menu.menuName}}</span>
+                <span class="txr" position = "{{menu.id}}"  @click="loadmenu($event)"> > </span>
+            </a>
+        </p>
+      <!--   <p class="index-p">
+           
+        </p>
+        <p class="index-p">
+            <a href="####"><span>销售发货</span><span class="txr"> > </span></a>
+        </p>
+        <p class="index-p">
+            <a href="####"><span>业务员录单</span><span class="txr"> > </span></a>
+        </p> -->
+    </section>
+    <script src="/js/lib/require.js" data-main="/js/user/index/index.js">
+    </script>        
+</body>
+</html>

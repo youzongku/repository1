@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.promotion.PrivilegeJudgementTypeMapper" >
+  <resultMap id="BaseResultMap" type="entity.marketing.promotion.PrivilegeJudgementType" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="j_type" property="jType" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="BOOLEAN" />
+  </resultMap>
+  
+  <update id="deleteSoftlyByPrimaryKey">
+  	update t_pvlg_jgmnt_type set is_delete=true where where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <sql id="Base_Column_List" >
+    id, name, j_type, is_delete
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_pvlg_jgmnt_type
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="entity.marketing.promotion.PrivilegeJudgementType" >
+    insert into t_pvlg_jgmnt_type (id, name, j_type, is_delete)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+    #{jType,jdbcType=VARCHAR}, #{isDelete})
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.marketing.promotion.PrivilegeJudgementType" >
+    update t_pvlg_jgmnt_type
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="jType != null" >
+        j_type = #{jType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

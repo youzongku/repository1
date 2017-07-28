@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.DisBillMapper" >
+  <resultMap id="BaseResultMap" type="entity.timer.DisBill" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="account_id" property="accountId" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="NUMERIC" />
+    <result column="balance" property="balance" jdbcType="NUMERIC" />
+    <result column="purpose" property="purpose" jdbcType="VARCHAR" />
+    <result column="target_account" property="targetAccount" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="serial_number" property="serialNumber" jdbcType="VARCHAR" />
+    <result column="payment_type" property="paymentType" jdbcType="VARCHAR" />
+    <result column="apply_id" property="applyId" jdbcType="INTEGER" />
+    <result column="source_card" property="sourceCard" jdbcType="VARCHAR" />
+    <result column="sources" property="sources" jdbcType="INTEGER" />
+    <result column="credit_limit_balance" property="creditLimitBalance" jdbcType="NUMERIC" />
+    <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, account_id, amount, purpose, target_account, 
+    remark, create_date, serial_number,payment_type,
+    apply_id,source_card,balance,sources,credit_limit_balance,
+    trade_no
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_bill
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_bill
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.timer.DisBill" >
+    insert into t_dis_bill (id, account_id, amount, 
+      purpose, target_account, remark, 
+      create_date, serial_number,payment_type,apply_id,source_card,balance,sources)
+    values (#{id,jdbcType=INTEGER}, #{accountId,jdbcType=INTEGER}, #{amount,jdbcType=NUMERIC}, 
+      #{purpose,jdbcType=VARCHAR}, #{targetAccount,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{serialNumber,jdbcType=VARCHAR},
+      #{paymentType,jdbcType=VARCHAR}, #{applyId,jdbcType=INTEGER},#{sourceCard,jdbcType=VARCHAR},#{balance,jdbcType=NUMERIC},
+      #{sources,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.timer.DisBill"  useGeneratedKeys="true" keyProperty="id"  >
+    insert into t_dis_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="purpose != null" >
+        purpose,
+      </if>
+      <if test="targetAccount != null" >
+        target_account,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="serialNumber != null" >
+        serial_number,
+      </if>
+      <if test="paymentType != null" >
+        payment_type,
+      </if>
+      <if test="applyId != null" >
+        apply_id,
+      </if>
+      <if test="sourceCard != null" >
+        source_card,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="sources != null">
+      	sources,
+      </if>
+      <if test="creditLimitBalance != null">
+      	credit_limit_balance,
+      </if>
+      <if test="tradeNo != null">
+      	trade_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accountId != null" >
+        #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=NUMERIC},
+      </if>
+      <if test="purpose != null" >
+        #{purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="targetAccount != null" >
+        #{targetAccount,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serialNumber != null" >
+        #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentType != null" >
+        #{paymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="applyId != null" >
+        #{applyId,jdbcType=INTEGER},
+      </if>
+      <if test="sourceCard != null" >
+        #{sourceCard,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=INTEGER},
+      </if>
+      <if test="sources != null">
+      	#{sources,jdbcType=INTEGER},
+      </if>
+      <if test="creditLimitBalance != null">
+      	#{creditLimitBalance,jdbcType=NUMERIC},
+      </if>
+      <if test="tradeNo != null">
+      	#{tradeNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.timer.DisBill" >
+    update t_dis_bill
+    <set >
+      <if test="accountId != null" >
+        account_id = #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=NUMERIC},
+      </if>
+      <if test="purpose != null" >
+        purpose = #{purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="targetAccount != null" >
+        target_account = #{targetAccount,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serialNumber != null" >
+        serial_number = #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentType != null" >
+        payment_type = #{paymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="applyId != null" >
+        apply_id = #{applyId,jdbcType=INTEGER},
+      </if>
+      <if test="sourceCard != null" >
+        source_card = #{sourceCard,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.timer.DisBill" >
+    update t_dis_bill
+    set account_id = #{accountId,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=NUMERIC},
+      purpose = #{purpose,jdbcType=VARCHAR},
+      target_account = #{targetAccount,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      serial_number = #{serialNumber,jdbcType=VARCHAR},
+      payment_type = #{paymentType,jdbcType=VARCHAR},
+      apply_id = #{applyId,jdbcType=INTEGER},
+      source_card = #{sourceCard,jdbcType=INTEGER},
+      balance = #{balance,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="queryBills" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	bi.*
+	from t_dis_bill bi LEFT JOIN t_dis_account t
+	on bi.account_id = t.id
+	where 
+	t.email=#{param.email,jdbcType=VARCHAR}
+	<if test="param.purpose != null and param.purpose != ''">
+		and bi.purpose = #{param.purpose,jdbcType=VARCHAR}
+	</if>
+	<if test='param.time != null and param.time != ""'>
+		and bi.create_date <![CDATA[>=]]> TO_DATE(#{param.time,jdbcType=VARCHAR}, 'FMYYYY-FMMM-FMDDTFMHH24:FMMI:FMSS')
+	</if>
+	<if test='param.serialNumber!= null and param.serialNumber!= ""'>
+		and bi.serial_number = #{param.serialNumber,jdbcType=VARCHAR}
+	</if>
+	<if test='param.applyId!= null'>
+		and bi.apply_id = #{param.applyId,jdbcType=INTEGER}
+	</if>
+	<if test='param.sources!= null'>
+		and bi.sources = #{param.sources,jdbcType=INTEGER}
+	</if>
+	<!--传son 处理里为该条记录的子项 -->   
+	<if test='param.son == true'>
+		and bi.sources != 3
+	</if>
+	order by bi.create_date desc
+	<if test="param.currPage !=null">
+		limit #{param.pageSize} offset (#{param.currPage}-1)*#{param.pageSize}
+	</if>
+  </select>
+  
+  <select id="queryBillsTotal" resultType="java.lang.Integer" parameterType="java.util.Map">
+	select
+	count(1)
+	from t_dis_bill bi LEFT JOIN t_dis_account t
+	on bi.account_id = t.id
+	where 
+	t.email=#{param.email,jdbcType=VARCHAR}
+	<if test="param.purpose != null and param.purpose != ''">
+		and bi.purpose = #{param.purpose,jdbcType=VARCHAR}
+	</if>
+	<if test='param.serialNumber!= null and param.serialNumber!= ""'>
+		and bi.serial_number = #{param.serialNumber,jdbcType=VARCHAR}
+	</if>
+	<if test='param.applyId!= null'>
+		and bi.apply_id = #{param.applyId,jdbcType=INTEGER}
+	</if>
+	<if test='param.sources!= null'>
+		and bi.sources = #{param.sources,jdbcType=INTEGER}
+	</if>
+	<if test='param.time != null and param.time != ""'>
+		and bi.create_date <![CDATA[>=]]> TO_DATE(#{param.time,jdbcType=VARCHAR}, 'FMYYYY-FMMM-FMDDTFMHH24:FMMI:FMSS')
+	</if>
+  </select>
+  
+  
+  
+  <select id="queryBill" resultMap="BaseResultMap" parameterType="entity.timer.DisBill" >
+  	select * from t_dis_bill bi where 1=1
+  	  <if test="accountId != null" >
+        and account_id = #{accountId,jdbcType=INTEGER}
+      </if>
+      <if test="purpose != null" >
+        and purpose = #{purpose,jdbcType=VARCHAR}
+      </if>
+      <if test="serialNumber != null" >
+        and serial_number = #{serialNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="paymentType != null" >
+        and payment_type = #{paymentType,jdbcType=VARCHAR}
+      </if>
+      <if test="applyId != null" >
+        and apply_id = #{applyId,jdbcType=INTEGER}
+      </if>
+      <if test="sourceCard != null" >
+        and source_card = #{sourceCard,jdbcType=INTEGER}
+      </if>
+  </select>
+</mapper>

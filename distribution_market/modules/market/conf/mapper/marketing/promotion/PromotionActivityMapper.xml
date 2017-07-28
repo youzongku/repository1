@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.promotion.PromotionActivityMapper">
+	<resultMap id="BaseResultMap" type="entity.marketing.promotion.PromotionActivity">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="last_update_user" property="lastUpdateUser" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+		<result column="is_delete" property="isDelete" jdbcType="BOOLEAN" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="OrderPageReturnsDto" type="dto.marketing.promotion.OrderPageReturnsDto">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<update id="deleteSoftlyByPrimaryKey">
+		update t_pro_act set is_delete=true where where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<sql id="Base_Column_List">
+		id, name, description, start_time, end_time, create_user,
+		last_update_user, create_time,
+		last_update_time, is_delete,status
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_pro_act
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 进行中的才能更新 -->
+	<update id="pauseByPrimaryKey" parameterType="java.lang.Integer">
+		update t_pro_act
+		set status = 4
+		where id = #{id}
+		and status = 2
+	</update>
+	
+	<!-- 具体的status要计算，因为它启动启动了，但是时间已过期，那就要把活动改为过期 -->
+	<update id="activateProActPaused">
+		update t_pro_act
+		set status = #{status}
+		where id = #{id}
+		and status = 4
+	</update>
+	
+	<update id="updateStatusByPrimaryKey">
+		update t_pro_act
+		set status = #{status}
+		where id = #{id}
+	</update>
+
+	<insert id="insertPromotion" parameterType="entity.marketing.promotion.PromotionActivity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_pro_act (name, description, start_time, end_time, create_user, 
+		create_time, last_update_time, is_delete, status)
+		values (#{name}, #{description}, #{startTime}, #{endTime}, #{createUser},
+		 now(), now(), #{isDelete}, #{status}
+		)
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="entity.marketing.promotion.PromotionActivity">
+		update t_pro_act
+		<set>
+			last_update_time = now(),
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="startTime != null">
+				start_time = #{startTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateUser != null">
+				last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<select id="getAllActivity" resultMap="BaseResultMap"
+		parameterType="forms.marketing.promotion.ActivityInstanceSearchForm">
+		select
+		<include refid="Base_Column_List" />
+		from t_pro_act where is_delete = false
+		<if test="name != null and name!=''">
+			and name = #{name}
+		</if>
+		<if test="startTime != null and startTime!=''">
+			and to_char(start_time,'YYYY-MM-DD') = #{startTime}
+		</if>
+		<if test="endTime != null and endTime!=''">
+			and to_char(end_time,'YYYY-MM-DD') = #{endTime}
+		</if>
+		<if test="status != null and status!=''">
+			and status = #{status}
+		</if>
+		<choose>
+			<when test="sidx != null and sidx != '' and sord != null and sord != ''">
+				order by ${sidx} ${sord} nulls last
+			</when>
+			<otherwise>
+				order by end_time desc
+			</otherwise>
+		</choose>
+		limit #{pageSize} offset #{offset}
+	</select>
+	<update id="updateEndTime">
+		update t_pro_act set end_time = #{endTime},last_update_user=#{lastCreateUser},last_update_time = now() where id = #{id}
+	</update>
+
+	<select id="getRowSize" resultType="java.lang.Integer" 
+	parameterType="forms.marketing.promotion.ActivityInstanceSearchForm">
+		select
+		count(*)
+		from t_pro_act where is_delete = false
+		<if test="name != null and name!=''">
+			and name = #{name}
+		</if>
+		<if test="startTime != null and startTime!=''">
+			and to_char(start_time,'YYYY-MM-DD') = #{startTime}
+		</if>
+		<if test="endTime != null and endTime!=''">
+			and to_char(end_time,'YYYY-MM-DD') =#{endTime}
+		</if>
+		<if test="status != null and status!=''">
+			and status = #{status}
+		</if>
+	</select>
+	
+	<select id="getProActivitiesByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+	select <include refid="Base_Column_List" />
+	 from t_pro_act where name = #{name} 
+	 and is_delete=false
+	</select>
+  
+  <select id="getExecutoryActivity" resultMap="BaseResultMap">
+     select <include refid="Base_Column_List" /> from t_pro_act where is_delete = FALSE and status = 2
+  </select>
+  
+  <update id="updateProActNotDelete">
+  	update t_pro_act set is_delete=false
+  	where id=#{id} and name=#{name} and is_delete=true
+  </update>
+  
+  <select id="getActivityByPvlg" parameterType="java.lang.Integer" resultMap="OrderPageReturnsDto">
+   select pa."id",pa."name" from t_pro_act pa LEFT JOIN t_act_inst ai on pa."id" = ai.pro_act_id LEFT JOIN t_pvlg_inst pi ON ai."id" = pi.act_inst_id where pi."id" = #{id} and pa.status = 2 and pa.is_delete = false
+  </select>
+  
+  <update id="statusEndTimerTrigger">
+     update t_pro_act  set status = 3,last_update_time=now() where end_time<![CDATA[<=]]>now() and status not in (3,4)
+  </update>
+  
+  <update id="statusStartTimerTrigger">
+     update t_pro_act  set status = 2,last_update_time=now() where start_time<![CDATA[<=]]>now() and end_time >= now() and status not in (2,4)
+  </update>
+  
+  <select id="getPaymentTimeParticipateActivaty" resultMap="BaseResultMap" parameterType="java.util.Date">
+    select <include refid="Base_Column_List" /> from t_pro_act where (is_delete = FALSE or status = 4 ) and start_time  <![CDATA[<=]]> #{paymentTime,jdbcType=TIMESTAMP} and #{paymentTime,jdbcType=TIMESTAMP} <![CDATA[<=]]> end_time
+  </select>
+</mapper>

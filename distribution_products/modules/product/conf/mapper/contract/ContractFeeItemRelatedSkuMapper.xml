@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.contract.ContractFeeItemRelatedSkuMapper" >
+  <resultMap id="BaseResultMap" type="entity.contract.ContractFeeItemRelatedSku" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="fee_item_id" property="feeItemId" jdbcType="INTEGER" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="contract_price" property="contractPrice" jdbcType="DOUBLE" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, fee_item_id, product_name, sku, warehouse_id, warehouse_name, category_id, category_name, contract_price
+  </sql>
+  
+  <select id="selectByConditions" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_contract_fee_items_related_skus
+    <where>
+    	<if test="feeItemIdList!=null and feeItemIdList.size()>0">
+    		and fee_item_id in
+    		<foreach collection="feeItemIdList" item="item" open="("  separator=","   close=")">  
+				#{item}
+		    </foreach>
+    	</if>
+    </where>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_contract_fee_items_related_skus
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_contract_fee_items_related_skus
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByFeeItemId" parameterType="java.lang.Integer" >
+    delete from t_contract_fee_items_related_skus
+    where fee_item_id = #{feeItemId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="entity.contract.ContractFeeItemRelatedSku" >
+    insert into t_contract_fee_items_related_skus (fee_item_id, product_name, sku, 
+      warehouse_id, warehouse_name, category_id, category_name, contract_price
+      )
+    values (#{feeItemId}, #{productName}, #{sku}, #{warehouseId},
+    #{warehouseName}, #{categoryId}, #{categoryName}, #{contractPrice})
+  </insert>
+  
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into t_contract_fee_items_related_skus (fee_item_id, product_name, sku, 
+      warehouse_id, warehouse_name, category_id, category_name, contract_price)
+	values
+	<foreach collection="list" item="item" index="index" separator="," >
+		(#{item.feeItemId}, #{item.productName}, #{item.sku}, #{item.warehouseId},
+    #{item.warehouseName}, #{item.categoryId}, #{item.categoryName}, #{item.contractPrice})
+	</foreach>  
+  </insert>
+  
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="entity.contract.ContractFeeItemRelatedSku" >
+    insert into t_contract_fee_items_related_skus
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="feeItemId != null" >
+        fee_item_id,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="contractPrice != null" >
+        contract_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="feeItemId != null" >
+        #{feeItemId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        #{productName},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName},
+      </if>
+      <if test="contractPrice != null" >
+        #{contractPrice},
+      </if>
+    </trim>
+  </insert>
+</mapper>

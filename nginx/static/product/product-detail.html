@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="shortcut icon" href="../img/favicon.ico"/>
+    <link rel="stylesheet" href="/css/sub-details.css"/>
+    <link type="text/css" rel="stylesheet" href="/css/style/style.css">
+    <link rel="stylesheet" href="../css/vendors/jquery.mCustomScrollbar.min.css"/>
+    <script type="text/javascript" src="/js/lib/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../js/lib/layer2.0/layer.js"></script>
+    <script type="text/javascript" src="../js/lib/jquery.lazyload.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <!--<script charset="utf-8" src="https://wpa.b.qq.com/cgi/wpa.php"></script>-->
+    <title>商品详情</title>
+</head>
+
+<body>
+<div id="div_head"></div>
+
+<!--正文 start-->
+<div class="content-list" style="padding-top: 20px;">
+    <div class="main goods-details-main">
+
+        <div class="goods-detail">
+            <div class="goods-detail-l">
+                <ul>
+                    <li id="defaultImg"></li>
+                </ul>
+                <a href="javascript:;" id="switch-top" class="prev"></a>
+                <a href="javascript:;" id="switch-down" class="next"></a>
+                <ol class="goods-detail-ol" id="thumblistNew"></ol>
+                <div class="follow"></div>
+            </div>
+            <div class="goods-detail-r">
+                <div class="goods-detail-r-t">
+                    <p id="productIntroduce_title"></p>
+                    <div class="goods-detail-price">
+                        <span>￥<span id="productSpecialPrice_NUM"></span></span>
+                        零售价&nbsp;&nbsp;￥&nbsp;<span id="localrefpriceNew" style="font-size: 14px;color:#332"></span>
+                    </div>
+                    <div class="goods-detail-text">
+                        <input type="hidden" id="batchNum" value=""/>
+                        <input type="hidden" id="productSKU" value=""/>
+                        <span id="internalCode"></span>
+                        <span id="productWarehouseName"></span>
+                        <span id="product_weight_td"></span>
+                    </div>
+                    <div class="goods-detail-text">
+                        <span>库存：<span id="stock"></span></span>
+                        <span id="batchNumShow"></span>
+                    </div>
+                </div>
+                <div class="goods-detail-r-d">
+                    <div class="goods-num">
+                        <span>
+                            数量
+                            <span class="gw-num">
+                                <em class="jian" id="cart-button-qty-sub_new">-</em>
+                                <input type="text" value="1" class="num" id="cart-button-qty_new">
+                                <em class="add" id="cart-button-qty-add_new">+</em>
+                            </span>
+                            可售<span id="canSaleNum"></span>个
+                        </span>
+                        <span class="subtotal">
+                            小计：<em>￥<span id="subcount_new"></span></em>
+                        </span>
+                    </div>
+                    <div class="goods-btn">
+                        <button class="btn-org" id="add-to-cart-button_new">加入购物车</button>
+                        <button class="btn-bule" id="buynow_new">立即采购</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="remark"><em class="hotR">*</em>备注：如产生税金，请联系客服，通淘为你报销哦！<a class="service-b-icon" title="客服"></a></div>
+
+        <h2 class="goods-detail-title">商品详情</h2>
+        <div class="goods-detail-img productDescription_box">
+
+        </div>
+    </div>
+</div>
+<!--正文 end-->
+
+<div id="div_footer"></div>
+</body>
+<script type="text/javascript" src="/js/product/product_detail.js"></script>
+<script src="/js/lib/jquery.imagezoom.min.js"></script>
+<script type="text/javascript" src="/js/lib/mCustomScrollbar/jquery.mCustomScrollbar.min.js"></script>
+<script type="text/javascript" src="/js/lib/jquery.SuperSlide.2.1.1.js"></script>
+</html>

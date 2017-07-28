@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.ProductImageMapper">
+	<resultMap id="BaseResultMap" type="entity.product.ProductImage">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+		<result column="csku" property="csku" jdbcType="VARCHAR" />
+		<result column="cimageurl" property="cimageurl" jdbcType="VARCHAR" />
+		<result column="clabel" property="clabel" jdbcType="VARCHAR" />
+		<result column="iorder" property="iorder" jdbcType="INTEGER" />
+		<result column="bthumbnail" property="bthumbnail" jdbcType="BIT" />
+		<result column="bsmallimage" property="bsmallimage" jdbcType="BIT" />
+		<result column="bbaseimage" property="bbaseimage" jdbcType="BIT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, clistingid, csku, cimageurl, clabel, iorder, bthumbnail, bsmallimage,
+		bbaseimage
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_product_image
+		where iid = #{iid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_product_image
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="entity.product.ProductImage">
+		insert into t_product_image (iid, clistingid, csku,
+		cimageurl, clabel, iorder,
+		bthumbnail, bsmallimage, bbaseimage
+		)
+		values (#{iid,jdbcType=INTEGER}, #{clistingid,jdbcType=VARCHAR},
+		#{csku,jdbcType=VARCHAR},
+		#{cimageurl,jdbcType=VARCHAR}, #{clabel,jdbcType=VARCHAR}, #{iorder,jdbcType=INTEGER},
+		#{bthumbnail,jdbcType=BIT}, #{bsmallimage,jdbcType=BIT},
+		#{bbaseimage,jdbcType=BIT}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="entity.product.ProductImage">
+		insert into t_product_image
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				iid,
+			</if>
+			<if test="clistingid != null">
+				clistingid,
+			</if>
+			<if test="csku != null">
+				csku,
+			</if>
+			<if test="cimageurl != null">
+				cimageurl,
+			</if>
+			<if test="clabel != null">
+				clabel,
+			</if>
+			<if test="iorder != null">
+				iorder,
+			</if>
+			<if test="bthumbnail != null">
+				bthumbnail,
+			</if>
+			<if test="bsmallimage != null">
+				bsmallimage,
+			</if>
+			<if test="bbaseimage != null">
+				bbaseimage,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				#{iid,jdbcType=INTEGER},
+			</if>
+			<if test="clistingid != null">
+				#{clistingid,jdbcType=VARCHAR},
+			</if>
+			<if test="csku != null">
+				#{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="cimageurl != null">
+				#{cimageurl,jdbcType=VARCHAR},
+			</if>
+			<if test="clabel != null">
+				#{clabel,jdbcType=VARCHAR},
+			</if>
+			<if test="iorder != null">
+				#{iorder,jdbcType=INTEGER},
+			</if>
+			<if test="bthumbnail != null">
+				#{bthumbnail,jdbcType=BIT},
+			</if>
+			<if test="bsmallimage != null">
+				#{bsmallimage,jdbcType=BIT},
+			</if>
+			<if test="bbaseimage != null">
+				#{bbaseimage,jdbcType=BIT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="entity.product.ProductImage">
+		update t_product_image
+		<set>
+			<if test="clistingid != null">
+				clistingid = #{clistingid,jdbcType=VARCHAR},
+			</if>
+			<if test="csku != null">
+				csku = #{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="cimageurl != null">
+				cimageurl = #{cimageurl,jdbcType=VARCHAR},
+			</if>
+			<if test="clabel != null">
+				clabel = #{clabel,jdbcType=VARCHAR},
+			</if>
+			<if test="iorder != null">
+				iorder = #{iorder,jdbcType=INTEGER},
+			</if>
+			<if test="bthumbnail != null">
+				bthumbnail = #{bthumbnail,jdbcType=BIT},
+			</if>
+			<if test="bsmallimage != null">
+				bsmallimage = #{bsmallimage,jdbcType=BIT},
+			</if>
+			<if test="bbaseimage != null">
+				bbaseimage = #{bbaseimage,jdbcType=BIT},
+			</if>
+		</set>
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="entity.product.ProductImage">
+		update t_product_image
+		set clistingid = #{clistingid,jdbcType=VARCHAR},
+		csku = #{csku,jdbcType=VARCHAR},
+		cimageurl = #{cimageurl,jdbcType=VARCHAR},
+		clabel = #{clabel,jdbcType=VARCHAR},
+		iorder = #{iorder,jdbcType=INTEGER},
+		bthumbnail = #{bthumbnail,jdbcType=BIT},
+		bsmallimage = #{bsmallimage,jdbcType=BIT},
+		bbaseimage = #{bbaseimage,jdbcType=BIT}
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+
+	<select id="queryProductImgs" parameterType="dto.product.ProductSearchParamDto" resultType="entity.product.ProductImage">
+		select * from t_product_image
+		<where>
+				<if test="sku != null and sku !='' ">
+					csku = #{sku}
+				</if>
+				order by bbaseimage desc
+		</where>
+	</select>
+	
+	<select id="queryProductImg" parameterType="dto.product.ProductSearchParamDto" resultType="entity.product.ProductImage">
+		select * from t_product_image
+		<where>
+				<if test="listingId != null and listingId !='' ">
+					clistingid = #{listingId}
+				</if>
+				<if test="sku != null and sku !='' ">
+					and csku = #{sku}
+				</if>
+				AND bbaseimage = true
+		</where>
+	</select>
+</mapper>

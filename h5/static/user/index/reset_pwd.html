@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="email=no" name="format-detection" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>设置</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main/main.css">
+</head>
+<body id = "body_pwd" v-cloak>
+    <header class="posFix head">
+        <a href="/user/index/index.html" class="ret-logo"></a>
+        设置
+    </header>
+    <form id = "reset_form">
+        <section class="invoCon conTop">
+            <div class="impornor invonor">
+                <label>登录账户：</label>
+                <label>{{account}}</label>
+            </div>
+            <div class="impornor invonor">
+                <label>原密码：</label>
+                <label><input type="password" name = "oldcode" v-model="old_pwd" class="inp4"/></label>
+            </div>
+            <div class="impornor invonor">
+                <label>新密码：</label>
+                <label><input type="password" name = "newcode" v-model="new_pwd" class="inp4"/></label>
+            </div>
+            <div class="impornor invonor">
+                <label>确认密码：</label>
+                <label><input type="password" name = "surecode" v-model="sure_pwd" class="inp4"/></label>
+            </div>
+            <!--登录提示信息-->
+            <div v-if="!saveSuccess" :style="saveMsgStyle" style="text-align: center">
+                {{saveMsg}}</div>
+        </section>
+    </form>
+    <a href="javascript:void(0);">
+        <input type="submit" value="保存" @click = "save()"class="inp-1 btn-blue"/>
+    </a>
+    </footer>
+    <script src="/js/lib/require.js" data-main="/js/user/index/reset_pwd.js?time=(new Date()).getTime()">
+    </script> 
+</body>
+</html>

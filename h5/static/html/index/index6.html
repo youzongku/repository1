@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="email=no" name="format-detection" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>通淘供应链</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main/main.css">
+</head>
+<body>
+<header class="posFix head">
+    <a href="####" class="set-out">退出</a>
+    通淘供应链
+    <a href="####" class="set-logo"></a>
+</header>
+<nav class="conTop indexNav">
+        <span>
+            <p>11111</p>
+            <p>发货单待审核</p>
+        </span>
+</nav>
+<section id="menu">
+    <ul>
+        <li class="menu1">
+            <a href='javascript:void(0);'>微仓进货<span>+</span></a>
+            <ul>
+                <li>
+                    <a href='####'>微仓订单</a>
+                </li>
+                <li id='end'>
+                    <a href='####'>微仓订单录入</a>
+                </li>
+            </ul>
+        </li>
+        <li id='end' class="menu1">
+            <a href='javascript:void(0);'>销售发货<span>+</span></a>
+            <ul>
+                <li>
+                    <a href='####'>终端订单</a>
+                </li>
+                <li id='end'>
+                    <a href='####'>终端订单录入</a>
+                </li>
+                <li id='end'>
+                    <a href='####'>等待审核</a>
+                </li>
+            </ul>
+        </li>
+        <li id='end' class="menu1">
+            <a href='javascript:void(0);'>业务员录单<span>+</span></a>
+            <ul>
+                <li>
+                    <a href='####'>发货单</a>
+                </li>
+                <li id='end'>
+                    <a href='####'>发货单录入</a>
+                </li>
+                <li id='end'>
+                    <a href='####'>等待审核</a>
+                </li>
+                <li>
+                    <a href='javascript:void(0);'>采购单</a>
+                </li>
+                <li id='end'>
+                    <a href='javascript:void(0);'>采购单录入</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</section>
+<script type="text/javascript">
+    (function(e){
+        for(var _obj=document.getElementById(e.id).getElementsByTagName(e.tag),i=-1,a;a=_obj[++i];){
+            a.onclick = function(){
+                var ul = this.nextSibling;
+                if(!ul){return false;}
+                ul = ul.nextSibling; if(!ul){return false;}
+                if(e.tag != 'a'){ ul = ul.nextSibling; if(!ul){return false;} }
+                for(var _li=this.parentNode.parentNode.childNodes,n=-1,li;li=_li[++n];){
+                    if(li.tagName=="LI"){
+                        for(var _ul=li.childNodes,t=-1,$ul;$ul=_ul[++t];){
+                            switch($ul.tagName){
+                                case "UL":
+                                    $ul.className = $ul!=ul?"" : ul.className?"":"off";
+                                    break;
+                                case "A":
+                                    $ul.className = $ul!=this?"" : this.className?"":"off";
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    })({id:'menu',tag:'a'});
+</script>
+</body>
+</html>

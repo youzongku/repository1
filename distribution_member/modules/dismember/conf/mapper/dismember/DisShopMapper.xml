@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.DisShopMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.DisShop" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="account_id" property="accountId" jdbcType="INTEGER" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+    <result column="shop_url" property="shopUrl" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="telphone" property="telphone" jdbcType="VARCHAR" />
+    <result column="platform_id" property="platformId" jdbcType="INTEGER" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="other_platform" property="otherPlatform" jdbcType="VARCHAR" />
+    <result column="shroff_account_number" property="shroffAccountNumber" jdbcType="VARCHAR" />
+    <result column="province_id" property="provinceId" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="keeper_name" property="keeperName" jdbcType="VARCHAR" />
+    <result column="shop_platform" property="platformName" jdbcType="VARCHAR" />
+    <result column="idcard" property="idcard" jdbcType="VARCHAR" />
+    <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
+    <result column="parentid" property="parentId" jdbcType="INTEGER" />
+    <result column="client_id" property="clientid" jdbcType="VARCHAR" />
+    <result column="redirect_uri" property="redirecturi" jdbcType="VARCHAR" />
+    <result column="client_secret" property="clientsecret" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="access_token" property="accesstoken" jdbcType="VARCHAR" />
+    <result column="refresh_token" property="refreshtoken" jdbcType="VARCHAR" />
+    <result column="create_time" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updatetime" jdbcType="TIMESTAMP" />
+    <!-- add by zbc 线上店铺账号(方便有赞拉取订单)  -->
+    <result column="shop_account" property="shopAccount" jdbcType="VARCHAR" />
+    <result column="shop_no" property="shopNo" jdbcType="VARCHAR" />
+    <result column="deduction_points" property="deductionPoints" jdbcType="DOUBLE" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, account_id, shop_name, shop_url, remarks, create_date,
+    last_update_date, email, telphone, platform_id, category_id, other_platform,shroff_account_number,
+    idcard,zip_code,parentid,client_id,redirect_uri,client_secret,code,access_token,create_time,end_time,update_time,
+    refresh_token,shop_account,shop_no,deduction_points
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    	ds.id, account_id, shop_name, shop_url, remarks, create_date,
+	    last_update_date, email, telphone, platform_id, category_id, other_platform,shroff_account_number,
+	    ds.province_id, ds.city_id, ds.area_id,province_name, city_name, area_name ,addr ,keeper_name,shop_platform,ds.idcard,ds.zip_code,ds.parentid
+	    ,ds.client_id,ds.client_secret,shop_account,ds.redirect_uri,ds.code,ds.access_token,ds.create_time,ds.end_time,ds.update_time,ds.refresh_token,
+	    ds.shop_no,ds.deduction_points
+    from t_dis_shop ds
+    	left join t_dis_shop_platform on ds.platform_id = t_dis_shop_platform.id
+    	left join t_dis_province dp on ds.province_id = dp.id
+    	left join t_dis_city dc on ds.city_id = dc.id
+    	left join t_dis_area da on ds.area_id = da.id
+    where ds.id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByIds" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select 
+    	ds.id, account_id, shop_name, shop_url, remarks, create_date,
+	    last_update_date, email, telphone, platform_id, category_id, other_platform,shroff_account_number,
+	    ds.province_id, ds.city_id, ds.area_id,province_name, city_name, area_name ,addr ,keeper_name,shop_platform,ds.idcard,ds.zip_code,ds.parentid
+	    ,ds.client_id,ds.client_secret,shop_account,ds.redirect_uri,ds.code,ds.access_token,ds.create_time,ds.end_time,ds.update_time,ds.refresh_token,
+	    ds.shop_no,ds.deduction_points
+    from t_dis_shop ds
+    	left join t_dis_shop_platform on ds.platform_id = t_dis_shop_platform.id
+    	left join t_dis_province dp on ds.province_id = dp.id
+    	left join t_dis_city dc on ds.city_id = dc.id
+    	left join t_dis_area da on ds.area_id = da.id
+    where ds.id in
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+    	#{id}
+    </foreach>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_shop
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByParentid" parameterType="java.lang.Integer" >
+    delete from t_dis_shop
+    where parentid = #{parentId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="entity.dismember.DisShop" >
+    insert into t_dis_shop (id, account_id, shop_name, 
+      shop_url, remarks, create_date,
+      last_update_date, email, telphone, platform_id, category_id, other_platform,shroff_account_number,
+      idcard,zip_code,parentid,deduction_points)
+    values (#{id,jdbcType=INTEGER}, #{accountId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, 
+      #{shopUrl,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateDate,jdbcType=TIMESTAMP},
+      #{email,jdbcType=VARCHAR}, #{telphone,jdbcType=VARCHAR},
+      #{platformId,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER},
+      #{otherPlatform,jdbcType=VARCHAR},#{shroffAccountNumber,jdbcType=VARCHAR},
+      #{idcard,jdbcType=VARCHAR},#{zipCode,jdbcType=VARCHAR},#{parentId,jdbcType=INTEGER},
+      #{deductionPoints}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="entity.dismember.DisShop" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_dis_shop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="shopName != null" >
+        shop_name,
+      </if>
+      <if test="shopUrl != null" >
+        shop_url,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="telphone != null" >
+        telphone,
+      </if>
+      <if test="platformId != null" >
+        platform_id,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="otherPlatform != null" >
+        other_platform,
+      </if>
+      <if test="provinceId != null" >
+        province_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="keeperName != null" >
+        keeper_name,
+      </if>
+      <if test="shroffAccountNumber != null" >
+        shroff_account_number,
+      </if>
+      <if test="idcard != null" >
+        idcard,
+      </if>
+      <if test="zipCode != null" >
+        zip_code,
+      </if>
+      <if test="parentId != null" >
+        parentid,
+      </if>
+       <if test="clientid != null" >
+        client_id,
+      </if>
+       <if test="clientsecret != null" >
+        client_secret,
+      </if>
+      <if test="shopAccount != null" >
+        shop_account,
+      </if>
+      <if test="shopNo != null" >
+        shop_no,
+      </if>
+      <if test="deductionPoints != null" >
+        deduction_points,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopUrl != null" >
+        #{shopUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="platformId != null" >
+        #{platformId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="otherPlatform != null" >
+        #{otherPlatform,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        #{provinceId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="keeperName != null" >
+        #{keeperName,jdbcType=VARCHAR},
+      </if>
+      <if test="shroffAccountNumber != null" >
+        #{shroffAccountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+      #{parentId,jdbcType=INTEGER},
+      </if>
+       <if test="clientid != null" >
+       #{clientid,jdbcType=VARCHAR},
+      </if>
+       <if test="clientsecret != null" >
+        #{clientsecret,jdbcType=VARCHAR},
+      </if>
+       <if test="shopAccount != null" >
+        #{shopAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deductionPoints != null" >
+        #{deductionPoints},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.DisShop" >
+    update t_dis_shop
+    <set >
+      <if test="accountId != null" >
+        account_id = #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="shopName != null" >
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopUrl != null" >
+        shop_url = #{shopUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        telphone = #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="platformId != null" >
+        platform_id = #{platformId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="otherPlatform != null" >
+        other_platform = #{otherPlatform,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        province_id = #{provinceId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="keeperName != null" >
+        keeper_name = #{keeperName,jdbcType=VARCHAR},
+      </if>
+      <if test="shroffAccountNumber != null" >
+        shroff_account_number = #{shroffAccountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        idcard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        zip_code = #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parentid = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="clientid != null" >
+        client_id = #{clientid,jdbcType=VARCHAR},
+      </if>
+      <if test="clientsecret != null" >
+        client_secret = #{clientsecret,jdbcType=VARCHAR},
+      </if>
+      <if test="refreshtoken != null" >
+        refresh_token = #{refreshtoken,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAccount != null" >
+        shop_account = #{shopAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="accesstoken != null" >
+        access_token = #{accesstoken,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        create_time = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        end_time = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deductionPoints != null" >
+        deduction_points = #{deductionPoints},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="batchUpdateDeductionPointsById" parameterType="java.util.List" >
+    <foreach collection="list" item="item" open="" close="" separator=";">
+		update t_dis_shop
+    	set last_update_date = now()
+        <if test="item.deductionPoints != null" >
+    		,deduction_points = #{item.deductionPoints}
+    	</if>
+    	where id = #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.DisShop" >
+    update t_dis_shop
+    set account_id = #{accountId,jdbcType=INTEGER},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_url = #{shopUrl,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      email = #{email,jdbcType=VARCHAR},
+      telphone = #{telphone,jdbcType=VARCHAR},
+      platform_id = #{platformId,jdbcType=INTEGER},
+      category_id = #{categoryId,jdbcType=INTEGER},
+      other_platform = #{otherPlatform,jdbcType=VARCHAR},
+      shroff_account_number = #{shroffAccountNumber,jdbcType=VARCHAR},
+      idcard = #{idcard,jdbcType=VARCHAR},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      parentid = #{parentId,jdbcType=INTEGER},
+      deduction_points = #{deductionPoints}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getCountByCondition" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    select count(*)
+    from t_dis_shop
+    where 1 = 1
+    <if test="email != null">
+      and email = #{email,jdbcType=VARCHAR}
+    </if>
+    <if test="accountId != null" >
+      and account_id = #{accountId,jdbcType=INTEGER}
+    </if>
+    <if test="shopName != null" >
+      and shop_name = #{shopName,jdbcType=VARCHAR}
+    </if>
+    <if test="shopUrl != null" >
+      and shop_url = #{shopUrl,jdbcType=VARCHAR}
+    </if>
+    <if test="type != null">
+      and platform_id = #{type,jdbcType=INTEGER}
+    </if>
+     <if test="parentId != null" >
+      and  parentid = #{parentId,jdbcType=INTEGER}
+    </if>
+    <if test="clientid != null" >
+      and  client_id = #{clientid,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="getDisShopsByCondition" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+	    ds.id, account_id, shop_name, shop_url, remarks, create_date,last_update_date, email, telphone, 
+	    platform_id, category_id, other_platform, shroff_account_number, 
+	    ds.province_id, ds.city_id, ds.area_id, province_name, city_name, area_name, addr, 
+	    keeper_name, ds.idcard, ds.zip_code, ds.parentid, ds.client_id, ds.client_secret,
+	    shop_account, ds.deduction_points, dsp.shop_platform
+    	<if test="shopId != null">
+      		,ds.redirect_uri,ds.code,ds.access_token,ds.create_time,ds.end_time,ds.update_time,refresh_token
+    	</if>
+    from t_dis_shop ds
+    	left join t_dis_province dp on ds.province_id = dp.id
+    	left join t_dis_city dc on ds.city_id = dc.id
+    	left join t_dis_area da on ds.area_id = da.id
+    	left join t_dis_shop_platform dsp on ds.platform_id = dsp.id
+    where 1 = 1
+    <if test="email != null and email != ''">
+      and email = #{email,jdbcType=VARCHAR}
+    </if>
+    <if test="accountId != null" >
+      and account_id = #{accountId,jdbcType=INTEGER}
+    </if>
+    <if test="shopName != null" >
+      and shop_name = #{shopName,jdbcType=VARCHAR}
+    </if>
+    <if test="shopUrl != null" >
+      and shop_url = #{shopUrl,jdbcType=VARCHAR}
+    </if>
+    <if test="type != null">
+      and platform_id = #{type,jdbcType=INTEGER}
+    </if>
+     <if test="parentId != null" >
+      and parentid = #{parentId,jdbcType=INTEGER}
+    </if>
+    <if test="shopId != null">
+      and ds.id = #{shopId,jdbcType=INTEGER}
+    </if>
+    <if test="clientid != null" >
+      and  client_id = #{clientid,jdbcType=VARCHAR}
+    </if>
+    order by ds.create_date
+    <if test="pageSize != null and startNum != null " >
+   		 limit #{pageSize,jdbcType=INTEGER} offset #{startNum,jdbcType=INTEGER}
+    </if>
+  </select>
+</mapper>

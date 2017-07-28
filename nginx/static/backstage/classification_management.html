@@ -1,0 +1,109 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<h1>商品管理<span>---</span><span>分类属性集管理</span></h1>
+<script>  //解决IEplaceholder不兼容问题
+$(document).ready(function () {
+    $(function () {
+        if (!placeholderSupport()) {
+            $('[placeholder]').focus(function () {
+                var input = $(this);
+                if (input.val() == input.attr('placeholder')) {
+                    input.val('');
+                    input.removeClass('placeholder');
+                }
+            }).blur(function () {
+                var input = $(this);
+                if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                    input.addClass('placeholder');
+                    input.val(input.attr('placeholder'));
+                }
+            }).blur();
+        }
+    })
+    function placeholderSupport() {
+        return 'placeholder' in document.createElement('input');
+    }
+})
+</script>
+<div>
+    <div class="content_list associated-properties">
+        <table class="list_title all_table">
+            <thead>
+            <tr>
+                <th style="width: 10%">序号</th>
+                <th style="width: 20%;">分类名称</th>
+                <th style="width: 50%;">关联属性集名称</th>
+                <th style="width: 20%;">操作</th>
+            </tr>
+            </thead>
+            <tbody class="list_content role-list-content">
+            <tr class="list_message">
+                <td>01</td>
+                <td>母婴用品</td>
+                <td>属性集1，属性集2</td>
+                <td>
+                    <a href="javascript:void(0);" class="associatedProperties">关联属性集</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="content_list category-set" style="margin-top: 10px;display: none;">
+        <ul class="search_category">
+            <li>
+                <input type="text" id="searchInput" class="searchInput" placeholder="属性集名称">
+                <input id="searchButton" class="searchButton" value="搜索" type="submit">
+            </li>
+            <li>
+                <div class="search">
+                    <button class="categorySet">添加</button>
+                </div>
+            </li>
+        </ul>
+        <label class="set_price_line"><input id="select_curr_all" type="checkbox">全选</label>
+        <table class="list_title all_table" style="padding: 0;">
+            <thead>
+            <tr>
+                <th style="width: 6%"></th>
+                <th style="width: 10%">序号</th>
+                <th style="width: 20%;">属性集名称</th>
+                <th style="width: 44%;">关联属性</th>
+                <th style="width: 20%;">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <input type="checkbox">
+                </td>
+                <td>01</td>
+                <td>属性集A</td>
+                <td>属性1，属性2</td>
+                <td>
+                    <a href="javascript:void(0);" class="categorySet">添加</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="list_content">
+            <p>共<span id="goodsTotal" style="display:inline-block;">2687</span>记录，每页显示
+                <select id="goods_pageSize">
+                    <option value="10" selected="">10</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                </select>
+                ，共<span id="goodsPages" style="display:inline-block;">269</span>页
+            </p>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //  关联属性集-页面切换
+    $('.associatedProperties').click(function(){
+        $('.associated-properties').hide();
+        $('.category-set').show();
+    });
+    $('.categorySet').click(function(){
+        $('.associated-properties').show();
+        $('.category-set').hide();
+    });
+</script>

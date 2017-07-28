@@ -1,0 +1,113 @@
+<!--<table class="box-right-one-1">
+	<tr class="tb-1">
+		<td class="res-user">尊敬的 <span id="member" class="red"></span>：</td>
+	</tr>
+	<tr>
+		<td class="welcom">TOMTOP欢迎您！</td>
+	</tr>
+	<tr>
+		<td class="time-up">您的上一次登录时间: </td><td class="time-up">2015-11-14 09:19:41</td>
+	</tr>
+</table>
+<ul class="box-right-one-2 light-gray" style="margin-top: 10px">
+	<li>账户余额：<span id="balance">0.00</span>元&nbsp;</li>
+	<li>信用额度：<span id="credit_limit">0.00</span>元&nbsp;</li>
+	<li style="min-width:100px;"><a href="javascript:transferStation(false,'box-right-six');toggle_menu_content(6);" class="blue">交易记录</a></li>
+</ul>
+<ul class="box-right-one-2 light-gray">
+	<li>可用额度：<span id="available_credit_limit">0.00</span>元&nbsp;</li>
+	<li>待还额度：<span id="used_amount">0.00</span>元&nbsp;</li>
+</ul>
+<div class="limit-validity-box limit_validity light-gray">
+	临时额度有效期：<span class="limit-start">2016-04-28 10:51:00</span>&#45;&#45;<span class="limit-end">2016-04-28 10:51:00</span>
+</div>
+<table class="box-right-one-2 light-gray warm-tip">
+	<tr>
+		<td>
+			温馨提醒：您最近30天内提交了 <a href="javascript:transferStation(false,'box-right-eleven');toggle_menu_content(15);" id="purchase_amount" class="inline-blo blue">0</a> 个微仓订单，<a href="javascript:transferStation(false,'box-right-four');toggle_menu_content(4);" id="sales_amount" class="inline-blo blue">0</a> 个客户订单
+		</td>
+	</tr>
+</table>
+<div class="box-right-process">
+	<span class="yewuliucheng">业务流程</span>
+
+	<div class="yewuliucheng-img">
+		<img src="../img/myaccount-1.png"  usemap="#planetmap"  border="0" hidefocus="true"/>
+		<map name="planetmap" id="planetmap">
+			<area shape="rect" coords="0,0,51,69" href ="javascript:transferStation(false,'box-right-twelve');toggle_menu_content(16)"   border="0" />
+			<area shape="rect" coords="100,0,169,69" href ="javascript:transferStation(false,'box-right-three');toggle_menu_content(3)"  border="0" />
+			<area shape="rect" coords="212,0,281,69" href ="javascript:transferStation(false,'box-right-five');toggle_menu_content(5)"   border="0" />
+			<area shape="rect" coords="342,0,411,69" href ="javascript:transferStation(false,'box-right-four');toggle_menu_content(4)"   border="0" />
+		</map>
+	</div>
+</div>-->
+
+<div class="welcom-head bottom-margin">
+	<div class="welcom-head-title">
+		尊敬的
+		<span id="member" class="blue"></span>
+		<button tag="frozen" class="btn-org display">账户冻结</button>
+        <button tag="frozen" class="btn-line-blue display"  onclick="to_charge();" > 立即去充值</button>
+	</div>
+	<div>
+		<span class="welcom-tomtop">TOMTOP&nbsp;&nbsp;欢迎您！</span>
+		<span class="time-up">您的上一次登录时间：<em class="time-up">--</em></span>
+	</div>
+</div>
+<div class="bottom-margin">
+	<ul class="trading-record">
+		<li>
+			<span>账户余额</span>
+			<span><em id="balance">--</em>元</span>
+		</li>
+		<li>
+			<span>账期额度</span>
+			<span><em id="credit_limit">--</em>元</span>
+		</li>
+		<li>
+			<span>账期剩余额度</span>
+			<span><em id="available_credit_limit">--</em>元</span>
+		</li>
+		<li class="for-reimbur">
+			<span>待还款金额</span>
+			<span><em id="used_amount">--</em>元</span>
+			<button id="disable-the" class="disable-the display">禁用中</button>
+		</li>
+	</ul>
+	<div class="trading-record-con">
+		<a href="javascript:transferStation(false,'box-right-six');toggle_menu_content(6);" class="blue">交易记录</a>
+		<h4>账期时间</h4>
+		<div>
+			<span>账期开始时间：<em id="startTime">--</em></span>
+            <span>应还款时间：<em id="forRefundTime" >--</em></span>
+            <span>最迟还款时间：<em id="lastForRefundTime">--</em></span>
+		</div>
+	</div>
+</div>
+<div class="order-data bottom-margin">
+	<h4>订单数据<span class="color-9">（最近30天）</span></h4>
+	<ul class="order-data-ul">
+		<li>
+			<span>微仓订单</span>
+			<span><a href="javascript:transferStation(false,'box-right-eleven');toggle_menu_content(15);" id="purchase_amount" class="inline-blo blue">--</a>个</span>
+		</li>
+		<li>
+			<span>客户订单</span>
+			<span><a href="javascript:transferStation(false,'box-right-four');toggle_menu_content(4);" id="sales_amount" class="inline-blo blue">--</a>个</span>
+		</li>
+	</ul>
+</div>
+<div class="order-data box-right-process">
+	<h4>业务流程-指南</h4>
+	<div class="yewuliucheng-img">
+		<img src="../img/myaccount-1.png"  usemap="#planetmap"  border="0" hidefocus="true"/>
+		<map name="planetmap" id="planetmap">
+			<area shape="rect" coords="0,0,51,69" href ="javascript:transferStation(false,'box-right-twelve');toggle_menu_content(16)"   border="0" />
+			<area shape="rect" coords="100,0,169,69" href ="javascript:transferStation(false,'box-right-three');toggle_menu_content(3)"  border="0" />
+			<area shape="rect" coords="212,0,281,69" href ="javascript:transferStation(false,'box-right-five');toggle_menu_content(5)"   border="0" />
+			<area shape="rect" coords="342,0,411,69" href ="javascript:transferStation(false,'box-right-four');toggle_menu_content(4)"   border="0" />
+		</map>
+	</div>
+</div>
+
+

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.promotion.PromotionPrivilegeMapper" >
+  <resultMap id="BaseResultMap" type="entity.marketing.promotion.PromotionPrivilege" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="p_type" property="pType" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="BOOLEAN" />
+    <result column="attr" property="attr" jdbcType="SMALLINT" />
+  </resultMap>
+  
+  <update id="deleteSoftlyByPrimaryKey">
+  	update t_pro_pvlg set is_delete=true where where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByIdList" resultMap="BaseResultMap" parameterType="java.util.List">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_pro_pvlg
+    <where>
+    	<if test="idList!=null and idList.size>0">
+    		id in
+    		<foreach collection="idList" item="id" open="(" separator="," close=")">
+		      #{id}
+		    </foreach>
+    	</if>
+    </where>
+  </select>
+  
+  <sql id="Base_Column_List" >
+    id, name, remark, is_delete,p_type
+  </sql>
+  
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Boolean">
+  	select 
+  	<include refid="Base_Column_List" />
+    from t_pro_pvlg
+    where is_delete = #{isDelete}
+  </select>
+  
+  <select id="getProPvlgListByAttr" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+    from t_pro_pvlg
+    where is_delete = #{isDelete} and attr=#{attr}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_pro_pvlg
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <insert id="insert" parameterType="entity.marketing.promotion.PromotionPrivilege" >
+    insert into t_pro_pvlg (id, name, remark, is_delete, p_type)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{isDelete}, #{pType})
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.marketing.promotion.PromotionPrivilege" >
+    update t_pro_pvlg
+    <set >
+      <if test="name != null" >
+        p_type = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

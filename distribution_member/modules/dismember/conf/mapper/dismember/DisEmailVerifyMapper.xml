@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.DisEmailVerifyMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.DisEmailVerify" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="cemail" property="cemail" jdbcType="VARCHAR" />
+    <result column="bisending" property="bisending" jdbcType="BIT" />
+    <result column="cmark" property="cmark" jdbcType="VARCHAR" />
+    <result column="cactivationcode" property="cactivationcode" jdbcType="VARCHAR" />
+    <result column="idaynumber" property="idaynumber" jdbcType="INTEGER" />
+    <result column="dvaliddate" property="dvaliddate" jdbcType="TIMESTAMP" />
+    <result column="dsenddate" property="dsenddate" jdbcType="TIMESTAMP" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+    <result column="sendtype" property="sendType" jdbcType="INTEGER" />
+    <result column="send_params" property="sendParams" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    iid, cemail, bisending, cmark, cactivationcode, idaynumber, dvaliddate, dsenddate, 
+    dcreatedate, sendtype,send_params
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_disemail_verify
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+
+  <select id="getVerify" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_disemail_verify
+    <where>
+      <if test="cemail != null">
+        cemail = #{cemail}
+      </if>
+      <if test="sendType != null">
+        and sendtype = #{sendType}
+      </if>
+      <if test="cactivationcode != null">
+        and cactivationcode = #{cactivationcode}
+      </if>
+    </where>
+    order by dsenddate desc
+    limit 1 offset 0
+  </select>
+
+  <!-- 查询当天发送邮件次数 -->
+  <select id="getVerifyCount" resultType="java.lang.Integer">
+      select count(*)
+      from t_disemail_verify
+      <where>
+        <![CDATA[
+          dsenddate >= to_date(to_char(now(),'yyyy-mm-dd'), 'yyyy-mm-dd')
+          and dsenddate < (to_date(to_char(now(),'yyyy-mm-dd'),'yyyy-mm-dd') + interval '1 day')
+        ]]>
+        <if test="cemail != null">
+          and cemail = #{cemail}
+        </if>
+        <if test="sendType != null">
+          and sendtype = #{sendType}
+        </if>
+      </where>
+
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_disemail_verify
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="entity.dismember.DisEmailVerify" >
+    insert into t_disemail_verify (iid, cemail, bisending, 
+      cmark, cactivationcode, idaynumber, 
+      dvaliddate, dsenddate, dcreatedate,send_params
+      )
+    values (#{iid,jdbcType=INTEGER}, #{cemail,jdbcType=VARCHAR}, #{bisending,jdbcType=BIT}, 
+      #{cmark,jdbcType=VARCHAR}, #{cactivationcode,jdbcType=VARCHAR}, #{idaynumber,jdbcType=INTEGER}, 
+      #{dvaliddate,jdbcType=TIMESTAMP}, #{dsenddate,jdbcType=TIMESTAMP}, #{dcreatedate,jdbcType=TIMESTAMP},#{sendParams,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="entity.dismember.DisEmailVerify" >
+    insert into t_disemail_verify
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="cemail != null" >
+        cemail,
+      </if>
+      <if test="bisending != null" >
+        bisending,
+      </if>
+      <if test="cmark != null" >
+        cmark,
+      </if>
+      <if test="cactivationcode != null" >
+        cactivationcode,
+      </if>
+      <if test="idaynumber != null" >
+        idaynumber,
+      </if>
+      <if test="dvaliddate != null" >
+        dvaliddate,
+      </if>
+      <if test="dsenddate != null" >
+        dsenddate,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+      <if test="sendType != null" >
+        sendtype,
+      </if>
+      <if test="sendParams != null" >
+        send_params,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="cemail != null" >
+        #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="bisending != null" >
+        #{bisending,jdbcType=BIT},
+      </if>
+      <if test="cmark != null" >
+        #{cmark,jdbcType=VARCHAR},
+      </if>
+      <if test="cactivationcode != null" >
+        #{cactivationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="idaynumber != null" >
+        #{idaynumber,jdbcType=INTEGER},
+      </if>
+      <if test="dvaliddate != null" >
+        #{dvaliddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dsenddate != null" >
+        #{dsenddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendType != null" >
+        #{sendType,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendParams != null" >
+        #{sendParams,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.DisEmailVerify" >
+    update t_disemail_verify
+    <set >
+      <if test="cemail != null" >
+        cemail = #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="bisending != null" >
+        bisending = #{bisending,jdbcType=BIT},
+      </if>
+      <if test="cmark != null" >
+        cmark = #{cmark,jdbcType=VARCHAR},
+      </if>
+      <if test="cactivationcode != null" >
+        cactivationcode = #{cactivationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="idaynumber != null" >
+        idaynumber = #{idaynumber,jdbcType=INTEGER},
+      </if>
+      <if test="dvaliddate != null" >
+        dvaliddate = #{dvaliddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dsenddate != null" >
+        dsenddate = #{dsenddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendParams != null" >
+        send_params = #{sendParams,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.DisEmailVerify" >
+    update t_disemail_verify
+    set cemail = #{cemail,jdbcType=VARCHAR},
+      bisending = #{bisending,jdbcType=BIT},
+      cmark = #{cmark,jdbcType=VARCHAR},
+      cactivationcode = #{cactivationcode,jdbcType=VARCHAR},
+      idaynumber = #{idaynumber,jdbcType=INTEGER},
+      dvaliddate = #{dvaliddate,jdbcType=TIMESTAMP},
+      dsenddate = #{dsenddate,jdbcType=TIMESTAMP},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      send_params = #{sendParams,jdbcType=VARCHAR},
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getLastVerifyByEmail" parameterType="entity.dismember.DisEmailVerify" resultMap="BaseResultMap">
+  		select <include refid="Base_Column_List" />
+  		  from t_disemail_verify
+  		 where cemail = #{cemail,jdbcType=VARCHAR}
+  		   and sendtype = #{sendType,jdbcType=INTEGER}
+  		   <![CDATA[
+	       and dsenddate >= to_date(to_char(now(),'yyyy-mm-dd'), 'yyyy-mm-dd')
+	          and dsenddate < (to_date(to_char(now(),'yyyy-mm-dd'),'yyyy-mm-dd') + interval '1 day')
+	        ]]>
+  		 order by iid desc 
+  		 limit 1
+  </select>
+</mapper>

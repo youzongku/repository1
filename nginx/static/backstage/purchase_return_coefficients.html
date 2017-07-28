@@ -1,0 +1,83 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<div>
+    <h1><span id="purchase_order_title">微仓退货</span><span>---</span><span>商品退款比例</span></h1>
+    <ul class="search_category" style="height: 100px;">
+        <li>商品分类：
+            <select id="rc_categoriesSelect" onchange="reloadRC()">
+            </select>
+        </li>
+        <li>商品类别：
+            <select id="rc_typesSelect" onchange="reloadRC()">
+            </select>
+        </li>
+        <li>所属仓库：
+            <select id="rc_warehousesSelect" onchange="reloadRC()">
+            </select>
+        </li>
+        <li>
+            <input id="rc_searchText" onkeyup="enter_keyUp(event,this, reloadRC)" style="width:230px" class="searchInput" placeholder="商品名称/商品编号">
+            <input class="searchButton" value="搜索" type="submit" onclick="reloadRC()">
+            <input class="back_zone" style="margin-top: -20px;" value="一键设置系数" type="button" onclick="batchSetReturnAmountCoefficientValue()">
+        </li>
+    </ul>
+    <script>  //解决IEplaceholder不兼容问题
+    $(document).ready(function () {
+        $(function () {
+            if (!placeholderSupport()) {
+                $('[placeholder]').focus(function () {
+                    var input = $(this);
+                    if (input.val() == input.attr('placeholder')) {
+                        input.val('');
+                        input.removeClass('placeholder');
+                    }
+                }).blur(function () {
+                    var input = $(this);
+                    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                        input.addClass('placeholder');
+                        input.val(input.attr('placeholder'));
+                    }
+                }).blur();
+            }
+        })
+        function placeholderSupport() {
+            return 'placeholder' in document.createElement('input');
+        }
+    })
+    </script>
+    <div class="content_list">
+        <div>
+            <table class="list_title all_table" id="return_coefficients_table">
+            </table>
+            <div id="return_coefficients_pagination" style="text-align: center; margin-top: 30px;"></div>
+        </div>
+    </div>
+</div>
+
+<div id="setReturnAmountCoefficientValueDiv" class="purchase-return-pop display">
+    <input name="racId" type="hidden">
+    <input name="sku" type="hidden">
+    <input name="warehouseId" type="hidden">
+    <div>
+        <span>30天：<input name="coefficientKey" coefficientDays="30" type="text"></span>
+        <span>360天：<input name="coefficientKey" coefficientDays="360" type="text"></span>
+    </div>
+    <div>
+        <span>60天：<input name="coefficientKey" coefficientDays="60" type="text"></span>
+        <span>540天：<input name="coefficientKey" coefficientDays="540" type="text"></span>
+    </div>
+    <div>
+        <span>90天：<input name="coefficientKey" coefficientDays="90" type="text"></span>
+        <span>720天：<input name="coefficientKey" coefficientDays="720" type="text"></span>
+    </div>
+    <div>
+        <span>180天：<input name="coefficientKey" coefficientDays="180" type="text"></span>
+        <span>1080天：<input name="coefficientKey" coefficientDays="1080" type="text"></span>
+    </div>
+    <div>
+        <span>1080天以上：<input name="coefficientKey" coefficientDays="1081" type="text"></span>
+    </div>
+</div>
+
+<div id="setCoefficientLogsDiv" class="display">
+
+</div>

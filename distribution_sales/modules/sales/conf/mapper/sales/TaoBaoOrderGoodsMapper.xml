@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.TaoBaoOrderGoodsMapper">
+	<resultMap id="BaseResultMap"
+		type="entity.platform.order.template.TaoBaoOrderGoods">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="goods_title" property="goodsTitle" jdbcType="VARCHAR" />
+		<result column="amount" property="amount" jdbcType="INTEGER" />
+		<result column="sku" property="sku" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="DOUBLE" />
+		<result column="warehouse_id" property="warehouseId" jdbcType="VARCHAR" />
+		<result column="warehouse_name" property="warehouseName"
+			jdbcType="VARCHAR" />
+		<result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, order_no, goods_title,
+		amount, sku, price, warehouse_id,
+		warehouse_name, is_deleted,email
+	</sql>
+
+	<select id="getGoodsByOrderNoAndEmail" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from t_product_sales_goods_taobao
+		where
+		is_deleted = 0 and order_no=#{orderNo,jdbcType=VARCHAR} and email=#{email,jdbcType=VARCHAR} order by id
+	</select>
+
+	<select id="queryGoodsByCondition" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from t_product_sales_goods_taobao
+		where
+		order_no=#{orderNo,jdbcType=VARCHAR} and sku=#{sku,jdbcType=VARCHAR}
+		<if test="email != null and email != ''">
+		and email = #{email,jdbcType=VARCHAR}
+		</if>
+	</select>
+	
+	<select id="selectBygroup" resultMap="BaseResultMap"
+		parameterType="entity.platform.order.template.TaoBaoOrderGoods">
+		select
+		<include refid="Base_Column_List"></include>
+		from t_product_sales_goods_taobao
+		<where>
+			1=1 and is_deleted=0
+			<if test="param.email != null">
+				and email = #{param.email,jdbcType=VARCHAR}
+			</if>
+			<if test="param.orderNo != null">
+				and order_no = #{param.orderNo}
+			</if>
+			<if test="param.sku != null">
+				and sku = #{param.sku}
+			</if>
+			<if test="param.warehouseId != null">
+				and warehouse_id = #{param.param.warehouseId}
+			</if>
+		</where>
+	</select>
+
+	<update id="saveGoodsInfo" parameterType="entity.platform.order.template.TaoBaoOrderGoods">
+		update 
+		t_product_sales_goods_taobao
+		<set>
+			<if test="param.orderNo != null">
+				order_no=#{param.orderNo},
+			</if>
+			<if test="param.goodsTitle != null">
+				goods_title=#{param.goodsTitle},
+			</if>
+			<if test="param.amount != null">
+				amount=#{param.amount},
+			</if>
+			<if test="param.sku != null">
+				sku=#{param.sku},
+			</if>
+			<if test="param.price != null">
+				price=#{param.price},
+			</if>
+			<if test="param.warehouseId != null">
+				warehouse_id=#{param.warehouseId},
+			</if>
+			<if test="param.warehouseName != null">
+				warehouse_name=#{param.warehouseName},
+			</if>
+			<if test="param.isDeleted != null">
+				is_deleted=#{param.isDeleted}
+			</if>
+		</set>
+		<where>
+			id=#{param.id,jdbcType=INTEGER}
+		</where>
+	</update>
+	
+	<delete id="batchDeleteOrderGoods" parameterType="dto.sales.TaoBaoGoodsSearchDto">
+		delete from 
+		t_product_sales_goods_taobao
+		where
+		1=1
+		<if test="param.orderNo != null">
+			and order_no=#{param.orderNo}
+		</if>
+		<if test="param.orderNoList != null and param.orderNoList.size() > 0">
+			and order_no in
+			<foreach item="item" index="index" collection="param.orderNoList"
+				open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<if test="param.skuList != null and param.skuList.size() > 0">
+			and sku in
+			<foreach item="item" index="index" collection="param.skuList"
+				open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		and email = #{param.email,jdbcType=VARCHAR}
+	</delete>
+
+
+	<insert id="insert" parameterType="entity.platform.order.template.TaoBaoOrderGoods">
+		insert into
+		t_product_sales_goods_taobao (id, order_no, goods_title,
+		amount, sku,
+		price, warehouse_id, warehouse_name, is_deleted)
+		values (#{id,jdbcType=INTEGER},
+		#{orderNo,jdbcType=VARCHAR},
+		#{goodsTitle,jdbcType=VARCHAR},
+		#{amount,jdbcType=INTEGER},
+		#{sku,jdbcType=VARCHAR},#{price,jdbcType=DOUBLE},
+		#{warehouseId,jdbcType=VARCHAR},#{warehouseName,jdbcType=VARCHAR},#{isDeleted,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="entity.platform.order.template.TaoBaoOrderGoods">
+		insert into t_product_sales_goods_taobao
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="orderNo != null">
+				order_no,
+			</if>
+			<if test="goodsTitle != null">
+				goods_title,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+			<if test="sku != null">
+				sku,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="warehouseId != null">
+				warehouse_id,
+			</if>
+			<if test="warehouseName != null">
+				warehouse_name,
+			</if>
+			<if test="isDeleted != null">
+				is_deleted,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="orderNo != null">
+				#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsTitle != null">
+				#{goodsTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=INTEGER},
+			</if>
+			<if test="sku != null">
+				#{sku,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=DOUBLE},
+			</if>
+			<if test="warehouseId != null">
+				#{warehouseId,jdbcType=VARCHAR},
+			</if>
+			<if test="warehouseName != null">
+				#{warehouseName,jdbcType=VARCHAR},
+			</if>
+			<if test="isDeleted != null">
+				#{isDeleted,jdbcType=INTEGER},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<insert id="batchInsert" parameterType="java.util.List">
+	    <foreach collection="list" item="item" index="index" separator=";">
+			insert into t_product_sales_goods_taobao
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				<if test="item.id != null">
+					id,
+				</if>
+				<if test="item.orderNo != null">
+					order_no,
+				</if>
+				<if test="item.goodsTitle != null">
+					goods_title,
+				</if>
+				<if test="item.amount != null">
+					amount,
+				</if>
+				<if test="item.sku != null">
+					sku,
+				</if>
+				<if test="item.price != null">
+					price,
+				</if>
+				<if test="item.warehouseId != null">
+					warehouse_id,
+				</if>
+				<if test="item.warehouseName != null">
+					warehouse_name,
+				</if>
+				<if test="item.email != null">
+				    email,
+			    </if>
+				<if test="item.isDeleted != null">
+					is_deleted
+				</if>
+			</trim>
+			<trim prefix="values (" suffix=")" suffixOverrides=",">
+				<if test="item.id != null">
+					#{item.id,jdbcType=INTEGER},
+				</if>
+				<if test="item.orderNo != null">
+					#{item.orderNo,jdbcType=VARCHAR},
+				</if>
+				<if test="item.goodsTitle != null">
+					#{item.goodsTitle,jdbcType=VARCHAR},
+				</if>
+				<if test="item.amount != null">
+					#{item.amount,jdbcType=INTEGER},
+				</if>
+				<if test="item.sku != null">
+					#{item.sku,jdbcType=VARCHAR},
+				</if>
+				<if test="item.price != null">
+					#{item.price,jdbcType=DOUBLE},
+				</if>
+				<if test="item.warehouseId != null">
+					#{item.warehouseId,jdbcType=VARCHAR},
+				</if>
+				<if test="item.warehouseName != null">
+					#{item.warehouseName,jdbcType=VARCHAR}
+				</if>
+				<if test="item.email != null">
+					#{item.email,jdbcType=VARCHAR},
+				</if>
+				<if test="item.isDeleted != null">
+					#{item.isDeleted,jdbcType=INTEGER}
+				</if>
+			</trim>
+	    </foreach>
+  	</insert>
+	<select id="getGoodsByParam" resultMap="BaseResultMap"
+		parameterType="dto.sales.TaoBaoGoodsSearchDto">
+		select
+		<include refid="Base_Column_List"></include>
+		from t_product_sales_goods_taobao
+		<where>
+			<if test="orderNo !=null and orderNo !='' ">
+				order_no=#{orderNo,jdbcType=VARCHAR}
+			</if>
+			<if test="skuList !=null and skuList.size>0 ">
+			     and sku in
+				<foreach collection="skuList" item="sku" index="index" open="(" separator="," close=")">
+					#{sku}
+				</foreach>
+			</if>
+			<if test="email !=null">
+				 and email=#{email,jdbcType=VARCHAR}
+			</if>
+			<if test="warehouseId !=null">
+				 and warehouse_id=#{warehouseId,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getGoodsNumByOrderNoAndEmail" resultType="Integer">
+		SELECT count(*) FROM t_product_sales_goods_taobao
+		where order_no = #{orderNo,jdbcType=VARCHAR} 
+		and is_deleted = 0 and email = #{email,jdbcType=VARCHAR};
+	</select>
+	<delete id="deleteOrderGoodById" parameterType="java.lang.Integer">
+		delete from 
+		t_product_sales_goods_taobao
+		where id = #{goodId,jdbcType=INTEGER}
+	</delete>
+	<select id="goodsLists" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List"></include>
+		from t_product_sales_goods_taobao
+		where
+		is_deleted = 0 and email=#{email,jdbcType=VARCHAR} 
+		<if test="orderNos != null and orderNos.size() > 0">
+			and order_no in 
+			<foreach collection="orderNos" open="(" separator="," close=")" item="orderNo"> 
+				#{orderNo,jdbcType=VARCHAR}
+			</foreach>
+		</if>
+		order by id
+	</select>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from t_product_sales_goods_taobao
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+</mapper>

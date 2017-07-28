@@ -1,0 +1,190 @@
+<!--促销一览表-->
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<script type="text/javascript" src="../js/backstage/promotion/promotion_schedule.js"></script>
+<div class="promotion_schedule">
+    <h1>促销管理<span>---</span><span>促销一览表</span></h1>
+    <ul class="search_category">
+        <li>促销名称：
+            <input onkeyup="enter_keyUp(event,this, getList_promotion_schedule)" id="promotion_name" class="searchInput">
+        </li>
+        <li>开始日期：
+            <input placeholder="开始日期" id="startTime" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                   class="searchInput"/>
+            结束日期：
+            <input placeholder="结束日期" id="endTime" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                   class="searchInput"/>
+        </li>
+        <li style="float:right;">活动状态：
+            <select id="shcedule_status">
+                <option value="" selected>请选择活动状态</option>
+                <option value="1">未开始</option>
+                <option value="2">促销中</option>
+                <option value="3">已过期</option>
+                <option value="4">暂停</option>
+            </select>
+            <input class="searchButton" value="查&nbsp;询" type="button">
+        </li>
+    </ul>
+    <script>  //解决IEplaceholder不兼容问题
+    $(document).ready(function () {
+        $(function () {
+            if (!placeholderSupport()) {
+                $('[placeholder]').focus(function () {
+                    var input = $(this);
+                    if (input.val() == input.attr('placeholder')) {
+                        input.val('');
+                        input.removeClass('placeholder');
+                    }
+                }).blur(function () {
+                    var input = $(this);
+                    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                        input.addClass('placeholder');
+                        input.val(input.attr('placeholder'));
+                    }
+                }).blur();
+            }
+        })
+        function placeholderSupport() {
+            return 'placeholder' in document.createElement('input');
+        }
+    })
+    </script>
+    <div class="content_list">
+        <!--<table class="schedule_table">-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th style="width: 4%;">序号</th>-->
+                <!--<th style="width: 9%;">促销名称</th>-->
+                <!--<th style="width: 22%;">促销描述</th>-->
+                <!--<th style="width: 12%;" class="schedule_time">开始日期</th>-->
+                <!--<th style="width: 12%;" class="schedule_time">结束日期</th>-->
+                <!--<th style="width: 6%;">状态</th>-->
+                <!--<th style="width: 5%;">创建人</th>-->
+                <!--<th style="width: 12%;" class="schedule_time">创建日期</th>-->
+                <!--<th style="width: 12%;" class="schedule_time">修改日期</th>-->
+                <!--<th style="width: 6%;">操作</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody id="promotion_browse">-->
+            <!--</tbody>-->
+        <!--</table>-->
+        <!--<div id="schedule_pagination"  style="text-align: center; margin-top: 30px;"></div>-->
+
+        <table class="list_title all_table" id="promotion_schedule_table">
+        </table>
+
+        <div id="promotion_schedule_pagination" style="text-align: center; margin-top: 30px;"></div>
+    </div>
+</div>
+
+<!--时间调整-->
+<div class="time_adjust_box">
+    <div>
+        <em>促销活动名称：</em>
+        <span id="updateEndName"></span>
+    </div>
+    <div>
+        <em>促销活动结束时间：</em>
+        <span>
+            <input placeholder="结束时间" id="updateEndTime" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"/>
+        </span>
+    </div>
+</div>
+
+<!--查看促销活动详情-->
+<div class="promotion_check_box">
+    <h1>查看促销活动详情</h1>
+    <button class="promotion_back">返回</button>
+    <div class="promotion_check_block">
+        <h2>基本信息</h2>
+        <div>
+            <p>
+                <em>促销名称:</em>
+                <span id="proAct_name"></span>
+            </p>
+            <p>
+                <em>促销描述:</em>
+                <span id="proAct_description"></span>
+            </p>
+            <p>
+                <em>分销渠道:</em>
+                <span id="proAct_disMode"></span>
+            </p>
+            <p>
+                <em>促销开始时间:</em>
+                <span id="proAct_startTime"></span>
+            </p>
+            <p>
+                <em>促销结束时间:</em>
+                <span id="proAct_endTime"></span>
+            </p>
+            <p>
+                <em>促销状态:</em>
+                <span id="proAct_status"></span>
+            </p>
+            <p>
+                <em>创建人:</em>
+                <span id="proAct_createUser"></span>
+            </p>
+            <p>
+                <em>创建时间:</em>
+                <span id="proAct_createTime"></span>
+            </p>
+            <p>
+                <em>修改时间:</em>
+                <span id="proAct_updateTime"></span>
+            </p>
+        </div>
+    </div>
+    <div class="promotion_check_block">
+        <h2>促销条件</h2>
+            <table class="promotion_check_table">
+                <thead>
+                <tr>
+                    <th style="width: 5%">序号</th>
+                    <th>促销类型名称</th>
+                    <th>促销类型描述</th>
+                    <th>条件属性</th>
+                    <th>条件名称</th>
+                    <th>是否设置参数</th>
+                    <th>优先级</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="proAct_actInst_condtInst_tbody">
+                </tbody>
+            </table>
+    </div>
+</div>
+
+<!--查看参数设置-->
+<div class="check_parameter_box popBox">
+    <div>
+        <em>促销活动名称：</em>
+        <div>
+            <input id="activity_name" style="width:200px;display:inline" class="promotion_input" disabled="true">
+            <!--暂时屏蔽可阶梯-inline-->
+            <span style="display:none;float:right;margin-right: 76px;">
+                <input id="view_stepped_checkbox" type="checkbox" style="display:inline">可阶梯
+            </span>
+        </div>
+    </div>
+    <div>
+        <em style="vertical-align: top">参与促销的条件及优惠：</em>
+        <div id="view_dynamic_actInst_condtPvlgInsts_div">
+            <div id="view_match_type_div" style="display: none">
+            </div>
+            <!--动态生成条件-->
+            <div id="view_dynamic_pro_inst_condition_div">
+            </div>
+            <!--动态生成优惠-->
+            <div id="view_dynamic_pro_inst_pvlg_div">
+            </div>
+        </div>
+    </div>
+    <div>
+        <em>促销描述：</em>
+        <div id="activity_description">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.warehousing.ErpPushInvenRecodeMapper">
+	<resultMap id="BaseResultMap" type="entity.warehousing.ErpPushInvenRecode">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="contents" property="contents" jdbcType="VARCHAR" />
+		<result column="created" property="created" jdbcType="TIMESTAMP" />
+		<result column="unique_id" property="uniqueId" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, contents, created,unique_id
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_erp_push_inven_recode
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectByUniqueId" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_erp_push_inven_recode
+		where unique_id =
+		#{uniqueId,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_erp_push_inven_recode
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="entity.warehousing.ErpPushInvenRecode">
+		insert into
+		t_erp_push_inven_recode (id, contents, created
+		)
+		values
+		(#{id,jdbcType=INTEGER}, #{contents,jdbcType=VARCHAR},
+		#{created,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="entity.warehousing.ErpPushInvenRecode"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_erp_push_inven_recode
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="contents != null">
+				contents,
+			</if>
+			<if test="created != null">
+				created,
+			</if>
+			<if test="uniqueId != null">
+				unique_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="contents != null">
+				#{contents,jdbcType=VARCHAR},
+			</if>
+			<if test="created != null">
+				#{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="uniqueId != null">
+				#{uniqueId,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="entity.warehousing.ErpPushInvenRecode">
+		update t_erp_push_inven_recode
+		<set>
+			<if test="contents != null">
+				contents = #{contents,jdbcType=VARCHAR},
+			</if>
+			<if test="created != null">
+				created = #{created,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="entity.warehousing.ErpPushInvenRecode">
+		update
+		t_erp_push_inven_recode
+		set contents = #{contents,jdbcType=VARCHAR},
+		created = #{created,jdbcType=TIMESTAMP}
+		where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+</mapper>

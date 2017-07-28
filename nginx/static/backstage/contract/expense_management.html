@@ -1,0 +1,110 @@
+<script src="../../js/backstage/lib/laydate/laydate.js"></script>
+<div id="expenseManagement">
+    <h1>合同管理<span>---</span><span>费用管理</span>
+        <span class="record_sendList_do">
+            <button onclick="entryFee();">录入费用</button>
+        </span>
+    </h1>
+    <ul class="search_category">
+        <li>费用类型：
+            <select name="">
+                <option>全部</option>
+                <option>合同扣点</option>
+                <option>满减</option>
+            </select>
+        </li>
+        <li>时间期限：
+            <input id="_start_" placeholder="开始时间" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" class="searchInput">
+            至
+            <input id="_end_" placeholder="结束时间" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" class="searchInput">
+        </li>
+        <li>
+            <div class="search">
+                <input type="text" class="searchInput" placeholder="关联合同/分销商账号/分销商名称" style="width: 230px;">
+                <input type="button" class="searchButton" value="搜索">
+            </div>
+        </li>
+    </ul>
+
+    <div class="content_list">
+        <table id="expense_management_table"></table>
+        <div id="expense_management_pagination"></div>
+    </div>
+
+    <!--弹框 start-->
+    <div id="compile" class="add-payment display">
+        <div>
+            <span>费用类型：</span>
+            <em>合同扣点</em>
+        </div>
+        <div>
+            <span>费用率：</span>
+            <input type="text" placeholder="0.12"/>
+            <i class="question-icon">?</i>
+        </div>
+        <div>
+            <span>时间期限：</span>
+            <input id="" placeholder="开始时间" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+            至
+            <input id="" placeholder="结束时间" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+         </div>
+    </div>
+
+    <div id="operationLog" class="display">
+        <div class="log-pop-con"><span>2017-03-16 12:17:13</span><span>superadmin录入此记录</span></div>
+        <div class="log-pop-con"><span>2017-03-16 12:17:13</span><span>superadmin编辑分销商账号13518893923为：12325893698</span></div>
+    </div>
+    <!--弹框 end-->
+</div>
+
+<!--录入费用 start-->
+<div id="entryFee" class="display">
+    <h1>录入费用</h1>
+    <div class="contract-cont">
+        <form id="quoted_create_form" enctype="multipart/form-data" method="post" action="/product/quoted/add">
+            <div style="overflow: hidden;">
+                <span class="contract-cont-t-l">
+                    <span class="contract-cont-wid"><b class="red">*</b>选择合同：</span>
+                    <select>
+                        <option>请选择</option>
+                        <option>HN05</option>
+                        <option>HN04</option>
+                        <option>HN03</option>
+                    </select>
+                </span>
+            </div>
+            <div class="content_list">
+                <table id="entry_fee_table"></table>
+                <div id="entry_fee_pagination"></div>
+            </div>
+            <div style="overflow: hidden;">
+                <span class="contract-cont-t-l">
+                    <span class="contract-cont-wid"><b class="red">*</b>费用类型：</span>
+                    <select>
+                        <option>请选择</option>
+                        <option>合同扣点</option>
+                        <option>满返</option>
+                        <!--<option>其他</option>-->
+                    </select>
+                </span>
+            </div>
+            <div>
+                <span class="contract-cont-wid"><b class="red">*</b>费用率：</span>
+                <input type="text" placeholder="0.00">
+            </div>
+            <div>
+                <span class="contract-cont-wid"><b class="red">*</b>时间期限：</span>
+                <input id="quoted_start_date" type="hidden"/>
+                <input id="quoted_end_date" type="hidden"/>
+                <input id="input_start" name="start" required="true" placeholder="开始时间" onclick="loadDate(this);">
+                至
+                <input id="input_end" name="end" required="true" placeholder="结束时间" onclick="loadDate(this);">
+            </div>
+            <div class="txt-ct">
+                <button class="btn-hui" type="button" onclick="entryFeeReturn();">返回</button>
+                <button class="btn-lan" type="button" onclick="entryFeeReturn();">保存</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!--录入费用 end-->

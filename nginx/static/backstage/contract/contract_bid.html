@@ -1,0 +1,176 @@
+<script src="../../js/backstage/lib/laydate/laydate.js"></script>
+<div id="contractBid">
+    <h1>合同管理<span>---</span><span>报价管理</span>
+        <span class="record_sendList_do">
+            <button onclick="addBid();">添加报价</button>
+        </span>
+    </h1>
+    <ul class="search_category">
+        <li>状态：
+            <select id="selected_status" onchange="reloadQuotedTable();">
+                <option value="">全部</option>
+                <option value="1">未开始</option>
+                <option value="2">已开始</option>
+                <option value="3">已结束</option>
+            </select>
+        </li>
+        <li>仓库：
+            <select id="selected_warehouse" onchange="reloadQuotedTable();">
+            </select>
+        </li>
+        <li>有效期限：
+            <input id="_start_" placeholder="开始时间" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" class="searchInput">
+            至
+            <input id="_end_" placeholder="结束时间" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" class="searchInput">
+        </li>
+        <li>
+            <input id="_quoted_" class="searchInput" placeholder="SKU/合同编码/分销商">
+            <input class="searchButton" value="搜索" onclick="reloadQuotedTable();" type="submit">
+        </li>
+    </ul>
+
+    <div class="content_list">
+        <table id="contract_bid_table"></table>
+        <div id="contract_bid_pagination"></div>
+    </div>
+</div>
+
+<!--添加报价 start-->
+<div id="addBid" class="display">
+    <h1>添加报价</h1>
+    <div class="contract-cont">
+        <form id="quoted_create_form" enctype="multipart/form-data" method="post" action="/product/quoted/add">
+            <div style="overflow: hidden;">
+                <span class="contract-cont-t-l">
+                    <span class="contract-cont-wid"><b class="red">*</b>选择合同：</span>
+                    <input type="hidden" name="cid" required="true">
+                    <input type="hidden" name="model" required="true">
+                    <input name="contract_no" type="text" required="true"><button type="button" class="btn-black" onclick="choose_contract();">选择</button>
+                </span>
+            </div>
+            <div class="content_list">
+                <table id="add_bid_table"></table>
+                <div id="add_bid_pagination"></div>
+            </div>
+            <div>
+                <span class="contract-cont-wid"><b class="red">*</b>商品SKU：</span>
+                <input type="hidden" name="warehouseId" required="true"/>
+                <input type="text" required="true" onblur="check_product();" name="sku" assekey="" placeholder="请输入SKU编号"><button class="btn-black" type="button" onclick="check_product();">添加</button>
+                <span class="gray" style="display: inline-block">分销价：￥<em id="disPrice" class="red">0.00</em></span>
+            </div>
+            <div>
+                <span class="contract-cont-wid"><b class="red">*</b>报价：</span>
+                <input name="contractPrice" required="true" type="tel" min="0.00" onblur="inputContractPrice(this)">元
+            </div>
+            <div>
+                <span class="contract-cont-wid"><b class="red">*</b>有效期限：</span>
+                <input id="quoted_start_date" type="hidden"/>
+                <input id="quoted_end_date" type="hidden"/>
+                <input id="input_start" name="start" required="true" placeholder="开始时间" onclick="loadDate(this);">
+                至
+                <input id="input_end" name="end" required="true" placeholder="结束时间" onclick="loadDate(this);">
+            </div>
+            <div class="txt-ct">
+                <button class="btn-hui" type="button" onclick="returnButton();">返回</button>
+                <button class="btn-lan" type="button" onclick="saveButton();">保存</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+<!--添加报价 end-->
+
+<!--弹框 start-->
+<!--设置 start-->
+<div id="setUp" class="set-pop display">
+    <div id="price_div" style="margin-top: 10px;">
+        <b class="red">*</b>报 价：
+        <input id="update_price" type="tel" min="0.00" onblur="inputContractPrice2(this)">元
+    </div>
+    <div>
+        <b class="red">*</b>有效期限：
+        <input id="update_start" placeholder="开始时间" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+        至
+        <input id="update_end" placeholder="结束时间" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+    </div>
+</div>
+<!--设置 end-->
+
+<!--操作日志 start-->
+    <div id="operationQuotedLog" class="display">
+    </div>
+<!--操作日志 end-->
+
+<!--选择分销商 start-->
+<div class="disturb_choice_pop display" id="disturb_choice_pop_div">
+    <p>
+        <input id="chooice_contract_input" type="text">
+        <button id="chooice_contract_btn" onclick="reloadContractChoicePop();">搜索</button>
+    </p>
+    <div>
+        <table id="contract_choice_pop"></table>
+        <div id="contract_choice_page"></div>
+    </div>
+</div>
+<!--选择分销商 end-->
+
+<!--选择商品 start-->
+<div id="add_normalProduct_div" class="add_normalProduct_pop display">
+    <ul class="search_category" style="min-width:600px;">
+        <li>商品分类：
+            <select>
+                <option>所有商品</option>
+                <option>母婴用品</option>
+                <option>营养保健</option>
+                <option>美妆日化</option>
+                <option>箱包手袋</option>
+                <option>服饰鞋帽</option>
+            </select>
+        </li>
+        <li>所属仓库：
+            <select>
+                <option>所有仓库</option>
+                <option>深圳仓</option>
+                <option>福州1仓</option>
+                <option>福州仓</option>
+                <option>美国</option>
+            </select>
+        </li>
+        <li>
+            <div class="search">
+                <input class="searchInput" id="search_product_input" placeholder="商品名称/SKU(，隔开可多个查询)" style="width: 220px;">
+                <input class="searchButton" value="搜索" type="submit">
+            </div>
+        </li>
+    </ul>
+    <div class="normalProduct_select">
+        <span><input type="checkbox" name="products_match_condition">选中符合搜索/筛选条件的所有商品</span>
+    </div>
+    <table id="normalProduct_table">
+        <thead>
+        <tr>
+            <th style="width:8%">全选<input type="checkbox" onchange="checkbox_selectAll(this)"></th>
+            <th style="width:10%">商品编号</th>
+            <th style="width:32%">商品名称</th>
+            <th style="width:20%">国际条码</th>
+            <th style="width:10%">所属仓库</th>
+            <th style="width:10%">云仓库存</th>
+            <th style="width:10%">分销价(元)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input type="checkbox"></td>
+            <td>IF942-1</td>
+            <td title="越南wismo番茄饼干棒22克">越南wismo番茄饼干棒22克</td>
+            <td>8936047445493</td>
+            <td>深圳仓</td>
+            <td>153395</td>
+            <td>4.77</td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="normalProduct_pagination"></div>
+</div>
+<!--选择商品 end-->
+<!--弹框 end-->

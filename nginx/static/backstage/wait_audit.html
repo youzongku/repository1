@@ -1,0 +1,127 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<h1>销售发货<span>---</span><span>等待审核</span></h1>
+<ul class="search_category" style="height:110px;">
+    <li>下单时间：
+        <input  class="searchInput" placeholder="开始日期" id="seachTime0" name='startTime' onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>至
+        <input  class="searchInput" placeholder="结束日期" id="seachTime1" name='endTime' onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+    </li>
+    <li>通知发货时间：
+        <input  class="searchInput" placeholder="开始日期" id="seachTime0" name='noticeStartTime' onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>至
+        <input  class="searchInput" placeholder="结束日期" id="seachTime1" name='noticeEndTime' onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+    </li>
+    <li>发货仓库：
+        <select id="delivery_warehouse_select">
+        	<option value="">所有仓库</option>
+        </select>
+    </li>
+    <li style = "position: absolute;margin-top: 45px;margin-left: 0;">
+        分销商类型：
+        <select id="distributorType" >
+            <option value="0">全部分销商</option>
+            <option value="1">普通分销商</option>
+            <option value="2">合营分销商</option>
+            <option value="3">内部分销商</option>
+        </select>
+    </li>
+    <li id="order_status_select" style = "margin-left: 245px;">
+        <button id="mergeAudit" onclick="batchPay()" disabled="disabled" style="cursor: not-allowed; background-color: darkgray;">批量审核</button>
+        <span style="display: inline-block;">(注：只有选择同一仓库才可进行批量操作)</span>
+        <!-- <button onclick="batchCheck()">批量设置审核通过</button> -->
+    </li>
+    <li>
+        <div class="search">
+            <input type="text" id="searchInput" class="searchInput" placeholder="订单编号/分销商/交易号/业务员/录入人" style="width: 240px">
+            <input id="searchButton" class="searchButton" value="搜索" type="submit">
+        </div>
+    </li>
+</ul>
+<script>  //解决IEplaceholder不兼容问题
+$(document).ready(function () {
+    $(function () {
+        if (!placeholderSupport()) {
+            $('[placeholder]').focus(function () {
+                var input = $(this);
+                if (input.val() == input.attr('placeholder')) {
+                    input.val('');
+                    input.removeClass('placeholder');
+                }
+            }).blur(function () {
+                var input = $(this);
+                if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                    input.addClass('placeholder');
+                    input.val(input.attr('placeholder'));
+                }
+            }).blur();
+        }
+    })
+    function placeholderSupport() {
+        return 'placeholder' in document.createElement('input');
+    }
+})
+
+</script>
+<div class="content_list">
+    <table class="list_title all_table">
+        <thead>
+        <tr>
+            <th class="sale_save_select"><input type="checkbox" class="checkbox-top" onclick="sale_select_all(this);"/>全选
+            </th>
+            <th class=""><span class="spread-top" style="color: #888;display: inline-block;font: 600 16px/20px Arial;height: 20px;"></span></th>
+            <th class="sale_save_num">订单编号</th>
+            <th class="sale_save_time">下单时间</th>
+            <th class="sale_save_user">业务员</th>
+            <th class="sale_save_user">分销商</th>
+            <th class="sale_save_user">录入人</th>
+            <th class="sale_save_disturb">分销商类型</th>
+            <th class="sale_save_wareh">发货仓库</th>
+            <th class="sale_save_about">相关操作</th>
+        </tr>
+        </thead>
+        <tbody class="sale_list_content"></tbody>
+    </table>
+
+    <p style="margin-left: 19px">共<span id="sale_total" style="display:inline-block;">0</span>记录，每页显示
+        <select id="sale_pageSize">
+            <option value="10" selected>10</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+        </select>
+        ，共<span id="sale_pages" style="display:inline-block;">0</span>页
+    </p>
+    <div id="sale_pagination" style="text-align: center; margin-top: 30px;"></div>
+    <div id="to_check" class="recharge_check" style="display: none">
+        <ul>
+            <!--<li class="check_title">审核 <span onclick="checkOrder(this,'')">×</span></li>-->
+            <li class="check_all">
+                <ul>
+                    <!--<li class="check_all_btn">-->
+                        <!--<input type="button" value="实际支付" onclick="checkOrder(this,'pay')"/>-->
+                        <!--<input type="button" value="审核通过" onclick="checkOrder(this,'suc')"/>-->
+                        <!--<input type="button" value="审核不通过" onclick="checkOrder(this,'fail')"/>-->
+                    <!--</li>-->
+                    <li style="text-align: left;padding-left: 26px;display: none" class="check_fail_reason">
+                        <!--请选择审核不通过原因：<br/>-->
+
+                        <p><label><input id="hgReason" type="radio" name="toCheckReason" value="近期海关通关限制" checked="checked"/>近期海关通关限制</label></p>
+
+                        <p><label><input id="wlReason" type="radio" name="toCheckReason" value="物流公司原因"/>物流公司原因</label></p>
+
+                        <p><label><input id="otherReason" type="radio" name="toCheckReason" value="其他特殊原因"/>其他特殊原因</label></p>
+                    </li>
+                    <li style="margin-top: 10px;display: none;">
+                        <span id="toCheckId" style="display: none;"></span>
+                        <span id="result" style="display: none;"></span>
+                        <span id="orderNo" style="display: none;"></span>
+                        <span id="tradeNo" style="display: none;"></span>
+                        <span id="productName" style="display: none;"></span>
+                        <span id="sumPrice" style="display: none;"></span>
+                        <!--<input type="button" atr="sure" value="确定" onclick="submitToCheck()"/>-->
+                        <!--<input type="button" atr="close" value="取消" onclick="checkOrder(this,'')"/>-->
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="recharge_black" style="display:none;"></div>
+<div  id = "winxin_content" class="modal fade in"></div>

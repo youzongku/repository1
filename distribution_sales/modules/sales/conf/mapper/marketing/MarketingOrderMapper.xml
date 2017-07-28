@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.MarketingOrderMapper" >
+  <resultMap id="BaseResultMap" type="entity.marketing.MarketingOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="marketing_order_no" property="marketingOrderNo" jdbcType="VARCHAR" />
+    <result column="sales_order_no" property="salesOrderNo" jdbcType="VARCHAR" />
+    <result column="total_amount" property="totalAmount" jdbcType="DOUBLE" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="dis_mode" property="disMode" jdbcType="INTEGER" />
+    <result column="distributor_type" property="distributorType" jdbcType="INTEGER" />
+    <result column="salesman" property="salesman" jdbcType="VARCHAR" />
+    <result column="province_id" property="provinceId" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="region_id" property="regionId" jdbcType="INTEGER" />
+    <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="region_name" property="regionName" jdbcType="VARCHAR" />
+    <result column="address_detail" property="addressDetail" jdbcType="VARCHAR" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="receiver_tel" property="receiverTel" jdbcType="VARCHAR" />
+    <result column="receiver_postcode" property="receiverPostcode" jdbcType="VARCHAR" />
+    <result column="logistics_mode" property="logisticsMode" jdbcType="VARCHAR" />
+    <result column="logistics_type_code" property="logisticsTypeCode" jdbcType="VARCHAR" />
+    <result column="bbc_postage" property="bbcPostage" jdbcType="DOUBLE" />
+    <result column="orderer" property="orderer" jdbcType="VARCHAR" />
+    <result column="orderer_tel" property="ordererTel" jdbcType="VARCHAR" />
+    <result column="orderer_postcode" property="ordererPostcode" jdbcType="VARCHAR" />
+    <result column="business_remark" property="businessRemark" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_user" property="lastUpdateUser" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+	<result column="tawprice" property="tAWPrice" jdbcType="DOUBLE" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, marketing_order_no, total_amount, sales_order_no, status, email, nick_name, 
+    dis_mode, distributor_type, salesman, province_id, 
+    city_id, region_id, province_name, city_name, region_name, address_detail, receiver, 
+    receiver_tel, receiver_postcode, logistics_mode, logistics_type_code, bbc_postage, 
+    orderer, orderer_tel, orderer_postcode, business_remark, create_user, create_date, 
+    last_update_user, last_update_date, tawprice
+  </sql>
+  
+  <select id="getMarketingOrderList" parameterType="dto.marketing.QueryMarketingOrderParams"
+   resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+	from t_marketing_order
+	<where>
+		<if test="distributorType !=null">
+			and distributor_type = #{distributorType}
+		</if>
+		<if test="status !=null">
+			and status = #{status}
+		</if>
+		<if test="relatedMembers!=null and relatedMembers.size()>0">
+			and email in 
+			<foreach collection="relatedMembers" item="aEamil" open="(" close=")" separator=",">
+				#{aEamil}
+			</foreach>
+		</if>
+		<if test="searchText !=null and searchText != ''">
+				<![CDATA[
+			    	and (lower(email) like lower('%'||#{searchText,jdbcType=VARCHAR}||'%')
+			        	or lower(nick_name) like lower('%'||#{searchText,jdbcType=VARCHAR}||'%') 
+			            or lower(marketing_order_no) like lower('%'||#{searchText,jdbcType=VARCHAR}||'%') 
+			            or lower(sales_order_no) like lower('%'||#{searchText,jdbcType=VARCHAR}||'%') 
+			            or lower(create_user) like lower('%'||#{searchText,jdbcType=VARCHAR}||'%')
+			            or lower(salesman) like lower('%'||#{searchText,jdbcType=VARCHAR}||'%')
+			            )
+			    ]]>
+		</if>
+		<if test="startDate !=null and startDate != ''">
+			<![CDATA[and create_date  >= to_timestamp(#{startDate}, 'YYYY-MM-DD HH24:MI:SS')]]>
+		</if>
+		<if test="endDate !=null and endDate != ''">
+			<![CDATA[and create_date  <= to_timestamp(#{endDate}, 'YYYY-MM-DD HH24:MI:SS')]]>
+		</if>
+	</where>
+  	<choose>
+    	<when test="filter != null and sort != null and sort != ''">
+			order by ${sort} ${filter} nulls last
+		</when>
+		<otherwise>
+			order by id desc
+		</otherwise>
+    </choose>
+	<if test="pageSize!=null and currPage!=null">
+		LIMIT #{pageSize} OFFSET (#{currPage}-1)*#{pageSize}
+	</if>
+  </select>
+  
+  <select id="getMarketingOrderCount" parameterType="dto.marketing.QueryMarketingOrderParams"
+   resultType="java.lang.Integer">
+  	select count(1) from t_marketing_order 
+  	<where>
+		<if test="distributorType !=null">
+			and distributor_type = #{distributorType}
+		</if>
+		<if test="status !=null">
+			and status = #{status}
+		</if>
+		<if test="relatedMembers!=null and relatedMembers.size()>0">
+			and email in 
+			<foreach collection="relatedMembers" item="aEamil" open="(" close=")" separator=",">
+				#{aEamil}
+			</foreach>
+		</if>
+		<if test="searchText !=null and searchText != ''">
+				<![CDATA[
+			    	and (lower(email) like lower('%'||#{searchText,jdbcType=VARCHAR}||'%')
+			        	or lower(nick_name) like lower('%'||#{searchText,jdbcType=VARCHAR}||'%') 
+			            or lower(marketing_order_no) like lower('%'||#{searchText,jdbcType=VARCHAR}||'%') 
+			            or lower(sales_order_no) like lower('%'||#{searchText,jdbcType=VARCHAR}||'%') 
+			            or lower(create_user) like lower('%'||#{searchText,jdbcType=VARCHAR}||'%')
+			            or lower(salesman) like lower('%'||#{searchText,jdbcType=VARCHAR}||'%')
+			            )
+			    ]]>
+		</if>
+		<if test="startDate !=null and startDate != ''">
+			<![CDATA[and create_date  >= to_timestamp(#{startDate}, 'YYYY-MM-DD HH24:MI:SS')]]>
+		</if>
+		<if test="endDate !=null and endDate != ''">
+			<![CDATA[and create_date  <= to_timestamp(#{endDate}, 'YYYY-MM-DD HH24:MI:SS')]]>
+		</if>
+	</where>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_marketing_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByMarketingOrderNo" resultMap="BaseResultMap" parameterType="string" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_marketing_order
+    where marketing_order_no = #{marketingOrderNo}
+  </select>
+  
+  <select id="getBySno"  resultMap="BaseResultMap" parameterType="string">
+  	 select 
+    <include refid="Base_Column_List" />
+    from t_marketing_order
+    where sales_order_no = #{sno,jdbcType=VARCHAR}
+  </select>
+  
+  <insert id="insert" keyColumn="id" useGeneratedKeys="true" keyProperty="id"
+  	parameterType="entity.marketing.MarketingOrder" >
+    insert into t_marketing_order (total_amount, marketing_order_no, sales_order_no, status, 
+      email, nick_name, dis_mode, distributor_type, 
+      salesman, province_id, city_id, 
+      region_id, province_name, city_name, 
+      region_name, address_detail, receiver, 
+      receiver_tel, receiver_postcode, logistics_mode, 
+      logistics_type_code, bbc_postage, orderer, 
+      orderer_tel, orderer_postcode, business_remark, 
+      create_user, create_date, tawprice)
+    values (#{totalAmount}, #{marketingOrderNo,jdbcType=VARCHAR}, #{salesOrderNo,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{email,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{disMode,jdbcType=INTEGER}, #{distributorType,jdbcType=INTEGER}, 
+      #{salesman,jdbcType=VARCHAR}, #{provinceId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, 
+      #{regionId,jdbcType=INTEGER}, #{provinceName,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, 
+      #{regionName,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR}, #{receiver,jdbcType=VARCHAR}, 
+      #{receiverTel,jdbcType=VARCHAR}, #{receiverPostcode,jdbcType=VARCHAR}, #{logisticsMode,jdbcType=VARCHAR}, 
+      #{logisticsTypeCode,jdbcType=VARCHAR}, #{bbcPostage,jdbcType=DOUBLE}, #{orderer,jdbcType=VARCHAR}, 
+      #{ordererTel,jdbcType=VARCHAR}, #{ordererPostcode,jdbcType=VARCHAR}, #{businessRemark,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, now(), #{tAWPrice})
+  </insert>
+  
+  <update id="updateStatusById">
+    update 
+    	t_marketing_order
+  	set 
+   	 	status = #{status},
+  		last_update_user = #{lastUpdateUser},
+  		last_update_date = now()
+  	where id = #{id}
+  </update>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.marketing.MarketingOrder" >
+    update t_marketing_order
+    <set >
+      <if test="marketingOrderNo != null" >
+        marketing_order_no = #{marketingOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="salesOrderNo != null" >
+        sales_order_no = #{salesOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="disMode != null" >
+        dis_mode = #{disMode,jdbcType=INTEGER},
+      </if>
+      <if test="distributorType != null" >
+        distributor_type = #{distributorType,jdbcType=INTEGER},
+      </if>
+      <if test="salesman != null" >
+        salesman = #{salesman,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        province_id = #{provinceId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="regionId != null" >
+        region_id = #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="provinceName != null" >
+        province_name = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="regionName != null" >
+        region_name = #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null" >
+        address_detail = #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null" >
+        receiver = #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverTel != null" >
+        receiver_tel = #{receiverTel,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverPostcode != null" >
+        receiver_postcode = #{receiverPostcode,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsMode != null" >
+        logistics_mode = #{logisticsMode,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsTypeCode != null" >
+        logistics_type_code = #{logisticsTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bbcPostage != null" >
+        bbc_postage = #{bbcPostage,jdbcType=DOUBLE},
+      </if>
+      <if test="orderer != null" >
+        orderer = #{orderer,jdbcType=VARCHAR},
+      </if>
+      <if test="ordererTel != null" >
+        orderer_tel = #{ordererTel,jdbcType=VARCHAR},
+      </if>
+      <if test="ordererPostcode != null" >
+        orderer_postcode = #{ordererPostcode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessRemark != null" >
+        business_remark = #{businessRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = now()
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

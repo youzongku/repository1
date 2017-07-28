@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.store.ErpAttributeMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.store.ErpAttribute" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="erp_attr_key" property="erpAttrKey" jdbcType="VARCHAR" />
+    <result column="erp_attr_name" property="erpAttrName" jdbcType="VARCHAR" />
+    <result column="erp_attr_desc" property="erpAttrDesc" jdbcType="VARCHAR" />
+    <result column="erp_attr_type" property="erpAttrType" jdbcType="VARCHAR" />
+    <result column="type_id" property="typeId" jdbcType="INTEGER" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, erp_attr_key, erp_attr_name, erp_attr_desc, erp_attr_type, type_id, create_user, 
+    create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_erp_attribute
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_erp_attribute
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.store.ErpAttribute" >
+    insert into t_erp_attribute (id, erp_attr_key, erp_attr_name, 
+      erp_attr_desc, erp_attr_type, type_id, 
+      create_user, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{erpAttrKey,jdbcType=VARCHAR}, #{erpAttrName,jdbcType=VARCHAR}, 
+      #{erpAttrDesc,jdbcType=VARCHAR}, #{erpAttrType,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.store.ErpAttribute" >
+    insert into t_erp_attribute
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="erpAttrKey != null" >
+        erp_attr_key,
+      </if>
+      <if test="erpAttrName != null" >
+        erp_attr_name,
+      </if>
+      <if test="erpAttrDesc != null" >
+        erp_attr_desc,
+      </if>
+      <if test="erpAttrType != null" >
+        erp_attr_type,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="erpAttrKey != null" >
+        #{erpAttrKey,jdbcType=VARCHAR},
+      </if>
+      <if test="erpAttrName != null" >
+        #{erpAttrName,jdbcType=VARCHAR},
+      </if>
+      <if test="erpAttrDesc != null" >
+        #{erpAttrDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="erpAttrType != null" >
+        #{erpAttrType,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.store.ErpAttribute" >
+    update t_erp_attribute
+    <set >
+      <if test="erpAttrKey != null" >
+        erp_attr_key = #{erpAttrKey,jdbcType=VARCHAR},
+      </if>
+      <if test="erpAttrName != null" >
+        erp_attr_name = #{erpAttrName,jdbcType=VARCHAR},
+      </if>
+      <if test="erpAttrDesc != null" >
+        erp_attr_desc = #{erpAttrDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="erpAttrType != null" >
+        erp_attr_type = #{erpAttrType,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.store.ErpAttribute" >
+    update t_erp_attribute
+    set erp_attr_key = #{erpAttrKey,jdbcType=VARCHAR},
+      erp_attr_name = #{erpAttrName,jdbcType=VARCHAR},
+      erp_attr_desc = #{erpAttrDesc,jdbcType=VARCHAR},
+      erp_attr_type = #{erpAttrType,jdbcType=VARCHAR},
+      type_id = #{typeId,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

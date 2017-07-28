@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.inventory.WarehouseProductMapper" >
+  <resultMap id="BaseResultMap" type="entity.inventory.WarehouseProduct" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="csku" property="csku" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="weight" property="weight" jdbcType="DOUBLE" />
+    <result column="zero_stock_price" property="zeroStockPrice" jdbcType="DOUBLE" />
+    <result column="postage_free_price" property="postageFreePrice" jdbcType="DOUBLE" />
+    <result column="postage_price" property="postagePrice" jdbcType="DOUBLE" />
+    <result column="market_price" property="marketPrice" jdbcType="DOUBLE" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, csku, status, stock, weight, zero_stock_price, postage_free_price, postage_price, 
+    market_price, create_date, product_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_warehouse_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_warehouse_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.inventory.WarehouseProduct" >
+    insert into t_warehouse_product (id, csku, status, 
+      stock, weight, zero_stock_price, 
+      postage_free_price, postage_price, market_price, 
+      create_date, product_name)
+    values (#{id,jdbcType=INTEGER}, #{csku,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{stock,jdbcType=INTEGER}, #{weight,jdbcType=DOUBLE}, #{zeroStockPrice,jdbcType=DOUBLE}, 
+      #{postageFreePrice,jdbcType=DOUBLE}, #{postagePrice,jdbcType=DOUBLE}, #{marketPrice,jdbcType=DOUBLE}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{productName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.inventory.WarehouseProduct" >
+    insert into t_warehouse_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="csku != null" >
+        csku,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="zeroStockPrice != null" >
+        zero_stock_price,
+      </if>
+      <if test="postageFreePrice != null" >
+        postage_free_price,
+      </if>
+      <if test="postagePrice != null" >
+        postage_price,
+      </if>
+      <if test="marketPrice != null" >
+        market_price,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="csku != null" >
+        #{csku,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="zeroStockPrice != null" >
+        #{zeroStockPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="postageFreePrice != null" >
+        #{postageFreePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="postagePrice != null" >
+        #{postagePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="marketPrice != null" >
+        #{marketPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.inventory.WarehouseProduct" >
+    update t_warehouse_product
+    <set >
+      <if test="csku != null" >
+        csku = #{csku,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="zeroStockPrice != null" >
+        zero_stock_price = #{zeroStockPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="postageFreePrice != null" >
+        postage_free_price = #{postageFreePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="postagePrice != null" >
+        postage_price = #{postagePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="marketPrice != null" >
+        market_price = #{marketPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.inventory.WarehouseProduct" >
+    update t_warehouse_product
+    set csku = #{csku,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      stock = #{stock,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=DOUBLE},
+      zero_stock_price = #{zeroStockPrice,jdbcType=DOUBLE},
+      postage_free_price = #{postageFreePrice,jdbcType=DOUBLE},
+      postage_price = #{postagePrice,jdbcType=DOUBLE},
+      market_price = #{marketPrice,jdbcType=DOUBLE},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      product_name = #{productName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateTotalStock">
+    update t_warehouse_product
+    set stock = stock + #{1}
+    where csku = #{0}
+  </update>
+</mapper>

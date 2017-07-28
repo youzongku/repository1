@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.promotion.PromotionTypeMapper" >
+  <resultMap id="BaseResultMap" type="entity.marketing.promotion.PromotionType" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="attr" property="attr" jdbcType="SMALLINT" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="last_update_user" property="lastUpdateUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="is_delete" property="isDelete" jdbcType="BOOLEAN" />
+    <result column="used" property="used" jdbcType="BOOLEAN" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, name, description, attr, create_user, last_update_user, create_time, last_update_time,
+    is_delete,used
+  </sql>
+  
+  <select id="selectProTypeByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_pro_type
+    where name=#{proTypeName} and is_delete=false
+  </select>
+  
+  <select id="selectProTypeList" resultMap="BaseResultMap" parameterType="forms.marketing.promotion.PromotionTypeSearchForm">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_pro_type
+    <include refid="page_select_where"/>
+    <choose>
+      <when test="sidx != null and sidx != '' and sord != null and sord != ''">
+        order by ${sidx} ${sord} nulls last
+      </when>
+      <otherwise>
+        order by create_time desc
+      </otherwise>
+    </choose>
+    limit #{pageSize} offset #{offset}
+  </select>
+  <select id="selectProTypeCount" resultType="java.lang.Integer" parameterType="forms.marketing.promotion.PromotionTypeSearchForm">
+  	select count(*)
+    from t_pro_type
+    <include refid="page_select_where"/>
+  </select>
+  <!-- 分页查询条件 -->
+  <sql id="page_select_where">
+  	<where>
+  		is_delete=false
+    	<if test="proTypeName!=null and proTypeName!=''">
+    		and name=#{proTypeName}
+    	</if>
+    	<if test="attr!=null">
+    		and attr=#{attr}
+    	</if>
+    	<if test="used!=null">
+    		and used=#{used}
+    	</if>
+    	<if test="createDate!=null and createDate!=''">
+    		and to_char(create_time,'YYYY-MM-DD') = #{createDate}
+    	</if>
+    </where>
+  </sql>
+  
+  <update id="deleteSoftlyByPrimaryKey">
+  	update t_pro_type set is_delete=true,last_update_time = now() where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_pro_type
+    where id = #{id,jdbcType=INTEGER} and is_delete=false
+  </select>
+  
+  <insert id="insert" parameterType="entity.marketing.promotion.PromotionType" useGeneratedKeys="true" keyProperty="id">
+    insert into t_pro_type (name, description, attr, create_user, create_time,
+    is_delete,used)
+    values (#{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{attr,jdbcType=SMALLINT}, #{createUser,jdbcType=VARCHAR}, now(),
+      #{isDelete},#{used})
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.marketing.promotion.PromotionType" >
+    update t_pro_type
+    <set >
+      <if test="name != null and name != ''" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null and description != ''" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="attr != null" >
+        attr = #{attr,jdbcType=SMALLINT},
+      </if>
+      <if test="lastUpdateUser != null and lastUpdateUser != ''" >
+        last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+      last_update_time = now()
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateUsed">
+  	update t_pro_type
+  	set used=#{used},last_update_time = now() where 
+ 	id in
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+		#{id}
+	</foreach>
+  </update>
+  
+</mapper>

@@ -1,0 +1,1410 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.SaleMainMapper">
+	<resultMap id="BaseResultMap" type="entity.sales.SaleMain">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="sales_order_no" property="salesOrderNo" jdbcType="VARCHAR" />
+		<result column="ordering_date" property="orderingDate" jdbcType="TIMESTAMP" />
+		<result column="payment_type" property="paymentType" jdbcType="VARCHAR" />
+		<result column="payer" property="payer" jdbcType="VARCHAR" />
+		<result column="payment_no" property="paymentNo" jdbcType="VARCHAR" />
+		<result column="paryer_idcard" property="paryerIdcard" jdbcType="VARCHAR" />
+		<result column="pay_date" property="payDate" jdbcType="TIMESTAMP" />
+		<result column="currency" property="currency" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="is_notified" property="isNotified" jdbcType="INTEGER" />
+		<result column="is_adjusted" property="isAdjusted" jdbcType="INTEGER" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="purchase_order_no" property="purchaseOrderNo" jdbcType="VARCHAR" />
+		<result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+		<result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+		<result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+		<result column="distributor_type" property="distributorType" jdbcType="INTEGER" />
+		<result column="purchase_payment_no" property="purchasePaymentNo" jdbcType="VARCHAR" />
+		<result column="purchase_pay_date" property="purchasePayDate" jdbcType="TIMESTAMP" />
+		<result column="purchase_payment_type" property="purchasePaymentType" jdbcType="VARCHAR" />
+		<result column="compensation_payment_no" property="compensationPaymentNo" jdbcType="VARCHAR" />
+		<result column="compensation_pay_date" property="compensationPayDate" jdbcType="TIMESTAMP" />
+		<result column="compensation_payment_type" property="compensationPaymentType" jdbcType="VARCHAR" />
+		<result column="compensation_payment_amount" property="compensationAmount" jdbcType="DOUBLE" />
+		<result column="dis_prime_cost" property="disPrimeCost" jdbcType="DOUBLE" />
+		<result column="gst" property="gst" jdbcType="DOUBLE" />
+		<result column="vat" property="vat" jdbcType="DOUBLE" />
+		<result column="import_tar" property="importTar" jdbcType="DOUBLE" />
+		<result column="postal_fee" property="postalFee" jdbcType="DOUBLE" />
+		<result column="tax_fee" property="taxFee" jdbcType="DOUBLE" />
+		<result column="is_fetched" property="isFetched" jdbcType="BOOLEAN" />
+		<result column="erp_reason" property="erpReason" jdbcType="VARCHAR" />
+		<result column="cinfirm_receipt_date" property="confirmReceiptDate" jdbcType="TIMESTAMP" />
+		<result column="platform_amount" property="platformAmount" jdbcType="DOUBLE" />
+		<result column="clearance_amount" property="clearanceAmount" jdbcType="DOUBLE" />
+		<result column="host_origin" property="hostOrigin" jdbcType="INTEGER" />
+		<result column="order_actual_payment" property="orderActualPayment" jdbcType="DOUBLE" />
+		<result column="source" property="source" jdbcType="VARCHAR" />
+		<result column="host" property="host" jdbcType="VARCHAR" />
+		<result column="dis_mode" property="disMode" jdbcType="INTEGER" />
+		<result column="is_close" property="isClose" jdbcType="BOOLEAN" />
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+		<result column="created_from" property="createdFrom" jdbcType="INTEGER" />
+		<result column="opt_fee" property="optFee" jdbcType="DOUBLE" />
+		<result column="arrvice_total" property="arrviceTotal" jdbcType="DOUBLE" />
+		<result column="total_cost" property="totalCost" jdbcType="DOUBLE" />
+		<result column="profit" property="profit" jdbcType="DOUBLE" />
+		<result column="profit_margin" property="profitMargin" jdbcType="DOUBLE" />
+		<result column="contract_charge" property="contractCharge" jdbcType="DOUBLE" />
+		<result column="shop_deduction_points" property="shopDeductionPoints" jdbcType="DOUBLE" />
+		<result column="sdp_amount" property="sdpAmount" jdbcType="DOUBLE" />
+		<result column="erp_status" property="erpStatus" jdbcType="INTEGER" />
+		<result column="clearance_price_total" property="clearancePriceTotal" jdbcType="DOUBLE" />
+		<result column="thirdpart_lc" jdbcType="VARCHAR" property="thirdPartLogisticsTypeCode" />
+		<result column="orderchannel" property="orderchannel" jdbcType="INTEGER" />
+		<result column="cs_confirm_date" property="csConfirmDate" jdbcType="TIMESTAMP" />
+		<result column="rejected_by_finance" property="rejectedByFinance" jdbcType="BOOLEAN" />
+		<result column="estimated_catfee_in_order" property="estimatedCatfeeInOrder" jdbcType="DOUBLE" />
+		<result column="real_catfee_in_order" property="realCatfeeInOrder" jdbcType="DOUBLE" />
+		<result column="is_package_mail" property="isPackageMail" jdbcType="SMALLINT" />
+		<result column="is_combine" property="isCombine" jdbcType="BIT"/>
+		<result column="combine_order_no" property="combineOrderNo" jdbcType="VARCHAR"/>
+		<result column="combine_order_count" property="combineOrderCount" jdbcType="INTEGER"/>
+		<result column="erp_order_no" property="erpOrderNo" jdbcType="VARCHAR" />
+		<result column="attribution_type" property="attributionType" jdbcType="INTEGER" />
+		<result column="is_need_invoice" property="isNeedInvoice" jdbcType="BIT" />
+		<result column="order_send_date" property="orderSendDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, sales_order_no, ordering_date, payment_type, payer, payment_no,
+		paryer_idcard,pay_date, currency, status, is_notified, is_adjusted, 
+		email,purchase_order_no,trade_no,warehouse_id,warehouse_name,
+		is_pushed,distributor_type,purchase_payment_no,
+		purchase_pay_date,purchase_payment_type,is_fetched,erp_reason,cinfirm_receipt_date,
+		clearance_amount,platform_amount,host_origin,order_actual_payment,source,
+		compensation_payment_no,compensation_pay_date,compensation_payment_type,
+		compensation_payment_amount,dis_prime_cost,host,dis_mode,tax_fee,gst,vat,import_tar,
+		postal_fee,is_close,nick_name,created_from,opt_fee,arrvice_total,total_cost,
+		profit,profit_margin,contract_charge,clearance_price_total,thirdpart_lc,cs_confirm_date,shop_deduction_points,sdp_amount,
+		rejected_by_finance, estimated_catfee_in_order, real_catfee_in_order,is_package_mail,
+		is_combine,combine_order_no,combine_order_count, orderchannel,erp_order_no,attribution_type,
+		is_need_invoice,order_send_date
+	</sql>
+	
+	<select id="selectSaleMain" resultMap="BaseResultMap" >
+		select
+		<include refid="Base_Column_List" />
+		from t_product_sales_order_main
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_product_sales_order_main
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByIdAndAccounts" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from t_product_sales_order_main
+		where id = #{id,jdbcType=INTEGER}
+		<if test="accounts != null and accounts.size() > 0 ">
+			and email in
+			<foreach collection="accounts" open="(" close=")" item="item"
+				separator=",">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+
+	<select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_product_sales_order_main
+		where sales_order_no = #{orderNo,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByOrderNoList" resultMap="BaseResultMap" parameterType="java.util.List">
+		select
+		<include refid="Base_Column_List" />
+		from t_product_sales_order_main
+		<where>
+			<if test="orderNoList!=null and orderNoList.size()>0">
+				sales_order_no in
+				<foreach collection="orderNoList" item="item" open="(" close=")" separator=",">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<select id="selectSalesOrderCount" resultType="java.lang.Integer">
+		select count(*)
+		from t_product_sales_order_main
+		where 1 = 1
+		<if test="from != null">
+			and ordering_date <![CDATA[>=]]>
+			to_timestamp(#{from}, 'YYYY/MM/DD HH24:MI:SS MS')
+		</if>
+		<if test="to != null">
+			and ordering_date <![CDATA[<=]]>
+			to_timestamp(#{to}, 'YYYY/MM/DD HH24:MI:SS MS')
+		</if>
+		<if test="email != null">
+			and email = #{email,jdbcType=VARCHAR}
+		</if>
+		<if test="accounts != null and accounts.size() > 0 ">
+			and email in
+			<foreach collection="accounts" open="(" close=")" item="item"
+				separator=",">
+				#{item}
+			</foreach>
+		</if>
+		<if test="status != null">
+			and status = #{status}
+		</if>
+	</select>
+	
+	<sql id="selectAllSaleMain_conditions_sql">
+		<where>
+			<if test="statusList !=null and statusList.size() > 0">
+				and m.status in
+				<foreach collection="statusList" open="(" close=")" item="status" separator=",">
+					#{status}
+				</foreach>
+			</if>
+			<if test="isAdjusted != null and isAdjusted != ''">
+				and m.is_adjusted = #{isAdjusted}
+			</if>
+			<if test="warehouseId != null and warehouseId != ''">
+				and m.warehouse_id = CAST(#{warehouseId} as INT)
+			</if>
+			<if test="orderStartDate !=null and orderStartDate != ''">
+			        <![CDATA[and m.ordering_date  >= to_timestamp(#{orderStartDate}, 'YYYY-MM-DD HH24:MI:SS')]]>
+			</if>
+			<if test="orderEndDate !=null and orderEndDate != ''">
+		               <![CDATA[and m.ordering_date  <= to_timestamp(#{orderEndDate}, 'YYYY-MM-DD HH24:MI:SS')]]>
+			</if>
+			<if test="noticeStartDate !=null and noticeStartDate !=''">
+		               <![CDATA[and m.pay_date  >= to_timestamp(#{noticeStartDate}, 'YYYY-MM-DD HH24:MI:SS')]]>
+			</if>
+			<if test="noticeEndDate !=null and noticeEndDate !=''">
+		               <![CDATA[and m.pay_date  <= to_timestamp(#{noticeEndDate}, 'YYYY-MM-DD HH24:MI:SS')]]>
+			</if>
+			<if test="email !=null and email !=''">
+				and m.email = #{email}
+			</if>
+			<if test="accounts != null and accounts.size() > 0 ">
+				and m.email in
+				<foreach collection="accounts" open="(" close=")" item="item"
+					separator=",">
+					#{item}
+				</foreach>
+			</if>
+			<if test="isCombine != null">
+				and is_combine = #{isCombine,jdbcType=BIT}
+			</if>
+			<if test="seachSpan !=null and seachSpan !=''">
+		               <![CDATA[
+		                and (lower(m.email) like lower('%'||#{seachSpan,jdbcType=VARCHAR}||'%')
+		                    or lower(m.erp_order_no)=lower(#{seachSpan,jdbcType=VARCHAR})
+		                    or lower(m.sales_order_no) like lower('%'||#{seachSpan,jdbcType=VARCHAR}||'%') 
+		                    or lower(m.trade_no) like lower('%'||#{seachSpan,jdbcType=VARCHAR}||'%') 
+		                    or lower(m.payment_no) like lower('%'||#{seachSpan,jdbcType=VARCHAR}||'%')
+		                    or lower(m.host) like lower('%'||#{seachSpan,jdbcType=VARCHAR}||'%')
+		                    or lower(m.nick_name) like lower('%'||#{seachSpan,jdbcType=VARCHAR}||'%')
+		                    or lower(b.customer_service) like lower('%'||#{seachSpan,jdbcType=VARCHAR}||'%')
+		                    or lower(b.createuser) like lower('%'||#{seachSpan,jdbcType=VARCHAR}||'%')
+		                    or lower(b.receiver) like lower('%'||#{seachSpan,jdbcType=VARCHAR}||'%'))
+		              ]]>
+			</if>
+			<if test="distributorType !=null and distributorType != 0">
+				and m.distributor_type = CAST(#{distributorType} AS INT)
+			</if>
+			<if test="disMode !=null and disMode != 0">
+				and m.dis_mode = CAST(#{disMode} AS INT)
+			</if>
+			<if test="source !=null and source != ''">
+				and m.source = #{source,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+	<select id="selectAllSaleMain" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select 
+			m.*
+		from
+		t_product_sales_order_main m
+		left join t_product_sales_order_base b
+		on m.id = b.sales_order_id  
+		<include refid="selectAllSaleMain_conditions_sql"/>
+		<choose>
+			<when test="sort != null and sort != '' and filter != null and filter != '' ">
+				<choose>
+					<when test='filter == "csConfirmDate"'>
+						order by m.cs_confirm_date ${sort} nulls last
+					</when>
+					<otherwise>
+						<if test='filter == "orderingDate"'>
+							order by m.ordering_date ${sort} nulls last
+						</if>
+					</otherwise>
+				</choose>
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		LIMIT #{pageSize} OFFSET (#{currPage}-1)*#{pageSize}
+	</select>
+	<select id="selectAllSaleMainCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from
+		t_product_sales_order_main m
+		left join t_product_sales_order_base b
+		on m.id = b.sales_order_id  
+		<include refid="selectAllSaleMain_conditions_sql"/>
+	</select>
+	
+	<resultMap type="dto.sales.SalesOrderInfo4FinanceDto" id="BaseResultMap_SalesOrderInfo4FinanceDto">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="sales_order_no" property="salesOrderNo" jdbcType="VARCHAR" />
+		<result column="erp_order_no" property="erpOrderNo" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="customer_service" jdbcType="VARCHAR" property="customerService" />
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+		<result column="platform_amount" property="platformAmount" jdbcType="DOUBLE" />
+		<result column="total_cost" property="totalCost" jdbcType="DOUBLE" />
+		<result column="profit" property="profit" jdbcType="DOUBLE" />
+		<result column="profit_margin" property="profitMargin" jdbcType="DOUBLE" />
+		<result column="clearance_amount" property="clearanceAmount" jdbcType="DOUBLE" />
+		<result column="bbc_postage" property="bbcPostage" jdbcType="DOUBLE" />
+		<result column="original_freight" property="originalFreight" jdbcType="DOUBLE" />
+		<result column="arrvice_total" property="arrviceTotal" jdbcType="DOUBLE" />
+		<result column="opt_fee" property="optfee" jdbcType="DOUBLE" />
+	    <result column="contract_charge" property="contractCharge" jdbcType="DOUBLE" />
+	    <result column="clearance_price_total" property="clearancePriceTotal" jdbcType="DOUBLE" />
+	    <result column="clear_total_cost" property="clearTotalCost" jdbcType="DOUBLE" />
+	    <result column="clear_profit" property="clearProfit" jdbcType="DOUBLE" />
+	    <result column="clear_profit_margin" property="clearProfitMargin" jdbcType="DOUBLE" />
+	    <result column="sdp_amount" property="sdpAmount" jdbcType="DOUBLE" />
+	</resultMap>
+	<sql id="selectAllSaleMain4finance_conditions_sql">
+		<where>
+			<if test="statusList !=null and statusList.size() > 0">
+				and m.status in
+				<foreach collection="statusList" open="(" close=")" item="status" separator=",">
+					#{status}
+				</foreach>
+			</if>
+			<if test="seachSpan !=null and seachSpan !=''">
+		               <![CDATA[
+		                and (lower(m.email) like lower('%'||#{seachSpan,jdbcType=VARCHAR}||'%')
+		                    or lower(m.sales_order_no) like lower('%'||#{seachSpan,jdbcType=VARCHAR}||'%') 
+		                    or lower(b.customer_service) like lower('%'||#{seachSpan,jdbcType=VARCHAR}||'%')
+		                    or lower(m.nick_name) like lower('%'||#{seachSpan,jdbcType=VARCHAR}||'%'))
+		              ]]>
+			</if>
+		</where>
+	</sql>
+	<select id="selectAllSaleMain4finance" resultMap="BaseResultMap_SalesOrderInfo4FinanceDto" parameterType="java.util.Map">
+		select 
+			m.id, m.sales_order_no, m.erp_order_no, m.email,m.status,b.customer_service,m.nick_name,
+			m.platform_amount,
+			m.clearance_amount,
+		  	b.bbc_postage,
+		  	b.original_freight,
+			m.arrvice_total,
+			m.opt_fee,
+			m.total_cost,
+			m.profit,
+			m.profit_margin,
+			m.contract_charge,
+			m.clearance_price_total,
+			m.clear_total_cost,
+			m.clear_profit,
+			m.clear_profit_margin,
+			m.sdp_amount
+		from
+		t_product_sales_order_main m
+		left join t_product_sales_order_base b
+		on m.id = b.sales_order_id  
+		<include refid="selectAllSaleMain4finance_conditions_sql"/>
+		<choose>
+			<when test="sort != null and sort != '' and filter != null and filter != '' ">
+				order by ${filter} ${sort} nulls last
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		LIMIT #{pageSize} OFFSET (#{currPage}-1)*#{pageSize}
+	</select>
+	<select id="selectAllSaleMainCount4finance" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from
+		t_product_sales_order_main m
+		left join t_product_sales_order_base b
+		on m.id = b.sales_order_id  
+		<include refid="selectAllSaleMain4finance_conditions_sql"/>
+	</select>
+
+	<select id="selectSaleOrderListDto" resultType="dto.sales.SaleOrderListDto">
+		select * from (
+			select
+			 	"row_number" () over (
+					partition BY main.sales_order_no
+				) AS rownum,
+				main.ID,
+				main.status,
+				main.purchase_order_no AS purchaseOrderNo,
+				main.cinfirm_receipt_date confirmReceiptDate,
+				base.platform_order_no AS pno,
+				main.sales_order_no sno,
+				to_char(main.ordering_date, 'YYYY-MM-DD
+				HH24:MI:SS') as odate,
+				base.receiver AS receiver,
+				base.bbc_postage bbcPostage,
+				base.coupons_code couponsCode,
+				base.coupons_amount couponsAmount,
+				main.is_notified  isNotified,
+				main.thirdpart_lc thirdLogistisCode,
+				main.is_combine isCombine,
+				main.ordering_date
+			from
+				t_product_sales_order_main main
+				LEFT JOIN t_product_sales_order_base base ON main."id" = base.sales_order_id
+				LEFT JOIN t_product_sales_order_receiver re ON main."id" = re.sales_order_id
+				LEFT JOIN t_product_sales_order_details d ON d.sales_order_id = main.id
+			where 1=1
+			<if test="statusList != null and statusList.size()>0">
+				AND
+				main.status in
+				<foreach item="status" collection="statusList" open="(" separator="," close=")">
+					#{status}
+				</foreach>
+			</if>
+			<if test="desc != ''">
+				AND
+				(base.receiver like '%'||#{desc}||'%'
+				OR
+				main.sales_order_no like '%'||#{desc}||'%'
+				OR
+				main.trade_no  like '%'||#{desc}||'%'
+				OR
+				base.platform_order_no like '%'||#{desc}||'%'
+				OR
+				main.nick_name  like '%'||#{desc}||'%'
+				OR
+				d.sku like #{desc}
+				)
+			</if>
+			AND main.email = #{email}
+		) foo
+		where
+			rownum = 1
+		order by foo.ordering_date desc  nulls last
+		limit #{pageSize} offset (#{currPage}-1)*#{pageSize}
+	</select>
+
+	<select id="selectSaleOrderListDtoCount" resultType="java.lang.Integer">
+		SELECT COUNT(1) from (
+			SELECT
+				DISTINCT main.ID
+			FROM
+				t_product_sales_order_main main
+				LEFT JOIN t_product_sales_order_base base ON main."id" = base.sales_order_id
+				LEFT JOIN t_product_sales_order_receiver re ON main."id" = re.sales_order_id
+				LEFT JOIN t_product_sales_order_details d ON d.sales_order_id = main.id
+			where 1=1
+			<if test="statusList != null and statusList.size()>0">
+				AND
+				main.status in
+				<foreach item="status" collection="statusList" open="(" separator="," close=")">
+					#{status}
+				</foreach>
+			</if>
+			<if test="desc != ''">
+				AND
+				(base.receiver like '%'||#{desc}||'%'
+				OR
+				main.sales_order_no like '%'||#{desc}||'%'
+				OR
+				main.trade_no  like '%'||#{desc}||'%'
+				OR
+				base.platform_order_no like '%'||#{desc}||'%'
+				OR
+				main.nick_name  like '%'||#{desc}||'%'
+				OR
+				d.sku like #{desc}
+				)
+			</if>
+			AND main.email = #{email}
+		) foo
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_product_sales_order_main
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<insert id="insert" parameterType="entity.sales.SaleMain"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_product_sales_order_main 
+		(
+		id, sales_order_no, ordering_date, payment_type, payer, payment_no,
+		paryer_idcard, pay_date, currency, status, is_notified, is_adjusted, 
+		email, rejected_by_finance
+		)
+		values 
+		(
+		#{id,jdbcType=INTEGER}, #{salesOrderNo,jdbcType=VARCHAR},
+		#{orderingDate,jdbcType=TIMESTAMP}, #{paymentType,jdbcType=VARCHAR}, 
+		#{payer,jdbcType=VARCHAR}, #{paymentNo,jdbcType=VARCHAR},
+		#{paryerIdcard,jdbcType=VARCHAR}, #{payDate,jdbcType=TIMESTAMP},
+		#{currency,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+		#{isNotified,jdbcType=INTEGER}, #{isAdjusted,jdbcType=INTEGER},
+		#{email,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<insert id="insertSelective" parameterType="entity.sales.SaleMain"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_product_sales_order_main
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="salesOrderNo != null">
+				sales_order_no,
+			</if>
+			<if test="orderingDate != null">
+				ordering_date,
+			</if>
+			<if test="paymentType != null">
+				payment_type,
+			</if>
+			<if test="payer != null">
+				payer,
+			</if>
+			<if test="paymentNo != null">
+				payment_no,
+			</if>
+			<if test="paryerIdcard != null">
+				paryer_idcard,
+			</if>
+			<if test="payDate != null">
+				pay_date,
+			</if>
+			<if test="currency != null">
+				currency,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="isNotified != null">
+				is_notified,
+			</if>
+			<if test="isAdjusted != null">
+				is_adjusted,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="purchaseOrderNo != null">
+				purchase_order_no,
+			</if>
+			<if test="tradeNo != null">
+				trade_no,
+			</if>
+			<if test="warehouseId != null">
+				warehouse_id,
+			</if>
+			<if test="warehouseName != null">
+				warehouse_name,
+			</if>
+			<if test="isPushed != null">
+				is_pushed,
+			</if>
+			<if test="distributorType != null">
+				distributor_type,
+			</if>
+			<if test="purchasePaymentNo != null">
+				purchase_payment_no,
+			</if>
+			<if test="purchasePayDate != null">
+				purchase_pay_date,
+			</if>
+			<if test="purchasePaymentType != null">
+				purchase_payment_type,
+			</if>
+			<if test="platformAmount!= null">
+				platform_amount,
+			</if>
+			<if test="clearanceAmount != null">
+				clearance_amount,
+			</if>
+			<if test="hostOrigin != null">
+				host_origin,
+			</if>
+			<if test="source != null">
+				source,
+			</if>
+			<if test="host != null">
+				host,
+			</if>
+			<if test="compensationPaymentNo != null">
+				compensation_payment_no,
+			</if>
+			<if test="compensationPayDate != null">
+				compensation_pay_date,
+			</if>
+			<if test="compensationPaymentType != null">
+				compensation_payment_type,
+			</if>
+			<if test="compensationAmount != null">
+				compensation_payment_amount,
+			</if>
+			<if test="disPrimeCost != null">
+				dis_prime_cost,
+			</if>
+			<if test="disMode != null">
+				dis_mode,
+			</if>
+			<if test="nickName != null">
+				nick_name,
+			</if>
+			<if test="createdFrom != null">
+				created_from,
+			</if>
+			<if test="shopDeductionPoints != null">
+				shop_deduction_points,
+			</if>
+			<if test="orderchannel != null">
+				orderchannel,
+			</if>
+			<if test="sdpAmount != null">
+				sdp_amount,
+			</if>
+			<if test="thirdPartLogisticsTypeCode != null">
+				thirdpart_lc,
+			</if>
+			<if test="isPackageMail != null">
+				is_package_mail,
+			</if>
+			<if test="attributionType != null">
+				attribution_type,
+			</if>
+			<if test="isNeedInvoice != null">
+				is_need_invoice,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="salesOrderNo != null">
+				#{salesOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderingDate != null">
+				#{orderingDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="paymentType != null">
+				#{paymentType,jdbcType=VARCHAR},
+			</if>
+			<if test="payer != null">
+				#{payer,jdbcType=VARCHAR},
+			</if>
+			<if test="paymentNo != null">
+				#{paymentNo,jdbcType=VARCHAR},
+			</if>
+			<if test="paryerIdcard != null">
+				#{paryerIdcard,jdbcType=VARCHAR},
+			</if>
+			<if test="payDate != null">
+				#{payDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="currency != null">
+				#{currency,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="isNotified != null">
+				#{isNotified,jdbcType=INTEGER},
+			</if>
+			<if test="isAdjusted != null">
+				#{isAdjusted,jdbcType=INTEGER},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="purchaseOrderNo != null">
+				#{purchaseOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="tradeNo != null">
+				#{tradeNo,jdbcType=VARCHAR},
+			</if>
+			<if test="warehouseId != null">
+				#{warehouseId,jdbcType=INTEGER},
+			</if>
+			<if test="warehouseName != null">
+				#{warehouseName,jdbcType=VARCHAR},
+			</if>
+			<if test="isPushed != null">
+				#{isPushed,jdbcType=INTEGER},
+			</if>
+			<if test="distributorType != null">
+				#{distributorType,jdbcType=INTEGER},
+			</if>
+			<if test="purchasePaymentNo != null">
+				#{purchasePaymentNo,jdbcType=VARCHAR},
+			</if>
+			<if test="purchasePayDate != null">
+				#{purchasePayDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="purchasePaymentType != null">
+				#{purchasePaymentType,jdbcType=VARCHAR},
+			</if>
+			<if test="platformAmount != null">
+				#{platformAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="clearanceAmount != null">
+				#{clearanceAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="hostOrigin != null">
+				#{hostOrigin,jdbcType=INTEGER},
+			</if>
+			<if test="source != null">
+				#{source,jdbcType=VARCHAR},
+			</if>
+			<if test="host != null">
+				#{host,jdbcType=VARCHAR},
+			</if>
+			<if test="compensationPaymentNo != null">
+				#{compensationPaymentNo},
+			</if>
+			<if test="compensationPayDate != null">
+				#{compensationPayDate},
+			</if>
+			<if test="compensationPaymentType != null">
+				#{compensationPaymentType},
+			</if>
+			<if test="compensationAmount != null">
+				#{compensationAmount},
+			</if>
+			<if test="disPrimeCost != null">
+				#{disPrimeCost},
+			</if>
+			<if test="disMode != null">
+				#{disMode,jdbcType=INTEGER},
+			</if>
+			<if test="nickName != null">
+				#{nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="createdFrom != null">
+				#{createdFrom,jdbcType=INTEGER},
+			</if>
+			<if test="shopDeductionPoints != null">
+				#{shopDeductionPoints,jdbcType=DOUBLE},
+			</if>
+			<if test="orderchannel != null">
+				#{orderchannel,jdbcType=INTEGER},
+			</if>
+			<if test="sdpAmount != null">
+				#{sdpAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="thirdPartLogisticsTypeCode != null">
+				#{thirdPartLogisticsTypeCode,jdbcType=VARCHAR},
+			</if>
+			<if test="isPackageMail != null">
+				#{isPackageMail,jdbcType=SMALLINT},
+			</if>
+			<if test="attributionType != null">
+				#{attributionType,jdbcType=INTEGER},
+			</if>
+			<if test="isNeedInvoice != null">
+				#{isNeedInvoice,jdbcType=BIT},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 更新税金等数据 -->
+	<update id="updateTaxFee" parameterType="entity.sales.SaleMain">
+		update t_product_sales_order_main
+		<set>
+			<if test="taxFee != null">
+				tax_fee = #{taxFee},
+			</if>
+			<if test="gst != null">
+				gst = #{gst},
+			</if>
+			<if test="vat != null">
+				vat = #{vat},
+			</if>
+			<if test="importTar != null">
+				import_tar = #{importTar},
+			</if>
+			<if test="postalFee != null">
+				postal_fee = #{postalFee},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="entity.sales.SaleMain">
+		update t_product_sales_order_main
+		<set>
+			<if test="salesOrderNo != null">
+				sales_order_no = #{salesOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderingDate != null">
+				ordering_date = #{orderingDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="paymentType != null">
+				payment_type = #{paymentType,jdbcType=VARCHAR},
+			</if>
+			<if test="payer != null">
+				payer = #{payer,jdbcType=VARCHAR},
+			</if>
+			<if test="paymentNo != null">
+				payment_no = #{paymentNo,jdbcType=VARCHAR},
+			</if>
+			<if test="paryerIdcard != null">
+				paryer_idcard = #{paryerIdcard,jdbcType=VARCHAR},
+			</if>
+			<if test="payDate != null">
+				pay_date = #{payDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="currency != null">
+				currency = #{currency,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="isNotified != null">
+				is_notified = #{isNotified,jdbcType=INTEGER},
+			</if>
+			<if test="isAdjusted != null">
+				is_adjusted = #{isAdjusted,jdbcType=INTEGER},
+			</if>
+			<if test="purchaseOrderNo != null">
+				purchase_order_no = #{purchaseOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="tradeNo != null">
+				trade_no = #{tradeNo,jdbcType=VARCHAR},
+			</if>
+			<if test="warehouseId != null">
+				warehouse_id = #{warehouseId,jdbcType=INTEGER},
+			</if>
+			<if test="warehouseName != null">
+				warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+			</if>
+			<if test="isPushed != null">
+				is_pushed = #{isPushed,jdbcType=INTEGER},
+			</if>
+			<if test="purchasePaymentNo != null">
+				purchase_payment_no = #{purchasePaymentNo,jdbcType=VARCHAR},
+			</if>
+			<if test="purchasePayDate != null">
+				purchase_pay_date = #{purchasePayDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="purchasePaymentType != null">
+				purchase_payment_type = #{purchasePaymentType,jdbcType=VARCHAR},
+			</if>
+			<if test="isFetched != null">
+				is_fetched = #{isFetched,jdbcType=BOOLEAN},
+			</if>
+			<if test="erpReason != null">
+				erp_reason = #{erpReason,jdbcType=VARCHAR},
+			</if>
+			<if test="confirmReceiptDate != null">
+				cinfirm_receipt_date = #{confirmReceiptDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="platformAmount != null">
+				platform_amount = #{platformAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="clearanceAmount != null">
+				clearance_amount = #{clearanceAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="hostOrigin != null">
+				host_origin = #{hostOrigin,jdbcType=INTEGER},
+			</if>
+			<if test="orderActualPayment != null">
+				order_actual_payment = #{orderActualPayment,jdbcType=DOUBLE},
+			</if>
+			<if test="isClose != null">
+				is_close = #{isClose,jdbcType=BOOLEAN},
+			</if>
+			<if test="nickName != null">
+				nick_name = #{nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="arrviceTotal != null">
+				arrvice_total = #{arrviceTotal,jdbcType=DOUBLE},
+			</if>
+			<if test="totalCost != null">
+				total_cost = #{totalCost,jdbcType=DOUBLE},
+			</if>
+			<if test="profit != null">
+				profit = #{profit,jdbcType=DOUBLE},
+			</if>
+			<if test="profitMargin != null">
+				profit_margin = #{profitMargin,jdbcType=DOUBLE},
+			</if>
+			<if test="contractCharge != null">
+				contract_charge = #{contractCharge,jdbcType=DOUBLE},
+			</if>
+			<if test="clearancePriceTotal != null">
+				clearance_price_total = #{clearancePriceTotal,jdbcType=DOUBLE},
+			</if>
+			<if test="clearTotalCost != null">
+				clear_total_cost = #{clearTotalCost,jdbcType=DOUBLE},
+			</if>
+			<if test="clearProfit != null">
+				clear_profit = #{clearProfit,jdbcType=DOUBLE},
+			</if>
+			<if test="clearProfitMargin != null">
+				clear_profit_margin = #{clearProfitMargin,jdbcType=DOUBLE},
+			</if>
+			<if test="erpStatus != null">
+				erp_status = #{erpStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="thirdPartLogisticsTypeCode != null">
+				thirdpart_lc = #{thirdPartLogisticsTypeCode,jdbcType=VARCHAR},
+			</if>
+			<if test="csConfirmDate != null">
+				cs_confirm_date = #{csConfirmDate},
+			</if>
+			<if test="rejectedByFinance != null">
+				rejected_by_finance = #{rejectedByFinance},
+			</if>
+			<if test="isCombine != null">
+				is_combine = #{isCombine,jdbcType=BIT},
+			</if>
+			<if test="combineOrderNo != null">
+				combine_order_no = #{combineOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="combineOrderCount != null">
+				combine_order_count = #{combineOrderCount,jdbcType=INTEGER},
+			</if>
+			<if test="estimatedCatfeeInOrder != null">
+				estimated_catfee_in_order = #{estimatedCatfeeInOrder,jdbcType=DOUBLE},
+			</if>
+			<if test="realCatfeeInOrder != null">
+				real_catfee_in_order =  #{realCatfeeInOrder,jdbcType=DOUBLE},
+			</if>
+			<if test="erpOrderNo != null">
+				erp_order_no = #{erpOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="isNeedInvoice != null">
+				is_need_invoice = #{isNeedInvoice,jdbcType=BIT},
+			</if>
+			<if test="orderSendDate != null">
+				order_send_date = #{orderSendDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="entity.sales.SaleMain">
+		update t_product_sales_order_main
+		set sales_order_no = #{salesOrderNo,jdbcType=VARCHAR},
+		ordering_date = #{orderingDate,jdbcType=TIMESTAMP},
+		payment_type = #{paymentType,jdbcType=VARCHAR},
+		payer = #{payer,jdbcType=VARCHAR},
+		payment_no = #{paymentNo,jdbcType=VARCHAR},
+		paryer_idcard = #{paryerIdcard,jdbcType=VARCHAR},
+		pay_date = #{payDate,jdbcType=TIMESTAMP},
+		currency = #{currency,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		is_notified = #{isNotified,jdbcType=INTEGER},
+		is_adjusted = #{isAdjusted,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="batchUpdateVerify" parameterType="java.util.List">
+		<foreach collection="idList" item="id" separator=";">
+			update t_product_sales_order_main set status = 6 where id = #{id}
+		</foreach>
+	</update>
+
+	<resultMap id="pushSales" type="dto.sales.SalesToB2cIterm">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="cemail" property="cemail" jdbcType="VARCHAR" />
+		<result column="ccountry" property="ccountry" jdbcType="VARCHAR" />
+		<result column="ccountrysn" property="ccountrysn" jdbcType="VARCHAR" />
+		<result column="cprovince" property="cprovince" jdbcType="VARCHAR" />
+		<result column="ccity" property="ccity" jdbcType="VARCHAR" />
+		<result column="cstreetaddress" property="cstreetaddress" jdbcType="VARCHAR" />
+		<result column="cpostalcode" property="cpostalcode" jdbcType="VARCHAR" />
+		<result column="ctelephone" property="ctelephone" jdbcType="VARCHAR" />
+		<result column="cfirstname" property="cfirstname" jdbcType="VARCHAR" />
+		<result column="cmiddlename" property="cmiddlename" jdbcType="VARCHAR" />
+		<result column="clastname" property="clastname" jdbcType="VARCHAR" />
+		<result column="istorageid" property="istorageid" jdbcType="INTEGER" />
+		<result column="ishippingmethodid" property="ishippingmethodid" jdbcType="INTEGER" />
+		<result column="fshippingprice" property="fshippingprice" jdbcType="DOUBLE" />
+		<result column="taxfee" property="taxFee" jdbcType="DOUBLE" />
+		<result column="fordersubtotal" property="fordersubtotal" jdbcType="DOUBLE" />
+		<result column="fextra" property="fextra" jdbcType="DOUBLE" />
+		<result column="fgrandtotal" property="fgrandtotal" jdbcType="DOUBLE" />
+		<result column="ccartid" property="ccartid" jdbcType="VARCHAR" />
+		<result column="istatus" property="istatus" jdbcType="INTEGER" />
+		<result column="cpaymentid" property="cpaymentid" jdbcType="VARCHAR" />
+		<result column="ccurrency" property="ccurrency" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+		<result column="dpaymentdate" property="dpaymentdate" jdbcType="TIMESTAMP" />
+		<result column="corigin" property="corigin" jdbcType="VARCHAR" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+		<result column="cmemberemail" property="cmemberemail" jdbcType="VARCHAR" />
+		<result column="cmessage" property="cmessage" jdbcType="VARCHAR" />
+		<result column="ishow" property="ishow" jdbcType="INTEGER" />
+		<result column="ctransactionid" property="ctransactionid" jdbcType="VARCHAR" />
+		<result column="cip" property="cip" jdbcType="VARCHAR" />
+		<result column="cremark" property="cremark" jdbcType="VARCHAR" />
+		<result column="creceiveraccount" property="creceiveraccount" jdbcType="VARCHAR" />
+		<result column="cshippingcode" property="cshippingcode" jdbcType="VARCHAR" />
+		<result column="cordernumber" property="cordernumber" jdbcType="VARCHAR" />
+		<result column="cvhost" property="cvhost" jdbcType="VARCHAR" />
+		<result column="isendtime" property="isendtime" jdbcType="INTEGER" />
+		<result column="idtype" property="idtype" jdbcType="VARCHAR" />
+		<result column="idcard" property="idcard" jdbcType="VARCHAR" />
+		<result column="payman" property="payman" jdbcType="VARCHAR" />
+		<result column="buyerid" property="buyerid" jdbcType="VARCHAR" />
+		<result column="collectaccount" property="collectaccount" jdbcType="VARCHAR" />
+		<result column="customerservice" property="customerservice" jdbcType="VARCHAR" />
+		
+		<result column="tradeno" property="tradeNo" jdbcType="VARCHAR" />
+		<result column="distributortype" property="distributorType" jdbcType="INTEGER" />
+		<result column="purchasepayno" property="purchasePayno" jdbcType="VARCHAR" />
+		<result column="purchasepaytype" property="purchasePaytype" jdbcType="VARCHAR" />
+		
+		<result column="platformamount" property="platformamount" jdbcType="DOUBLE" />
+		<result column="clearanceamount" property="clearanceamount" jdbcType="DOUBLE" />
+		<result column="orderLevel" property="orderLevel" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<resultMap id="charge" type="dto.sales.SalesPriceDto" >
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="sales_order_no" property="salesOrderNo" jdbcType="DOUBLE" />
+		<result column="ordering_date" property="orderingDate" jdbcType="TIMESTAMP" />
+	    <result column="platform_amount" property="platformamount" jdbcType="DOUBLE" />
+	    <result column="clearance_amount" property="clearanceamount" jdbcType="DOUBLE" />
+	    <result column="bbc_postage" property="bbcpostage" jdbcType="DOUBLE" />
+	    <result column="original_freight" property="originalFreight" jdbcType="DOUBLE" />
+	    <result column="arrvice_total" property="arrvicetotal" jdbcType="DOUBLE" />
+	    <result column="opt_fee" property="optfee" jdbcType="DOUBLE" />
+	    <result column="total_cost" property="totalcost" jdbcType="DOUBLE" />
+	    <result column="profit" property="profit" jdbcType="DOUBLE" />
+	    <result column="profit_margin" property="profitmargin" jdbcType="DOUBLE" />
+	    <result column="contract_charge" property="contractcharge" jdbcType="DOUBLE" />
+	    <result column="clearance_price_total" property="clearancepricetotal" jdbcType="DOUBLE" />
+	    <result column="clear_total_cost" property="cleartotalcost" jdbcType="DOUBLE" />
+	    <result column="clear_profit" property="clearprofit" jdbcType="DOUBLE" />
+	    <result column="clear_profit_margin" property="clearprofitmargin" jdbcType="DOUBLE" />
+	    <result column="sdp_amount" property="sdpamount" jdbcType="DOUBLE" />
+  	</resultMap>
+  	
+	<select id="getCharges" resultMap="charge" parameterType="java.lang.Integer">
+		select
+			m.platform_amount,
+			m.clearance_amount,
+		  	b.bbc_postage,
+		  	b.original_freight,
+			m.arrvice_total,
+			m.opt_fee,
+			m.total_cost,
+			m.profit,
+			m.profit_margin,
+			m.contract_charge,
+			m.clearance_price_total,
+			m.clear_total_cost,
+			m.clear_profit,
+			m.clear_profit_margin,
+			m.sdp_amount
+		from 
+			t_product_sales_order_main m
+			left join t_product_sales_order_base b on m . id = b.sales_order_id
+		where m.id = #{1,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getSalesInfo" parameterType="java.util.Map"
+		resultMap="pushSales">
+		SELECT
+		som.id as salesorderid,
+		som.id as iid,
+		som.email as cemail,
+		som.sales_order_no as cordernumber,--平台订单号
+		som.trade_no as tradeno,--外部订单交易号
+		som.distributor_type as distributortype,--分销商类型
+		som.purchase_payment_no as purchasepayno,--缺货采购交易号
+		som.purchase_payment_type as purchasepaytype,--缺货采购类型
+		som.tax_fee as taxfee,--税金
+		som.created_from as orderLevel,--为50则表示营销单，其他都是普通订单
+		sob.shop_id as shopId, -- 店铺ID
+		sob.platform_type as platformtype, -- 平台店辅类型
+		sob.platform_type_name as plattypename, -- 平台名称
+		sob.receiver as cfirstname,--收货人姓名
+		sob.tel as ctelephone,--收货人手机
+		sob.post_code as cpostalcode, --收货人邮编
+		'CN' as ccountrysn,--国家简写
+		'中国' as ccountry,--国家
+		sob.order_total_amount as fordersubtotal,-- 基本费用
+		'0' as fextra,--额外支付费用
+		sob.order_actual_amount as fgrandtotal,--发货单总金额
+		'2' as istatus,--订单状态
+		som.payment_type as cpaymentid,--付款方式:支付宝
+		'RMB' as ccurrency,--结算货币
+		som.email as cmemberemail,--会员Email
+		som.payment_no as ctransactionid,--交易号
+		sob.ordering_date as dcreatedate,--下单时间
+		som.pay_date as dpaymentdate,--付款时间
+		'1' as ishow,--可见性:1.可见(默认),2.回收站可见,3.不可见
+		'http://www.tomtop.com.cn' as cvhost,--域名
+		'01' as idtype,--证件类型,01身份证
+		sob.orderer_idcard as idcard,--证件号码
+		sob.orderer as payman,--支付人姓名
+		sob.address as receiveraddr,--收货人地址
+		sob.idcard as receiveridcard,--收货人身份证号
+		sob.buyer_id as buyerid,--买家ID
+		sob.collect_account as creceiveraccount,--收款账户
+		sob.customer_service as customerservice,--客服账号
+		sob.remark as cremark,
+		sob.logistics_type_code as cshippingcode,--物流代码
+		sob.bbc_postage as fshippingprice,--物流费用
+		som.orderchannel as orderchannel,--订单渠道：1，b2b;2M站;3门店
+		som.warehouse_id as istorageid,
+		som.platform_amount as platformamount,
+		som.clearance_amount as clearanceamount,
+		som.combine_order_no as combineOrderNo, --合并发货单
+		som.combine_order_count as combineOrderCount --合并发货单数量
+		FROM t_product_sales_order_main som
+		INNER JOIN t_product_sales_order_base sob ON som.id = sob.sales_order_id
+		WHERE som.status = #{status}
+		AND (som.is_pushed =0 or som.is_pushed is null)
+	</select>
+
+	<update id="batchUpdateStatus" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" separator=";">
+			update t_product_sales_order_main
+			set status = #{item.status,jdbcType=INTEGER}
+			<if test="item.confirmReceiptDate != null">
+				,cinfirm_receipt_date = #{item.confirmReceiptDate,jdbcType=TIMESTAMP}
+			</if>
+			where sales_order_no = #{item.salesOrderNo,jdbcType=VARCHAR}
+		</foreach>
+	</update>
+
+	<!--通用查询-->
+	<select id="getSalesById" parameterType="java.lang.Integer" resultType="java.util.Map">
+		SELECT
+			om.id,
+			om.sales_order_no,
+			om.warehouse_id,
+			ob.order_actual_amount,
+			ob.orderer,
+			ob.orderer_idcard,
+			om.email email,
+			ob.coupons_code couponsCode,
+			ob.coupons_amount couponsAmount
+		FROM  t_product_sales_order_main om
+		INNER JOIN t_product_sales_order_base ob ON om.id = ob.sales_order_id
+		WHERE om.id = #{id}
+	</select>
+	
+	<select id="getShippedSales" resultMap="BaseResultMap">
+		select  DISTINCT 
+			m.* 
+		from t_product_sales_order_main m 
+		LEFT JOIN t_product_sales_order_pack pc ON m.sales_order_no = pc.cordernumber 
+		where status = 9
+		and  (
+		(m.warehouse_id = 2024 and 
+		<![CDATA[pc.dshippingdate + interval '10 D' <= now()]]>)
+		  or (m.warehouse_id in (2029,2012,2050) and 
+		<![CDATA[pc.dshippingdate + interval '15 D' <= now()]]>)
+		  or (m.warehouse_id in (6,70,73) and 
+		<![CDATA[pc.dshippingdate + interval '45 D' <= now()]]>)
+		)
+	</select>
+	
+	<resultMap id="getLogisticsInfo" type="dto.sales.ExportSaleLogistic">
+	    <id column="id" property="id" jdbcType="INTEGER" />
+		<result column="sales_order_no" property="saleOrderNO" jdbcType="VARCHAR" />
+		<result column="platform_order_no" property="platformOrderNo" jdbcType="VARCHAR" />
+		<result column="receiver" property="receiver" jdbcType="VARCHAR" />
+		<result column="tel" property="tel" jdbcType="VARCHAR" />
+		<result column="buyer_id" property="buyer_id" jdbcType="VARCHAR" />
+		<result column="cshippingname" property="shippingName" jdbcType="VARCHAR" />
+		<result column="clocaltracknumber" property="localTrackNumber" jdbcType="VARCHAR" />
+		<result column="logistics_mode" property="logisticsMode" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectSaleOrederLogistics" resultMap="getLogisticsInfo" parameterType="java.util.Map">
+		SELECT
+		    main.id as id,
+			main.sales_order_no saleOrderNO,
+			base.platform_order_no AS platformOrderNo,
+			base.receiver AS receiver,
+			base.tel AS tel,
+			base.buyer_id AS buyerId,
+			base.logistics_mode AS logisticsMode,
+			pp.cshippingname AS shippingName,
+			pp.ctrackingnumber AS trackingNumber,
+			pp.clocaltracknumber AS localTrackNumber
+		FROM t_product_sales_order_main main
+			LEFT JOIN t_product_sales_order_base base ON main.id = base.sales_order_id
+			LEFT JOIN t_product_sales_order_pack pp ON main.sales_order_no = pp.cordernumber
+		where 1=1
+		<if test="email != null and email != ''">
+			and email = #{email,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null">
+			and main.status = #{status,jdbcType=INTEGER}
+		</if>
+		ORDER BY main.ordering_date DESC
+		<if test="currPage !=null">
+			LIMIT #{pageSize} OFFSET (#{currPage}-1)*#{pageSize}
+		</if>
+	</select>
+
+	<select id="countTradeNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(1) from t_product_sales_order_main where trade_no = #{0}
+	</select>
+	
+	<update id="updateNickNameByEmail" parameterType="entity.sales.SaleMain">
+		update t_product_sales_order_main set nick_name = #{nickName,jdbcType=VARCHAR} 
+			where email = #{email,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateOptFeeByOrderNo">
+		update t_product_sales_order_main set opt_fee = #{optFee} 
+			where sales_order_no = #{salesOrderNo}
+	</update>
+	
+	<select id='getAutoConfirmOrders' resultMap="BaseResultMap" parameterType="java.lang.String">
+		SELECT 
+			<include refid="Base_Column_List" /> 
+		FROM t_product_sales_order_main 
+		where
+		purchase_pay_date <![CDATA[<=]]> to_timestamp(#{paystr,jdbcType=VARCHAR}, 'YYYY-MM-DD HH24:MI:SS') 
+		and status=3
+		and dis_mode = 1
+	</select>
+	<update id="updateSalesOrderOrderFee" parameterType="java.util.List">
+	  <foreach collection="quotedPriceList" item="item" open="" close="" separator=";">
+		update t_product_sales_order_main 
+        <set>
+			estimated_catfee_in_order = #{item.estimatedCatfeeInOrder},
+			real_catfee_in_order = #{item.realCatfeeInOrder}
+		</set>
+		where sales_order_no = #{item.salesOrderNo}
+      </foreach>
+	</update>
+	<resultMap id="exportModelMap" type="dto.sales.CommonExportDto" >
+	    <id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="functionId" property="functionId" jdbcType="VARCHAR" />
+	    <result column="functionParam" property="functionParam" jdbcType="VARCHAR" />
+	    <result column="functionResult" property="functionResult" jdbcType="VARCHAR" />
+	    <result column="excelRows" property="excelRows" jdbcType="VARCHAR" />
+	    <result column="excelTitle" property="excelTitle" jdbcType="VARCHAR" />
+	    <result column="fileName" property="fileName" jdbcType="VARCHAR" />
+	    <result column="excelWidth" property="excelWidth" jdbcType="VARCHAR" />
+	    <result column="mergekey" property="mergeKey" jdbcType="VARCHAR" />
+	    <result column="rowsMerge" property="rowsMerge" jdbcType="VARCHAR" />
+	</resultMap>	
+	<select id="getExprotDtoByFunctionId" resultMap="exportModelMap">
+		SELECT function_id as functionId,
+		function_param as functionParam,
+		function_result as functionResult,
+		excel_rows as excelRows,
+		excel_title as excelTitle,
+		file_name as fileName,
+		excel_width as excelWidth,
+		rows_merge as rowsMerge,
+		mergekey
+		FROM export_model_foreign WHERE function_id=#{functionId}
+	</select>
+	<select id="getExportDataBySqlFunction" resultType="java.util.Map">
+		SELECT
+		*
+		FROM
+		${param};
+	</select>
+	<select id="executSalesVolumeCountFunction" resultType="java.lang.Integer">
+		SELECT
+			*
+		FROM
+			save_sales_volume (
+				#{begin,jdbcType=VARCHAR},
+				#{end,jdbcType=VARCHAR} 
+	);
+	</select>
+	<resultMap id="productInfoMap" type="dto.sales.ProductSalesVolume" >
+		<result column="out_sku" property="csku" jdbcType="VARCHAR" />
+	    <result column="out_cname" property="cname" jdbcType="VARCHAR" />
+	    <result column="out_brand" property="brand" jdbcType="VARCHAR" />
+	    <result column="out_interBarCode" property="interBarCode" jdbcType="VARCHAR" />
+	    <result column="out_packqty" property="packQty" jdbcType="VARCHAR" />
+	    <result column="out_title" property="ctitle" jdbcType="VARCHAR" />
+	    <result column="out_arrive_ware_price" property="arriveWarePrice" jdbcType="VARCHAR" />
+	    <result column="out_salesvolume" property="salesvolume" jdbcType="VARCHAR" />
+	    <result column="out_istatus" property="istatusName" jdbcType="VARCHAR" />
+	    <result column="out_type_id" property="typeName" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getProductInfo" parameterType="dto.sales.ProductSalesVolumeSearchDto" resultMap="productInfoMap">
+		SELECT
+			*
+		FROM
+			export_sales_volume(
+				<choose>
+				    <when test="beginDate !=null">
+				        #{beginDate,jdbcType=VARCHAR},
+				    </when>
+				    <otherwise>
+				        '',
+				    </otherwise>
+				</choose>
+				<choose>
+				    <when test="endDate !=null">
+				        #{endDate,jdbcType=VARCHAR},
+				    </when>
+				    <otherwise>
+				        '',
+				    </otherwise>
+				</choose>
+				<choose>
+				    <when test="title !=null">
+				        #{title,jdbcType=VARCHAR},
+				    </when>
+				    <otherwise>
+				        '',
+				    </otherwise>
+				</choose>
+				<choose>
+				    <when test="categoryId !=null">
+				        #{categoryId,jdbcType=VARCHAR},
+				    </when>
+				    <otherwise>
+				        '',
+				    </otherwise>
+				</choose>
+				<choose>
+				    <when test="typeId !=null">
+				        #{typeId,jdbcType=VARCHAR},
+				    </when>
+				    <otherwise>
+				        '',
+				    </otherwise>
+				</choose>
+				<choose>
+				    <when test="istatus !=null">
+				        #{istatus,jdbcType=VARCHAR},
+				    </when>
+				    <otherwise>
+				        '',
+				    </otherwise>
+				</choose>
+				<choose>
+				    <when test="currPage !=null">
+				        #{currPage,jdbcType=VARCHAR},
+				    </when>
+				    <otherwise>
+				        '',
+				    </otherwise>
+				</choose>
+				<choose>
+				    <when test="pageSize !=null">
+				        #{pageSize,jdbcType=VARCHAR}
+				    </when>
+				    <otherwise>
+				        ''
+				    </otherwise>
+				</choose>
+				
+	);
+	</select>
+	<select id="productInfoTotal" parameterType="dto.sales.ProductSalesVolumeSearchDto" resultType="java.lang.Integer">
+		SELECT
+			count(1)
+		FROM
+			export_sales_volume(
+				<choose>
+				    <when test="beginDate !=null">
+				        #{beginDate,jdbcType=VARCHAR},
+				    </when>
+				    <otherwise>
+				        '',
+				    </otherwise>
+				</choose>
+				<choose>
+				    <when test="endDate !=null">
+				        #{endDate,jdbcType=VARCHAR},
+				    </when>
+				    <otherwise>
+				        '',
+				    </otherwise>
+				</choose>
+				<choose>
+				    <when test="title !=null">
+				        #{title,jdbcType=VARCHAR},
+				    </when>
+				    <otherwise>
+				        '',
+				    </otherwise>
+				</choose>
+				<choose>
+				    <when test="categoryId !=null">
+				        #{categoryId,jdbcType=VARCHAR},
+				    </when>
+				    <otherwise>
+				        '',
+				    </otherwise>
+				</choose>
+				<choose>
+				    <when test="typeId !=null">
+				        #{typeId,jdbcType=VARCHAR},
+				    </when>
+				    <otherwise>
+				        '',
+				    </otherwise>
+				</choose>
+				<choose>
+				    <when test="istatus !=null">
+				        #{istatus,jdbcType=VARCHAR},
+				    </when>
+				    <otherwise>
+				        '',
+				    </otherwise>
+				</choose>
+				'',''
+				
+	);
+	</select>
+
+
+	<select id="getListCharges" resultMap="charge" parameterType="java.util.List">
+		select
+		m.id,
+		m.sales_order_no,
+		m.ordering_date,
+		m.platform_amount,
+		m.clearance_amount,
+		b.bbc_postage,
+		b.original_freight,
+		m.arrvice_total,
+		m.opt_fee,
+		m.total_cost,
+		m.profit,
+		m.profit_margin,
+		m.contract_charge,
+		m.clearance_price_total,
+		m.clear_total_cost,
+		m.clear_profit,
+		m.clear_profit_margin,
+		m.sdp_amount
+		from
+		t_product_sales_order_main m
+		left join t_product_sales_order_base b on m . id = b.sales_order_id
+		where m.id in
+		<foreach collection="idList" item="itemId" open="(" separator="," close=")">
+			#{itemId}
+		</foreach>
+	</select>
+</mapper>

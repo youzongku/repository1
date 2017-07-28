@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.PurchaseOrderMapper" >
+  <resultMap id="BaseResultMap" type="entity.timer.PurchaseOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="purchase_order_no" property="purchaseOrderNo" jdbcType="VARCHAR" />
+    <result column="cart_id" property="cartId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="payment_id" property="paymentId" jdbcType="VARCHAR" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="transaction_id" property="transactionId" jdbcType="VARCHAR" />
+    <result column="payer_ip" property="payerIp" jdbcType="VARCHAR" />
+    <result column="pay_date" property="payDate" jdbcType="TIMESTAMP" />
+    <result column="pay_host" property="payHost" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="purchase_total_amount" property="purchaseTotalAmount" jdbcType="DOUBLE" />
+    <result column="validable_pay_date" property="validablePayDate" jdbcType="TIMESTAMP" />
+    <result column="purchase_date" property="purchaseDate" jdbcType="TIMESTAMP" />
+    <result column="payer_idcard" property="payerIdcard" jdbcType="VARCHAR" />
+    <result column="payer_name" property="payerName" jdbcType="VARCHAR" />
+    <result column="purchase_type" property="purchaseType" jdbcType="SMALLINT" />
+    <result column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="purchase_discount_amout" property="purchaseDiscountAmount" jdbcType="DOUBLE" />
+    <result column="discount" property="discount" jdbcType="DOUBLE" />
+    <result column="cancel_date" property="cancelDate" jdbcType="TIMESTAMP" />
+    <!-- 销售单缺货采购实付金额 -->
+    <result column="sales_amount" property="salesAmount" jdbcType="DOUBLE" />
+    <!-- 分销商平台运费 -->
+    <result column="bbc_postage" jdbcType="DOUBLE" property="bbcPostage" />
+     <!-- 物流方式 -->
+    <result column="logistics_mode" jdbcType="VARCHAR" property="logisticsMode" />
+    <!-- 优惠码 -->
+    <result column="coupons_code" jdbcType="VARCHAR" property="couponsCode" />
+    <!-- 优惠码面额 -->
+    <result column="coupons_amount" jdbcType="DOUBLE" property="couponsAmount" />
+    <!-- 分销商类型 -->
+    <result column="distributor_type" jdbcType="INTEGER" property="distributorType" />
+    <!-- 分销商类型 -->
+    <result column="deduction_amount" jdbcType="DOUBLE" property="deductionAmount" />
+    <result column="ispro" property="isPro" jdbcType="BIT" />
+    <result column="ischoose" property="isChoose" jdbcType="BIT" />
+    <result column="input_user" property="inputUser" jdbcType="VARCHAR" />
+    <result column="offline_money" property="offlineMoney" jdbcType="DOUBLE" />
+    <result column="has_associated_orders" property="hasAssociatedOrders" jdbcType="BOOLEAN" />
+    <result column="finance_money" property="financeMoney" jdbcType="DOUBLE" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="customer_service" property="customerService" jdbcType="VARCHAR" />
+    <result column="reduce_price" property="reducePrice" jdbcType="DOUBLE" />
+    <result column="tawprice" property="tAWPrice" jdbcType="DOUBLE" />
+    <result column="oa_audit_no" property="oaAuditNo" jdbcType="VARCHAR" />
+    <result column="buseness_remarks" property="busenessRemarks" jdbcType="VARCHAR" />
+    <result column="back_in" property="backIn" jdbcType="BIT" />
+     <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, email, purchase_order_no, cart_id, status, payment_id, currency, transaction_id, payer_ip,
+    pay_date, pay_host, remarks, purchase_total_amount, validable_pay_date, purchase_date, 
+    payer_idcard, payer_name, purchase_type ,sid,purchase_discount_amout,discount,sales_amount,
+    cancel_date,bbc_postage,logistics_mode,coupons_code,coupons_amount,distributor_type,
+    deduction_amount,ispro,isChoose,input_user,offline_money,has_associated_orders,
+    finance_money,remark,reason,customer_service,reduce_price,tawprice,oa_audit_no,buseness_remarks
+    ,back_in,nick_name
+  </sql>
+  
+	<select id="getInvalidOrders" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from t_purchase_order where status = 0
+		and   <![CDATA[validable_pay_date <= now()]]>
+	</select>
+	<update id="batchUpdate" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index"
+			separator=";">
+			update 
+			t_purchase_order set 
+			<trim suffix="" suffixOverrides=",">
+				<if test="item.status != null">
+					status = #{item.status,jdbcType=INTEGER},
+				</if>
+				<if test="item.financeMoney != null">
+					finance_money = #{item.financeMoney,jdbcType=DOUBLE},
+				</if>
+				<if test="item.remark != null">
+					remark = #{item.remark,jdbcType=VARCHAR},
+				</if>
+				<if test="item.reason != null">
+					reason = #{item.reason,jdbcType=VARCHAR},
+				</if>
+				<if test="item.payDate != null">
+					pay_date = #{item.payDate,jdbcType=TIMESTAMP},
+				</if>
+			</trim>
+			where id = #{item.id,jdbcType=INTEGER}
+		</foreach>
+	</update>
+	
+</mapper>

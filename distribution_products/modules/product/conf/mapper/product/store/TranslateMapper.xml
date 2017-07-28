@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.store.TranslateMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.store.Translate" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="entity_id" property="entityId" jdbcType="INTEGER" />
+    <result column="ctitle" property="ctitle" jdbcType="VARCHAR" />
+    <result column="cdescription" property="cdescription" jdbcType="VARCHAR" />
+    <result column="cshortdescription" property="cshortdescription" jdbcType="VARCHAR" />
+    <result column="ckeyword" property="ckeyword" jdbcType="VARCHAR" />
+    <result column="cmetatitle" property="cmetatitle" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, entity_id, ctitle, cdescription, cshortdescription, ckeyword, cmetatitle
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_translate
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_translate
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.store.Translate" >
+    insert into t_translate (id, entity_id, ctitle, 
+      cdescription, cshortdescription, ckeyword, 
+      cmetatitle)
+    values (#{id,jdbcType=INTEGER}, #{entityId,jdbcType=INTEGER}, #{ctitle,jdbcType=VARCHAR}, 
+      #{cdescription,jdbcType=VARCHAR}, #{cshortdescription,jdbcType=VARCHAR}, #{ckeyword,jdbcType=VARCHAR}, 
+      #{cmetatitle,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.store.Translate" >
+    insert into t_translate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="entityId != null" >
+        entity_id,
+      </if>
+      <if test="ctitle != null" >
+        ctitle,
+      </if>
+      <if test="cdescription != null" >
+        cdescription,
+      </if>
+      <if test="cshortdescription != null" >
+        cshortdescription,
+      </if>
+      <if test="ckeyword != null" >
+        ckeyword,
+      </if>
+      <if test="cmetatitle != null" >
+        cmetatitle,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="entityId != null" >
+        #{entityId,jdbcType=INTEGER},
+      </if>
+      <if test="ctitle != null" >
+        #{ctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="cdescription != null" >
+        #{cdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="cshortdescription != null" >
+        #{cshortdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="ckeyword != null" >
+        #{ckeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="cmetatitle != null" >
+        #{cmetatitle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.store.Translate" >
+    update t_translate
+    <set >
+      <if test="entityId != null" >
+        entity_id = #{entityId,jdbcType=INTEGER},
+      </if>
+      <if test="ctitle != null" >
+        ctitle = #{ctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="cdescription != null" >
+        cdescription = #{cdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="cshortdescription != null" >
+        cshortdescription = #{cshortdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="ckeyword != null" >
+        ckeyword = #{ckeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="cmetatitle != null" >
+        cmetatitle = #{cmetatitle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.store.Translate" >
+    update t_translate
+    set entity_id = #{entityId,jdbcType=INTEGER},
+      ctitle = #{ctitle,jdbcType=VARCHAR},
+      cdescription = #{cdescription,jdbcType=VARCHAR},
+      cshortdescription = #{cshortdescription,jdbcType=VARCHAR},
+      ckeyword = #{ckeyword,jdbcType=VARCHAR},
+      cmetatitle = #{cmetatitle,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

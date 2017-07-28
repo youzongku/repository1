@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.payment.alipay.AlipayResultMapper" >
+  <resultMap id="BaseResultMap" type="entity.payment.alipay.AlipayResult" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="notify_type" property="notifyType" jdbcType="VARCHAR" />
+    <result column="notify_id" property="notifyId" jdbcType="VARCHAR" />
+    <result column="notify_time" property="notifyTime" jdbcType="VARCHAR" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+    <result column="input_charset" property="inputCharset" jdbcType="VARCHAR" />
+    <result column="sign_type" property="signType" jdbcType="VARCHAR" />
+    <result column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
+    <result column="trade_status" property="tradeStatus" jdbcType="VARCHAR" />
+    <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="total_fee" property="totalFee" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_user" property="lastUpdateUser" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="rmb_fee" property="rmbFee" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, notify_type, notify_id, notify_time, sign, input_charset, sign_type, out_trade_no, 
+    trade_status, trade_no, currency, total_fee, create_user, create_date, last_update_user, 
+    last_update_date, order_id, rmb_fee
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_alipay_result
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getAlipayResults" resultMap="BaseResultMap" parameterType="entity.payment.alipay.AlipayResult">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM T_ALIPAY_RESULT
+    WHERE OUT_TRADE_NO = #{outTradeNo}
+    ORDER BY CREATE_DATE DESC
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_alipay_result
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.payment.alipay.AlipayResult" >
+    insert into t_alipay_result (id, notify_type, notify_id, 
+      notify_time, sign, input_charset, 
+      sign_type, out_trade_no, trade_status, 
+      trade_no, currency, total_fee, 
+      create_user, create_date, last_update_user, 
+      last_update_date, order_id, rmb_fee
+      )
+    values (#{id,jdbcType=INTEGER}, #{notifyType,jdbcType=VARCHAR}, #{notifyId,jdbcType=VARCHAR}, 
+      #{notifyTime,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, #{inputCharset,jdbcType=VARCHAR}, 
+      #{signType,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=VARCHAR}, #{tradeStatus,jdbcType=VARCHAR}, 
+      #{tradeNo,jdbcType=VARCHAR}, #{currency,jdbcType=VARCHAR}, #{totalFee,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateUser,jdbcType=VARCHAR}, 
+      #{lastUpdateDate,jdbcType=TIMESTAMP}, #{orderId,jdbcType=VARCHAR}, #{rmbFee,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.payment.alipay.AlipayResult" >
+    insert into t_alipay_result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="notifyType != null" >
+        notify_type,
+      </if>
+      <if test="notifyId != null" >
+        notify_id,
+      </if>
+      <if test="notifyTime != null" >
+        notify_time,
+      </if>
+      <if test="sign != null" >
+        sign,
+      </if>
+      <if test="inputCharset != null" >
+        input_charset,
+      </if>
+      <if test="signType != null" >
+        sign_type,
+      </if>
+      <if test="outTradeNo != null" >
+        out_trade_no,
+      </if>
+      <if test="tradeStatus != null" >
+        trade_status,
+      </if>
+      <if test="tradeNo != null" >
+        trade_no,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+      <if test="totalFee != null" >
+        total_fee,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="rmbFee != null" >
+        rmb_fee,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="notifyType != null" >
+        #{notifyType,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyId != null" >
+        #{notifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyTime != null" >
+        #{notifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="inputCharset != null" >
+        #{inputCharset,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        #{signType,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null" >
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeStatus != null" >
+        #{tradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNo != null" >
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null" >
+        #{totalFee,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUser != null" >
+        #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="rmbFee != null" >
+        #{rmbFee,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.payment.alipay.AlipayResult" >
+    update t_alipay_result
+    <set >
+      <if test="notifyType != null" >
+        notify_type = #{notifyType,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyId != null" >
+        notify_id = #{notifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyTime != null" >
+        notify_time = #{notifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="inputCharset != null" >
+        input_charset = #{inputCharset,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        sign_type = #{signType,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null" >
+        out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeStatus != null" >
+        trade_status = #{tradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNo != null" >
+        trade_no = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null" >
+        total_fee = #{totalFee,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="rmbFee != null" >
+        rmb_fee = #{rmbFee,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.payment.alipay.AlipayResult" >
+    update t_alipay_result
+    set notify_type = #{notifyType,jdbcType=VARCHAR},
+      notify_id = #{notifyId,jdbcType=VARCHAR},
+      notify_time = #{notifyTime,jdbcType=VARCHAR},
+      sign = #{sign,jdbcType=VARCHAR},
+      input_charset = #{inputCharset,jdbcType=VARCHAR},
+      sign_type = #{signType,jdbcType=VARCHAR},
+      out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      trade_status = #{tradeStatus,jdbcType=VARCHAR},
+      trade_no = #{tradeNo,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      total_fee = #{totalFee,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      rmb_fee = #{rmbFee,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

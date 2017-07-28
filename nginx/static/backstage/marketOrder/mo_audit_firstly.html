@@ -1,0 +1,185 @@
+<script src="../../js/backstage/lib/laydate/laydate.js"></script>
+<div>
+    <h1>营销单管理<span>---</span><span>营销单初审</span></h1>
+    <ul class="search_category">
+        <li>下单时间：
+            <input class="searchInput" placeholder="开始日期" id="af_mo_createdate_start"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+            至
+            <input class="searchInput" placeholder="结束日期" id="af_mo_createdate_end"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+        </li>
+        <li>
+            <select id="af_mo_distributor_type" onchange="getAFMarketingOrderByConditions()">
+                <option value="">所有分销商类型</option>
+                <option value="1">普通分销商</option>
+                <option value="2">合营分销商</option>
+                <option value="3">内部分销商</option>
+            </select>
+        </li>
+        <li>
+            <input onkeyup="enter_keyUp(event,this, getAFMarketingOrderByConditions)" style="width:230px" id="af_mo_searchText" class="searchInput" placeholder="订单编号/分销商/录入人/业务员/名称">
+            <input onclick="getAFMarketingOrderByConditions()" class="searchButton" id="af_mo_search_btn" value="搜索" type="submit">
+        </li>
+    </ul>
+    <script>  //解决IEplaceholder不兼容问题
+    $(document).ready(function () {
+        $(function () {
+            if (!placeholderSupport()) {
+                $('[placeholder]').focus(function () {
+                    var input = $(this);
+                    if (input.val() == input.attr('placeholder')) {
+                        input.val('');
+                        input.removeClass('placeholder');
+                    }
+                }).blur(function () {
+                    var input = $(this);
+                    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                        input.addClass('placeholder');
+                        input.val(input.attr('placeholder'));
+                    }
+                }).blur();
+            }
+        })
+        function placeholderSupport() {
+            return 'placeholder' in document.createElement('input');
+        }
+    })
+    </script>
+
+    <!--营销单列表start-->
+    <div class="content_list" id="af_mo_list">
+        <table class="list_title all_table" id="af_mo_table">
+            <!--<thead>
+            <tr>
+                <th style="width: 2%"></th>
+                <th style="width: 20%">订单编号</th>
+                <th style="width: 8%">下单时间</th>
+                <th style="width: 8%;">订单状态</th>
+                <th style="width: 14%;">分销商</th>
+                <th style="width: 8%;">分销商名称</th>
+                <th style="width: 8%;">分销商类型</th>
+                <th style="width: 8%;">录入人</th>
+                <th style="width: 8%;">业务员</th>
+                <th style="width: 8%;">业务备注</th>
+                <th style="width: 8%;">操作</th>
+            </tr>
+            </thead>
+            <tbody class="tbodyTrHover"></tbody>-->
+        </table>
+        <!--<div class="list_content" >
+            <p>共<span id="af_mo_totalCount" style="display:inline-block;">0</span>记录，每页显示
+                <select id="af_mo_pageSize" onchange="get2AFMoList(1)">
+                    <option value="10" selected>10</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                </select>
+                ，共<span id="af_mo_pages" style="display:inline-block;">0</span>页
+            </p>
+        </div>-->
+        <div id="af_mo_pagination" style="text-align: center; margin-top: 30px;"></div>
+    </div>
+    <!--营销单列表end-->
+
+    <!--审核弹窗start-->
+    <div style="display: none;" id="af_mo_popup_div" class="redactPop">
+        <div>
+            <span class="to-confirm-l">业务备注：</span>
+            <span class="to-confirm-r"></span>
+        </div>
+        <div>
+            <div class="redactPopL">
+                <span class="to-confirm-l">商品总数量：</span>
+                <span class="to-confirm-r">&nbsp;<em>0</em>&nbsp;个</span>
+            </div>
+            <div class="redactPopR">
+                <span class="to-confirm-l">商品总计：</span>
+                <span class="to-confirm-r">￥&nbsp;<em>0.00</em>&nbsp;元</span>
+            </div>
+        </div>
+        <div>
+            <span>营销单总金额（含运费）：</span>
+            <span>￥&nbsp;<em>0.00</em>&nbsp;元</span>
+        </div>
+        <div>
+            <span class="to-confirm-l">
+                <em class="red">*</em>
+                请选择：
+            </span>
+            <span class="to-confirm-r">
+                <label>
+                    <input type="radio" value="1" name="passed">通过
+                </label>
+                <label>
+                    <input type="radio" value="0" name="passed">不通过
+                </label>
+            </span>
+        </div>
+        <div>
+            <span class="to-confirm-l">
+                <!--<em class="red">*</em>-->
+                备注：
+            </span>
+            <span class="to-confirm-r">
+                <textarea style="resize: none" cols="55" rows="10" placeholder="200字符以内"></textarea>
+            </span>
+        </div>
+    </div>
+    <!--审核弹窗end-->
+</div>
+
+<!--营销单详情 start-->
+<div id="af_mo_detail_div" class="sale-order-detail display">
+    <ul class="sale-order-detail-lbox">
+        <li class="currentBlue"><a>收件人信息</a></li>
+        <li><a>商品信息</a></li>
+    </ul>
+    <div class="sale-order-detail-rbox">
+        <h4>收件人信息</h4>
+        <div class="sale-order-detail-rbox-cont" name="receiverInfoDiv">
+        </div>
+        <h4 class="light-blue">商品信息</h4>
+        <div class="sale-order-detail-rbox-cont">
+            <table name="productInfoTable">
+                <thead>
+                <tr>
+                    <th>商品编码</th>
+                    <th>商品名称</th>
+                    <th>国际条码</th>
+                    <th>所属仓库</th>
+                    <th>到期日期</th>
+                    <th>分销价（元）</th>
+                    <th>数量（个）</th>
+                    <th>小计（元）</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <p class="red" name="sumInfoP">
+            </p>
+        </div>
+    </div>
+</div>
+<!--营销单详情 end-->
+
+<script>
+    $(document).ready(function() {
+//  营销单详情锚点跳转效果 start
+        var i=0;
+        $(".sale-order-detail-lbox li a").each(function(){
+            var s = ++i;
+            $(this).attr("href","#linktitle-"+s);
+        });
+        var x=0;
+        $(".sale-order-detail-rbox h4").each(function(){
+            var z = ++x;
+            $(this).attr("id","linktitle-"+z);
+        });
+        $(".sale-order-detail-lbox li a").click(function(){
+            $(this).parent().addClass("currentBlue");
+            $(this).parent().siblings().removeClass("currentBlue");
+        });
+//  营销单详情锚点跳转效果 end
+    });
+</script>

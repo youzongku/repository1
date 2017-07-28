@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="email=no" name="format-detection" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/main/main.css">
+    <script type="text/javascript" src="../../js/layer.js"></script>
+</head>
+<body onload="loaded()">
+<header class="posFix head">
+    <a href="####" class="ret-logo"></a>
+    线下转账
+</header>
+<section class="imporCon conTop" style="height: auto;">
+    <div class="impornor invonor" style="text-align: center">
+        <select class="inp4" style="width: 80%">
+            <option>请选择收款渠道</option>
+            <option>中国农业银行深圳分行华南城支行</option>
+            <option>支付宝</option>
+        </select>
+    </div>
+    <div class="impornor invonor">
+        <label>收款账户：</label>
+        <label>001001@qq.com</label>
+    </div>
+    <div class="impornor invonor">
+        <label>收款人：</label>
+        <label>深圳市通拓科技有限公司</label>
+    </div>
+    <div class="impornor invonor" style="text-align: center">
+        <select class="inp4" style="width: 80%">
+            <option>请选择收款渠道</option>
+            <option>中国农业银行深圳分行华南城支行</option>
+            <option>支付宝</option>
+        </select>
+    </div>
+    <div class="impornor invonor">
+        <label><b class="red-start">*</b>收款账户：</label>
+        <label><input type="text" class="inp4"/></label>
+    </div>
+    <div class="impornor invonor">
+        <label><b class="red-start">*</b>账款开户名：</label>
+        <label><input type="text" class="inp4"/></label>
+    </div>
+    <div class="impornor invonor">
+        <label><b class="red-start">*</b>付款金额：</label>
+        <label><input type="text" class="inp4" style="width: 90%;"/>元</label>
+    </div>
+    <div class="impornor invonor">
+        <label><b class="red-start">*</b>付款流水号：</label>
+        <label><input type="text" class="inp4"/></label>
+    </div>
+    <div class="impornor invonor">
+        <label>充值备注：</label>
+        <label>
+            <textarea class="inp4 texta" placeholder="1~300字以内"></textarea>
+        </label>
+    </div>
+    <div class="impornor invonor">
+        <label>付款截图：</label>
+        <label class="blue" id="bigImg">点击看图</label>
+    </div>
+    <div class="impornor invonor">
+        <label><b class="red-start">*</b>实际付款时间：</label>
+        <label><input type="text" class="inp4"/></label>
+    </div>
+</section>
+<footer class="foot">
+    <a href="####">
+        <input type="submit" value="取消" class="inp-3 btn-gray fl"/>
+        <input type="submit" value="确定" class="inp-3 btn-blue fr confirmBtn"/>
+    </a>
+</footer>
+</body>
+<script src="../../js/lib/zepto.js"></script>
+<script src="../../js/lib/frozen.js"></script>
+<script>
+    $("#bigImg").click(function(){
+        var dia=$.dialog({
+            content:'<div class="bigImg"><img src="../../img/1.jpg" alt=""/></div>',
+            button:["关闭"]
+        });
+    });
+    var el;
+    $(".confirmBtn").click(function() {
+        el = $.tips({
+            content: '生成成功',
+            stayTime: 3000,
+            type: "success"
+        })
+        el.on("tips:hide", function () {
+            window.location = 'https://www.baidu.com/?tn=99342822_hao_pg';
+        })
+    })
+</script>
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.ProductBaseLogMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.ProductBaseLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="csku" property="csku" jdbcType="VARCHAR" />
+    <result column="istatus" property="istatus" jdbcType="INTEGER" />
+    <result column="salable" property="salable" jdbcType="INTEGER" />
+    <result column="opt_type" property="optType" jdbcType="INTEGER" />
+    <result column="opt_user" property="optUser" jdbcType="VARCHAR" />
+    <result column="opt_date" property="optDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, csku, istatus, salable, opt_type, opt_user, opt_date
+  </sql>
+  
+  <select id="selectBySku" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_base_logs
+    where csku = #{sku}
+  </select>
+  
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into t_product_base_logs (csku, istatus, 
+      salable, opt_type, opt_user, opt_date
+      )
+    values 
+    <foreach collection="logList" item="item" separator="," >
+		(#{item.csku,jdbcType=VARCHAR}, #{item.istatus,jdbcType=INTEGER}, 
+	      #{item.salable,jdbcType=INTEGER}, 
+	      #{item.optType,jdbcType=INTEGER}, 
+	      #{item.optUser,jdbcType=VARCHAR}, 
+	      now()
+	      )
+	</foreach>
+  </insert>
+  
+  <insert id="insert" parameterType="entity.product.ProductBaseLog" >
+    insert into t_product_base_logs (csku, istatus, 
+      salable, opt_type, opt_user, opt_date
+      )
+    values (#{csku,jdbcType=VARCHAR}, #{istatus,jdbcType=INTEGER}, 
+      #{salable,jdbcType=INTEGER}, 
+      #{optType,jdbcType=INTEGER}, 
+      #{optUser,jdbcType=VARCHAR}, now()
+      )
+  </insert>
+  
+</mapper>

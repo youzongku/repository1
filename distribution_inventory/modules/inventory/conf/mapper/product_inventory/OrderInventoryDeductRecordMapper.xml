@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product_inventory.OrderInventoryDeductRecordMapper" >
+  <resultMap id="BaseResultMap" type="entity.product_inventory.OrderInventoryDeductRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="qty" property="qty" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="container_number" property="containerNumber" jdbcType="VARCHAR" />
+    <result column="storage_location" property="storageLocation" jdbcType="VARCHAR" />
+    <result column="expiration_date" property="expirationDate" jdbcType="DATE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="order_detail_id" property="orderDetailId" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sku, qty, warehouse_id, warehouse_name, container_number, storage_location, expiration_date, 
+    create_time, update_time, order_detail_id,order_no
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from public.t_order_inventory_deduct_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from public.t_order_inventory_deduct_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByOrderNo" parameterType="java.lang.String">
+  	delete from public.t_order_inventory_deduct_record
+    where order_no = #{orderNo,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product_inventory.OrderInventoryDeductRecord" >
+    insert into public.t_order_inventory_deduct_record (id, sku, qty, 
+      warehouse_id, warehouse_name, container_number, 
+      storage_location, expiration_date, create_time, 
+      update_time, order_detail_id,order_no)
+    values (#{id,jdbcType=INTEGER}, #{sku,jdbcType=VARCHAR}, #{qty,jdbcType=INTEGER}, 
+      #{warehouseId,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR}, #{containerNumber,jdbcType=VARCHAR}, 
+      #{storageLocation,jdbcType=VARCHAR}, #{expirationDate,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{orderDetailId,jdbcType=INTEGER},#{orderNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product_inventory.OrderInventoryDeductRecord" >
+    insert into public.t_order_inventory_deduct_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="qty != null" >
+        qty,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="containerNumber != null" >
+        container_number,
+      </if>
+      <if test="storageLocation != null" >
+        storage_location,
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="containerNumber != null" >
+        #{containerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="storageLocation != null" >
+        #{storageLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationDate != null" >
+        #{expirationDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderDetailId != null" >
+        #{orderDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product_inventory.OrderInventoryDeductRecord" >
+    update public.t_order_inventory_deduct_record
+    <set >
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        qty = #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="containerNumber != null" >
+        container_number = #{containerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="storageLocation != null" >
+        storage_location = #{storageLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date = #{expirationDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id = #{orderDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product_inventory.OrderInventoryDeductRecord" >
+    update public.t_order_inventory_deduct_record
+    set sku = #{sku,jdbcType=VARCHAR},
+      qty = #{qty,jdbcType=INTEGER},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      container_number = #{containerNumber,jdbcType=VARCHAR},
+      storage_location = #{storageLocation,jdbcType=VARCHAR},
+      expiration_date = #{expirationDate,jdbcType=DATE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      order_detail_id = #{orderDetailId,jdbcType=INTEGER},
+      order_no = #{orderNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="listByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from public.t_order_inventory_deduct_record
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </select>
+  <select id="selectForDeductByHistoryOrderClosed" resultMap="BaseResultMap" parameterType="entity.product_inventory.OrderInventoryDeductRecord">
+   	select
+    <include refid="Base_Column_List" />
+    from public.t_order_inventory_deduct_record
+    <where>
+	  	<if test="sku != null" >
+	        and sku = #{sku,jdbcType=VARCHAR}
+	      </if>
+	      <if test="warehouseId != null" >
+	       and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+	      </if>
+	      <if test="warehouseName != null" >
+	        and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+	      </if>
+	      <if test="expirationDate != null" >
+	        and expiration_date = #{expirationDate,jdbcType=DATE}
+	      </if>
+	      <if test="orderNo != null" >
+	        and order_no = #{orderNo,jdbcType=VARCHAR}
+	      </if>
+      </where>
+  </select>
+</mapper>

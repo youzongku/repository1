@@ -1,0 +1,218 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<h1>商品管理<span>---</span><span>商品属性集管理</span></h1>
+<ul class="search_category">
+    <li>
+        <input type="text" id="searchInput" class="searchInput" placeholder="属性集名称">
+        <input id="searchButton" class="searchButton" value="搜索" type="submit">
+    </li>
+    <li>
+        <div class="search">
+            <button class="attributePop">添加属性集</button>
+        </div>
+    </li>
+</ul>
+<script>  //解决IEplaceholder不兼容问题
+$(document).ready(function () {
+    $(function () {
+        if (!placeholderSupport()) {
+            $('[placeholder]').focus(function () {
+                var input = $(this);
+                if (input.val() == input.attr('placeholder')) {
+                    input.val('');
+                    input.removeClass('placeholder');
+                }
+            }).blur(function () {
+                var input = $(this);
+                if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                    input.addClass('placeholder');
+                    input.val(input.attr('placeholder'));
+                }
+            }).blur();
+        }
+    });
+    function placeholderSupport() {
+        return 'placeholder' in document.createElement('input');
+    }
+})
+</script>
+<div class="content_list propertiesSet">
+    <table class="list_title all_table">
+        <thead>
+        <tr>
+            <th style="width: 8%;">序号</th>
+            <th style="width: 20%;">属性名称</th>
+            <th style="width: 32%;">关联属性名</th>
+            <th style="width: 20%;">是否已关联属性集</th>
+            <th style="width: 20%;">操作</th>
+        </tr>
+        </thead>
+        <tbody class="list_content role-list-content">
+        <tr class="list_message">
+            <td>01</td>
+            <td>属性A</td>
+            <td>属性A，属性B</td>
+            <td>
+                <b class="">
+                    <span class="">否</span>
+                    <span style="display: none;">是</span>
+                </b>
+            </td>
+            <td class="operation">
+                <a href="javascript:void(0);" class="modificationPop">修改</a>
+                <a href="javascript:void(0);">删除</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="list_content">
+        <p>共<span id="count" style="display: inline-block; color: #55ccc8;">35</span>记录，每页显示
+            <select>
+                <option value="10">10</option>
+                <option value="20" selected="selected">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
+            ，共<span id="page_count" style="display: inline-block; color: #55ccc8;">2</span>页
+        </p>
+    </div>
+    <div id="role_pagination" style="text-align: center; margin-top: 30px;"><div name="laypage1.3" class="laypage_main laypageskin_molv" id="laypage_10"><span class="laypage_curr" style="background-color:#55ccc8">1</span><a href="javascript:;" data-page="2">2</a><a href="javascript:;" class="laypage_next" data-page="2">下一页</a><span class="laypage_total"><label>到第</label><input type="number" min="1" onkeyup="this.value=this.value.replace(/\D/, '');" class="laypage_skip"><label>页</label><button type="button" class="laypage_btn">确定</button></span></div></div>
+</div>
+
+<div class="category-set" style="display: none">
+    <ul class="search_category">
+        <li>
+            <input type="text" id="searchInput" class="searchInput" placeholder="属性集名称">
+            <input id="searchButton" class="searchButton" value="搜索" type="submit">
+        </li>
+        <li>
+            <div class="search">
+                <button class="categorySet">添加</button>
+            </div>
+        </li>
+    </ul>
+    <label class="set_price_line"><input id="select_curr_all" type="checkbox">全选</label>
+    <table class="list_title all_table">
+        <thead>
+        <tr>
+            <th style="width: 6%"></th>
+            <th style="width: 10%">序号</th>
+            <th style="width: 14%;">属性名称</th>
+            <th style="width: 28%;">备选值</th>
+            <th style="width: 14%;">Key值</th>
+            <th style="width: 14%;">属性类型</th>
+            <th style="width: 14%;">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="background: #fafafa;">
+            <td>
+                <input type="checkbox">
+            </td>
+            <td>01</td>
+            <td>属性A</td>
+            <td>值1，值2</td>
+            <td>Key值</td>
+            <td>文本</td>
+            <td>
+                <a href="javascript:void(0);" class="categorySet">添加</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="list_content">
+        <p>共<span id="goodsTotal" style="display:inline-block;">2687</span>记录，每页显示
+            <select id="goods_pageSize">
+                <option value="10" selected="">10</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
+            ，共<span id="goodsPages" style="display:inline-block;">269</span>页
+        </p>
+    </div>
+</div>
+
+<!--添加属性and修改-弹出窗-->
+<div class="attribute-pop" style="display: none">
+    <div>
+            <span class="attribute-pop-l">
+                <em class="red">*</em>
+                属性集名称：
+            </span>
+            <span class="attribute-pop-r">
+                <input type="text"/>
+            </span>
+    </div>
+    <div>
+            <span class="attribute-pop-l">
+                <em class="red">*</em>
+                请添加属性集：
+            </span>
+            <span class="attribute-pop-r">
+                 <btutton class="searchButton addProperties">添加属性</btutton>
+            </span>
+    </div>
+    <table class="list_title all_table" style="padding: 10px;box-sizing: border-box;">
+        <thead>
+        <tr>
+            <th style="width: 10%;">序号</th>
+            <th style="width: 18%;">属性名称</th>
+            <th style="width: 18%;">备选值</th>
+            <th style="width: 18%;">Key值</th>
+            <th style="width: 18%;">属性类型</th>
+            <th style="width: 18%;">操作</th>
+        </tr>
+        </thead>
+        <tbody class="list_content role-list-content">
+        <tr class="list_message" style="background: #fafafa;">
+            <td>01</td>
+            <td>属性A</td>
+            <td>值1，值2</td>
+            <td>Key值</td>
+            <td>文本</td>
+            <td>
+                <a href="javascript:void(0);">删除</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    //  添加属性-弹出窗
+    $('.attributePop').click(function(){
+        layer.open({
+            type: 1,
+            title: "添加属性",
+            area: ['600px', '500px'],
+            shadeClose: true, //点击遮罩关闭
+            content: $(".attribute-pop"),
+            btn: ['保存','取消'],
+            scrollbar: false
+        });
+    });
+    //  修改属性-弹出窗
+    $('.modificationPop').click(function(){
+        layer.open({
+            type: 1,
+            title: "添加属性",
+            area: ['600px', '500px'],
+            shadeClose: true, //点击遮罩关闭
+            content: $(".attribute-pop"),
+            btn: ['保存','取消'],
+            scrollbar: false
+        });
+    });
+    $('.addProperties').click(function(){
+        layer.open({
+            type: 1,
+            title: "添加属性",
+            area: ['600px', '500px'],
+            shadeClose: true, //点击遮罩关闭
+            content: $(".category-set"),
+            btn: false,
+            scrollbar: false
+        });
+//        $('.categorySet').click(function(){
+//            layer.closeAll();
+//        });
+    });
+</script>

@@ -1,0 +1,248 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<div class="purchase_order_box">
+    <h1><span id="purchase_order_title">业务员录单</span><span>---</span><span>采购单</span></h1>
+    <ul class="search_category" style="height:110px;">
+        <li>下单时间：
+            <input class="searchInput" placeholder="开始日期" id="seachTime0"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+            至
+            <input class="searchInput" placeholder="结束日期" id="seachTime1"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+        </li>
+        <li>支付时间：
+            <input class="searchInput" placeholder="开始日期" id="seachTime2"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+            至
+            <input class="searchInput" placeholder="结束日期" id="seachTime3"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+        </li>
+        <li>订单状态：
+            <select id="statusSelected">
+                <option value="" selected>所有状态</option>
+                <option value="0">待付款</option>
+                <option value="1">已完成</option>
+                <option value="2">已取消</option>
+                <option value="4">待客服确认</option>
+                <option value="6">待财务确认</option>
+            </select>
+            <select id="priStatus">
+                <option value="0" selected>请选择赠品状态</option>
+                <option value="1">有赠品的订单</option>
+                <option value="2">待选赠品</option>
+                <option value="3">已选赠品</option>
+            </select>
+        </li>
+        <li style="line-height: 40px;">
+            <input onkeyup="enter_keyUp(event,this, getPurchaseOrderByConditions)" id="searchInput" style="width:230px" class="searchInput" placeholder="订单编号/分销商/录入人/业务员/名称">
+            <input class="searchButton" value="搜索" type="submit" onclick="getPurchaseOrderByConditions()">
+            <!--<div class="search">-->
+                <!--<button id="export_purchase" style="display: none;" >导出表格</button>-->
+            <!--</div>-->
+        </li>
+    </ul>
+    <script>  //解决IEplaceholder不兼容问题
+    $(document).ready(function () {
+        $(function () {
+            if (!placeholderSupport()) {
+                $('[placeholder]').focus(function () {
+                    var input = $(this);
+                    if (input.val() == input.attr('placeholder')) {
+                        input.val('');
+                        input.removeClass('placeholder');
+                    }
+                }).blur(function () {
+                    var input = $(this);
+                    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                        input.addClass('placeholder');
+                        input.val(input.attr('placeholder'));
+                    }
+                }).blur();
+            }
+        })
+        function placeholderSupport() {
+            return 'placeholder' in document.createElement('input');
+        }
+    })
+    </script>
+    <div class="content_list">
+        <div id="orders_div">
+            <table class="list_title all_table" id="purchase_orders_table">
+                <!--<thead>
+                <tr>
+                    <th style="width: 2%;" class="add_list_down" id="add_list_down">
+                    </th>
+                    <th style="width: 14%;" class="num" name="purchaseOrderNo">订单编号</th>
+                    <th style="width: 6%;" class="order_status" name="statusMes">订单状态</th>
+                    <th style="width: 7%;" class="order_time" name="sorderDate">下单时间</th>
+                    <th style="width: 7%;" class="del_time" name="spayDate">支付/取消时间</th>
+                    <th style="width: 6%;" class="order_money" name="purchaseTotalAmount">订单金额(元)</th>
+                    <th style="width: 6%;" class="discount_money">折后金额(元)</th>
+                    <th style="width: 6%;" class="purchase_free">是否已选赠品</th>
+                    <th style="width: 6%;">客户实付(元)</th>
+                    <th style="width: 6%;">财务实收(元)</th>
+                    <th style="width: 6%;">名称</th>
+                    <th style="width: 6%;" class="distributor" name="email">下单分销商</th>
+                    <th style="width: 6%;">业务员</th>
+                    <th style="width: 6%;" class="purchase_people">录入人</th>
+                    <th style="width: 6%;">录单备注</th>
+                    <th style="width: 8%;" class="dose">操作</th>
+                </tr>
+                </thead>
+                <tbody id="purchaseList" style="overflow-y:auto;height:400px;">
+                </tbody>-->
+            </table>
+            <div id="purchase_pagination" style="text-align: center; margin-top: 30px;"></div>
+        </div>
+        <!--<div class="list_content">
+            <p>共<span id="purchase_total" style="display:inline-block;">0</span>记录，每页显示
+                <select id="pur_pageSize" onchange="postPurchase()">
+                    <option value="10" selected>10</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                </select>
+                ，共<span id="purchase_pages" style="display:inline-block;">0</span>页
+            </p>
+        </div>
+        <div id="purchase_pagination" style="text-align: center; margin-top: 30px;"></div>-->
+    </div>
+
+    <!--
+<div class="content_list">
+        <table class="list_title all_table" style="display: block;">
+            <thead style="display: block;width: 1083px;">
+            <tr>
+                <th class="add_list_down" style="width: 6%;">
+                    <input type="checkbox" value="" />全选
+                </th>
+                <th class="num" name="purchaseOrderNo" style="width: 7%;">订单编号</th>
+                <th class="order_status" name="statusMes" style="width: 7%;">订单状态</th>
+                <th class="order_time" name="sorderDate" style="width: 7%;">下单时间</th>
+                <th class="del_time" name="spayDate" style="width: 7%;">支付/取消时间</th>
+                <th class="distributor" name="email" style="width: 7%;">下单分销商</th>
+                <th class="order_money" name="purchaseTotalAmount" style="width: 6%;">订单金额</th>
+                <th class="discount_money" style="width: 6%;">折后金额</th>
+                <th class="purchase_free" style="width: 7%;">是否已选赠品</th>
+                <th style="width: 6%;">客户实付</th>
+                <th style="width: 6%;">财务实收</th>
+                <th class="purchase_people" style="width: 7%;">录入人</th>
+                <th style="width: 7%;">审核理由</th>
+                <th class="dose" style="width: 7%;">关联状态</th>
+                <th class="dose" style="width: 7%;">操作</th>
+            </tr>
+            </thead>
+        </table>
+        <table id="orders_table" class="list_title all_table" style="width: 1100px;display: block;height: 330px; overflow-y: auto;">
+            <tbody id="purchaseList" style="display: block;">
+
+            </tbody>
+        </table>
+    </div>
+-->
+
+    <!--操作日志弹出窗-->
+    <div class="operation-log-pop-box" style="display: none">
+        <div class="operation-log-list">
+        </div>
+    </div>
+</div>
+
+<!--关联订单-->
+<div class="display all_pop relevancy_pop">
+    <p><span style="width: 150px">共关联订单数：</span><b name="order_qty"></b></p>
+    <p><span style="width: 150px">订单合计实收总额：</span><b name="money_total"></b>&nbsp;元</p>
+    <p><span style="width: 150px">业务合计实收总额：</span><input name="money_input" type="text">&nbsp;元</p>
+</div>
+
+<!--订单详情-->
+<div class="display all_pop" id="order_detail_div">
+    <table id="order_detail_table" class="list_title all_table">
+        <thead>
+        <tr>
+            <th style="width: 7%;">订单编号</th>
+            <th style="width: 7%;">订单状态</th>
+            <th style="width: 7%;">下单时间</th>
+            <th style="width: 7%;">支付/取消时间</th>
+            <th style="width: 7%;">下单分销商</th>
+            <th style="width: 7%;">订单金额</th>
+            <th style="width: 7%;">折后金额</th>
+            <th style="width: 7%;">是否已选赠品</th>
+            <th style="width: 7%;">客户实付</th>
+            <th style="width: 7%;">录入人</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<!--采购单详情 start-->
+<div id="purchaseorder_detail_div" class="sale-order-detail display">
+    <ul class="sale-order-detail-lbox">
+        <li class="currentBlue"><a>OA审批单号</a></li>
+        <li><a>录单备注信息</a></li>
+        <li><a>客服备注信息</a></li>
+        <li><a>财务备注信息</a></li>
+        <li><a>商品信息</a></li>
+    </ul>
+    <div class="sale-order-detail-rbox">
+        <h4>OA审批单号</h4>
+        <div class="sale-order-detail-rbox-cont">
+            <div>
+                <span name="oaAuditNoSpan"></span>
+            </div>
+        </div>
+        <h4>录单备注信息</h4>
+        <div class="sale-order-detail-rbox-cont" name="remarksInfoDiv">
+        </div>
+        <h4>客服备注信息</h4>
+        <div class="sale-order-detail-rbox-cont" name="csRemarksInfoDiv">
+        </div>
+        <h4>财务备注信息</h4>
+        <div class="sale-order-detail-rbox-cont" name="financeRemarksInfoDiv">
+        </div>
+        <h4 class="light-blue">商品信息</h4>
+        <div class="sale-order-detail-rbox-cont purchaseorder-detail-box">
+            <table>
+                <thead>
+                <tr>
+                    <th>商品编码</th>
+                    <th>商品名称</th>
+                    <th>到期日期</th>
+                    <th>国际条码</th>
+                    <th>所属仓库</th>
+                    <th>单价（元）</th>
+                    <th>均摊价（元）</th>
+                    <th>数量（个）</th>
+                    <th>小计（元）</th>
+                </tr>
+                </thead>
+                <tbody name="productInfoTbody">
+                </tbody>
+            </table>
+            <p class="red" name="sumInfoP">
+            </p>
+        </div>
+    </div>
+</div>
+<!--采购单详情 end-->
+
+<script>
+    $(document).ready(function() {
+//  采购单详情锚点跳转效果 start
+        var i=0;
+        $(".sale-order-detail-lbox li a").each(function(){
+            var s = ++i;
+            $(this).attr("href","#linktitle-"+s);
+        });
+        var x=0;
+        $(".sale-order-detail-rbox h4").each(function(){
+            var z = ++x;
+            $(this).attr("id","linktitle-"+z);
+        });
+        $(".sale-order-detail-lbox li a").click(function(){
+            $(this).parent().addClass("currentBlue");
+            $(this).parent().siblings().removeClass("currentBlue");
+        });
+//  采购单详情锚点跳转效果 end
+    });
+</script>

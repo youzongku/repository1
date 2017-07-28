@@ -1,0 +1,123 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<div class="details_one">
+    <h1>用户管理<span>---</span><span>模式审核</span></h1>
+    <ul class="search_category" style="height:120px;">
+        <li>注册时间：
+            <input class="searchInput" placeholder="开始日期" id="sregdate" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+            至
+            <input class="searchInput" placeholder="结束日期" id="eregdate" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+        </li>
+        <li>申请时间：
+            <input class="searchInput" placeholder="开始日期" id="sapplydate" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+            至
+            <input class="searchInput" placeholder="结束日期" id="eapplydate" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+        </li>
+        <li>
+            <select class="register-mehtod" name="" style="width: 130px;">
+                <option value="0" selected="selected">默认所有注册方式</option>
+                <option value="1">自发注册</option>
+                <option value="2">后台添加</option>
+            </select>
+        </li>
+        <li>
+            <select id="status" name="" style="width: 100px;">
+                <option value="-1" selected="selected">所有审核状态</option>
+                <option value="0">待审核</option>
+                <option value="2">审核通过</option>
+                <option value="3">已取消</option>
+                <option value="1">审核不通过</option>
+            </select>
+        </li>
+        <li>
+            <div class="search">
+                <input id="searchInput" onkeyup="enter_keyUp(event,this, searchModel)"  class="searchInput" placeholder="手机号/注册人">
+                <input id="searchButton" class="searchButton" value="搜索" type="button" style="cursor: pointer;">
+            </div>
+        </li>
+    </ul>
+    <div class="content_list">
+        <table id="model_audit_table">
+        </table>
+        <div id="pagination_audit"></div>
+    </div>
+</div>
+<!--查看详情-->
+<div class="details_one_con" style="display: none;">
+    <h1>用户管理<span>---</span><span>模式审核-详情</span></h1>
+    <button class="back_zone viewDetails_return">返回</button>
+    <div class="apply-detail">
+        <form enctype="multipart/form-data" method="post" action="/member/modifyApplyFiles" id="files-form">
+            <div class="handle-files">
+                <button class="clear-setting" id="change-files" type="button" onclick="readyChangeFile()">更换附件</button>
+                <button class="clear-setting" id="sure-change" type="button" onclick="changeFiles()">确定更换</button>
+            </div>
+            <ul class="zone_examine_about">
+                <input type="hidden" name="applyId">
+                <input type="hidden" name="tel">
+                <li><span>手机号：</span><div class="account" name="tel"></div></li>
+                <li><span>注册时间：</span><div class="register-date"></div></li>
+                <li><span>申请时间：</span><div class="apply-date"></div></li>
+                <li>
+                    <span>备注：</span>
+                    <div style="word-break: break-all;" class="apply-remark"></div>
+                    <textarea class="be-change display" name="remark" rows="4" placeholder="不超过500字" maxlength="500"></textarea>
+                </li>
+                <li><span>注册方式：</span><div class="register-method"></div></li>
+                <li><span>注册人：</span><div class="register-man"></div><input class="salesman_id" type="hidden"></li>
+                <li>
+                    <span style="vertical-align: top; padding-top: 8px;">附件：</span>
+                    <div class="accessory apply-files">
+                    </div>
+                </li>
+                <li>
+                    <span>发票抬头：</span>
+                    <div id="invoiceTitle" ></div>
+                    <input class="be-change display" type="text" name="invoiceTitle" placeholder="50 字符以内" maxlength="50" />
+                </li>
+                <li>
+                    <span>纳税号：</span>
+                    <div id="invoiceTaxNumber" ></div>
+                    <input class="be-change display" type="text" name="invoiceTaxNumber" />
+                </li>
+                <li>
+                    <span>银行开户行：</span>
+                    <div id="invoiceBank" ></div>
+                    <input class="be-change display" type="text" name="invoiceBank" placeholder="20 字符以内" maxlength="20" />
+                </li>
+                <li>
+                    <span>开户行帐号：</span>
+                    <div id="invoiceBankAccount" ></div>
+                    <input class="be-change display" type="text" name="invoiceBankAccount"
+                        onkeyup="this.value=this.value.replace(/\D/g,'')"  
+                        onafterpaste="this.value=this.value.replace(/\D/g,'')" />
+                </li>
+                <li>
+                    <span>联系电话：</span>
+                    <div id="invoiceTel" ></div>
+                    <input class="be-change display" type="text" name="invoiceTel" />
+                </li>
+                <li>
+                    <span>公司地址：</span>
+                    <div id="invoiceCompanyAddr" ></div>
+                     <input class="be-change display" type="text" name="invoiceCompanyAddr" placeholder="50 字符以内" maxlength="50" />
+                </li>
+                <li><span>状态：</span><div class="status"></div></li>
+                <li>
+                    <button type="button" class="clear-setting modelAduitPop submit-audit" onclick="auditData()">审核</button>
+                </li>
+                <li><span>审核人：</span><div class="audit-man"></div></li>
+                <li><span>审核理由：</span><div class="audit-reason"></div></li>
+                <li><span>审核备注：</span><div style="word-break: break-all;width: 89%" class="audit-remark"></div></li>
+                <li><span>审核时间：</span><div class="audit-time"></div></li>
+            </ul>
+        </form>
+    </div>
+</div>
+
+<!--操作日志弹出窗-->
+<div class="operation-log-pop-box" style="display: none">
+    <div class="operation-log-list">
+    </div>
+</div>
+<link rel="stylesheet" type="text/css" href="../css/laydate/skins/molv/laydate.css">
+<script type="text/javascript" src="../js/lib/laydate/laydate.js"></script>

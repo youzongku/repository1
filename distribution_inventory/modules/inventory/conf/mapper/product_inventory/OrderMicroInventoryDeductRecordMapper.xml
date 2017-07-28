@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product_inventory.OrderMicroInventoryDeductRecordMapper" >
+  <resultMap id="BaseResultMap" type="entity.product_inventory.OrderMicroInventoryDeductRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="qty" property="qty" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="container_number" property="containerNumber" jdbcType="VARCHAR" />
+    <result column="storage_location" property="storageLocation" jdbcType="VARCHAR" />
+    <result column="is_gift" property="isGift" jdbcType="SMALLINT" />
+    <result column="expiration_date" property="expirationDate" jdbcType="DATE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="order_detail_id" property="orderDetailId" jdbcType="INTEGER" />
+    <result column="purchase_price" property="purchasePrice" jdbcType="REAL" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+
+    <result column="micro_inrecord_id" property="microInRecordId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sku, qty, warehouse_id, warehouse_name, container_number, storage_location, is_gift, 
+    expiration_date, create_time, update_time, order_no, order_detail_id,purchase_price,account,micro_inrecord_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from public.t_order_micro_inventory_deduct_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from public.t_order_micro_inventory_deduct_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product_inventory.OrderMicroInventoryDeductRecord" >
+    insert into public.t_order_micro_inventory_deduct_record (id, sku, qty, 
+      warehouse_id, warehouse_name, container_number, 
+      storage_location, is_gift, expiration_date, 
+      create_time, update_time,order_no, order_detail_id,
+      purchase_price,account
+      )
+    values (#{id,jdbcType=INTEGER}, #{sku,jdbcType=VARCHAR}, #{qty,jdbcType=INTEGER}, 
+      #{warehouseId,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR}, #{containerNumber,jdbcType=VARCHAR}, 
+      #{storageLocation,jdbcType=VARCHAR}, #{isGift,jdbcType=SMALLINT}, #{expirationDate,jdbcType=DATE}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},#{orderNo,jdbcType=VARCHAR}, #{orderDetailId,jdbcType=INTEGER},
+      #{purchasePrice,jdbcType=REAL},#{account,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product_inventory.OrderMicroInventoryDeductRecord" >
+    insert into public.t_order_micro_inventory_deduct_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="qty != null" >
+        qty,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="containerNumber != null" >
+        container_number,
+      </if>
+      <if test="storageLocation != null" >
+        storage_location,
+      </if>
+      <if test="isGift != null" >
+        is_gift,
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id,
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+
+      <if test="microInRecordId != null">
+        micro_inrecord_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="containerNumber != null" >
+        #{containerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="storageLocation != null" >
+        #{storageLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="isGift != null" >
+        #{isGift,jdbcType=SMALLINT},
+      </if>
+      <if test="expirationDate != null" >
+        #{expirationDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDetailId != null" >
+        #{orderDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="purchasePrice != null" >
+        #{purchasePrice,jdbcType=REAL},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+
+      <if test="microInRecordId != null">
+        #{microInRecordId, jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product_inventory.OrderMicroInventoryDeductRecord" >
+    update public.t_order_micro_inventory_deduct_record
+    <set >
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        qty = #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="containerNumber != null" >
+        container_number = #{containerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="storageLocation != null" >
+        storage_location = #{storageLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="isGift != null" >
+        is_gift = #{isGift,jdbcType=SMALLINT},
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date = #{expirationDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id = #{orderDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price = #{purchasePrice,jdbcType=REAL},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product_inventory.OrderMicroInventoryDeductRecord" >
+    update public.t_order_micro_inventory_deduct_record
+    set sku = #{sku,jdbcType=VARCHAR},
+      qty = #{qty,jdbcType=INTEGER},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      container_number = #{containerNumber,jdbcType=VARCHAR},
+      storage_location = #{storageLocation,jdbcType=VARCHAR},
+      is_gift = #{isGift,jdbcType=SMALLINT},
+      expiration_date = #{expirationDate,jdbcType=DATE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      order_detail_id = #{orderDetailId,jdbcType=INTEGER},
+      purchase_price = #{purchasePrice,jdbcType=REAL},
+      account = #{account,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="listByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from public.t_order_micro_inventory_deduct_record
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOrderNoAndSku" resultMap="BaseResultMap">
+  	SELECT
+	*
+	FROM
+		t_order_micro_inventory_deduct_record
+		where 1=1 AND order_no in
+	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+	  #{item}  
+	</foreach>
+	AND sku = #{sku,jdbcType=VARCHAR}
+	<if test="expirationDate !=null">
+		AND expiration_date = #{expirationDate,jdbcType=DATE}
+	</if>
+  </select>
+  <select id="selectRecordBySkuAndExpirationDate" resultMap="BaseResultMap" parameterType="entity.product_inventory.ProductInventoryDetail">
+  	 SELECT
+		dr.*
+	FROM
+		t_order_micro_inventory_deduct_record dr
+	LEFT JOIN t_order tor ON dr.order_no = tor.order_no
+	LEFT JOIN t_inventory_sync_record sync ON dr.sku=sync.sku AND dr.warehouse_id=sync.warehouse_id
+	WHERE
+		tor.status = 4
+	AND dr.create_time > sync.last_syncing_time
+	AND dr.sku = #{sku,jdbcType=VARCHAR}
+	AND dr.warehouse_id = #{warehouseId,jdbcType=INTEGER}
+	<if test="expirationDate !=null ">
+		AND dr.expiration_date = #{expirationDate,jdbcType=DATE}
+	</if>
+  </select>
+</mapper>

@@ -1,0 +1,144 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<div id="sales_order_box" class="sales_order_box">
+    <div id="winxin_content" class="modal fade in"></div>
+    <h1><span id="sales_order_category_title">发货单售后</span><span>---</span><span>客服确认</span></h1>
+    <ul class="search_category">
+        <li>申请时间：
+            <input class="searchInput" placeholder="开始日期" id="seachTime0"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+            至
+            <input class="searchInput" placeholder="结束日期" id="seachTime1"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+        </li>
+
+        <li>
+            <div class="search">
+                <input onkeyup="enter_keyUp(event,this, getList_sale_order_cs_audit)" id="searchInput" class="searchInput" placeholder="编号/发货单号/分销商账号/分销商名称/业务员" style="width: 280px;">
+                <input class="searchButton" value="搜索" type="submit">
+            </div>
+        </li>
+    </ul>
+    <div class="content_list" id="order_info_list">
+        <table class="list_title all_table" id="sales_order_refunds_cs_audit_table"></table>
+        <div id="sales_order_refunds_cs_audit_pagination" style="text-align: center; margin-top: 30px;"></div>
+        <div id="all_sale_pagination" style="text-align: center; margin-top: 30px;"></div>
+        <div class="recharge_operation" style="display: none; padding: 0;">
+            <ul class="operation_record" style="display: none;">
+                <!--<li class="recharge_operation_li1">操作记录</li>-->
+            </ul>
+            <ul class="check_reason" style="display: none;">
+                <li class="recharge_operation_li1">查看原因</li>
+            </ul>
+            <ul class="logistics_info" style="display: none;">
+                <li class="recharge_operation_li1">物流信息</li>
+                <li class="recharge_operation_li2">
+                    <ul>
+                        <li>物流公司：</li>
+                        <li>申通快递</li>
+                    </ul>
+                </li>
+                <li class="recharge_operation_li2">
+                    <ul>
+                        <li>物流单号：</li>
+                        <li>192029489321859123583475</li>
+                    </ul>
+                </li>
+                <li class="recharge_operation_li2">
+                    <ul>
+                        <li>2015-12-03 19：01</li>
+                        <li>深圳保税仓揽件</li>
+                    </ul>
+                </li>
+                <li class="recharge_operation_li2">
+                    <ul>
+                        <li>2015-12-03 19：01</li>
+                        <li>前往调拨中心</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="recharge_check" style="display: none">
+            <ul>
+                <li class="check_all">
+                    <ul>
+                        <li style="text-align: left;padding-left: 26px;display: none" class="check_fail_reason">
+                            <p><label><input id="hgReason" type="radio" name="reason" value="近期海关通关限制"/>近期海关通关限制</label></p>
+
+                            <p><label><input id="wlReason" type="radio" name="reason" value="物流公司原因"/>物流公司原因</label></p>
+
+                            <p><label><input id="otherReason" type="radio" name="reason" value="其他特殊原因"/>其他特殊原因</label></p>
+                        </li>
+                        <li style="margin-top: 10px;;display: none">
+                            <input type="hidden" id="checkId"/>
+                            <input type="hidden" id="result"/>
+                            <input type="hidden" id="orderNo"/>
+                            <input type="hidden" id="tradeNo"/>
+                            <input type="hidden" id="productName"/>
+                            <input type="hidden" id="sumPrice"/>
+                            <input type="hidden" id="isPay"/>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="recharge_black" style="display: none"></div>
+</div>
+<div id="checkDetails" class="display">
+    <h1>发货单售后<span>---</span><span>客服确认</span><span>----</span><span>查看详情</span></h1>
+    <input type="hidden" id="SH_ORDER_ID">
+    <div class="invoice-after zone_examine_about">
+        <div>
+            <h4>基本信息</h4>
+            <div class="info-box">
+                <span class="info-left info-left2">编号：<em id="XS_ORDER_NO"></em></span>
+                <span class="info-right info-right2">状态：<em>待客服确认</em></span>
+            </div>
+            <div class="info-box">
+                <span class="info-left info-left2">申请时间：<em id="CREATE_TIME"></em></span>
+                <span class="info-right info-right2">发货单号：<em id="SALE_ORDER_NO"></em></span>
+            </div>
+            <div class="info-box">
+                <span class="info-left info-left2">分销商账号：<em id="EMAIL"></em></span>
+                <span class="info-right info-right2">
+                    <span class="info-left">分销商名称：<em id="DIS_NAME"></em></span>
+                    <span class="info-right">业务员：<em id="BUSINESS_ERP"></em></span>
+                </span>
+            </div>
+        </div>
+        <div>
+            <h4>详细内容</h4>
+            <table id="detail_table"></table>
+            <p class="red invoice-after-p">
+                <span>用户要求退款金额：<em id="DEMAND_AMOUNT"></em></span>
+                <span>实际退款金额：<em id="ACTUAL_AMOUNT">--</em></span>
+            </p>
+            <div>
+                <div>问题描述：<em id="DESC"></em></div>
+                <div>附件：
+                    <span style="vertical-align: top" id="IMG_SPAN_LIST">
+
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h4>采购信息</h4>
+            <table id="purchasing_info_table"></table>
+        </div>
+
+        <div id="OPERATE_SALES_ORDER_REFUNDS_CS_AUDIT_DIV">
+
+        </div>
+    </div>
+    <ul class="detail-nav-float">
+        <li class="detail-nav-return" onclick="detailReturn();">
+            <i class="detail-nav-return-icon"></i>
+            <span>返回</span>
+        </li>
+        <li class="detail-nav-confirm" onclick="toConfirm_cs_audit();">
+            <i class="detail-nav-confirm-icon"></i>
+            <span>去确认</span>
+        </li>
+    </ul>
+</div>

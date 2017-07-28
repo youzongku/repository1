@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.hb.SalesHBDeliveryLogMapper" >
+  <resultMap id="BaseResultMap" type="entity.sales.hb.SalesHBDeliveryLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sales_hb_id" property="salesHbId" jdbcType="INTEGER" />
+    <result column="sales_hb_no" property="salesHbNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="opt_type" property="optType" jdbcType="INTEGER" />
+    <result column="opt_time" property="optTime" jdbcType="TIMESTAMP" />
+    <result column="opt_user" property="optUser" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, sales_hb_id, sales_hb_no, status, remarks, opt_time, opt_user, opt_type
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sales_hb_delivery_logs
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectBySalesHbId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sales_hb_delivery_logs
+    where sales_hb_id = #{salesHbId,jdbcType=INTEGER}
+  </select>
+  
+  <insert id="insertSelective" parameterType="entity.sales.hb.SalesHBDeliveryLog" >
+    insert into t_sales_hb_delivery_logs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="salesHbId != null" >
+        sales_hb_id,
+      </if>
+      <if test="salesHbNo != null" >
+        sales_hb_no,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="optUser != null" >
+        opt_user,
+      </if>
+      <if test="optType != null">
+      	opt_type,
+      </if>
+      opt_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="salesHbId != null" >
+        #{salesHbId,jdbcType=INTEGER},
+      </if>
+      <if test="salesHbNo != null" >
+        #{salesHbNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="optUser != null" >
+        #{optUser,jdbcType=VARCHAR},
+      </if>
+      <if test="optType != null">
+      	#{optType,jdbcType=INTEGER},
+      </if>
+      now()
+    </trim>
+  </insert>
+</mapper>

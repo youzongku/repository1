@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.ShopCategoryMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.ShopCategory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="shop_category" property="shopCategory" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, shop_category
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />	
+    from t_dis_shop_category
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_shop_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.ShopCategory" >
+    insert into t_dis_shop_category (id, shop_category)
+    values (#{id,jdbcType=INTEGER}, #{shopCategory,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.ShopCategory" >
+    insert into t_dis_shop_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="shopCategory != null" >
+        shop_category,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shopCategory != null" >
+        #{shopCategory,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.ShopCategory" >
+    update t_dis_shop_category
+    <set >
+      <if test="shopCategory != null" >
+        shop_category = #{shopCategory,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.ShopCategory" >
+    update t_dis_shop_category
+    set shop_category = #{shopCategory,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getAllShopCategorys" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_shop_category
+    order by id asc
+  </select>
+</mapper>

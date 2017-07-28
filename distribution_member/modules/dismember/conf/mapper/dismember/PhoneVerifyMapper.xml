@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.PhoneVerifyMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.PhoneVerify" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="wano" property="wano" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="types" property="types" jdbcType="INTEGER" />
+    <result column="validate" property="validate" jdbcType="TIMESTAMP" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    id, phone, wano, code, types, validate, create_date
+  </sql>
+
+  <!-- 通过id查询 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_phone_verify
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!-- 通用查询 -->
+  <select id="getRecords" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+      <include refid="Base_Column_List" />
+    from t_phone_verify
+    <where>
+      <![CDATA[
+          create_date >= to_date(to_char(now(),'yyyy-mm-dd'), 'yyyy-mm-dd')
+          and create_date < (to_date(to_char(now(),'yyyy-mm-dd'),'yyyy-mm-dd') + interval '1 day')
+        ]]>
+      <if test="phone != null">
+        and phone = #{phone}
+      </if>
+      <if test="types != null">
+        and types = #{types}
+      </if>
+    </where>
+    order by create_date desc
+  </select>
+
+  <!-- 查询最近一条记录 -->
+  <select id="getRecord" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from t_phone_verify
+    <where>
+      <if test="phone != null">
+        and phone = #{phone}
+      </if>
+      <if test="types != null">
+        and types = #{types}
+      </if>
+    </where>
+    order by create_date desc
+    limit 1 offset 0
+  </select>
+
+  <!-- 保存 -->
+  <insert id="insert" parameterType="entity.dismember.PhoneVerify" >
+    insert into t_phone_verify (
+      phone, wano, code, types, validate, create_date
+    )
+    values (#{phone,jdbcType=VARCHAR}, #{wano,jdbcType=VARCHAR},
+      #{code,jdbcType=VARCHAR}, #{types,jdbcType=INTEGER},
+      #{validate,jdbcType=TIMESTAMP},
+      #{createDate,jdbcType=TIMESTAMP}
+    )
+  </insert>
+
+  <!-- 更新 -->
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.PhoneVerify" >
+    update t_phone_verify
+    <set >
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="wano != null" >
+        wano = #{wano,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="types != null" >
+        types = #{types,jdbcType=INTEGER},
+      </if>
+      <if test="validate != null" >
+        validate = #{validate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

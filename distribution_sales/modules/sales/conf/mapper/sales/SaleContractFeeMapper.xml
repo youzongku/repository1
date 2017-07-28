@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.SaleContractFeeMapper" >
+  <resultMap id="BaseResultMap" type="entity.sales.SaleContractFee" >
+    <result column="sales_order_no" property="salesOrderNo" jdbcType="VARCHAR" />
+    <result column="contract_no" property="contractNo" jdbcType="VARCHAR" />
+    <result column="attr_key" property="attrKey" jdbcType="VARCHAR" />
+    <result column="attr_name" property="attrName" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_delete" property="isDelete" jdbcType="BIT" />
+    <result column="fee_id" property="feeId" jdbcType="INTEGER" />
+     <result column="uid" property="uid" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="MainMap" type="entity.sales.SaleMain">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="sales_order_no" property="salesOrderNo" jdbcType="VARCHAR" />
+		<result column="ordering_date" property="orderingDate" jdbcType="TIMESTAMP" />
+		<result column="payment_type" property="paymentType" jdbcType="VARCHAR" />
+		<result column="payer" property="payer" jdbcType="VARCHAR" />
+		<result column="payment_no" property="paymentNo" jdbcType="VARCHAR" />
+		<result column="paryer_idcard" property="paryerIdcard" jdbcType="VARCHAR" />
+		<result column="pay_date" property="payDate" jdbcType="TIMESTAMP" />
+		<result column="currency" property="currency" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="is_notified" property="isNotified" jdbcType="INTEGER" />
+		<result column="is_adjusted" property="isAdjusted" jdbcType="INTEGER" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="purchase_order_no" property="purchaseOrderNo" jdbcType="VARCHAR" />
+		<result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+		<result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+		<result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+		<result column="distributor_type" property="distributorType" jdbcType="INTEGER" />
+		<result column="purchase_payment_no" property="purchasePaymentNo" jdbcType="VARCHAR" />
+		<result column="purchase_pay_date" property="purchasePayDate" jdbcType="TIMESTAMP" />
+		<result column="purchase_payment_type" property="purchasePaymentType" jdbcType="VARCHAR" />
+		<result column="compensation_payment_no" property="compensationPaymentNo" jdbcType="VARCHAR" />
+		<result column="compensation_pay_date" property="compensationPayDate" jdbcType="TIMESTAMP" />
+		<result column="compensation_payment_type" property="compensationPaymentType" jdbcType="VARCHAR" />
+		<result column="compensation_payment_amount" property="compensationAmount" jdbcType="DOUBLE" />
+		<result column="dis_prime_cost" property="disPrimeCost" jdbcType="DOUBLE" />
+		<result column="gst" property="gst" jdbcType="DOUBLE" />
+		<result column="vat" property="vat" jdbcType="DOUBLE" />
+		<result column="import_tar" property="importTar" jdbcType="DOUBLE" />
+		<result column="postal_fee" property="postalFee" jdbcType="DOUBLE" />
+		<result column="tax_fee" property="taxFee" jdbcType="DOUBLE" />
+		<result column="is_fetched" property="isFetched" jdbcType="BOOLEAN" />
+		<result column="erp_reason" property="erpReason" jdbcType="VARCHAR" />
+		<result column="cinfirm_receipt_date" property="confirmReceiptDate" jdbcType="TIMESTAMP" />
+		<result column="platform_amount" property="platformAmount" jdbcType="DOUBLE" />
+		<result column="clearance_amount" property="clearanceAmount" jdbcType="DOUBLE" />
+		<result column="host_origin" property="hostOrigin" jdbcType="INTEGER" />
+		<result column="order_actual_payment" property="orderActualPayment" jdbcType="DOUBLE" />
+		<result column="source" property="source" jdbcType="VARCHAR" />
+		<result column="host" property="host" jdbcType="VARCHAR" />
+		<result column="dis_mode" property="disMode" jdbcType="INTEGER" />
+		<result column="is_close" property="isClose" jdbcType="BOOLEAN" />
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+		<result column="created_from" property="createdFrom" jdbcType="INTEGER" />
+		<result column="opt_fee" property="optFee" jdbcType="DOUBLE" />
+		<result column="arrvice_total" property="arrviceTotal" jdbcType="DOUBLE" />
+		<result column="total_cost" property="totalCost" jdbcType="DOUBLE" />
+		<result column="profit" property="profit" jdbcType="DOUBLE" />
+		<result column="profit_margin" property="profitMargin" jdbcType="DOUBLE" />
+		<result column="contract_charge" property="contractCharge" jdbcType="DOUBLE" />
+		<result column="shop_deduction_points" property="shopDeductionPoints" jdbcType="DOUBLE" />
+		<result column="sdp_amount" property="sdpAmount" jdbcType="DOUBLE" />
+		<result column="erp_status" property="erpStatus" jdbcType="INTEGER" />
+		<result column="clearance_price_total" property="clearancePriceTotal" jdbcType="DOUBLE" />
+		<result column="thirdpart_lc" jdbcType="VARCHAR" property="thirdPartLogisticsTypeCode" />
+		<result column="orderchannel" property="orderchannel" jdbcType="INTEGER" />
+		<result column="cs_confirm_date" property="csConfirmDate" jdbcType="TIMESTAMP" />
+		<result column="rejected_by_finance" property="rejectedByFinance" jdbcType="BOOLEAN" />
+		<result column="estimated_catfee_in_order" property="estimatedCatfeeInOrder" jdbcType="DOUBLE" />
+		<result column="real_catfee_in_order" property="realCatfeeInOrder" jdbcType="DOUBLE" />
+	</resultMap> 
+  <sql id="Base_Column_List" >
+   		sales_order_no, contract_no, attr_key, attr_name, value, create_time, update_time,is_delete,fee_id,uid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_sales_order_fee
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
+   <select id="getFields" parameterType="java.lang.String" resultType="dto.sales.FeeColumnDto">
+		select 
+			foo.attr_name as columnName,
+			foo.attr_key as name,
+			foo.attr_key as index
+		from (
+				select
+					"row_number" () over (
+						partition by attr_name
+						order by
+							create_time desc
+					) as rownum,*
+				from
+					t_product_sales_order_fee
+				where 
+					is_delete = false
+					and contract_no = #{jdbcType=VARCHAR}
+				order by create_time asc
+			) foo
+		where foo.rownum = 1
+   </select>
+   <select id="selectByParams" resultMap="BaseResultMap" >
+   		select 
+   			<include refid="Base_Column_List" />
+ 		from 
+ 			t_product_sales_order_fee
+ 		where 
+ 			is_delete = false
+ 			<if test="sno != null">
+ 				and sales_order_no = #{sno,jdbcType=VARCHAR}
+ 			</if>
+   			<if test="cno != null">
+   				and contract_no = #{cno,jdbcType=VARCHAR}
+   			</if>
+   </select>
+   <select id="pageSearch" resultMap="MainMap" parameterType="dto.sales.ContractFeeSearch">
+	   	select
+			m.*
+		from
+			(
+				select
+					foo.*
+				from
+					(
+						select
+							"row_number" () over (
+								partition by foo.sales_order_no
+							) as rownum2,
+							foo.*
+						from
+							(
+								select
+									"row_number" () over (
+										partition by attr_name
+										order by value asc
+									) as rownum ,*
+								from
+									t_product_sales_order_fee
+								where 1 = 1
+									<if test="contractNo">
+										and contract_no = #{contractNo,jdbcType=VARCHAR}
+									</if>
+									<if test="sidx != null and sidx != '' and sidx != 'orderingDate' ">
+										and attr_key = #{sidx,jdbcType=VARCHAR}
+									</if>
+							) foo
+					) foo
+					where foo.rownum2 = 1
+			) foo
+		 left join 
+			t_product_sales_order_main m 
+			on  foo.sales_order_no = m .sales_order_no
+		where 1 = 1
+		<if test="search != null and search !=''">
+			and (lower(m.sales_order_no) like lower('%'||#{search,jdbcType=VARCHAR}||'%'))
+		</if>
+		 order by
+			<choose>
+				<when test="sord != null and sord != '' and sidx != null and sidx != '' ">
+					<choose>
+						<when test="sidx != 'orderingDate'">
+							foo.rownum ${sord}
+						</when>
+						<otherwise>
+						 	m.ordering_date ${sord}
+						</otherwise>
+					</choose>
+				</when>
+				<otherwise>
+					 m.ordering_date desc
+				</otherwise>
+			</choose> 
+		<if test="page != null and rows != null">
+			LIMIT #{rows} OFFSET (#{page}-1)*#{rows}
+		</if>	
+   </select>
+   <select id="pageCount" parameterType="dto.sales.ContractFeeSearch" resultType="java.lang.Integer">
+		select
+			count(1)
+		from
+		(
+			select
+			"row_number" () over (
+				partition by foo.sales_order_no
+				) as rownum2,
+				foo.*
+			from
+				(
+					select
+						"row_number" () over (
+							partition by attr_name
+							order by value asc
+						) as rownum ,*
+					from
+					t_product_sales_order_fee
+					where 1 = 1
+						<if test="contractNo">
+						and contract_no = #{contractNo,jdbcType=VARCHAR}
+					</if>
+					<if test="sidx != null and sidx != '' and sidx != 'orderingDate' ">
+						and attr_key = #{sidx,jdbcType=VARCHAR}
+					</if>
+				) foo
+			) foo
+		where foo.rownum2 = 1
+   </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_product_sales_order_fee
+    where uid = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="entity.sales.SaleContractFee" >
+    insert into t_product_sales_order_fee (uid, sales_order_no, contract_no, 
+      attr_key, attr_name, value, 
+      create_time, update_time)
+    values (#{uid,jdbcType=VARCHAR}, #{salesOrderNo,jdbcType=VARCHAR}, #{contractNo,jdbcType=VARCHAR}, 
+      #{attrKey,jdbcType=VARCHAR}, #{attrName,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.sales.SaleContractFee" >
+    insert into t_product_sales_order_fee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="salesOrderNo != null" >
+        sales_order_no,
+      </if>
+      <if test="contractNo != null" >
+        contract_no,
+      </if>
+      <if test="attrKey != null" >
+        attr_key,
+      </if>
+      <if test="attrName != null" >
+        attr_name,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="feeId != null" >
+        fee_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="salesOrderNo != null" >
+        #{salesOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contractNo != null" >
+        #{contractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="attrKey != null" >
+        #{attrKey,jdbcType=VARCHAR},
+      </if>
+      <if test="attrName != null" >
+        #{attrName,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feeId != null" >
+        #{feeId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.sales.SaleContractFee" >
+    update t_product_sales_order_fee
+    <set >
+      <if test="salesOrderNo != null" >
+        sales_order_no = #{salesOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contractNo != null" >
+        contract_no = #{contractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="attrKey != null" >
+        attr_key = #{attrKey,jdbcType=VARCHAR},
+      </if>
+      <if test="attrName != null" >
+        attr_name = #{attrName,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.sales.SaleContractFee" >
+    update t_product_sales_order_fee
+    set sales_order_no = #{salesOrderNo,jdbcType=VARCHAR},
+      contract_no = #{contractNo,jdbcType=VARCHAR},
+      attr_key = #{attrKey,jdbcType=VARCHAR},
+      attr_name = #{attrName,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+</mapper>

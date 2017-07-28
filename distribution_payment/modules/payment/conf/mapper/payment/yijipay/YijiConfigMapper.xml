@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.payment.yijipay.YijiConfigMapper" >
+  <resultMap id="BaseResultMap" type="entity.payment.yijipay.YijiConfig" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="yiji_url" property="yijiUrl" jdbcType="VARCHAR" />
+    <result column="post_protocol" property="postProtocol" jdbcType="VARCHAR" />
+    <result column="get_protocol" property="getProtocol" jdbcType="VARCHAR" />
+    <result column="trade_service" property="tradeService" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="partner_id" property="partnerId" jdbcType="VARCHAR" />
+    <result column="sign_type" property="signType" jdbcType="VARCHAR" />
+    <result column="return_url" property="returnUrl" jdbcType="VARCHAR" />
+    <result column="notify_url" property="notifyUrl" jdbcType="VARCHAR" />
+    <result column="secret_key" property="secretKey" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="single_pay_service" property="singlePayService" jdbcType="VARCHAR" />
+    <result column="single_pay_version" property="singlePayVersion" jdbcType="VARCHAR" />
+    <result column="mark" property="mark" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, yiji_url, post_protocol, get_protocol, trade_service, version,
+    partner_id, sign_type, return_url, notify_url, secret_key, create_user,
+    create_date, single_pay_service, single_pay_version,mark
+  </sql>
+
+  <select id="getYijiConfig" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from t_yiji_config
+    where mark = #{mark}
+    order by create_date desc
+    limit 1 offset 0
+  </select>
+
+</mapper>

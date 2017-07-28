@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.SaleInputMapper" >
+  <resultMap id="BaseResultMap" type="entity.sales.SaleInput" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="product_img" property="productImg" jdbcType="VARCHAR" />
+    <result column="final_selling_price" property="finalSellingPrice" jdbcType="DOUBLE" />
+    <result column="qty" property="qty" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, email, sku, warehouse_id, warehouse_name, product_img, final_selling_price, qty,title
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_sales_input
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_sales_input
+    where email = #{email,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_product_sales_input
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.sales.SaleInput" >
+    insert into t_product_sales_input (id, email, sku, 
+      warehouse_id, warehouse_name, product_img, 
+      final_selling_price, qty, title)
+    values (#{id,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{sku,jdbcType=VARCHAR}, 
+      #{warehouseId,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR}, #{productImg,jdbcType=VARCHAR}, 
+      #{finalSellingPrice,jdbcType=DOUBLE}, #{qty,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.sales.SaleInput" >
+    insert into t_product_sales_input
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="productImg != null" >
+        product_img,
+      </if>
+      <if test="finalSellingPrice != null" >
+        final_selling_price,
+      </if>
+      <if test="qty != null" >
+        qty,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="productImg != null" >
+        #{productImg,jdbcType=VARCHAR},
+      </if>
+      <if test="finalSellingPrice != null" >
+        #{finalSellingPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.sales.SaleInput" >
+    update t_product_sales_input
+    <set >
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="productImg != null" >
+        product_img = #{productImg,jdbcType=VARCHAR},
+      </if>
+      <if test="finalSellingPrice != null" >
+        final_selling_price = #{finalSellingPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="qty != null" >
+        qty = #{qty,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.sales.SaleInput" >
+    update t_product_sales_input
+    set email = #{email,jdbcType=VARCHAR},
+      sku = #{sku,jdbcType=VARCHAR},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      product_img = #{productImg,jdbcType=VARCHAR},
+      final_selling_price = #{finalSellingPrice,jdbcType=DOUBLE},
+      qty = #{qty,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="batchInsert" parameterType="java.util.List">
+	<foreach collection="list" item="item" index="index" separator=";">
+		insert into t_product_sales_input
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="item.id != null">
+				id,
+			</if>
+			<if test="item.email != null">
+				email,
+			</if>
+			<if test="item.sku != null">
+				sku,
+			</if>
+			<if test="item.warehouseId != null">
+				warehouse_id,
+			</if>
+			<if test="item.warehouseName != null">
+				warehouse_name,
+			</if>
+			<if test="item.productImg != null">
+				product_img,
+			</if>
+			<if test="item.finalSellingPrice != null">
+				final_selling_price,
+			</if>
+			<if test="item.qty != null">
+				qty,
+			</if>
+			<if test="item.title != null">
+				title,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="item.id != null">
+				#{item.id,jdbcType=INTEGER},
+			</if>
+			<if test="item.email != null">
+				#{item.email,jdbcType=VARCHAR},
+			</if>
+			<if test="item.sku != null">
+				#{item.sku,jdbcType=VARCHAR},
+			</if>
+			<if test="item.warehouseId != null">
+				#{item.warehouseId,jdbcType=INTEGER},
+			</if>
+			<if test="item.warehouseName != null">
+				#{item.warehouseName,jdbcType=VARCHAR},
+			</if>
+			<if test="item.productImg != null">
+				#{item.productImg,jdbcType=VARCHAR},
+			</if>
+			<if test="item.finalSellingPrice != null">
+				#{item.finalSellingPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="item.qty != null">
+				#{item.qty,jdbcType=INTEGER},
+			</if>
+			<if test="item.title != null">
+				#{item.title,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</foreach>
+ </insert>
+ <delete id="deleteByEmail" parameterType="java.lang.String" >
+    delete from t_product_sales_input
+    where email = #{email,jdbcType=VARCHAR}
+  </delete>
+ <delete id="deleteByIds" parameterType="java.util.List">
+	delete from t_product_sales_input where id in  
+	<foreach item="item" index="index" collection="list" open="("
+	separator="," close=")">
+		#{item}
+	</foreach>
+ </delete>
+</mapper>

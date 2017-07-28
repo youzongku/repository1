@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.DisShopDpLogMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.DisShopDpLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="shop_id" property="shopId" jdbcType="INTEGER" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="deduction_points" property="deductionPoints" jdbcType="DOUBLE" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, shop_id, shop_name, email, deduction_points, create_user, create_time
+  </sql>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select <include refid="Base_Column_List"/>
+    from t_dis_shop_dp_logs
+    <where>
+    	<if test="shopId!=null and shopId != -1">
+    		shop_id = #{shopId}
+    	</if>
+    	<if test="email!=null and email!='' ">
+    		and email = #{email}
+    	</if>
+    </where>
+    order by create_time desc
+  </select>
+  
+  <select id="selectByShopIdList" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select <include refid="Base_Column_List"/>
+    from t_dis_shop_dp_logs
+    where shop_id in 
+    <foreach collection="list" item="shopId" open="(" close=")" separator=",">
+    	#{shopId}
+    </foreach>
+  </select>
+  
+  <insert id="insert" parameterType="entity.dismember.DisShopDpLog" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_dis_shop_dp_logs (shop_id, shop_name, email, deduction_points, create_user, create_time)
+    values (#{shopId}, #{shopName}, #{email}, #{deductionPoints}, #{createUser}, now())
+  </insert>
+  
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into t_dis_shop_dp_logs (shop_id, shop_name,email,deduction_points,create_user,create_time)
+    values 
+    <foreach collection="list" item="item" index="index" separator="," >
+		(#{item.shopId}, #{item.shopName},#{item.email},#{item.deductionPoints},#{item.createUser},#{item.createTime})
+	</foreach>
+  </insert>
+  
+  <insert id="insertSelective" parameterType="entity.dismember.DisShopDpLog" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_dis_shop_dp_logs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="shopName != null and shopName != '' " >
+        shop_name,
+      </if>
+      <if test="email != null and email != '' " >
+        email,
+      </if>
+      <if test="deductionPoints != null" >
+        deduction_points,
+      </if>
+      <if test="createUser != null and createUser != '' " >
+        create_user,
+      </if>
+      create_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shopId != null" >
+        #{shopId},
+      </if>
+      <if test="shopName != null and shopName != '' " >
+        #{shopName},
+      </if>
+      <if test="email != null and email != '' " >
+        #{email},
+      </if>
+      <if test="deductionPoints != null" >
+        #{deductionPoints},
+      </if>
+      <if test="createUser != null and createUser != '' " >
+        #{createUser},
+      </if>
+      now()
+    </trim>
+  </insert>
+  
+</mapper>

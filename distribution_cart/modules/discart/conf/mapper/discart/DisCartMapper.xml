@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.discart.DisCartMapper" >
+  <resultMap id="BaseResultMap" type="entity.discart.DisCart" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="useable" property="useable" jdbcType="INTEGER" />
+    <result column="createtime" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, email, useable, createtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_cart
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_cart
+    where id = #{id}
+  </delete>
+  <insert id="insert" parameterType="entity.discart.DisCart" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into t_dis_cart (email, useable)
+    values (#{email}, #{useable})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.discart.DisCart" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into t_dis_cart
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="useable != null" >
+        useable
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="email != null" >
+        #{email},
+      </if>
+      <if test="useable != null" >
+        #{useable}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.discart.DisCart" >
+    update t_dis_cart
+    <set >
+      <if test="email != null" >
+        email = #{email},
+      </if>
+      <if test="useable != null" >
+        useable = #{useable}
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.discart.DisCart" >
+    update t_dis_cart
+    set email = #{email},
+      useable = #{useable},
+      createtime = #{createTime}
+    where id = #{id}
+  </update>
+  <select id="getUsableDisCart" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_cart
+    where useable = 1
+    and email = #{email}
+    order by createtime desc
+    limit 1 offset 0
+  </select>
+  
+  <insert id="insertActiveInfo" parameterType="java.util.Map">
+  	insert into t_cart_active (cartid,active_plvg) values 
+  	(#{info.cartid,jdbcType=INTEGER},#{info.activePlvg,jdbcType=VARCHAR})
+  </insert>
+  <resultMap id="ActiveMap" type="java.util.Map">
+  	<id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cartid" property="cartid" jdbcType="INTEGER" />
+    <result column="active_info" property="activeInfo" jdbcType="VARCHAR" />
+    <result column="multiple_info" property="multiples" jdbcType="VARCHAR" />
+    <!-- add by zbc 存放活动优惠 -->
+    <result column="active_plvg" property="activePlvg" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getActiveInfo" resultMap="ActiveMap" parameterType="java.lang.Integer">
+  	select * from t_cart_active where cartid=#{0,jdbcType=INTEGER}
+  </select>
+  <update id="updateActiveInfo" parameterType="java.util.Map">
+  	update t_cart_active set active_info = #{info.insts,jdbcType=VARCHAR},active_plvg=#{info.activePlvg,jdbcType=VARCHAR} where cartid=#{info.cartid,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteActiveInfo" parameterType="java.lang.String">
+  	delete from t_cart_active where cartid = (select id from t_dis_cart where email=#{0,jdbcType=VARCHAR})
+  </delete>
+</mapper>

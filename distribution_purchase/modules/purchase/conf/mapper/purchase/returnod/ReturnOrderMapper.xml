@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.purchase.returnod.ReturnOrderMapper" >
+  <resultMap id="BaseResultMap" type="entity.purchase.returnod.ReturnOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="return_order_no" property="returnOrderNo" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="salesman" property="salesman" jdbcType="VARCHAR" />
+    <result column="total_return_amount" property="totalReturnAmount" jdbcType="DOUBLE" />
+    <result column="user_expect_total_return_amount" property="userExpectTotalReturnAmount" jdbcType="DOUBLE" />
+    <result column="actual_total_return_amount" property="actualTotalReturnAmount" jdbcType="DOUBLE" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="application_time" property="applicationTime" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="audit_remarks" property="auditRemarks" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_user" property="lastUpdateUser" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, return_order_no, email, nick_name, salesman, total_return_amount, user_expect_total_return_amount, 
+    actual_total_return_amount, status, application_time, remarks, audit_remarks, 
+    create_time, create_user, last_update_time, last_update_user
+  </sql>
+  
+  <select id="selectReturnOrderInfo" parameterType="java.util.List" resultType="dto.purchase.returnod.ReturnOrderInfo">
+  	select 
+  	ro.id as returnOrderId, 
+  	ro.return_order_no as returnOrderNo, 
+  	ro.email as email, 
+  	ro.user_expect_total_return_amount as userExpectTotalReturnAmount, 
+  	ro.total_return_amount as totalReturnAmount, 
+  	ro.actual_total_return_amount as actualTotalReturnAmount, 
+  	ro.status as status, 
+  	rod.id as returnOrderDetailId, 
+  	rod.purchase_order_no as purchaseOrderNo, 
+  	rod.sku as sku, 
+  	rod.warehouse_id as warehouseId, 
+  	rod.purchase_price as purchasePrice, 
+  	rod.capfee as capfee, 
+  	rod.purchase_time as purchaseTime, 
+  	rod.expiration_date as expirationDate, 
+  	rod.return_qty as returnQty, 
+  	rod.qty as qty, 
+  	rod.residue_num as residueNum
+  	from t_return_order ro
+  	inner join t_return_order_detail rod on ro.id = rod.return_order_id
+  	<where>
+  		<if test=" purchaseOrderNo!=null and purchaseOrderNo!='' ">
+  			rod.purchase_order_no = #{purchaseOrderNo}
+  		</if>
+  		<if test="status!=null">
+  			and ro.status = #{status}
+  		</if>
+  	</where> 
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_return_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByReturnOrderNo" resultMap="BaseResultMap" parameterType="string" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_return_order
+    where return_order_no = #{returnOrderNo}
+  </select>
+  
+  <select id="selectByReturnOrderNoList" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_return_order
+    where return_order_no in
+    <foreach collection="list" item="returnOrderNo" open="(" close=")" separator=",">
+    	#{returnOrderNo}
+    </foreach>
+  </select>
+  
+  <sql id="page_query_conditions">
+  	<where>
+  		<if test="email!=null and email!=''">
+  			email=#{email}
+  		</if>
+  		<if test="status!=null">
+  			and status=#{status}
+  		</if>
+  		<if test="startApplicationDate != null and startApplicationDate != '' ">
+        	<![CDATA[AND date_trunc('day', application_time) >= to_date(''||#{startApplicationDate}||'','yyyy-mm-dd')]]>
+        </if>
+        <if test="endApplicationDate != null and endApplicationDate != '' ">
+        	<![CDATA[AND date_trunc('day', application_time) <= to_date(''||#{endApplicationDate}||'','yyyy-mm-dd')]]>
+        </if>
+        <if test="returnOrderNo != null and returnOrderNo != '' ">
+        	and return_order_no = #{returnOrderNo}
+        </if>
+  		<if test="searchText!=null and searchText!=''">
+  			and (
+	  			email like '%'||#{searchText}||'%'
+	  			or nick_name like '%'||#{searchText}||'%'
+	  			or return_order_no=#{searchText}
+  			)
+  		</if>
+  	</where>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_return_order
+    <include refid="page_query_conditions"/>
+    <choose>
+    	<when test="filter != null and sort != null and sort != ''">
+			order by ${sort} ${filter} nulls last
+		</when>
+		<otherwise>
+			ORDER BY create_time DESC
+		</otherwise>
+    </choose>
+    <if test="pageSize !=null and currPage !=null">
+		LIMIT #{pageSize} OFFSET (#{currPage}-1)*#{pageSize}
+	</if>
+  </select>
+  <select id="selectCountByParams" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	select count(*)
+    from t_return_order
+    <include refid="page_query_conditions"/>
+  </select>
+  
+  <update id="deleteByPrimaryKey">
+    update t_return_order
+    set status = #{status}
+    where id = #{id}
+  </update>
+  
+  <insert id="insert" parameterType="entity.purchase.returnod.ReturnOrder" keyProperty="id" useGeneratedKeys="true" >
+    insert into t_return_order (return_order_no, email, nick_name, salesman, total_return_amount, 
+    user_expect_total_return_amount, actual_total_return_amount, status, application_time, remarks, audit_remarks, 
+    create_time, create_user, last_update_time, last_update_user)
+    values (#{returnOrderNo}, #{email}, #{nickName}, #{salesman}, #{totalReturnAmount}, 
+    #{userExpectTotalReturnAmount}, #{actualTotalReturnAmount}, #{status}, now(), #{remarks}, #{auditRemarks}, 
+      now(), #{createUser}, now(), #{lastUpdateUser})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="entity.purchase.returnod.ReturnOrder" keyProperty="id" useGeneratedKeys="true" >
+    insert into t_return_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+    	application_time, create_time, last_update_time,
+      <if test="returnOrderNo != null" >
+        return_order_no,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="salesman != null" >
+        salesman,
+      </if>
+      <if test="totalReturnAmount != null" >
+        total_return_amount,
+      </if>
+      <if test="userExpectTotalReturnAmount != null" >
+        user_expect_total_return_amount,
+      </if>
+      <if test="actualTotalReturnAmount != null" >
+        actual_total_return_amount,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="auditRemarks != null" >
+        audit_remarks,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+    	now(), now(), now(),
+      <if test="returnOrderNo != null" >
+        #{returnOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="salesman != null" >
+        #{salesman,jdbcType=VARCHAR},
+      </if>
+      <if test="totalReturnAmount != null" >
+        #{totalReturnAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="userExpectTotalReturnAmount != null" >
+        #{userExpectTotalReturnAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="actualTotalReturnAmount != null" >
+        #{actualTotalReturnAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="auditRemarks != null" >
+        #{auditRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateUser != null" >
+        #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.purchase.returnod.ReturnOrder" >
+    update t_return_order
+    <set >
+    	last_update_time = now(),
+      <if test="actualTotalReturnAmount != null" >
+        actual_total_return_amount = #{actualTotalReturnAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="auditRemarks != null" >
+        audit_remarks = #{auditRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="batchUpdateByPrimaryKeySelective" parameterType="java.util.List">
+	<foreach collection="list" item="ro" index="index" open="" close="" separator=";">
+		update t_return_order
+	    <set >
+	    	last_update_time = now(),
+	      <if test="ro.actualTotalReturnAmount != null" >
+	        actual_total_return_amount = #{ro.actualTotalReturnAmount,jdbcType=DOUBLE},
+	      </if>
+	      <if test="ro.status != null" >
+	        status = #{ro.status,jdbcType=INTEGER},
+	      </if>
+	      <if test="ro.auditRemarks != null" >
+	        audit_remarks = #{ro.auditRemarks,jdbcType=VARCHAR},
+	      </if>
+	      <if test="ro.lastUpdateUser != null" >
+	        last_update_user = #{ro.lastUpdateUser,jdbcType=VARCHAR},
+	      </if>
+	    </set>
+	    where id = #{ro.id,jdbcType=INTEGER}
+	</foreach>
+  </update>
+
+  
+</mapper>

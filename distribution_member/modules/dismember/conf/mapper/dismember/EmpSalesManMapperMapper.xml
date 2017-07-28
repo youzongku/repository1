@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.EmpSalesManMapperMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.EmpSalesManMapper" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="emp_id" property="empId" jdbcType="INTEGER" />
+    <result column="salesman_id" property="salesmanId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, emp_id, salesman_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_emp_salesman_mapper
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_emp_salesman_mapper
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.EmpSalesManMapper" >
+    insert into t_dis_emp_salesman_mapper (id, emp_id, salesman_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{empId,jdbcType=INTEGER}, #{salesmanId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.EmpSalesManMapper" >
+    insert into t_dis_emp_salesman_mapper
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="empId != null" >
+        emp_id,
+      </if>
+      <if test="salesmanId != null" >
+        salesman_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="empId != null" >
+        #{empId,jdbcType=INTEGER},
+      </if>
+      <if test="salesmanId != null" >
+        #{salesmanId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.EmpSalesManMapper" >
+    update t_dis_emp_salesman_mapper
+    <set >
+      <if test="empId != null" >
+        emp_id = #{empId,jdbcType=INTEGER},
+      </if>
+      <if test="salesmanId != null" >
+        salesman_id = #{salesmanId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.EmpSalesManMapper" >
+    update t_dis_emp_salesman_mapper
+    set emp_id = #{empId,jdbcType=INTEGER},
+      salesman_id = #{salesmanId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectBySaleManId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    SELECT 
+    	esm.*
+    FROM t_dis_emp_salesman_mapper esm
+		LEFT JOIN t_dis_salesman ds
+		on esm.salesman_id = ds.id
+    WHERE ds.account is not null and emp_id = #{empId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteBySalemanId"  parameterType="java.lang.Integer" >
+  	delete from t_dis_emp_salesman_mapper where salesman_id = #{salesManId,jdbcType=INTEGER}
+  </delete>
+   <select id="selectBySaleManIds" resultMap="BaseResultMap" parameterType="java.util.List" >
+    SELECT 
+    	esm.*
+    FROM t_dis_emp_salesman_mapper esm
+		LEFT JOIN t_dis_salesman ds
+		on esm.salesman_id = ds.id
+    WHERE ds.account is not null 
+    	and emp_id in 
+	    <foreach collection="list" item="item" open="(" close=")" separator=",">
+	    	#{item,jdbcType=INTEGER}
+	    </foreach>
+  </select>
+</mapper>

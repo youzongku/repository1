@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.payment.yijipay.MergeResultMapper" >
+  <resultMap id="BaseResultMap" type="entity.payment.yijipay.MergeResult" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="merge_pay_result" property="mergePayResult" jdbcType="VARCHAR" />
+    <result column="notify_time" property="notifyTime" jdbcType="VARCHAR" />
+    <result column="notify_url" property="notifyUrl" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="partner_id" property="partnerId" jdbcType="VARCHAR" />
+    <result column="protocol" property="protocol" jdbcType="VARCHAR" />
+    <result column="result_code" property="resultCode" jdbcType="VARCHAR" />
+    <result column="result_message" property="resultMessage" jdbcType="VARCHAR" />
+    <result column="return_url" property="returnUrl" jdbcType="VARCHAR" />
+    <result column="service" property="service" jdbcType="VARCHAR" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+    <result column="sign_type" property="signType" jdbcType="VARCHAR" />
+    <result column="success" property="success" jdbcType="VARCHAR" />
+    <result column="trade_detail" property="tradeDetail" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+    <result column="merch_order_no" property="merchOrderNo" jdbcType="VARCHAR" />
+    <result column="creat_trade_result" property="creatTradeResult" jdbcType="VARCHAR" />
+    <result column="creat_result" property="creatResult" jdbcType="VARCHAR" />
+    <result column="trade_amount" property="tradeAmount" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <!--查询-->
+  <select id="getResult" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select * from t_yijifu_merge_result
+    <where>
+      <if test="orderNo != null">
+        order_no = #{orderNo}
+      </if>
+      <if test="id != null">
+        id = #{id}
+      </if>
+    </where>
+  </select>
+
+  <!--保存-->
+  <insert id="saveResult" parameterType="entity.payment.yijipay.MergeResult" >
+    insert into t_yijifu_merge_result (merge_pay_result, notify_time,
+      notify_url, order_no, partner_id, protocol, result_code, result_message,
+      return_url, service, sign, sign_type, success, trade_detail,
+      version, trade_no, merch_order_no, creat_trade_result, creat_result,
+      trade_amount, create_date)
+    values (#{mergePayResult,jdbcType=VARCHAR}, #{notifyTime,jdbcType=VARCHAR},
+      #{notifyUrl,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, #{partnerId,jdbcType=VARCHAR}, 
+      #{protocol,jdbcType=VARCHAR}, #{resultCode,jdbcType=VARCHAR}, #{resultMessage,jdbcType=VARCHAR}, 
+      #{returnUrl,jdbcType=VARCHAR}, #{service,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, 
+      #{signType,jdbcType=VARCHAR}, #{success,jdbcType=VARCHAR}, #{tradeDetail,jdbcType=VARCHAR}, 
+      #{version,jdbcType=VARCHAR}, #{tradeNo,jdbcType=VARCHAR}, #{merchOrderNo,jdbcType=VARCHAR},
+      #{creatTradeResult,jdbcType=VARCHAR}, #{creatResult,jdbcType=VARCHAR}, #{tradeAmount,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+
+  <!--更新-->
+  <update id="upResult" parameterType="entity.payment.yijipay.MergeResult" >
+    update t_yijifu_merge_result
+    <set >
+      <if test="mergePayResult != null" >
+        merge_pay_result = #{mergePayResult,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyTime != null" >
+        notify_time = #{notifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrl != null" >
+        notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerId != null" >
+        partner_id = #{partnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="protocol != null" >
+        protocol = #{protocol,jdbcType=VARCHAR},
+      </if>
+      <if test="resultCode != null" >
+        result_code = #{resultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resultMessage != null" >
+        result_message = #{resultMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="returnUrl != null" >
+        return_url = #{returnUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="service != null" >
+        service = #{service,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        sign_type = #{signType,jdbcType=VARCHAR},
+      </if>
+      <if test="success != null" >
+        success = #{success,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeDetail != null" >
+        trade_detail = #{tradeDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNo != null" >
+        trade_no = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchOrderNo != null" >
+        merch_order_no = #{merchOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTradeResult != null" >
+        creat_trade_result = #{creatTradeResult,jdbcType=VARCHAR},
+      </if>
+      <if test="creatResult != null" >
+        creat_result = #{creatResult,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeAmount != null" >
+        trade_amount = #{tradeAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

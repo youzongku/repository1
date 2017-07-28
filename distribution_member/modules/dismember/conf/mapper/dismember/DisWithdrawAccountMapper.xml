@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.DisWithdrawAccountMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.DisWithdrawAccount" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="withdraw_account" property="withdrawAccount" jdbcType="VARCHAR" />
+    <result column="account_user" property="accountUser" jdbcType="VARCHAR" />
+    <result column="account_unit" property="accountUnit" jdbcType="VARCHAR" />
+    <result column="distributor_email" property="distributorEmail" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="is_bind" property="isBind" jdbcType="INTEGER" />
+    <result column="account_type" property="accountType" jdbcType="INTEGER" />
+    <result column="account_province" property="accountProvince" jdbcType="VARCHAR" />
+    <result column="account_city" property="accountCity" jdbcType="VARCHAR" />
+    <result column="if_effective" property="ifEffective" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, withdraw_account, account_user, account_unit, distributor_email, create_time, is_bind,
+    account_type, account_province, account_city,if_effective
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_withdraw_account
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_withdraw_account
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.DisWithdrawAccount" >
+    insert into t_dis_withdraw_account (id, withdraw_account, account_user, 
+      account_unit, distributor_email, create_time, is_bind,
+      account_type, account_province, account_city,if_effective
+      )
+    values (#{id,jdbcType=INTEGER}, #{withdrawAccount,jdbcType=VARCHAR}, #{accountUser,jdbcType=VARCHAR}, 
+      #{accountUnit,jdbcType=VARCHAR}, #{distributorEmail,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{isBind,jdbcType=INTEGER}, #{accountType,jdbcType=INTEGER}, #{accountProvince,jdbcType=VARCHAR},
+      #{accountCity,jdbcType=VARCHAR},#{ifEffective,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.DisWithdrawAccount" >
+    insert into t_dis_withdraw_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="withdrawAccount != null" >
+        withdraw_account,
+      </if>
+      <if test="accountUser != null" >
+        account_user,
+      </if>
+      <if test="accountUnit != null" >
+        account_unit,
+      </if>
+      <if test="distributorEmail != null" >
+        distributor_email,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="isBind != null" >
+        is_bind,
+      </if>
+      <if test="accountType != null" >
+        account_type,
+      </if>
+      <if test="accountProvince != null" >
+        account_province,
+      </if>
+      <if test="accountCity != null" >
+        account_city,
+      </if>
+      <if test="ifEffective != null" >
+        if_effective,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="withdrawAccount != null" >
+        #{withdrawAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="accountUser != null" >
+        #{accountUser,jdbcType=VARCHAR},
+      </if>
+      <if test="accountUnit != null" >
+        #{accountUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="distributorEmail != null" >
+        #{distributorEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isBind != null" >
+        #{isBind,jdbcType=INTEGER},
+      </if>
+      <if test="accountType != null" >
+        #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test="accountProvince != null" >
+        #{accountProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="accountCity != null" >
+        #{accountCity,jdbcType=VARCHAR},
+      </if>
+      <if test="ifEffective != null" >
+        #{ifEffective,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.DisWithdrawAccount" >
+    update t_dis_withdraw_account
+    <set >
+      <if test="withdrawAccount != null" >
+        withdraw_account = #{withdrawAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="accountUser != null" >
+        account_user = #{accountUser,jdbcType=VARCHAR},
+      </if>
+      <if test="accountUnit != null" >
+        account_unit = #{accountUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="distributorEmail != null" >
+        distributor_email = #{distributorEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isBind != null" >
+        is_bind = #{isBind,jdbcType=INTEGER},
+      </if>
+      <if test="accountType != null" >
+        account_type = #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test="accountProvince != null" >
+        account_province = #{accountProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="accountCity != null" >
+        account_city = #{accountCity,jdbcType=VARCHAR},
+      </if>
+      <if test="ifEffective != null" >
+        if_effective = #{ifEffective,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.DisWithdrawAccount" >
+    update t_dis_withdraw_account
+    set withdraw_account = #{withdrawAccount,jdbcType=VARCHAR},
+      account_user = #{accountUser,jdbcType=VARCHAR},
+      account_unit = #{accountUnit,jdbcType=VARCHAR},
+      distributor_email = #{distributorEmail,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_bind = #{isBind,jdbcType=INTEGER},
+      #{account_city,jdbcType=VARCHAR},
+      account_province = #{accountProvince,jdbcType=VARCHAR},
+      account_type = #{accountType,jdbcType=INTEGER},
+      if_effective = #{ifEffective,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- 通用查询 -->
+  <select id="getWAccounts" parameterType="entity.dismember.DisWithdrawAccount" resultMap="BaseResultMap">
+      SELECT
+        <include refid="Base_Column_List" />
+      FROM t_dis_withdraw_account
+      <where>
+        <if test="withdrawAccount != null">
+          AND withdraw_account = #{withdrawAccount}
+        </if>
+        <if test="accountUser != null">
+          AND account_user = #{accountUser}
+        </if>
+        <if test="isBind != null">
+          AND is_bind = #{isBind}
+        </if>
+        <if test="distributorEmail != null">
+          AND distributor_email = #{distributorEmail}
+        </if>
+        <if test="ifEffective != null">
+          AND if_effective = #{ifEffective}
+        </if>
+        <if test="id != null">
+          AND id = #{id}
+        </if>
+        <if test="accountType != null" >
+          AND account_type = #{accountType,jdbcType=INTEGER}
+        </if>
+      </where>
+  </select>
+  
+  <select id="getWAccountsList" parameterType="entity.dismember.DisWithdrawAccount" resultMap="BaseResultMap">
+  		select <include refid="Base_Column_List" />
+  		  from t_dis_withdraw_account
+  		<where>
+	        <if test="withdrawAccount != null">
+	          AND withdraw_account = #{withdrawAccount}
+	        </if>
+	        <if test="accountUser != null">
+	          AND account_user = #{accountUser}
+	        </if>
+	        <if test="isBind != null">
+	          AND is_bind = #{isBind}
+	        </if>
+	        <if test="distributorEmail != null">
+	          AND distributor_email = #{distributorEmail}
+	        </if>
+	        <if test="ifEffective != null">
+	          AND if_effective = #{ifEffective}
+	        </if>
+            <if test="accountType != null" >
+              AND account_type = #{accountType,jdbcType=INTEGER}
+            </if>
+     	 </where>
+         order by case when account_type = 2 then 0 else 1 end, id desc
+  </select>
+  
+  <update id="delBindBangCard" parameterType="java.lang.Integer">
+  		update t_dis_withdraw_account 
+  		   set is_bind = 0
+  		 where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.DisRoleMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.DisRole" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="role_desc" property="roleDesc" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="button_authority" property="buttonOperate" jdbcType="BIT" />
+    <result column="isactive" property="isactive" jdbcType="BIT" />
+    <result column="is_message" property="ismessage" jdbcType="BIT" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, role_name, role_desc, create_date,button_authority,isactive,is_message,create_user
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_role
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_role
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.DisRole" >
+    insert into t_dis_role (id, role_name, role_desc, 
+      create_date,button_authority,isactive,is_message, create_user)
+    values (#{id,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{roleDesc,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP},#{buttonOperate,jdbcType=BIT},#{isactive,jdbcType=BIT},
+      #{ismessage,jdbcType=BIT}, #{createUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.DisRole" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_dis_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="roleName != null" >
+        role_name,
+      </if>
+      <if test="roleDesc != null" >
+        role_desc,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="buttonOperate != null">
+      	button_authority,
+      </if>
+      <if test="isactive != null">
+      	isactive,
+      </if>
+      <if test="ismessage != null">
+        is_message,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDesc != null" >
+        #{roleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buttonOperate != null">
+      	#{buttonOperate,jdbcType=BIT},
+      </if>
+      <if test="isactive != null">
+      	#{isactive,jdbcType=BIT},
+      </if>
+      <if test="ismessage != null">
+      	#{ismessage,jdbcType=BIT},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.DisRole" >
+    update t_dis_role
+    <set >
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDesc != null" >
+        role_desc = #{roleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buttonOperate != null">
+      	button_authority = #{buttonOperate,jdbcType=BIT},
+      </if>
+      <if test="isactive != null">
+      	isactive = #{isactive,jdbcType=BIT},
+      </if>
+      <if test="ismessage != null">
+      	is_message = #{ismessage,jdbcType=BIT},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.DisRole" >
+    update t_dis_role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      role_desc = #{roleDesc,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      button_authority = #{buttonOperate,jdbcType=BIT},
+      isactive = #{isactive,jdbcType=BIT},
+      is_message = #{ismessage,jdbcType=BIT},
+      create_user = #{createUser,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getCountByPage" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    select count(1)
+    from t_dis_role
+    <where>
+      <if test="roleName">
+        and role_name = #{roleName,jdbcType=VARCHAR}
+      </if>
+      <if test="createUser">
+        and create_user = #{createUser,jdbcType=VARCHAR}
+    </if>
+    </where>
+  </select>
+
+  <select id="getRolesByPage" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_role
+    <where>
+        <if test="roleName">
+          and role_name = #{roleName,jdbcType=VARCHAR}
+        </if>
+        <if test="createUser">
+          and create_user = #{createUser,jdbcType=VARCHAR}
+        </if>
+    </where>
+    order by create_date desc
+    <if test="pageSize != null and startNum != null">
+	    limit #{pageSize,jdbcType=INTEGER} offset #{startNum,jdbcType=INTEGER}    
+    </if>
+  </select>
+
+</mapper>

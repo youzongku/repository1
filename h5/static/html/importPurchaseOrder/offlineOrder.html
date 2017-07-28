@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="email=no" name="format-detection" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>订单详情</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main/main.css">
+</head>
+<body>
+<header class="posFix head">
+    <a href="../importPurchaseOrder/0fflineTransferApproval.html" class="ret-logo"></a>
+    订单详情
+</header>
+<section class="order conTop">
+    <div class="orderCon">
+        <p>
+            <span>订单编号：</span><span>CG2016092009081890</span>
+        </p>
+        <p>
+            <span>下单时间：</span><span>2016-09-04 12：09：08</span>
+        </p>
+        <p>
+            <span>分销商：</span><span>2850289715@qq.com</span>
+        </p>
+        <p>
+            <span>订单金额：</span><span>¥<em>200.00</em></span>
+        </p>
+        <p>
+            <span>收款渠道：</span><span>支付宝</span>
+        </p>
+        <p>
+            <span>付款方式：</span><span>支付宝</span>
+        </p>
+        <p>
+            <span>付款账户：</span><span>sale@qq.com</span>
+        </p>
+        <p>
+            <span>账户开户名：</span><span>姜颖</span>
+        </p>
+        <p>
+            <span>付款金额：</span><span>¥<em>200.00</em></span>
+        </p>
+        <p>
+            <span>付款流水号：</span><span>2016091892083283789238</span>
+        </p>
+        <p>
+            <span>付款截图：</span><span class="blue" id="bigImg">点击看图</span>
+        </p>
+        <p>
+            <span>录入人：</span><span>admin</span>
+        </p>
+    </div>
+    <div class="imporCom">
+        <div class="imporComR">
+            <div class="impor-img">
+                <a href="####"><img src="../../img/1.jpg" alt=""/></a>
+            </div>
+            <div class="impor-tit">
+                <div class="impor-tit1">
+                    <h5><i class="gift" v-if="detail.isgift" style="display: none;"></i>我是商品标题我是商品标题我是商品标题我是商品标题</h5>
+                    <b style="float: right">x1</b>
+                </div>
+                <div>
+                    <span>商品编号：<b class="impor-tit2">IM132</b></span>
+                    <span>分销价：¥<b class="impor-tit2">0.00</b></span>
+                </div>
+                <div>
+                    <span>来源：<b class="impor-tit2">杭州保税仓</b></span>
+                    <span>实际价格：¥<b class="impor-tit2">0.00</b></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="foot">
+    <a href="####">
+        <input type="submit" value="审核不通过" class="inp-3 btn-gray fl" id="btn1"/>
+        <input type="submit" value="审核通过" class="inp-3 btn-blue fr" id="btn2" />
+    </a>
+</footer>
+<!--审核不通过-->
+<div class="ui-dialog offlineBtn1">
+    <div class="ui-dialog-cnt offlineBtn">
+        <header class="ui-dialog-hd ui-border-b">
+            <h3 class="bor-b">审核</h3>
+        </header>
+        <div class="ui-dialog-bd offlinePop">
+            <p>
+                <select class="inp4">
+                    <option>请选择审核理由</option>
+                    <option>未收到货款</option>
+                    <option>无效订单</option>
+                </select>
+            </p>
+            <p>
+                <label><b class="red-start">*</b>到账时间：</label><label>2016-10-20 12：12：12</label>
+            </p>
+            <p class="textaPop">
+                <label><b class="red-start">*</b>审核备注：</label><label><textarea class="inp4" placeholder="1~300字以内"></textarea></label>
+            </p>
+        </div>
+        <div class="ui-dialog-ft bor-a">
+            <button type="button" data-role="button">取消</button>
+            <button type="button" data-role="button" class="confirmBtn">确定</button>
+        </div>
+    </div>
+</div>
+<!--审核-->
+<div class="ui-dialog offlineBtn2">
+    <div class="ui-dialog-cnt offlineBtn">
+        <header class="ui-dialog-hd ui-border-b">
+            <h3 class="bor-b">审核</h3>
+        </header>
+        <div class="ui-dialog-bd offlinePop">
+            <p>
+                <label><b class="red-start">*</b>实收金额：</label><label><input type="text" class="inp4" style="width: 85%;margin-right: 5px;"/>元</label>
+            </p>
+            <p>
+                <label><b class="red-start">*</b>到账时间：</label><label>2016-10-20 12：12：12</label>
+            </p>
+            <p class="textaPop">
+                <label><b class="red-start">*</b>审核备注：</label><label><textarea class="inp4" placeholder="1~300字以内"></textarea></label>
+            </p>
+        </div>
+        <div class="ui-dialog-ft bor-a">
+            <button type="button" data-role="button">取消</button>
+            <button type="button" data-role="button" class="confirmBtn">确定</button>
+        </div>
+    </div>
+</div>
+<script src="../../js/lib/zepto.js"></script>
+<script src="../../js/lib/frozen.js"></script>
+<script type="text/javascript">
+    $("#btn1").click(function(){
+        var dialog1 = $(".offlineBtn1").dialog("show");
+    });
+
+    $("#btn2").click(function(){
+        $(".offlineBtn2").dialog("show");
+    });
+
+    var el;
+    $(".confirmBtn").click(function() {
+        el = $.tips({
+            content: '生成成功',
+            stayTime: 3000,
+            type: "success"
+        })
+        el.on("tips:hide", function () {
+            window.location = 'https://www.baidu.com/?tn=99342822_hao_pg';
+        })
+    })
+
+    $("#bigImg").click(function(){
+        var dia=$.dialog({
+            content:'<div class="bigImg"><img src="../../img/1.jpg" alt=""/></div>',
+            button:["关闭"]
+        });
+    });
+</script>
+</html>

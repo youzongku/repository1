@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.store.AttributeTypeMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.store.AttributeType" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+    <result column="type_desc" property="typeDesc" jdbcType="VARCHAR" />
+  </resultMap>
+	<sql id="Base_Column_List" >
+     id,type_name,type_desc
+  </sql>
+  <insert id="insert" parameterType="entity.product.store.AttributeType" >
+    insert into t_attribute_type (id, type_name, type_desc
+      )
+    values (#{id,jdbcType=INTEGER}, #{typeName,jdbcType=VARCHAR}, #{typeDesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.store.AttributeType" >
+    insert into t_attribute_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="typeName != null" >
+        type_name,
+      </if>
+      <if test="typeDesc != null" >
+        type_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="typeName != null" >
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeDesc != null" >
+        #{typeDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from t_attribute_type
+  	order by id asc
+  </select>
+</mapper>

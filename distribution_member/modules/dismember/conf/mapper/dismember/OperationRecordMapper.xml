@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.OperationRecordMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.OperationRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="opdate" property="opdate" jdbcType="TIMESTAMP" />
+    <result column="opdesc" property="opdesc" jdbcType="VARCHAR" />
+    <result column="apply_id" property="applyId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, operator, opdate, opdesc, apply_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_operation_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_operation_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.OperationRecord" >
+    insert into t_dis_operation_record (id, operator, opdate, 
+      opdesc, apply_id)
+    values (#{id,jdbcType=INTEGER}, #{operator,jdbcType=VARCHAR}, #{opdate,jdbcType=TIMESTAMP}, 
+      #{opdesc,jdbcType=VARCHAR}, #{applyId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.OperationRecord" >
+    insert into t_dis_operation_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="opdate != null" >
+        opdate,
+      </if>
+      <if test="opdesc != null" >
+        opdesc,
+      </if>
+      <if test="applyId != null" >
+        apply_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="opdate != null" >
+        #{opdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opdesc != null" >
+        #{opdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="applyId != null" >
+        #{applyId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.OperationRecord" >
+    update t_dis_operation_record
+    <set >
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="opdate != null" >
+        opdate = #{opdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opdesc != null" >
+        opdesc = #{opdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="applyId != null" >
+        apply_id = #{applyId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.OperationRecord" >
+    update t_dis_operation_record
+    set operator = #{operator,jdbcType=VARCHAR},
+      opdate = #{opdate,jdbcType=TIMESTAMP},
+      opdesc = #{opdesc,jdbcType=VARCHAR},
+      apply_id = #{applyId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="query" resultType="entity.dismember.OperationRecord" parameterType="java.lang.Integer">
+  		select 
+  		<include refid="Base_Column_List" />
+    	from t_dis_operation_record
+    	where
+    	apply_id = #{0}
+    	order by opdate desc
+  </select>
+  
+  
+  
+</mapper>

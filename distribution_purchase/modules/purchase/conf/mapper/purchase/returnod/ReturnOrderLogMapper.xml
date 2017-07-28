@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.purchase.returnod.ReturnOrderLogMapper" >
+  <resultMap id="BaseResultMap" type="entity.purchase.returnod.ReturnOrderLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="return_order_no" property="returnOrderNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="audit_remarks" property="auditRemarks" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, return_order_no, status, create_time, create_user, audit_remarks
+  </sql>
+  
+  <select id="selectByReturnOrderNo" resultMap="BaseResultMap" parameterType="string" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_return_order_logs
+    where return_order_no = #{returnOrderNo}
+    order by create_time desc
+  </select>
+  
+  <select id="selectByReturnOrderNoList" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_return_order_logs
+    where return_order_no in
+    <foreach collection="returnOrderNoList" item="returnOrderNo" open="(" close=")" separator=",">
+		#{returnOrderNo}
+    </foreach>
+    order by create_time desc
+  </select>
+  
+  <insert id="insert" parameterType="entity.purchase.returnod.ReturnOrderLog" keyProperty="id" useGeneratedKeys="true" >
+    insert into t_return_order_logs (return_order_no, status, create_time, create_user, audit_remarks)
+    values (#{returnOrderNo,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      now(), #{createUser,jdbcType=VARCHAR}, #{auditRemarks,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
+	insert into t_return_order_logs (return_order_no, status, create_time, create_user, audit_remarks) 
+	values
+	<foreach collection="list" item="item" index="index" separator="," >
+	(#{item.returnOrderNo}, #{item.status}, now(), #{item.createUser}, #{item.auditRemarks})
+	</foreach>
+  </insert>
+  
+</mapper>

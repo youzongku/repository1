@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.ShOrderDetailMapper" >
+  <resultMap id="BaseResultMap" type="entity.sales.ShOrderDetail" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="sh_order_id" property="shOrderId" jdbcType="INTEGER" />
+    <result column="sh_order_no" property="shOrderNo" jdbcType="VARCHAR" />
+    <result column="purchase_order_no" property="purchaseOrderNo" jdbcType="VARCHAR" />
+    <result column="sku" property="sku" jdbcType="OTHER" />
+    <result column="qty" property="qty" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehoseid" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="product_img" property="productImg" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="purchase_price" property="purchasePrice" jdbcType="DOUBLE" />
+    <result column="capfee" property="capfee" jdbcType="DOUBLE" />
+    <result column="arrive_ware_price" property="arriveWarePrice" jdbcType="DOUBLE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="expiration_date" property="expirationDate" jdbcType="TIMESTAMP" />
+    <result column="inter_bar_code" property="interBarCode" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, sh_order_id,sh_order_no,purchase_order_no,sku,qty,warehouse_id,warehouse_name,product_img,product_name,purchase_price
+    ,capfee,arrive_ware_price,create_time,update_time,expiration_date,inter_bar_code
+  </sql>
+  
+  <select id="selectByPurchaseOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	SELECT
+    <include refid="Base_Column_List" />
+    from t_sh_order_detail
+    <where>
+    	<if test="purchaseOrderNo!=null and purchaseOrderNo!='' ">
+    		purchase_order_no = #{purchaseOrderNo}
+    	</if>
+    </where>
+  </select>
+
+  <insert id="insert" parameterType="entity.sales.ShOrderDetail" >
+    insert into public.t_sh_order_detail (id, sh_order_id, sh_order_no, 
+      purchase_order_no, sku, qty, 
+      warehoseid, warehouse_name, product_img, 
+      product_name, purchase_price, capfee, 
+      arrive_ware_price, create_time, update_time, 
+      expiration_date, inter_bar_code)
+    values (#{id,jdbcType=INTEGER}, #{shOrderId,jdbcType=INTEGER}, #{shOrderNo,jdbcType=VARCHAR}, 
+      #{purchaseOrderNo,jdbcType=VARCHAR}, #{sku,jdbcType=OTHER}, #{qty,jdbcType=INTEGER}, 
+      #{warehoseid,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR}, #{productImg,jdbcType=VARCHAR}, 
+      #{productName,jdbcType=VARCHAR}, #{purchasePrice,jdbcType=DOUBLE}, #{capfee,jdbcType=DOUBLE}, 
+      #{arriveWarePrice,jdbcType=DOUBLE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{expirationDate,jdbcType=TIMESTAMP}, #{interBarCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.sales.ShOrderDetail" useGeneratedKeys="true" keyProperty="id">
+    insert into public.t_sh_order_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="shOrderId != null" >
+        sh_order_id,
+      </if>
+      <if test="shOrderNo != null" >
+        sh_order_no,
+      </if>
+      <if test="purchaseOrderNo != null" >
+        purchase_order_no,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="qty != null" >
+        qty,
+      </if>
+      <if test="warehoseid != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="productImg != null" >
+        product_img,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price,
+      </if>
+      <if test="capfee != null" >
+        capfee,
+      </if>
+      <if test="arriveWarePrice != null" >
+        arrive_ware_price,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date,
+      </if>
+      <if test="interBarCode != null" >
+        inter_bar_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shOrderId != null" >
+        #{shOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="shOrderNo != null" >
+        #{shOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseOrderNo != null" >
+        #{purchaseOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=OTHER},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="warehoseid != null" >
+        #{warehoseid,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="productImg != null" >
+        #{productImg,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasePrice != null" >
+        #{purchasePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="capfee != null" >
+        #{capfee,jdbcType=DOUBLE},
+      </if>
+      <if test="arriveWarePrice != null" >
+        #{arriveWarePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expirationDate != null" >
+        #{expirationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="interBarCode != null" >
+        #{interBarCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getShOrderDetailListByShOrderId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      SELECT
+    <include refid="Base_Column_List" />
+    from t_sh_order_detail
+    where sh_order_id = #{id}
+  </select>
+  
+  <select id="getShOrderDetailListByShOrderIdList" parameterType="java.util.List" resultMap="BaseResultMap">
+	SELECT
+    <include refid="Base_Column_List" />
+    from t_sh_order_detail
+    <where>
+    	<if test="shOrderIdList!=null and shOrderIdList.size()>0 ">
+    		sh_order_id in
+    		<foreach collection="shOrderIdList" item="item" open="(" close=")" separator=",">
+    			#{item}
+    		</foreach>
+    	</if>
+    </where>
+  </select>
+  
+</mapper>

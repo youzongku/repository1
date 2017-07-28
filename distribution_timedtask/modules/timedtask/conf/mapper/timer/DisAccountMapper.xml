@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.DisAccountMapper" >
+  <resultMap id="BaseResultMap" type="entity.timer.DisAccount" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pay_pass" property="payPass" jdbcType="VARCHAR" />
+    <result column="balance" property="balance" jdbcType="NUMERIC" />
+    <result column="frozen_amount" property="frozenAmount" jdbcType="NUMERIC" />
+    <result column="frozen" property="frozen" jdbcType="BIT" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="input_error_num_times" property="inputErrorNumTimes" jdbcType="INTEGER" />
+    <result column="disable_time" property="disableTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pay_pass, balance, frozen_amount, frozen, create_user, create_date, email,update_date,input_error_num_times,disable_time
+  </sql>
+  
+  <select id="getDisAccountByEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_account
+    where email = #{email,jdbcType=VARCHAR}
+  </select>
+  
+  
+</mapper>

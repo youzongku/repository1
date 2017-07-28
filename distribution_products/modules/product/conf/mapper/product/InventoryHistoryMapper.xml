@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.InventoryHistoryMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.InventoryHistory" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+    <result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+    <result column="ibeforechangeqty" property="ibeforechangeqty" jdbcType="INTEGER" />
+    <result column="iqty" property="iqty" jdbcType="INTEGER" />
+    <result column="iafterchangeqty" property="iafterchangeqty" jdbcType="INTEGER" />
+    <result column="creference" property="creference" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+    <result column="ctype" property="ctype" jdbcType="VARCHAR" />
+    <result column="benabled" property="benabled" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, iwebsiteid, clistingid, ibeforechangeqty, iqty, iafterchangeqty, creference, 
+    dcreatedate, ctype, benabled
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_inventory_history
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_inventory_history
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.InventoryHistory" >
+    insert into t_inventory_history (iid, iwebsiteid, clistingid, 
+      ibeforechangeqty, iqty, iafterchangeqty, 
+      creference, dcreatedate, ctype, 
+      benabled)
+    values (#{iid,jdbcType=INTEGER}, #{iwebsiteid,jdbcType=INTEGER}, #{clistingid,jdbcType=VARCHAR}, 
+      #{ibeforechangeqty,jdbcType=INTEGER}, #{iqty,jdbcType=INTEGER}, #{iafterchangeqty,jdbcType=INTEGER}, 
+      #{creference,jdbcType=VARCHAR}, #{dcreatedate,jdbcType=TIMESTAMP}, #{ctype,jdbcType=VARCHAR}, 
+      #{benabled,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.InventoryHistory" >
+    insert into t_inventory_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid,
+      </if>
+      <if test="clistingid != null" >
+        clistingid,
+      </if>
+      <if test="ibeforechangeqty != null" >
+        ibeforechangeqty,
+      </if>
+      <if test="iqty != null" >
+        iqty,
+      </if>
+      <if test="iafterchangeqty != null" >
+        iafterchangeqty,
+      </if>
+      <if test="creference != null" >
+        creference,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+      <if test="ctype != null" >
+        ctype,
+      </if>
+      <if test="benabled != null" >
+        benabled,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="iwebsiteid != null" >
+        #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="clistingid != null" >
+        #{clistingid,jdbcType=VARCHAR},
+      </if>
+      <if test="ibeforechangeqty != null" >
+        #{ibeforechangeqty,jdbcType=INTEGER},
+      </if>
+      <if test="iqty != null" >
+        #{iqty,jdbcType=INTEGER},
+      </if>
+      <if test="iafterchangeqty != null" >
+        #{iafterchangeqty,jdbcType=INTEGER},
+      </if>
+      <if test="creference != null" >
+        #{creference,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctype != null" >
+        #{ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="benabled != null" >
+        #{benabled,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.InventoryHistory" >
+    update t_inventory_history
+    <set >
+      <if test="iwebsiteid != null" >
+        iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="clistingid != null" >
+        clistingid = #{clistingid,jdbcType=VARCHAR},
+      </if>
+      <if test="ibeforechangeqty != null" >
+        ibeforechangeqty = #{ibeforechangeqty,jdbcType=INTEGER},
+      </if>
+      <if test="iqty != null" >
+        iqty = #{iqty,jdbcType=INTEGER},
+      </if>
+      <if test="iafterchangeqty != null" >
+        iafterchangeqty = #{iafterchangeqty,jdbcType=INTEGER},
+      </if>
+      <if test="creference != null" >
+        creference = #{creference,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctype != null" >
+        ctype = #{ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="benabled != null" >
+        benabled = #{benabled,jdbcType=BIT},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.InventoryHistory" >
+    update t_inventory_history
+    set iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      clistingid = #{clistingid,jdbcType=VARCHAR},
+      ibeforechangeqty = #{ibeforechangeqty,jdbcType=INTEGER},
+      iqty = #{iqty,jdbcType=INTEGER},
+      iafterchangeqty = #{iafterchangeqty,jdbcType=INTEGER},
+      creference = #{creference,jdbcType=VARCHAR},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      ctype = #{ctype,jdbcType=VARCHAR},
+      benabled = #{benabled,jdbcType=BIT}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>测试vue.js</title>
+    <!-- <script src="http://apps.bdimg.com/libs/zepto/1.1.4/zepto.min.js"></script> -->
+</head>
+<body>
+    <h1>详见官网教程：<a href="http://vuejs.org.cn/guide/" target="_blank">http://vuejs.org.cn/guide/</a></h1>
+    <div id="app">
+        <p>
+            <h2>双向绑定</h2>
+            <input v-model="username"/><button v-on:click="clickMe">点击我</button><br>
+            username is {{username}}
+        </p>
+        <hr>
+
+        <p>
+            <h2>渲染列表-数组v-for</h2>
+            <ul>
+                <li v-for="todo in todos">
+                    <span>{{ todo.text }}</span><button v-on:click="removeTodo($index)">X</button>
+                </li>
+            </ul>
+            <input v-model="newTodo"><button v-on:click="addTodo">添加</button><br>
+            you input {{newTodo}}
+        </p>
+        <p>
+        <h2>渲染列表-对象v-for</h2>
+        <ul>
+            <li v-for="value in object">
+                {{ $key }} : {{ value }}
+            </li>
+        </ul>
+        </p>
+        <p>
+        <h2>值域v-for</h2>
+        <span v-for="n in 10">{{ n }} </span>
+        </p>
+        <hr>
+
+        <p>
+            <h2>处理用户输入</h2>
+            <span>{{message}}</span>
+            <button @click="reverseMessage">反转</button>
+        </p>
+        <hr>
+
+        <p>
+            <h2>条件渲染v-if</h2>
+            <input type="checkbox" v-model="showSpan">show or not
+            <span v-if="showSpan" :style="showSpanStyle">你选择了，所以显示咯</span>
+            <span v-else :style="showSpanStyle">你没选择，所以显示咯</span>
+        </p>
+        <p>
+        <h2>条件渲染v-show，与v-if的区别是只是控制display样式，block or none</h2>
+        <input type="checkbox" v-model="showSpan1">show or not
+        <span v-show="showSpan1" :style="showSpan1Style">显示v-show</span>
+        <span v-else :style="showSpan1Style">显示v-else</span>
+        </p>
+        <hr>
+
+        <p>
+        <h2>组件</h2>
+        <div id="example">
+            <!--使用自定义的组件-->
+            <my-component></my-component>
+        </div>
+        </p>
+        <hr>
+
+        <p>
+        <h2>表单控件-单个checkbox，返回的是逻辑值true/false</h2>
+        <input type="checkbox" value="onecheckbox_value1" id="onecheckbox" v-model="oneCheckedVal"><label for="onecheckbox">onecheckbox</label>
+        {{oneCheckedVal}}
+        </p>
+        <p>
+        <h2>表单控件-多个checkbox，返回的是真实的value数组</h2>
+        <input type="checkbox" value="checkbox_value_mike" id="mike" v-model="checkedVal"><label for="mike">Mike</label><br>
+        <input type="checkbox" value="checkbox_value_jack" id="jack" v-model="checkedVal"><label for="jack">jack</label><br>
+        <input type="checkbox" value="checkbox_value_rock" id="rock" v-model="checkedVal"><label for="rock">rock</label><br>
+        {{checkedVal}}
+        </p>
+        <p>
+            <h2>表单控件-radio，返回的是选择的radio的value</h2>
+            <input type="radio" id="one" value="One_value" v-model="picked">
+            <label for="one">One</label>
+            <br>
+            <input type="radio" id="two" value="Two_value" v-model="picked">
+            <label for="two">Two</label>
+            <br>
+            <span>Picked: {{ picked }}</span>
+        </p>
+        <p>
+            <h2>表单控件-radio，返回的是选择的radio的value</h2>
+            <select v-model="selected_value">
+                <option selected value="A_value">A</option>
+                <option value="B_value">B</option>
+                <option value="C_value">C</option>
+            </select>
+            <span>Selected: {{ selected_value }}</span>
+        </p>
+        <hr>
+    </div>
+</body>
+<script src="/js/lib/require.js" data-main="/js/test.js"></script>
+</html>

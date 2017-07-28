@@ -1,0 +1,959 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.DisMemberMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.DisMember" >   
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="pass_word" property="passWord" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="birthday" property="birthday" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="telphone" property="telphone" jdbcType="VARCHAR" />
+    <result column="profile" property="profile" jdbcType="VARCHAR" />
+    <result column="head_img" property="headImg" jdbcType="VARCHAR" />
+    <result column="is_actived" property="isActived" jdbcType="BIT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="role_name" property="role" jdbcType="VARCHAR" />
+	<result column="lastLoginDate" property="lastLoginDate" jdbcType="TIMESTAMP" />
+    <result column="rank_id" property="rankId" jdbcType="INTEGER" />
+    <result column="work_no" property="workNo" jdbcType="VARCHAR" />
+    <result column="is_customized" property="isCustomized" jdbcType="BIT" />
+    <result column="customized_discount" property="customizeDiscount" jdbcType="INTEGER" />
+    <result column="comsumer_type" property="comsumerType" jdbcType="INTEGER" />
+    <result column="register_invite_code" property="registerInviteCode" jdbcType="VARCHAR" />
+    <result column="self_invite_code" property="selfInviteCode" jdbcType="VARCHAR" />
+    <result column="erp_account" property="erpAccount" jdbcType="VARCHAR" />
+    <result column="distribution_mode" property="distributionMode" jdbcType="INTEGER" />
+    <result column="dis_mode" property="distributionModeDesc" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="if_add_permision" property="ifAddPermision" jdbcType="BIT" />
+    <result column="is_delete" property="isDelete" jdbcType="BIT" />
+    <result column="is_back_register" property="isBackRegister" jdbcType="BIT" />
+    <result column="register_man" property="registerMan" jdbcType="VARCHAR" />
+    <result column="salesman_erp" property="salesmanErp" jdbcType="VARCHAR" />
+    <result column="org_name" property="branchName" jdbcType="VARCHAR" />
+    <result column="is_disabled" property="isDisabled" jdbcType="BIT" />
+    <result column="user_code" property="userCode" jdbcType="VARCHAR" />
+    <result column="is_package_mail" property="isPackageMail" jdbcType="SMALLINT" />
+    <result column="attribution_type" property="attributionType" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, user_name, pass_word, nick_name, real_name, gender, birthday, email, telphone, 
+    profile, head_img, is_actived, create_date, last_update_date, role_id, rank_id,work_no,is_customized,
+    customized_discount,comsumer_type,register_invite_code,self_invite_code,erp_account,distribution_mode,
+    create_user,if_add_permision,is_delete,is_back_register,register_man,salesman_erp,is_disabled,user_code,
+    is_package_mail,attribution_type
+  </sql>
+  
+  <select id="selectByEmailList" resultMap="BaseResultMap" parameterType="java.util.List">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_dis_member
+    <where>
+    	<if test=" emailList != null and emailList.size() > 0 ">
+    		email in
+    		<foreach collection="emailList" item="email" open="(" close=")" separator=",">
+    			#{email}
+    		</foreach>
+    	</if>
+    </where>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_member
+    where id = #{id,jdbcType=INTEGER}
+      and is_delete = true
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_member
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.DisMember" >
+    insert into t_dis_member (id, user_name, pass_word, 
+      nick_name, real_name, gender, 
+      birthday, email, telphone, 
+      profile, head_img, is_actived, 
+      create_date, last_update_date, role_id, rank_id,
+      work_no,is_customized,customized_discount,
+      register_invite_code,self_invite_code,erp_account,create_user,if_add_permision)
+    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
+      #{birthday,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{telphone,jdbcType=VARCHAR}, 
+      #{profile,jdbcType=VARCHAR}, #{headImg,jdbcType=VARCHAR}, #{isActived,jdbcType=BIT}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateDate,jdbcType=TIMESTAMP}, #{roleId,jdbcType=INTEGER},
+      #{rankId,jdbcType=INTEGER},#{workNo,jdbcType=VARCHAR},#{isCustomized,jdbcType=BIT},
+      #{customizeDiscount,jdbcType=INTEGER}, #{registerInviteCode,jdbcType=VARCHAR},
+      #{selfInviteCode,jdbcType=VARCHAR}, #{erpAccount,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR},#{ifAddPermision,jdbcType=BIT})
+  </insert>
+
+  <insert id="insertSelective" parameterType="entity.dismember.DisMember" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_dis_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="passWord != null" >
+        pass_word,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="telphone != null" >
+        telphone,
+      </if>
+      <if test="profile != null" >
+        profile,
+      </if>
+      <if test="headImg != null" >
+        head_img,
+      </if>
+      <if test="isActived != null" >
+        is_actived,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="rankId != null" >
+        rank_id,
+      </if>
+      <if test="workNo != null" >
+        work_no,
+      </if>
+      <if test="isCustomized != null" >
+        is_customized,
+      </if>
+      <if test="customizeDiscount != null" >
+        customized_discount,
+      </if>
+      <if test="registerInviteCode != null" >
+        register_invite_code,
+      </if>
+      <if test="selfInviteCode != null" >
+        self_invite_code,
+      </if>
+      <if test="erpAccount != null" >
+        erp_account,
+      </if>
+      <if test="distributionMode != null" >
+        distribution_mode,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="ifAddPermision != null" >
+        if_add_permision,
+      </if>
+      <if test="isBackRegister != null" >
+        is_back_register,
+      </if>
+      <if test="registerMan != null" >
+        register_man,
+      </if>
+      <if test="salesmanErp != null" >
+        salesman_erp,
+      </if>
+      <if test="userCode != null" >
+        user_code,
+      </if>
+      <if test="attributionType != null" >
+        attribution_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="passWord != null" >
+        #{passWord,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="profile != null" >
+        #{profile,jdbcType=VARCHAR},
+      </if>
+      <if test="headImg != null" >
+        #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="isActived != null" >
+        #{isActived,jdbcType=BIT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="rankId != null" >
+        #{rankId,jdbcType=INTEGER},
+      </if>
+      <if test="workNo != null" >
+        #{workNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isCustomized != null" >
+        #{isCustomized,jdbcType=BIT},
+      </if>
+      <if test="customizeDiscount != null" >
+        #{customizeDiscount,jdbcType=INTEGER},
+      </if>
+      <if test="registerInviteCode != null" >
+        #{registerInviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="selfInviteCode != null" >
+        #{selfInviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="erpAccount != null" >
+        #{erpAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="distributionMode != null" >
+        #{distributionMode,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="ifAddPermision != null" >
+        #{ifAddPermision,jdbcType=VARCHAR},
+      </if>
+      <if test="isBackRegister != null" >
+        #{isBackRegister,jdbcType=BIT},
+      </if>
+      <if test="registerMan != null" >
+        #{registerMan,jdbcType=VARCHAR},
+      </if>
+      <if test="salesmanErp != null" >
+        #{salesmanErp,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="attributionType != null" >
+        #{attributionType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.DisMember" >
+    update t_dis_member
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="passWord != null" >
+        pass_word = #{passWord,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        telphone = #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="profile != null" >
+        profile = #{profile,jdbcType=VARCHAR},
+      </if>
+      <if test="headImg != null" >
+        head_img = #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="isActived != null" >
+        is_actived = #{isActived,jdbcType=BIT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="rankId != null" >
+        rank_id = #{rankId,jdbcType=INTEGER},
+      </if>
+      <if test="workNo != null" >
+       work_no = #{workNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isCustomized != null" >
+       is_customized = #{isCustomized,jdbcType=BIT},
+      </if>
+      <if test="customizeDiscount != null" >
+        customized_discount = #{customizeDiscount,jdbcType=INTEGER},
+      </if>
+      <if test="comsumerType != null" >
+        comsumer_type = #{comsumerType,jdbcType=INTEGER},
+      </if>
+      <if test="registerInviteCode != null" >
+        register_invite_code = #{registerInviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="selfInviteCode != null" >
+        self_invite_code = #{selfInviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="erpAccount != null" >
+        erp_account = #{erpAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="distributionMode != null" >
+        distribution_mode = #{distributionMode,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="ifAddPermision != null" >
+        if_add_permision = #{ifAddPermision,jdbcType=INTEGER},
+      </if>
+      <if test="isBackRegister != null" >
+        is_back_register = #{isBackRegister,jdbcType=BIT},
+      </if>
+      <if test="registerMan != null" >
+        register_man = #{registerMan,jdbcType=VARCHAR},
+      </if>
+      <if test="salesmanErp != null" >
+        salesman_erp = #{salesmanErp,jdbcType=VARCHAR},
+      </if>
+      <if test="isDisabled != null" >
+        is_disabled = #{isDisabled,jdbcType=BIT},
+      </if>
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isPackageMail != null" >
+        is_package_mail = #{isPackageMail,jdbcType=SMALLINT},
+      </if>
+      <if test="attributionType != null" >
+        attribution_type = #{attributionType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.DisMember" >
+    update t_dis_member
+    set user_name = #{userName,jdbcType=VARCHAR},
+      pass_word = #{passWord,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      telphone = #{telphone,jdbcType=VARCHAR},
+      profile = #{profile,jdbcType=VARCHAR},
+      head_img = #{headImg,jdbcType=VARCHAR},
+      is_actived = #{isActived,jdbcType=BIT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      role_id = #{roleId,jdbcType=INTEGER},
+      work_no = #{workNo,jdbcType=VARCHAR},
+      is_customized = #{isCustomized,jdbcType=BIT},
+      customized_discount = #{customizeDiscount,jdbcType=INTEGER},
+      register_invite_code = #{registerInviteCode,jdbcType=VARCHAR},
+      self_invite_code = #{selfInviteCode,jdbcType=VARCHAR},
+      erp_account = #{erpAccount,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      if_add_permision = #{ifAddPermision,jdbcType=VARCHAR},
+      rank_id = #{rankId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateSalesErpByPrimaryKey" parameterType="entity.dismember.DisMember" >
+    update t_dis_member
+    set salesman_erp = #{salesmanErp,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getMember" resultMap="BaseResultMap" parameterType="entity.dismember.DisMember">
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_member
+    where 1 = 1
+      and is_delete = true
+    <if test="userName != null and userName != '' ">
+      and user_name = #{userName,jdbcType=VARCHAR}
+    </if>
+    <if test="email != null and email != '' ">
+      and email = #{email,jdbcType=VARCHAR}
+    </if>
+    <if test="telphone != null and telphone != '' ">
+      and telphone = #{telphone,jdbcType=VARCHAR}
+    </if>
+    <if test="roleId != null">
+      and role_id = #{roleId,jdbcType=INTEGER}
+    </if>
+    <if test="id != null">
+      and id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="registerInviteCode != null and registerInviteCode != ''">
+      and register_invite_code = #{registerInviteCode,jdbcType=VARCHAR}
+    </if>
+    <if test="selfInviteCode != null and selfInviteCode != ''">
+      and self_invite_code = #{selfInviteCode,jdbcType=VARCHAR}
+    </if>
+    limit 1 offset 0
+  </select>
+  <select id="queryMembers" resultMap="BaseResultMap" parameterType="entity.dismember.DisMember">
+    select
+      max(h.dtimestamp) AS lastLoginDate,
+      m.*
+    from
+      t_dis_member m
+      left join t_member_login_history h
+      on m.email = h.cemail
+    where 1 = 1
+      and is_delete = true
+      <if test="userName != null">
+          and user_name = #{userName,jdbcType=VARCHAR}
+      </if>
+      <if test="nickName != null">
+          and nick_name = #{nickName,jdbcType=VARCHAR}
+      </if>
+      <if test="realName != null">
+          and real_name = #{realName,jdbcType=VARCHAR}
+      </if>
+      <if test="gender != null">
+          and gender = #{gender,jdbcType=INTEGER}
+      </if>
+      <if test="email != null">
+          and email = #{email,jdbcType=VARCHAR}
+      </if>
+      <if test="telphone != null">
+          and telphone = #{telphone,jdbcType=VARCHAR}
+      </if>
+      <if test="isActived != null">
+          and is_actived = #{isActived,jdbcType=BIT}
+      </if>
+      <if test="createDate != null">
+          and create_date = #{createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="lastUpdateDate != null">
+          and last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="roleId != null">
+          and role_id = #{roleId,jdbcType=INTEGER}
+      </if>
+    group by h.cemail, m.id
+  </select>
+
+  <select id="getCountByPage" resultType="java.lang.Integer" parameterType="java.util.Map">
+    select count(u.*) from (
+    select
+    max(h.dtimestamp) as lastLoginDate, m.*
+    from
+    t_dis_member m
+    left join t_member_login_history h
+    on m.email = h.cemail
+    where 1 = 1
+    and is_delete = true
+    <choose>
+      <when test='fromFlag == "2"'>
+        <if test='curRoleId != 1'>
+          and create_user = #{createUser,jdbcType=VARCHAR}
+        </if>
+      </when>
+      <!--  去除不返回数据的判断，还有其他地方调用，需要在标识为空时，查询全部数据
+      <when test='fromFlag == null or fromFlag == ""'>
+          and 1 = 2
+      </when>
+       -->
+    </choose>
+    <if test="search != null and search != '' ">
+      and (
+      lower(m.user_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+      or lower(m.email) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+      or lower(m.salesman_erp) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+      or lower(m.register_invite_code) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+      or lower(m.self_invite_code) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+      or lower(m.erp_account) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+      or lower(m.telphone) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+      or lower(m.nick_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+      or lower(m.real_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+      or lower(m.user_code) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+      )
+    </if>
+    <if test="workNo != null and workNo != ''">
+      and (lower(work_no) like lower('%'||#{workNo,jdbcType=VARCHAR}||'%')
+      or lower(email) like lower('%'||#{workNo,jdbcType=VARCHAR}||'%'))
+    </if>
+    <if test="sregdate != null and sregdate != '' ">
+      <![CDATA[and m.create_date >= to_date(''||#{sregdate}||'','yyyy-mm-dd')]]>
+    </if>
+    <if test="eregdate != null and eregdate != '' ">
+      <![CDATA[and m.create_date < to_date(''||#{eregdate}||'','yyyy-mm-dd')]]>
+    </if>
+    <if test="slogdate != null and slogdate != '' ">
+      <![CDATA[and h.dtimestamp >= to_date(''||#{slogdate}||'','yyyy-mm-dd')]]>
+    </if>
+    <if test="elogdate != null and elogdate != '' ">
+      <![CDATA[and h.dtimestamp < to_date(''||#{elogdate}||'','yyyy-mm-dd')]]>
+    </if>
+    <if test="userName != null and userName != '' ">
+      and m.user_name = #{userName,jdbcType=VARCHAR}
+    </if>
+    <if test="comsumerType != null and comsumerType != 0 ">
+      and m.comsumer_type = #{comsumerType,jdbcType=INTEGER}
+    </if>
+    <if test="notType != null and notType != 0 ">
+      and m.comsumer_type != #{notType,jdbcType=INTEGER}
+    </if>
+    <if test="email != null and email != '' ">
+      and m.email = #{email,jdbcType=VARCHAR}
+    </if>
+    <if test="telphone != null and telphone != '' ">
+      and m.telphone = #{telphone,jdbcType=VARCHAR}
+    </if>
+    <if test="distributionMode != null and distributionMode != 0 ">
+      and m.distribution_mode =
+      #{distributionMode,jdbcType=INTEGER}
+    </if>
+    <if test="roleId != null">
+      <if test="roleId == 0">
+        and m.role_id != 2
+      </if>
+      <if test="roleId != 0">
+        and m.role_id = #{roleId,jdbcType=INTEGER}
+      </if>
+    </if>
+    <if test="rankId != null">
+      and m.rank_id = #{rankId,jdbcType=INTEGER}
+    </if>
+    <if test="isActived != null">
+      and m.is_actived = #{isActived,jdbcType=BIT}
+    </if>
+    <if test="salesmanid != null">
+      and m.id not in (
+      SELECT
+      sm.memberid
+      FROM
+      t_dis_salesman_member_mapper sm)
+    </if>
+
+    <if test="isPackageMail != null and isPackageMail != 0">
+      and m.is_package_mail = #{isPackageMail,jdbcType=INTEGER}
+    </if>
+    group by h.cemail, m.id
+    ) as u
+    LEFT JOIN t_dis_mode md on u.distribution_mode = md.id
+  </select>
+
+  <select id="getMembersByPage" resultMap="BaseResultMap"
+	parameterType="java.util.Map">
+	select u.*,md.dis_mode from (
+	select
+	max(h.dtimestamp) as lastLoginDate, m.*
+	from
+	t_dis_member m
+	left join t_member_login_history h
+	on m.email = h.cemail
+	where 1 = 1
+	  and is_delete = true
+	<choose>
+		<when test='fromFlag == "2"'>
+			<if test='curRoleId != 1'>
+				and create_user = #{createUser,jdbcType=VARCHAR}
+			</if>
+		</when>
+		<!--  去除不返回数据的判断，还有其他地方调用，需要在标识为空时，查询全部数据
+		<when test='fromFlag == null or fromFlag == ""'>
+			and 1 = 2
+		</when>
+		 -->
+	</choose>	
+	<if test="search != null and search != '' ">
+		and (
+			lower(m.user_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(m.email) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(m.salesman_erp) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(m.register_invite_code) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(m.self_invite_code) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(m.erp_account) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(m.telphone) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(m.nick_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(m.real_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(m.user_code) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+		)
+	</if>
+	<if test="workNo != null and workNo != ''">
+		and (lower(work_no) like lower('%'||#{workNo,jdbcType=VARCHAR}||'%')
+		or lower(email) like lower('%'||#{workNo,jdbcType=VARCHAR}||'%'))
+	</if>
+	<if test="sregdate != null and sregdate != '' ">
+        <![CDATA[and m.create_date >= to_date(''||#{sregdate}||'','yyyy-mm-dd')]]>
+	</if>
+	<if test="eregdate != null and eregdate != '' ">
+        <![CDATA[and m.create_date < to_date(''||#{eregdate}||'','yyyy-mm-dd')]]>
+	</if>
+	<if test="slogdate != null and slogdate != '' ">
+        <![CDATA[and h.dtimestamp >= to_date(''||#{slogdate}||'','yyyy-mm-dd')]]>
+	</if>
+	<if test="elogdate != null and elogdate != '' ">
+        <![CDATA[and h.dtimestamp < to_date(''||#{elogdate}||'','yyyy-mm-dd')]]>
+	</if>
+	<if test="userName != null and userName != '' ">
+		and m.user_name = #{userName,jdbcType=VARCHAR}
+	</if>
+	<if test="comsumerType != null and comsumerType != 0 ">
+		and m.comsumer_type = #{comsumerType,jdbcType=INTEGER}
+	</if>
+	<if test="notType != null and notType != 0 ">
+		and m.comsumer_type != #{notType,jdbcType=INTEGER}
+	</if>
+	<if test="email != null and email != '' ">
+		and m.email = #{email,jdbcType=VARCHAR}
+	</if>
+	<if test="telphone != null and telphone != '' ">
+		and m.telphone = #{telphone,jdbcType=VARCHAR}
+	</if>
+	<if test="distributionMode != null and distributionMode != 0 ">
+		and m.distribution_mode =
+		#{distributionMode,jdbcType=INTEGER}
+	</if>
+	<if test="roleId != null">
+		<if test="roleId == 0">
+			and m.role_id != 2
+		</if>
+		<if test="roleId != 0">
+			and m.role_id = #{roleId,jdbcType=INTEGER}
+		</if>
+	</if>
+	<if test="rankId != null">
+		and m.rank_id = #{rankId,jdbcType=INTEGER}
+	</if>
+	<if test="isActived != null">
+		and m.is_actived = #{isActived,jdbcType=BIT}
+	</if>
+	<if test="salesmanid != null">
+		and m.id not in (
+		SELECT
+		sm.memberid
+		FROM
+		t_dis_salesman_member_mapper sm)
+	</if>
+    <if test="isPackageMail != null and isPackageMail != 0">
+      and m.is_package_mail = #{isPackageMail,jdbcType=INTEGER}
+	</if>
+	group by h.cemail, m.id
+	) as u
+	LEFT JOIN t_dis_mode md on u.distribution_mode = md.id
+	<choose>
+    	<when test="filter != null and sort != null and sort != ''">
+			order by ${sort} ${filter} nulls last
+		</when>
+		<otherwise>
+			<if test="roleId != null and roleId == 2">
+				order by u.lastLoginDate desc nulls last
+			</if>
+			<if test="roleId != null and roleId != 2">
+				order by case when u.role_id = 1 then 0 else 1 end, u.id desc
+			</if>
+		</otherwise>
+    </choose>
+	<if test="pageSize != null">
+		LIMIT #{pageSize} OFFSET (#{currPage}-1)*#{pageSize}
+	</if>
+</select>
+
+  	<select id="getCountByRoleIdOrRankId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*)
+			from t_dis_member
+		where 
+			is_delete = true
+		<if test="roleId != null">
+			and role_id = #{roleId,jdbcType=INTEGER}
+		</if>
+		<if test="rankId != null">
+			and rank_id = #{rankId,jdbcType=INTEGER}
+		</if>
+	</select>
+	
+	<select id="getMemberByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
+		SELECT
+			m.id as id,
+			m.nick_name, m.real_name, m.gender, m.birthday, m.email, m.telphone, 
+		    m.is_actived,comsumer_type,register_invite_code,self_invite_code,erp_account,distribution_mode,
+		    create_user,if_add_permision,is_delete,is_back_register,register_man,salesman_erp,is_disabled,user_code,is_package_mail,
+			sm.*
+		FROM 
+			t_dis_salesman_member_mapper sm
+		LEFT JOIN t_dis_member m on m.id = sm.memberid
+		WHERE 
+			m.email is not null and is_delete = true
+		<if test="salesmanid != null">
+			and sm.salesmanid = #{salesmanid,jdbcType=INTEGER}
+		</if>
+		<if test="desc != null and desc != '' ">
+			and (lower(m.user_name) like lower('%'||#{desc,jdbcType=VARCHAR}||'%')
+	        or lower(m.email) like lower('%'||#{desc,jdbcType=VARCHAR}||'%')
+	        or lower(m.nick_name) like lower('%'||#{desc,jdbcType=VARCHAR}||'%')
+	        or lower(m.telphone) like lower('%'||#{desc,jdbcType=VARCHAR}||'%'))
+		</if>
+		<if test="ids != null ">
+			and m.id in
+			<foreach item="item" index="index" collection="ids" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		order by sm.id
+		<if test="pageSize != null">
+		    LIMIT #{pageSize} OFFSET (#{currPage}-1)*#{pageSize}  
+	    </if>
+	</select>
+	<select id="getMemberCountByCondition" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT 
+			count(*)  
+		FROM 
+			t_dis_salesman_member_mapper sm
+		LEFT JOIN t_dis_member m on m.id = sm.memberid
+		WHERE m.email is not null and is_delete = true
+		<if test="salesmanid != null">
+			and sm.salesmanid = #{salesmanid,jdbcType=INTEGER}
+		</if>
+		<if test="desc != null and desc != '' ">
+			and (lower(m.user_name) like lower('%'||#{desc,jdbcType=VARCHAR}||'%')
+	        or lower(m.email) like lower('%'||#{desc,jdbcType=VARCHAR}||'%')
+	        or lower(m.nick_name) like lower('%'||#{desc,jdbcType=VARCHAR}||'%')
+	        or lower(m.telphone) like lower('%'||#{desc,jdbcType=VARCHAR}||'%'))
+		</if>
+		<if test="ids != null ">
+			and m.id in
+			<foreach item="item" index="index" collection="ids" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+
+	<update id="delMemberAndChildMem" parameterType="entity.dismember.DisMember">
+		update t_dis_member set is_delete = false where id in
+			 (with recursive dis_member as ( 
+		       select distinct * 
+		         from t_dis_member 
+		        where email = #{email,jdbcType=VARCHAR} and id = #{id,jdbcType=INTEGER}
+		       	  and is_delete = true
+		     union all 
+		       select distinct t_dis_member.* 
+		         from t_dis_member,dis_member 
+		        where t_dis_member.create_user = dis_member.email
+		          and t_dis_member.is_delete = true
+		          and dis_member.is_delete = true
+		     ) 
+		select dis_member.id from dis_member)
+	</update>
+	
+	<select id="getMemberSalesCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(1)
+		  from t_dis_salesman_member_mapper
+		 where memberid = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getMemCountByEmail" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(1)
+		  from t_dis_member
+		 where email = #{email,jdbcType=VARCHAR}
+		   and is_delete = true
+	</select>
+	<select id="getMemberByOrgId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+			mb.*
+		from
+			(
+				select
+					mb.*, row_number () over (
+						partition by mb.email
+						order by
+							mb.org_id desc
+					) rownum
+				from
+					(
+						select
+							m .*, org.name org_name,
+							org. id org_id
+						from
+							t_dis_member m
+						left join t_dis_salesman_member_mapper sm on m .id = sm.memberid
+						left join (
+							select
+								hmf.headerid,
+								hmf.salesmanid
+							from
+								t_dis_header_salesman_mapper hmf
+							union all
+								(
+									select
+										hmt.headerid,
+										esm.salesman_id as salesmanid
+									from
+										t_dis_emp_salesman_mapper as esm
+									left join t_dis_header_salesman_mapper hmt on hmt.salesmanid = esm.emp_id
+								)
+						) ahm on ahm.salesmanid = sm.salesmanid
+						left join t_dis_organization_header_mapper om on ahm.headerid = om.headerid 
+						left join (
+							with recursive org (id, name) as (
+								select
+									a . id,
+									a . name,
+									a .parentid
+								from
+									t_dis_organizational a
+		 						where 1 = 1
+		 							<if test="orgId != null and orgId != 0">
+		 								and a . id = #{orgId,jdbcType=INTEGER}
+		 							</if>
+								union all
+									select
+										k . id,
+										k . name,
+										k .parentid
+									from
+										t_dis_organizational k
+									inner join org v on v. id = k .parentid
+							) select
+								id,
+								name
+							from
+								org
+						) org on om.organizationid = org. id
+						where org. id is not null
+					) mb
+			) mb
+		where
+			mb.rownum = 1
+	</select>
+	<select id="relatedMember" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT
+			dm.*,
+			dr.role_name as role,
+			dml.dis_mode as distributionModeDesc
+		FROM
+			t_dis_member dm
+			LEFT JOIN t_dis_account da ON dm.email = da.email
+			LEFT JOIN t_dis_role dr ON dm.role_id = dr.id
+			LEFT JOIN t_dis_mode dml on dm.distribution_mode=dml.id
+		where 1 = 1
+		<if test="roleId != null">
+			<if test="roleId == 0">
+				and dm.role_id != 2
+			</if>
+			<if test="roleId != 0">
+				and dm.role_id = #{roleId,jdbcType=INTEGER}
+			</if>
+		</if>
+		<if test="search != null and search != '' ">
+			and (
+				lower(dm.user_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.email) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.salesman_erp) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.register_invite_code) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.self_invite_code) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.erp_account) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.telphone) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.nick_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.real_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			)
+		</if>
+		<if test="email != null and email != '' ">
+			and dm.email = #{email,jdbcType=VARCHAR}
+		</if>
+		<if test="notType != null and notType != 0 ">
+			and dm.comsumer_type != #{notType,jdbcType=INTEGER}
+		</if>
+		<if test="pageSize != null">
+			LIMIT #{pageSize} OFFSET (#{currPage}-1)*#{pageSize}
+		</if>
+	</select>
+	<select id="relatedMemberCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT
+			count(1)
+		FROM
+			t_dis_member dm
+			LEFT JOIN t_dis_account da ON dm.email = da.email
+			LEFT JOIN t_dis_role dr ON dm.role_id = dr.id
+			LEFT JOIN t_dis_mode dml on dm.distribution_mode=dml.id
+		where 1 = 1
+		<if test="roleId != null">
+			<if test="roleId == 0">
+				and dm.role_id != 2
+			</if>
+			<if test="roleId != 0">
+				and dm.role_id = #{roleId,jdbcType=INTEGER}
+			</if>
+		</if>
+		<if test="search != null and search != '' ">
+			and (
+				lower(dm.user_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.email) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.salesman_erp) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.register_invite_code) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.self_invite_code) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.erp_account) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.telphone) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.nick_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.real_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			)
+		</if>
+		<if test="email != null and email != '' ">
+			and dm.email = #{email,jdbcType=VARCHAR}
+		</if>
+		<if test="notType != null and notType != 0 ">
+			and dm.comsumer_type != #{notType,jdbcType=INTEGER}
+		</if>
+	</select>
+</mapper>

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="shortcut icon" href="../img/favicon.ico"/>
+    <link rel="stylesheet" href="../css/public.css"/>
+    <link rel="stylesheet" href="../css/sub-details.css"/>
+    <link rel="stylesheet" href="../css/style/style.css"/>
+    <link rel="stylesheet" href="../js/lib/laydate/need/laydate.css"/>
+    <link rel="stylesheet" href="../js/lib/layer2.0/skin/layer.css"/>
+    <link rel="stylesheet" href="../js/lib/laydate/skins/molv/laydate.css"/>
+    <script type="text/javascript" src="/js/lib/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <!--<script charset="utf-8" src="https://wpa.b.qq.com/cgi/wpa.php"></script>-->
+    <script type="text/javascript">
+    </script>
+    <title>线下转账</title>
+</head>
+<body id="filter_load" >
+<div id="div_head"></div>
+<div>
+    <div class="cart-borld content">
+        <h1 class="titile" style="margin:20px 0 10px 0;">收银台</h1>
+        <div class="cart-list">
+            <div class="product_table">
+                <table class="paid-order-list">
+                    <tr>
+                        <td style="width:20%">订单编号</td>
+                        <td>卖家</td>
+                        <td>总金额(元)</td>
+                        <td>运费(元)</td>
+                        <td>订单金额(元)</td>
+                        <td>优惠金额(元)</td>
+                    </tr>
+                    <tr>
+                        <td class="purchaseNo" style="width:20%"></td>
+                        <td>通淘供应链</td>
+                        <td class="productAmount"></td>
+                        <td class="bbcPostage"></td>
+                        <td class="totalAmount"></td>
+                        <td class="couponsAcount"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="remittance-content paid-content" style="margin-bottom: 20px;">
+            <p class="paid-online-p red">温馨提示：请选择收款银行后将所要充值汇款转至您选择的收款账户里，并留下您的汇款信息，请确保信息真实有效。</p>
+            <form enctype="multipart/form-data" method="post" action="/purchase/submitAudit" id="audit_form">
+                <div class="paid-online-box">
+                    <input type="hidden" id="pno" name="purno"/>
+                    <table class="paid-online-table">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <span class="red">*</span><span>收款渠道：</span>
+                            </td>
+                            <td>
+                                <select name="recipientId" class="login-select">
+                                    <option value="">请选择</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span></span><span>收款账户：</span>
+                            </td>
+                            <td id="receipt_account">
+                                <input type="text" name="receiptAccount" tag="validate" class="login-button" style="border: 0;background-color: #fff;"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span></span><span>收款人：</span>
+                            </td>
+                            <td id="receipt_payee">
+                                <input type="text" name="receiptName" tag="validate" class="login-button" style="border: 0;background-color: #fff;"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div id="pay-account">
+                                    <a class="add-pay-account blue" onclick="add_payer()">添加付款账户</a>
+                                    <a class="change-pay-account blue" onclick="list_payer()">管理付款账户</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="red">*</span><span>付款账户：</span>
+                            </td>
+                            <td>
+                                <select name="transferType" class="login-select">
+                                    <option value="">请选择</option>
+                                </select>
+                            </td>
+                            <td style="margin-left: 10px;">
+                                <input type="text" class="sendApply-user login-button" name="transferCard" tag="validate" readonly="true"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="red">*</span><span>付款人：</span>
+                            </td>
+                            <td>
+                                <input type="text" name="distributorName" tag="validate" style="border: 0;background-color: #fff;" class="login-button"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="red">*</span><span>付款金额：</span>
+                            </td>
+                            <td>
+                                <input type="text" name="transferAmount" data-fee="" class="login-button" tag="validate"/>
+                            </td>
+                            <td style="padding-left: 10px;">元</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="red">*</span><span>付款流水号：</span>
+                            </td>
+                            <td>
+                                <input type="text" name="transferNumber" maxlength="50" class="login-button"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span></span><span>付款截图：</span>
+                            </td>
+                            <td class="file btn btn-file" style="color: #949494!important;">
+                                选择文件
+                                <input type="file" name="image" onchange="readImg(this)" style="width: 76px; height: 22px;"/>
+                            </td>
+                            <td style=""></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span></span><span>图片预览：</span>
+                            </td>
+                            <td>
+                                <img id="preview" class="preview-img" alt="暂无图片" title="点击预览大图" onclick="previewImg(this)"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="red"></span><span>实际付款日期：</span>
+                            </td>
+                            <td>
+                                <input name="transferTime"
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss',max:laydate.now()})"
+                                       class="login-button" style="width: 150px;"/>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="paid-btn-box">
+                        <button class="top-up-submit btn btn-gray" id="go_purchase_list" type="button">取消</button>
+                        <button class="top-up-submit btn" id="purchase_audit" type="button">提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="div_footer"></div>
+</body>
+</html>
+<!--<script type="text/javascript" src="../js/layer2.0/layer.js"></script>-->
+<script src="../js/lib/requirejs/require.js" data-main="../js/product/paidonline.js"></script>
+<script type="text/javascript" src="../js/lib/laydate/laydate.js"></script>

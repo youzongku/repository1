@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.DisAccountMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.DisAccount" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pay_pass" property="payPass" jdbcType="VARCHAR" />
+    <result column="balance" property="balance" jdbcType="NUMERIC" />
+    <result column="frozen_amount" property="frozenAmount" jdbcType="NUMERIC" />
+    <result column="frozen" property="frozen" jdbcType="BIT" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="input_error_num_times" property="inputErrorNumTimes" jdbcType="INTEGER" />
+    <result column="disable_time" property="disableTime" jdbcType="TIMESTAMP" />
+    <result column="period_frozen" property="periodFrozen" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pay_pass, balance, frozen_amount, frozen, create_user, create_date, email,update_date,input_error_num_times,disable_time,period_frozen
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_account
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_account
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.DisAccount" >
+    insert into t_dis_account (id, pay_pass, balance, frozen_amount,
+      frozen, create_user, create_date, 
+      email,update_date,input_error_num_times,disable_time)
+    values (#{id,jdbcType=INTEGER}, #{payPass,jdbcType=VARCHAR}, #{balance,jdbcType=NUMERIC}, 
+      #{frozenAmount,jdbcType=NUMERIC}, #{frozen,jdbcType=NUMERIC}, #{createUser,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR},#{updateDate,jdbcType=TIMESTAMP},
+      #{inputErrorNumTimes,jdbcType=INTEGER},#{disableTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.DisAccount" >
+    insert into t_dis_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="payPass != null" >
+        pay_pass,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="frozenAmount != null">
+        frozen_amount,
+      </if>
+      <if test="frozen != null" >
+        frozen,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="inputErrorNumTimes != null" >
+        input_error_num_times,
+      </if>
+      <if test="disableTime != null" >
+        disable_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="payPass != null" >
+        #{payPass,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=NUMERIC},
+      </if>
+      <if test="frozenAmount != null">
+        #{frozenAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="frozen != null" >
+        #{frozen,jdbcType=NUMERIC},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inputErrorNumTimes != null" >
+        #{inputErrorNumTimes,jdbcType=INTEGER},
+      </if>
+      <if test="disableTime != null" >
+        #{disableTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.DisAccount" >
+    update t_dis_account
+    <set >
+      <if test="payPass != null" >
+        pay_pass = #{payPass,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=NUMERIC},
+      </if>
+      <if test="frozenAmount != null">
+        frozen_amount = #{frozenAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="frozen != null" >
+        frozen = #{frozen,jdbcType=NUMERIC},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inputErrorNumTimes != null" >
+        input_error_num_times = #{inputErrorNumTimes,jdbcType=INTEGER},
+      </if>
+      <if test="disableTime != null" >
+        disable_time = #{disableTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.DisAccount" >
+    update t_dis_account
+    set pay_pass = #{payPass,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=NUMERIC},
+      frozen_amount = #{frozenAmount,jdbcType=NUMERIC},
+      frozen = #{frozen,jdbcType=NUMERIC},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      email = #{email,jdbcType=VARCHAR},
+      input_error_num_times = #{inputErrorNumTimes,jdbcType=INTEGER},
+      disable_time = #{disableTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getDisAccountByEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_account
+    where email = #{email,jdbcType=VARCHAR}
+  </select>
+  <update id="updateInputErrorTimes" parameterType="entity.dismember.DisAccount">
+  	update t_dis_account
+  	   set input_error_num_times = #{inputErrorNumTimes,jdbcType=INTEGER},
+      	   disable_time = #{disableTime,jdbcType=TIMESTAMP}
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getDisAccountByCondition"  resultType="dto.dismember.AccountDto" parameterType="java.util.Map" >
+	select
+	  a.id as id,
+	  a.email as email,
+	  m.nick_name as nick,
+	  m.real_name as realName,
+	  m.telphone as telphone,
+	  m.comsumer_type as comsumerType,
+	  m.distribution_mode as distributionMode,
+	  a.balance as balance,
+	  a.frozen_amount as frozenAmount
+	from t_dis_account a LEFT JOIN t_dis_member m on a.email = m.email where 1=1
+	<if test="distributors != null and distributors.size() > 0">
+		and a.email in
+		<foreach collection="distributors" open="(" close=")" item="item"
+			separator=",">
+			#{item}
+		</foreach>
+	</if>
+	<if test="filter != null and sort != null and sort != ''">
+		order by ${sort} ${filter} nulls last
+	</if>
+	<if test="pageSize != null">
+		limit #{pageSize,jdbcType=INTEGER} offset (#{currPage,jdbcType=INTEGER} -1) * #{pageSize,jdbcType=INTEGER}
+	</if>
+  </select>
+  <select id="getCountByCondition" resultType="java.lang.Integer" parameterType="java.util.Map" >
+	select count(1)
+	from t_dis_account a LEFT JOIN t_dis_member m on a.email = m.email where 1=1
+	<if test="distributors != null and distributors.size() > 0">
+		and a.email in
+		<foreach collection="distributors" open="(" close=")" item="item"
+			separator=",">
+			#{item}
+		</foreach>
+	</if>
+  </select>
+  
+  <!-- 查询分销商余额 -->
+  <select id="getAccounts" parameterType="java.util.Map" resultType="dto.dismember.AccountDto">
+	SELECT
+		DISTINCT
+		da.id as id,
+		dm.email as email,
+		dm.nick_name as nick,
+		dm.real_name as realName,
+		dm.telphone as telphone,
+		dm.comsumer_type as comsumerType,
+		dm.distribution_mode as distributionMode,
+		da.balance as balance,
+		da.frozen_amount as frozenAmount
+	FROM
+		<if test="list != null and list.size() > 0">
+			t_dis_salesman_member_mapper smm
+			LEFT JOIN t_dis_salesman sm on sm.id=smm.salesmanid LEFT JOIN
+		</if>
+	t_dis_member dm
+		<if test="list != null and list.size() > 0">
+			on smm.memberid=dm.id
+		</if>
+	LEFT JOIN t_dis_account da on dm.email=da.email
+	WHERE
+	dm.email is not null and dm.is_actived=true and dm.role_id=2 and dm.is_delete = true and da.id is not null
+	<if test="search != null and search != '' ">
+		and (
+			lower(dm.email) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(dm.telphone) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(dm.nick_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+		)
+	</if>
+	<if test="comsumerType != null and comsumerType != 0 ">
+		and dm.comsumer_type = #{comsumerType,jdbcType=INTEGER}
+	</if>
+	<if test="distributionMode != null and distributionMode != 0 ">
+		and dm.distribution_mode = #{distributionMode,jdbcType=INTEGER}
+	</if>
+	<if test="list != null and list.size() > 0">
+		and smm.salesmanid in 
+		<foreach collection="list" item="item" open="(" separator="," close=")">
+			#{item.id}
+		</foreach>
+	</if>
+	<if test="filter != null and sort != null and sort != ''">
+		order by ${sort} ${filter} nulls last
+	</if>
+	<if test="pageSize != null">
+		limit #{pageSize,jdbcType=INTEGER} offset (#{currPage,jdbcType=INTEGER} -1) * #{pageSize,jdbcType=INTEGER}
+	</if>
+  </select>
+  <select id="getAccountsCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+	select count(0) from (
+		SELECT
+			DISTINCT
+			dm.email as email,
+			dm.nick_name as nick,
+			dm.real_name as realName,
+			dm.telphone as telphone,
+			dm.comsumer_type as comsumerType,
+			dm.distribution_mode as distributionMode,
+			da.balance as balance,
+			da.frozen_amount as frozenAmount
+		FROM
+			<if test="list != null and list.size() > 0">
+				t_dis_salesman_member_mapper smm
+				RIGHT JOIN t_dis_salesman sm on sm.id=smm.salesmanid LEFT JOIN
+			</if>
+		t_dis_member dm
+			<if test="list != null and list.size() > 0">
+				on smm.memberid=dm.id
+			</if>
+		LEFT JOIN t_dis_account da on dm.email=da.email
+		WHERE
+		dm.email is not null and dm.is_actived=true and dm.role_id=2 and dm.is_delete = true and da.id is not null
+		<if test="search != null and search != '' ">
+			and (
+				lower(dm.email) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.telphone) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or lower(dm.nick_name) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			)
+		</if>
+		<if test="comsumerType != null and comsumerType != 0 ">
+			and dm.comsumer_type = #{comsumerType,jdbcType=INTEGER}
+		</if>
+		<if test="distributionMode != null and distributionMode != 0 ">
+			and dm.distribution_mode = #{distributionMode,jdbcType=INTEGER}
+		</if>
+		<if test="list != null and list.size() > 0">
+			and smm.salesmanid in 
+			<foreach collection="list" item="item" open="(" separator="," close=")">
+				#{item.id}
+			</foreach>
+		</if>
+	) x
+  </select>
+
+	<update id="updatePeriodFrozen" parameterType="entity.dismember.DisAccount">
+		update t_dis_account 
+			set period_frozen = #{periodFrozen,jdbcType=DOUBLE} 
+		where 
+			email = #{email,jdbcType=VARCHAR}
+	</update>
+  
+</mapper>

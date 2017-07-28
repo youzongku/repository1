@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.InvoiceMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.Invoice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="invoice_title" property="invoiceTitle" jdbcType="VARCHAR" />
+    <result column="invoice_tax_number" property="invoiceTaxNumber" jdbcType="VARCHAR" />
+    <result column="invoice_bank" property="invoiceBank" jdbcType="VARCHAR" />
+    <result column="invoice_bank_account" property="invoiceBankAccount" jdbcType="VARCHAR" />
+    <result column="invoice_tel" property="invoiceTel" jdbcType="VARCHAR" />
+    <result column="invoice_company_addr" property="invoiceCompanyAddr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, email, invoice_title, invoice_tax_number, invoice_bank, invoice_bank_account, 
+    invoice_tel, invoice_company_addr
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_invoice
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_invoice
+    where email = #{1,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_invoice
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByEmail" parameterType="java.lang.String" >
+    delete from t_dis_invoice
+    where email = #{1,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.Invoice" >
+    insert into t_dis_invoice (id, email, invoice_title, 
+      invoice_tax_number, invoice_bank, invoice_bank_account, 
+      invoice_tel, invoice_company_addr)
+    values (#{id,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{invoiceTitle,jdbcType=VARCHAR}, 
+      #{invoiceTaxNumber,jdbcType=VARCHAR}, #{invoiceBank,jdbcType=VARCHAR}, #{invoiceBankAccount,jdbcType=VARCHAR}, 
+      #{invoiceTel,jdbcType=VARCHAR}, #{invoiceCompanyAddr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.Invoice" >
+    insert into t_dis_invoice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="invoiceTitle != null" >
+        invoice_title,
+      </if>
+      <if test="invoiceTaxNumber != null" >
+        invoice_tax_number,
+      </if>
+      <if test="invoiceBank != null" >
+        invoice_bank,
+      </if>
+      <if test="invoiceBankAccount != null" >
+        invoice_bank_account,
+      </if>
+      <if test="invoiceTel != null" >
+        invoice_tel,
+      </if>
+      <if test="invoiceCompanyAddr != null" >
+        invoice_company_addr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTitle != null" >
+        #{invoiceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTaxNumber != null" >
+        #{invoiceTaxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceBank != null" >
+        #{invoiceBank,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceBankAccount != null" >
+        #{invoiceBankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTel != null" >
+        #{invoiceTel,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceCompanyAddr != null" >
+        #{invoiceCompanyAddr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.Invoice" >
+    update t_dis_invoice
+    <set >
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTitle != null" >
+        invoice_title = #{invoiceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTaxNumber != null" >
+        invoice_tax_number = #{invoiceTaxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceBank != null" >
+        invoice_bank = #{invoiceBank,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceBankAccount != null" >
+        invoice_bank_account = #{invoiceBankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTel != null" >
+        invoice_tel = #{invoiceTel,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceCompanyAddr != null" >
+        invoice_company_addr = #{invoiceCompanyAddr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.Invoice" >
+    update t_dis_invoice
+    set email = #{email,jdbcType=VARCHAR},
+      invoice_title = #{invoiceTitle,jdbcType=VARCHAR},
+      invoice_tax_number = #{invoiceTaxNumber,jdbcType=VARCHAR},
+      invoice_bank = #{invoiceBank,jdbcType=VARCHAR},
+      invoice_bank_account = #{invoiceBankAccount,jdbcType=VARCHAR},
+      invoice_tel = #{invoiceTel,jdbcType=VARCHAR},
+      invoice_company_addr = #{invoiceCompanyAddr,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

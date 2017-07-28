@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.marketing.promotion.ActivityInformationLogMapper">
+  <resultMap id="BaseResultMap" type="entity.marketing.promotion.ActivityInformationLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="order_number" jdbcType="VARCHAR" property="orderNumber" />
+    <result column="purchase_price" jdbcType="DOUBLE" property="purchasePrice" />
+    <result column="pro_act_id" jdbcType="INTEGER" property="proActId" />
+    <result column="is_payment" jdbcType="BIT" property="isPayment" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="pvlg_inst_id" jdbcType="VARCHAR" property="pvlgInstId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_name, order_number, purchase_price, pro_act_id, is_payment, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_activity_information_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_activity_information_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.marketing.promotion.ActivityInformationLog">
+    insert into t_activity_information_log (user_name, order_number, 
+      purchase_price, pro_act_id, is_payment, 
+      create_time,pvlg_inst_id)
+    values (#{userName,jdbcType=VARCHAR}, #{orderNumber,jdbcType=VARCHAR}, 
+      #{purchasePrice,jdbcType=DOUBLE}, #{proActId,jdbcType=INTEGER}, #{isPayment,jdbcType=BIT}, 
+      now(),#{pvlgInstId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.marketing.promotion.ActivityInformationLog">
+    insert into t_activity_information_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="orderNumber != null">
+        order_number,
+      </if>
+      <if test="purchasePrice != null">
+        purchase_price,
+      </if>
+      <if test="proActId != null">
+        pro_act_id,
+      </if>
+      <if test="isPayment != null">
+        is_payment,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null">
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasePrice != null">
+        #{purchasePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="proActId != null">
+        #{proActId,jdbcType=INTEGER},
+      </if>
+      <if test="isPayment != null">
+        #{isPayment,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.marketing.promotion.ActivityInformationLog">
+    update t_activity_information_log
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null">
+        order_number = #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasePrice != null">
+        purchase_price = #{purchasePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="proActId != null">
+        pro_act_id = #{proActId,jdbcType=INTEGER},
+      </if>
+      <if test="isPayment != null">
+        is_payment = #{isPayment,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.marketing.promotion.ActivityInformationLog">
+    update t_activity_information_log
+    set user_name = #{userName,jdbcType=VARCHAR},
+      order_number = #{orderNumber,jdbcType=VARCHAR},
+      purchase_price = #{purchasePrice,jdbcType=DOUBLE},
+      pro_act_id = #{proActId,jdbcType=INTEGER},
+      is_payment = #{isPayment,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

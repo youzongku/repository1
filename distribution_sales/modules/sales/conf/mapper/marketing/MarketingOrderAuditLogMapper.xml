@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.MarketingOrderAuditLogMapper" >
+  <resultMap id="BaseResultMap" type="entity.marketing.MarketingOrderAuditLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="marketing_order_no" property="marketingOrderNo" jdbcType="VARCHAR" />
+    <result column="passed" property="passed" jdbcType="INTEGER" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="audit_user" property="auditUser" jdbcType="VARCHAR" />
+    <result column="audit_date" property="auditDate" jdbcType="TIMESTAMP" />
+    <result column="audit_type" property="auditType" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, status, marketing_order_no, passed, remarks, audit_user, audit_date, audit_type
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_marketing_order_audit_logs
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAllLogs" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_marketing_order_audit_logs
+    <where>
+    	<if test="marketingOrderNo!=null and marketingOrderNo!=''">
+    		marketing_order_no = #{marketingOrderNo}
+    	</if>
+    	<if test="auditType!=null">
+    		and audit_type = #{auditType}
+    	</if>
+    </where>
+  </select>
+  
+  <insert id="insert" parameterType="entity.marketing.MarketingOrderAuditLog" >
+    insert into t_marketing_order_audit_logs (status, marketing_order_no, 
+      passed, remarks, audit_user, 
+      audit_date, audit_type)
+    values (#{status,jdbcType=INTEGER}, #{marketingOrderNo,jdbcType=VARCHAR}, 
+      #{passed,jdbcType=INTEGER}, #{remarks,jdbcType=INTEGER}, #{auditUser,jdbcType=VARCHAR}, 
+      now(), #{auditType,jdbcType=INTEGER})
+  </insert>
+  
+  <!-- 获取一个单的最新的指定类型的那条审核记录 -->
+  <select id="selectAOrderLatestLog" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from t_marketing_order_audit_logs
+  	<where>
+  		<if test="auditType!=null">
+  			audit_type = #{auditType}
+  		</if>
+  		<if test="marketingOrderNo!=null">
+  			and marketing_order_no = #{marketingOrderNo}
+  		</if>
+  	</where>
+  	order by audit_date desc
+  	limit 1
+  </select>
+  
+</mapper>

@@ -1,0 +1,295 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<!--添加促销-->
+<link rel="stylesheet" type="text/css" href="../css/laydate/skins/molv/laydate.css">
+<script type="text/javascript" src="../js/lib/laydate/laydate.js"></script>
+
+<!--第1步 基础信息 start-->
+<div class="promotion_first_step new_promotion_first_step">
+    <h1>促销管理<span>---</span><span>添加促销</span></h1>
+    <button class="promotion_back">返回</button>
+    <div>
+        <em><b style="color: red">*</b>促销名称:</em>
+        <input id="pro_act_name" class="promotion_input">
+        <input id="pro_act_status" type="hidden">
+        <input id="pro_act_id" type="hidden">
+        <input id="pro_act_name_hidden" type="hidden">
+        <input id="mode_ids_hidden" type="hidden">
+    </div>
+    <div>
+        <em style="vertical-align: top"><b style="color: red">*</b>描述:</em>
+        <textarea id="pro_act_description" class="promotion_text"></textarea>
+    </div>
+    <div id="mode_div">
+        <em><b style="color: red">*</b>分销渠道:</em>
+        <span style="display: inline" id="mode_span"></span>
+    </div>
+    <div>
+        <em><b style="color: red">*</b>促销开始时间:</em>
+        <input id="start_time" class="promotion_input" placeholder="开始时间" onclick="new_laydate_start_time()">
+    </div>
+    <div>
+        <em><b style="color: red">*</b>促销结束时间:</em>
+        <input id="end_time" class="promotion_input" placeholder="结束时间" onclick="new_laydate_end_time()">
+    </div>
+    <div>
+        <em>促销状态:</em>
+        <span id="pro_act_status_str">未开始</span>
+    </div>
+    <div>
+        <button class="next_step_button new_next_step_button">下一步</button>
+        <button class="reset_step_button new_reset_step_button">重置</button>
+    </div>
+</div>
+<!--第1步 基础信息 end-->
+
+<!--第2步 添加促销类型 start-->
+<div class="promotion_second_step new_promotion_second_step">
+    <h1>促销管理<span>---</span><span>添加促销</span></h1>
+    <div class="commodity_attribute_title">
+        <h2>
+            请根据下列系统已配置好的促销类型选择
+        </h2>
+    </div>
+    <ul class="search_category">
+        <li>促销类型名称：
+            <input onkeyup="enter_keyUp(event,this, new_loadProTypes)" id="pro_type_name" class="searchInput">
+        </li>
+        <li style="float:right;">条件属性：
+            <select onchange="new_loadProTypes()" id="pro_type_condt_attr_select"></select>
+            <input class="searchButton" onclick="new_loadProTypes()" value="搜&nbsp;索" type="submit">
+        </li>
+    </ul>
+    <script>  //解决IEplaceholder不兼容问题
+    $(document).ready(function () {
+        $(function () {
+            if (!placeholderSupport()) {
+                $('[placeholder]').focus(function () {
+                    var input = $(this);
+                    if (input.val() == input.attr('placeholder')) {
+                        input.val('');
+                        input.removeClass('placeholder');
+                    }
+                }).blur(function () {
+                    var input = $(this);
+                    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                        input.addClass('placeholder');
+                        input.val(input.attr('placeholder'));
+                    }
+                }).blur();
+            }
+        })
+        function placeholderSupport() {
+            return 'placeholder' in document.createElement('input');
+        }
+    });
+    </script>
+    <div class="content_list">
+        <table class="select_table" id="pro_type_table">
+            <thead>
+            <tr>
+                <th style="width: 5%;">序号</th>
+                <th style="width: 45%;">促销类型名称</th>
+                <th style="width: 20%;">促销类型描述</th>
+                <th style="width: 10%;">条件属性</th>
+                <th style="width: 20%;">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="clear"></div>
+        <div class="list_content">
+            <div></div>
+            <p>共<span id="new_proTypeTotal" style="display:inline-block;">0</span>记录，每页显示
+                <select id="proType_pageSize">
+                    <option value="10" selected="selected">10</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                </select>
+                ，共<span id="new_proTypePages" style="display:inline-block;">0</span>页
+            </p>
+        </div>
+    </div>
+    <div id="new_proType_pagination" style="text-align: center; margin-top: 30px;"></div>
+</div>
+<!--第2步 添加促销类型 end-->
+
+<!--添加促销 start-->
+<div class="promotion_third_step new_promotion_third_step">
+    <h1>促销管理<span>---</span><span>添加促销</span></h1>
+    <div class="commodity_attribute_title">
+        <h2>
+            已添加促销类型<b class="red" id="pro_type_added_count">0</b>个
+        </h2>
+    </div>
+    <ul class="search_category">
+        <li>
+            <button class="add_promotion_cate new_add_promotion_cate">添加促销类型+</button>
+        </li>
+        <li style="float:right;">
+            <button class="create_promotion new_create_promotion">创建促销活动</button>
+            <button class="cancel_promotion">取消创建</button>
+        </li>
+    </ul>
+    <script>  //解决IEplaceholder不兼容问题
+    $(document).ready(function () {
+        $(function () {
+            if (!placeholderSupport()) {
+                $('[placeholder]').focus(function () {
+                    var input = $(this);
+                    if (input.val() == input.attr('placeholder')) {
+                        input.val('');
+                        input.removeClass('placeholder');
+                    }
+                }).blur(function () {
+                    var input = $(this);
+                    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                        input.addClass('placeholder');
+                        input.val(input.attr('placeholder'));
+                    }
+                }).blur();
+            }
+        })
+        function placeholderSupport() {
+            return 'placeholder' in document.createElement('input');
+        }
+    });
+    </script>
+    <div class="content_list">
+        <!--促销活动已选中的促销类型-->
+        <table class="select_table" id="pro_act_pro_type_table">
+            <thead>
+            <tr>
+                <th style="width: 5%;"><input type="checkbox" id="checkbox_selectAllProActis" onchange="selectAllProActis(this)"></th>
+                <th style="width: 5%;">序号</th>
+                <th style="width: 10%;">促销类型名称</th>
+                <th style="width: 20%;">促销类型描述</th>
+                <th style="width: 10%;">条件属性</th>
+                <th style="width: 10%;">条件名称</th>
+                <th style="width: 10%;">是否设置参数</th>
+                <th style="width: 10%;">优先级<b class="red question_first">?</b></th>
+                <th style="width: 20%;">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="select_operationBox">
+            <button class="cate_del_all">删除所选</button>
+            <p class="red">
+                温馨提示：添加了多种促销类型的模板时,系统会自动叠加优惠！(不按优先级)
+            </p>
+        </div>
+    </div>
+</div>
+<!--添加促销 end-->
+
+<!--优先级规则-->
+<div class="question_box display">
+    <p>优先级规则:</p>
+    <p>1、同一个促销类型的模板使用多次，填写了相同的优先级，系统会叠加优惠！</p>
+    <p>2、同一个促销类型的模板使用多次，填写了不同的优先级，用户订单满足多个条件时，则只显示优先高的优惠！</p>
+</div>
+
+<!--动态的条件和优惠设置-->
+<div class="dynamic_pro_inst_condition_privilege_parameter_box check_box" style="margin:0px 0px 0px 5px;display: none"><!--para_category-->
+    <div class="commodity_attribute_title">
+        <h2>
+            请设置促销类型的参数！
+        </h2>
+    </div>
+    <div>
+        <!--<em>促销活动名称：</em>-->
+        <div style="float:right">
+            <input type="hidden" id="condtInstExtId_hidden"/>
+            <!--<span id="act_inst_name" style="width:200px;display:inline"></span>-->
+            <span style="float:right;margin-right: 76px;display: none">
+                <input id="stepped_checkbox" type="checkbox" style="display:inline">可阶梯
+            </span>
+        </div>
+        <input id="act_inst_id" type="hidden">
+    </div>
+    <div>
+        <em style="vertical-align: top">促销的条件及优惠：</em>
+        <div>
+            <div id="match_type_div">
+            </div>
+            <!--动态生成条件-->
+            <div id="dynamic_pro_inst_condition_div" style="margin:6px 0px 0px 0px;">
+            </div>
+            <!--动态生成优惠-->
+            <div id="dynamic_pro_inst_pvlg_div">
+            </div>
+        </div>
+    </div>
+    <div>
+        <em>促销描述：</em>
+        <div id="dynamic_pro_inst_pvlg_desc_div">
+        </div>
+    </div>
+    <div>
+        <!--
+        <button class="promotion_button update_save_dynamic_condt_values">保存参数设置</button>
+        <button class="promotion_button cancel_para">取消</button>
+        -->
+    </div>
+</div>
+
+<!--运送地区弹窗-->
+<div class="convey_seek display" id="region_popup_div">
+    省份<select onchange="getCitiesByProvinceId(this)" id="province_select"></select>市<select id="city_select"><option>请选择城市</option></select>
+</div>
+
+<!--商品分类弹窗-->
+<div class="appoint_seek" id="product_category_popup_div" style="width: 550px;height: 200px">
+    <table id="product_category_table">
+        <thead>
+        <tr>
+            <th colspan="3">
+                <span style="float: left;margin-left: 48px"><input value="" id="checkbox_selectAllProductCategory" onchange="selectAllProductCategory(this)" type="checkbox">全选</span>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<!--指定商品弹窗-->
+<div class="appoint_seek" id="specify_product_popup_div" style="width: 600px;height: 400px">
+    <div>
+        <input type="text" id="specify_product_search_skus" class="promotion_input">
+        <button class="promotion_button" id="specify_product_search_btn">搜索</button>
+    </div>
+    <table id="specity_product_table">
+        <thead>
+        <tr>
+            <th><input type="checkbox" id="checkbox_specify_product_selectAll"></th>
+            <th>SKU</th>
+            <th>商品名称</th>
+            <th>仓库</th>
+            <th>云仓库存</th>
+            <th>所属分类</th>
+            <th>箱规</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div id="specify_product_pagination" style="text-align: center; margin-top: 30px;"></div>
+</div>
+
+<!--指定仓库弹窗-->
+<div class="warehouse_seek display" id="specify_warehouse_popup_div">
+    <table id="specify_warehouse_table">
+        <thead>
+        <tr>
+            <th><input type="checkbox"></th>
+            <th>仓库编号</th>
+            <th>仓库名称</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>

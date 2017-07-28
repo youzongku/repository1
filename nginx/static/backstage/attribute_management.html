@@ -1,0 +1,70 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<h1>商品管理<span>---</span><span>商品属性管理</span></h1>
+<ul class="search_category">
+    <li>
+        <select>
+            <option value="0">属性类型</option>
+            <option value="1">文本框</option>
+            <option value="2">单选框</option>
+            <option value="3">多选框</option>
+            <option value="3">时间</option>
+        </select>
+    </li>
+    <li>
+        <input type="text" id="searchInput" class="searchInput" placeholder="属性集名称">
+        <input id="searchButton" class="searchButton" value="搜索" type="submit">
+    </li>
+    <li>
+        <div class="search">
+            <button class="attributePop">添加属性</button>
+        </div>
+    </li>
+</ul>
+<script>  //解决IEplaceholder不兼容问题
+</script>
+<div class="content_list">
+    <table class="list_title all_table">
+        <thead>
+        <tr>
+            <th style="width: 8%;">序号</th>
+            <th style="width: 14%;">属性名称</th>
+            <th style="width: 14%;">属性类型</th>
+            <th style="width: 14%;">备选值</th>
+            <th style="width: 14%;">Key值</th>
+            <th style="width: 14%;">是否已关联属性集</th>
+            <th style="width: 22%;">操作</th>
+        </tr>
+        </thead>
+        <tbody class="list_content role-list-content">
+            <tr class="list_message">
+                <td>01</td>
+                <td>属性A</td>
+                <td>文本</td>
+                <td>值</td>
+                <td>Key值</td>
+                <td>
+                    <b class="">
+                        <span class="">否</span>
+                        <span style="display: none;">是</span>
+                    </b>
+                </td>
+                <td class="operation">
+                    <a href="javascript:void(0);" class="modificationPop">修改</a>
+                    <a href="javascript:void(0);">删除</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="list_content">
+        <p>共<span id="count" style="display: inline-block; color: #55ccc8;">35</span>记录，每页显示
+            <select>
+                <option value="10">10</option>
+                <option value="20" selected="selected">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
+            ，共<span id="page_count" style="display: inline-block; color: #55ccc8;">2</span>页
+        </p>
+    </div>
+    <div id="role_pagination" style="text-align: center; margin-top: 30px;"><div name="laypage1.3" class="laypage_main laypageskin_molv" id="laypage_10"><span class="laypage_curr" style="background-color:#55ccc8">1</span><a href="javascript:;" data-page="2">2</a><a href="javascript:;" class="laypage_next" data-page="2">下一页</a><span class="laypage_total"><label>到第</label><input type="number" min="1" onkeyup="this.value=this.value.replace(/\D/, '');" class="laypage_skip"><label>页</label><button type="button" class="laypage_btn">确定</button></span></div></div>
+</div>

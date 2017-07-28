@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.timer.SaleBaseMapper">
+  <resultMap id="BaseResultMap" type="entity.timer.SaleBase">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="platform_order_no" jdbcType="VARCHAR" property="platformOrderNo" />
+    <result column="platform_type" jdbcType="INTEGER" property="platformType" />
+    <result column="platform_type_name" jdbcType="VARCHAR" property="platformTypeName" />
+    <result column="platform_name" jdbcType="VARCHAR" property="platformName" />
+    <result column="order_total_amount" jdbcType="DOUBLE" property="orderTotalAmount" />
+    <result column="order_actual_amount" jdbcType="DOUBLE" property="orderActualAmount" />
+    <result column="order_postage" jdbcType="DOUBLE" property="orderPostage" />
+    <result column="ordering_date" jdbcType="TIMESTAMP" property="orderingDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="sales_order_id" jdbcType="INTEGER" property="salesOrderId" />
+    <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="addr_id" jdbcType="INTEGER" property="addrId" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    
+    <result column="receiver" jdbcType="VARCHAR" property="receiver" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="idcard" jdbcType="VARCHAR" property="idcard" />
+    <result column="post_code" jdbcType="VARCHAR" property="postCode" />
+    <result column="orderer" jdbcType="VARCHAR" property="orderer" />
+    <result column="orderer_idcard" jdbcType="VARCHAR" property="ordererIDCard" />
+    <result column="orderer_tel" jdbcType="VARCHAR" property="ordererTel" />
+    <result column="orderer_postcode" jdbcType="VARCHAR" property="ordererPostcode" />
+    <result column="buyer_id" jdbcType="VARCHAR" property="buyerID" />
+    <!-- 下述为关联查询时产生的额外字段，不属于本表，但是在映射的时候会用到  -->
+    <result column="trade_no" jdbcType="VARCHAR" property="tradeNo" />
+    <!-- 收款账户  -->
+    <result column="collect_account" jdbcType="VARCHAR" property="collectAccount" />
+    <!-- 客服账号 -->
+    <result column="customer_service" jdbcType="VARCHAR" property="customerservice" />
+    <!-- 物流代码 -->
+    <result column="logistics_type_code" jdbcType="VARCHAR" property="logisticsTypeCode" />
+    <!-- 分销商平台运费 -->
+    <result column="bbc_postage" jdbcType="DOUBLE" property="bbcPostage" />
+    <!-- 分销商平台原始运费，bbc_postage有可能被修改 -->
+    <result column="original_freight" jdbcType="DOUBLE" property="originalFreight" />
+    <!-- 物流方式 -->
+    <result column="logistics_mode" jdbcType="VARCHAR" property="logisticsMode" />
+    <result column="coupons_code" jdbcType="VARCHAR" property="couponsCode" />
+    <result column="coupons_amount" jdbcType="DOUBLE" property="couponsAmount" />
+    <result column="createuser" jdbcType="VARCHAR" property="createUser" />
+    <result column="is_back" jdbcType="BIT" property="isBack" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, platform_order_no, platform_type,platform_type_name, platform_name, order_total_amount, order_actual_amount, 
+    order_postage, ordering_date, remark, sales_order_id ,shop_id ,addr_id ,address ,receiver ,tel ,idcard,post_code,
+  	orderer,orderer_idcard,orderer_tel,orderer_postcode,buyer_id,collect_account,customer_service,logistics_type_code,
+  	bbc_postage,logistics_mode,coupons_code,coupons_amount,createuser,is_back
+  </sql>
+  
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+      select 
+      b.*,
+      b.ordering_date as orderingDateStr,
+      m.trade_no
+      from t_product_sales_order_base b left join t_product_sales_order_main m on 
+      b.sales_order_id = m.id
+      where b.sales_order_id=#{orderId}
+  </select>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.timer.SaleBase">
+    update t_product_sales_order_base
+    <set>
+      <if test="platformOrderNo != null">
+        platform_order_no = #{platformOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="platformType != null">
+        platform_type = #{platformType,jdbcType=INTEGER},
+      </if>
+      <if test="platformTypeName != null">
+        platform_type_name = #{platformTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="platformName != null">
+        platform_name = #{platformName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTotalAmount != null">
+        order_total_amount = #{orderTotalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="orderActualAmount != null">
+        order_actual_amount = #{orderActualAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="orderPostage != null">
+        order_postage = #{orderPostage,jdbcType=DOUBLE},
+      </if>
+      <if test="orderingDate != null">
+        ordering_date = #{orderingDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="salesOrderId != null">
+        sales_order_id = #{salesOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="addrId != null">
+        addr_id = #{addrId,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null">
+        receiver = #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        idcard = #{idcard,jdbcType=VARCHAR},
+      </if>
+       <if test="postCode != null">
+        post_code = #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderer != null">
+        orderer = #{orderer,jdbcType=VARCHAR},
+      </if>
+      <if test="ordererIDCard != null">
+        orderer_idcard = #{ordererIDCard,jdbcType=VARCHAR},
+      </if>
+      <if test="ordererTel != null">
+        orderer_tel = #{ordererTel,jdbcType=VARCHAR},
+      </if>
+      <if test="ordererPostcode != null">
+        orderer_postcode = #{ordererPostcode,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerID != null">
+        buyer_id = #{buyerID,jdbcType=VARCHAR},
+      </if>
+      <if test="collectAccount != null">
+        collect_account = #{collectAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="customerservice != null">
+        customer_service = #{customerservice,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsTypeCode != null">
+        logistics_type_code = #{logisticsTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bbcPostage != null">
+        bbc_postage = #{bbcPostage,jdbcType=DOUBLE},
+      </if>
+      <if test="logisticsMode != null">
+        logistics_mode = #{logisticsMode,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsCode != null">
+        coupons_code = #{couponsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsAmount != null">
+        coupons_amount = #{couponsAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="createUser != null">
+        createuser = #{createUser,jdbcType=VARCHAR},
+      </if>
+       <if test="isBack != null">
+        is_back = #{isBack,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

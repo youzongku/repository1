@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.promotion.ConditionInstanceMapper" >
+  <resultMap id="BaseResultMap" type="entity.marketing.promotion.ConditionInstance" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="act_inst_id" property="actInstId" jdbcType="INTEGER" />
+    <result column="condt_id" property="condtId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="attr" property="attr" jdbcType="SMALLINT" />
+    <result column="c_type" property="cType" jdbcType="INTEGER" />
+    <result column="condt_jgmnt_type_id" property="condtJgmntTypeId" jdbcType="INTEGER" />
+    <result column="condt_jgmnt_name" property="condtJgmntName" jdbcType="VARCHAR" />
+    <result column="condt_jgmnt_type" property="condtJgmntType" jdbcType="VARCHAR" />
+    <result column="condt_jgmnt_value" property="condtJgmntValue" jdbcType="VARCHAR" />
+    <result column="field_4" property="field4" jdbcType="VARCHAR" />
+    <result column="field_5" property="field5" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="BOOLEAN" />
+    <result column="is_set_v" property="isSetV" jdbcType="SMALLINT" />
+    <result column="priority" property="priority" jdbcType="SMALLINT" />
+    <result column="has_ext_condt" property="hasExtCondt" jdbcType="BOOLEAN" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <update id="deleteSoftlyByPrimaryKey">
+  	update t_condt_inst set is_delete=true where where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updatePriorityByPrimaryKey" parameterType="java.lang.Integer">
+  	update t_condt_inst set priority=#{priority} where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <sql id="Base_Column_List" >
+    id, act_inst_id, condt_id, name, attr, c_type, condt_jgmnt_type_id, condt_jgmnt_name, condt_jgmnt_type, 
+    condt_jgmnt_value, is_delete, is_set_v, priority, has_ext_condt, parent_id, field_4, field_5
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_condt_inst
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 根据活动实例id获取条件实例 -->
+  <select id="selectByActInstId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_condt_inst
+    where act_inst_id = #{actInstId}
+    and is_delete = false
+  </select>
+  
+  <insert id="insert" parameterType="entity.marketing.promotion.ConditionInstance" keyProperty="id" useGeneratedKeys="true" >
+    insert into t_condt_inst (act_inst_id, condt_id, name, attr, c_type, is_delete, is_set_v, priority, has_ext_condt,
+    parent_id)
+    values (#{actInstId,jdbcType=INTEGER}, #{condtId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+    #{attr,jdbcType=SMALLINT}, #{cType}, #{isDelete}, #{isSetV}, #{priority}, #{hasExtCondt}, #{parentId})
+  </insert>
+  
+  <insert id="insertBatch" parameterType="java.util.List">
+  	insert into t_condt_inst (act_inst_id, condt_id, name, attr, c_type, is_delete, is_set_v, priority, has_ext_condt, parent_id)
+  	values 
+    <foreach collection="list" item="item" index="index" separator="," >
+		(#{item.actInstId,jdbcType=INTEGER}, #{item.condtId,jdbcType=INTEGER}, 
+		#{item.name,jdbcType=VARCHAR}, #{item.attr,jdbcType=SMALLINT}, 
+		#{item.cType}, #{item.isDelete}, #{item.isSetV}, #{item.priority}, #{hasExtCondt}, #{parentId})
+	</foreach>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.marketing.promotion.ConditionInstance" >
+    update t_condt_inst
+    <set >
+      <if test="condtJgmntTypeId != null" >
+        condt_jgmnt_type_id = #{condtJgmntTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="condtJgmntName != null" >
+		condt_jgmnt_name = #{condtJgmntName,jdbcType=VARCHAR},
+	  </if>
+      <if test="condtJgmntType != null" >
+        condt_jgmnt_type = #{condtJgmntType,jdbcType=VARCHAR},
+      </if>
+      <if test="condtJgmntValue != null" >
+        condt_jgmnt_value = #{condtJgmntValue,jdbcType=VARCHAR},
+      </if>
+      <if test="isSetV != null" >
+        is_set_v = #{isSetV,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateBatch"  parameterType="java.util.List">
+  	<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+    	update t_condt_inst
+    	<set>
+	    	<if test="item.isSetV != null" >
+	        	is_set_v = #{item.isSetV},
+	      	</if>
+	      	<if test="item.jdmntTypeId != null" >
+	        	condt_jgmnt_type_id = #{item.jdmntTypeId},
+	      	</if>
+	      	<if test="item.jgmntName != null" >
+		        condt_jgmnt_name = #{item.jgmntName},
+		    </if>
+	      	<if test="item.jType != null and item.jType != ''" >
+	       	 	condt_jgmnt_type = #{item.jType},
+	      	</if>
+	      	<if test="item.jsonValue != null and item.jsonValue != ''" >
+		        condt_jgmnt_value = #{item.jsonValue},
+		    </if>
+		</set>
+		where id = ${item.condtInstId}
+  	</foreach>
+  </update>
+</mapper>

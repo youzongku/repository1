@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.OrderPackMapper" >
+  <resultMap id="BaseResultMap" type="entity.sales.OrderPack" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="cordernumber" property="cordernumber" jdbcType="VARCHAR" />
+    <result column="csku" property="csku" jdbcType="VARCHAR" />
+    <result column="iqty" property="iqty" jdbcType="INTEGER" />
+    <result column="cshippingtype" property="cshippingtype" jdbcType="VARCHAR" />
+    <result column="fshippingprice" property="fshippingprice" jdbcType="DOUBLE" />
+    <result column="ctrackingnumber" property="ctrackingnumber" jdbcType="VARCHAR" />
+    <result column="dshippingdate" property="dshippingdate" jdbcType="TIMESTAMP" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+    <result column="iisregister" property="iisregister" jdbcType="INTEGER" />
+    <result column="clocaltracknumber" property="clocaltracknumber" jdbcType="VARCHAR" />
+    <result column="cshippingname" property="cshippingname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, cordernumber, csku, iqty, cshippingtype, fshippingprice, ctrackingnumber, dshippingdate,
+    dcreatedate, iisregister, clocaltracknumber, cshippingname
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_product_sales_order_pack
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_product_sales_order_pack
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.sales.OrderPack" >
+    insert into t_product_sales_order_pack (iid, cordernumber, csku,
+    iqty, cshippingtype, fshippingprice,
+    ctrackingnumber, dshippingdate, dcreatedate,
+    iisregister, clocaltracknumber, cshippingname)
+    values (#{iid,jdbcType=INTEGER}, #{cordernumber,jdbcType=VARCHAR}, #{csku,jdbcType=VARCHAR},
+    #{iqty,jdbcType=INTEGER}, #{cshippingtype,jdbcType=VARCHAR}, #{fshippingprice,jdbcType=DOUBLE},
+    #{ctrackingnumber,jdbcType=VARCHAR}, #{dshippingdate,jdbcType=TIMESTAMP}, #{dcreatedate,jdbcType=TIMESTAMP},
+    #{iisregister,jdbcType=INTEGER}, #{clocaltracknumber,jdbcType=VARCHAR}, #{cshippingname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.sales.OrderPack" >
+    insert into t_product_sales_order_pack
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cordernumber != null" >
+        cordernumber,
+      </if>
+      <if test="csku != null" >
+        csku,
+      </if>
+      <if test="iqty != null" >
+        iqty,
+      </if>
+      <if test="cshippingtype != null" >
+        cshippingtype,
+      </if>
+      <if test="fshippingprice != null" >
+        fshippingprice,
+      </if>
+      <if test="ctrackingnumber != null" >
+        ctrackingnumber,
+      </if>
+      <if test="dshippingdate != null" >
+        dshippingdate,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+      <if test="iisregister != null" >
+        iisregister,
+      </if>
+      <if test="clocaltracknumber != null" >
+        clocaltracknumber,
+      </if>
+      <if test="cshippingname != null" >
+        cshippingname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cordernumber != null" >
+        #{cordernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="csku != null" >
+        #{csku,jdbcType=VARCHAR},
+      </if>
+      <if test="iqty != null" >
+        #{iqty,jdbcType=INTEGER},
+      </if>
+      <if test="cshippingtype != null" >
+        #{cshippingtype,jdbcType=VARCHAR},
+      </if>
+      <if test="fshippingprice != null" >
+        #{fshippingprice,jdbcType=DOUBLE},
+      </if>
+      <if test="ctrackingnumber != null" >
+        #{ctrackingnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="dshippingdate != null" >
+        #{dshippingdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iisregister != null" >
+        #{iisregister,jdbcType=INTEGER},
+      </if>
+      <if test="clocaltracknumber != null" >
+        #{clocaltracknumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cshippingname != null" >
+        #{cshippingname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.sales.OrderPack" >
+    update t_product_sales_order_pack
+    <set >
+      <if test="cordernumber != null" >
+        cordernumber = #{cordernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="csku != null" >
+        csku = #{csku,jdbcType=VARCHAR},
+      </if>
+      <if test="iqty != null" >
+        iqty = #{iqty,jdbcType=INTEGER},
+      </if>
+      <if test="cshippingtype != null" >
+        cshippingtype = #{cshippingtype,jdbcType=VARCHAR},
+      </if>
+      <if test="fshippingprice != null" >
+        fshippingprice = #{fshippingprice,jdbcType=DOUBLE},
+      </if>
+      <if test="ctrackingnumber != null" >
+        ctrackingnumber = #{ctrackingnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="dshippingdate != null" >
+        dshippingdate = #{dshippingdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iisregister != null" >
+        iisregister = #{iisregister,jdbcType=INTEGER},
+      </if>
+      <if test="clocaltracknumber != null" >
+        clocaltracknumber = #{clocaltracknumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cshippingname != null" >
+        cshippingname = #{cshippingname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.sales.OrderPack" >
+    update t_product_sales_order_pack
+    set cordernumber = #{cordernumber,jdbcType=VARCHAR},
+    csku = #{csku,jdbcType=VARCHAR},
+    iqty = #{iqty,jdbcType=INTEGER},
+    cshippingtype = #{cshippingtype,jdbcType=VARCHAR},
+    fshippingprice = #{fshippingprice,jdbcType=DOUBLE},
+    ctrackingnumber = #{ctrackingnumber,jdbcType=VARCHAR},
+    dshippingdate = #{dshippingdate,jdbcType=TIMESTAMP},
+    dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+    iisregister = #{iisregister,jdbcType=INTEGER},
+    clocaltracknumber = #{clocaltracknumber,jdbcType=VARCHAR},
+    cshippingname = #{cshippingname,jdbcType=VARCHAR}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+
+  <insert id="batchInsert" parameterType="java.util.List" >
+    <foreach collection="list" item="item" index="index" separator=";" >
+      insert into t_product_sales_order_pack
+      (cordernumber, csku, iqty, cshippingtype,
+      fshippingprice, ctrackingnumber, dshippingdate, cshippingname)
+      values (#{item.cordernumber,jdbcType=VARCHAR}, #{item.csku,jdbcType=VARCHAR},
+      #{item.iqty,jdbcType=INTEGER}, #{item.cshippingtype,jdbcType=VARCHAR},
+      #{item.fshippingprice,jdbcType=DOUBLE}, #{item.ctrackingnumber,jdbcType=VARCHAR},
+      #{item.dshippingdate,jdbcType=TIMESTAMP}, #{item.cshippingname,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <select id="getOrderPackByOrderNumberAndSKU" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_product_sales_order_pack
+    where cordernumber = #{ordernumber,jdbcType=VARCHAR}
+    <if test="sku != null" >
+      and csku = #{sku,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="getOrderPackByOrderNumberAndTrackNumber" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_product_sales_order_pack
+    where cordernumber = #{ordernumber,jdbcType=VARCHAR}
+    and ctrackingnumber = #{tracknumber,jdbcType=VARCHAR}
+    limit 1
+  </select>
+</mapper>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.banner.BannerInfoMapper">
+	<resultMap id="BaseResultMap" type="entity.banner.BannerInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="describe" property="describe" jdbcType="VARCHAR" />
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="is_delete" property="isDelete" jdbcType="BOOLEAN" />
+		<result column="related_interface_url" property="relatedInterfaceUrl"
+			jdbcType="VARCHAR" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_update_user" property="lastUpdateUser"
+			jdbcType="VARCHAR" />
+		<result column="last_update_time" property="lastUpdateTime"
+			jdbcType="TIMESTAMP" />
+		<result column="type" property="type"
+			jdbcType="INTEGER" />
+
+		<result column="bg_color" property="bgColor"
+				jdbcType="VARCHAR" />
+
+		<result column="category_id" property="categoryId"
+				jdbcType="INTEGER" />
+
+		<result column="parent_id" property="parentId"
+				jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, describe, img_url, status,
+		related_interface_url,
+		create_user,
+		create_time,last_update_user,last_update_time,sort,type,bg_color,category_id,parent_id
+	</sql>
+	<select id="selectAllBanner" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+			from t_banner_info where is_delete = false and status = 1 ORDER BY sort asc
+	</select>
+	<select id="getAllBanner" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_banner_info where is_delete = false
+		<if test=" status !=0">
+			and status = #{status}
+		</if>
+		<if test="type !=null">
+			and type = #{type}
+		</if>
+		<if test="describe !=null and describe != ''">
+			and describe like '%'||#{describe,jdbcType=VARCHAR}||'%'
+		</if>
+		<choose>
+			<when test="sidx != null and sidx != '' and sord != null and sord != ''">
+				order by ${sidx} ${sord} nulls last
+			</when>
+			<otherwise>
+				order by status asc
+			</otherwise>
+		</choose>
+		limit #{pageSize} offset #{openSize}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_banner_info
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_banner_info
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="entity.banner.BannerInfo">
+		insert into t_banner_info (
+		describe,
+		img_url,related_interface_url,
+		create_user,
+		create_time,status)
+		values ( #{describe,jdbcType=VARCHAR},
+		#{imgUrl,jdbcType=VARCHAR},
+		#{relatedInterfaceUrl,jdbcType=VARCHAR},
+		#{createUser,jdbcType=VARCHAR}, now(),#{status})
+	</insert>
+	<insert id="insertSelective" parameterType="entity.banner.BannerInfo">
+		insert into t_banner_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+
+			<if test="describe != null">
+				describe,
+			</if>
+			<if test="imgUrl != null">
+				img_url,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="isDelete != null">
+				is_delete,
+			</if>
+			<if test="relatedInterfaceUrl != null">
+				related_interface_url,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			create_time,
+			<if test="sort != null">
+				sort,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="categoryId != null">
+				category_id,
+			</if>
+			<if test="bgColor != null">
+				bg_color,
+			</if>
+			<if test="parentId != null">
+				parent_id
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="describe != null">
+				#{describe,jdbcType=VARCHAR},
+			</if>
+			<if test="imgUrl != null">
+				#{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="isDelete != null">
+				#{isDelete,jdbcType=BOOLEAN},
+			</if>
+			<if test="relatedInterfaceUrl != null">
+				#{relatedInterfaceUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			now(),
+			<if test="sort != null">
+				#{sort},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="categoryId != null">
+				#{categoryId},
+			</if>
+			<if test="bgColor != null">
+				#{bgColor},
+			</if>
+			<if test="parentId != null">
+				#{parentId},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="entity.banner.BannerInfo">
+		update t_banner_info set
+		<if test="describe != null">
+			describe = #{describe,jdbcType=VARCHAR},
+		</if>
+		<if test="imgUrl != null">
+			img_url = #{imgUrl,jdbcType=VARCHAR},
+		</if>
+		<if test="status != null">
+			status = #{status,jdbcType=INTEGER},
+		</if>
+        <if test="relatedInterfaceUrl != null">
+			related_interface_url = #{relatedInterfaceUrl,jdbcType=VARCHAR},
+		</if>
+		<if test="sort != null">
+			sort = #{sort},
+		</if>
+		<if test="bgColor != null">
+			bg_color = #{bgColor},
+		</if>
+		<if test="categoryId != null">
+			category_id = #{categoryId},
+		</if>
+		<if test="parentId != null">
+			parent_id = #{parentId},
+		</if>
+		last_update_user = #{lastUpdateUser},last_update_time = now()
+		where id= #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="entity.banner.BannerInfo">
+		update
+		t_banner_info
+		set describe = #{describe,jdbcType=VARCHAR},
+		img_url =
+		#{imgUrl,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		related_interface_url
+		=#{relatedInterfaceUrl,jdbcType=VARCHAR},
+		last_update_user =
+		#{lastUpdateUser},
+		last_update_time = now()
+		where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+
+	<update id="deleteBanner" parameterType="java.lang.Integer">
+		update t_banner_info set
+		is_delete = true where id = #{id}
+	</update>
+
+	<select id="getMaxSize" resultType="java.lang.Integer">
+		select count(*) from
+		t_banner_info where is_delete = false
+		and type = #{type}
+	</select>
+	<select id="getBannerImg" parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+		select img_url from t_banner_info where id= #{id}
+
+	</select>
+
+	<select id="countBannerByParam" resultType="int" parameterType="entity.banner.BannerInfo">
+		select count(*) from t_banner_info
+		<where>
+			1 =1
+			<if test="status != null">
+				and status = #{status}
+			</if>
+
+			<if test="type != null">
+				and type = #{type}
+			</if>
+
+			<if test="parentId != null">
+				and parent_id = #{parentId}
+			</if>
+
+			<if test="categoryId != null">
+				and category_id = #{categoryId}
+			</if>
+		</where>
+		and is_delete = false
+	</select>
+</mapper>

@@ -1,0 +1,156 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<div>
+    <h1><span>微仓退货</span><span>---</span><span>待审核退货单</span></h1>
+    <ul class="search_category">
+        <li>申请时间：
+            <input class="searchInput" placeholder="开始日期" id="auditro_ro_startApplicationDate"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+            至
+            <input class="searchInput" placeholder="结束日期" id="auditro_ro_endApplicationDate"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+        </li>
+        <li>
+            <input id="auditro_ro_searchText" onkeyup="enter_keyUp(event,this, auditro_reloadROs)" style="width:230px" class="searchInput" placeholder="退货单号/分销商账号/分销商名称">
+            <input onclick="auditro_reloadROs()" class="searchButton" value="搜索" type="submit">
+        </li>
+    </ul>
+    <script>  //解决IEplaceholder不兼容问题
+    $(document).ready(function () {
+        $(function () {
+            if (!placeholderSupport()) {
+                $('[placeholder]').focus(function () {
+                    var input = $(this);
+                    if (input.val() == input.attr('placeholder')) {
+                        input.val('');
+                        input.removeClass('placeholder');
+                    }
+                }).blur(function () {
+                    var input = $(this);
+                    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                        input.addClass('placeholder');
+                        input.val(input.attr('placeholder'));
+                    }
+                }).blur();
+            }
+        })
+        function placeholderSupport() {
+            return 'placeholder' in document.createElement('input');
+        }
+    })
+    </script>
+    <div class="content_list">
+        <div>
+            <table class="list_title all_table" id="auditro_return_orders_table">
+            </table>
+            <div id="auditro_return_orders_pagination" style="text-align: center; margin-top: 30px;"></div>
+        </div>
+    </div>
+</div>
+
+<!--审核弹窗start-->
+<div id="auditro_ro_auditDiv" class="redactPop display">
+    <div>
+        <span>用户期待退款金额：</span>
+        <span name="userExpectTotalReturnAmountSpan"></span>
+    </div>
+    <div>
+        <span class="to-confirm-l">用户备注：</span>
+        <span class="to-confirm-r" name="remarks"></span>
+    </div>
+    <div>
+        <span>系统计算出来的退款金额：</span>
+        <span name="totalReturnAmountSpan"></span>
+    </div>
+    <div>
+        <span class="to-confirm-l"><em class="red">*</em>退款金额：</span>
+        <span class="to-confirm-r"><input name="auditActualTotalReturnAmount" style="margin-left: 0;">元</span>
+    </div>
+    <div>
+        <span class="to-confirm-l">
+            备注：
+        </span>
+        <span class="to-confirm-r">
+            <textarea name="auditRemarks" style="resize: none" cols="55" rows="10"></textarea>
+        </span>
+    </div>
+</div>
+<!--审核弹窗end-->
+
+<!--日志弹窗start-->
+<div class="display" id="auditro_ro_logsDiv">
+</div>
+<!--日志弹窗end-->
+
+<!--退货单详情 start-->
+<div id="auditro_ro_detail_div" class="sale-order-detail display">
+    <ul class="sale-order-detail-lbox">
+        <li class="currentBlue"><a>商品信息</a></li>
+        <li><a>采购信息</a></li>
+    </ul>
+    <div class="sale-order-detail-rbox">
+        <h4 class="light-blue">商品信息</h4>
+        <div class="sale-order-detail-rbox-cont">
+            <table name="productInfoTable">
+                <thead>
+                <tr>
+                    <th>商品编码</th>
+                    <th>商品名称</th>
+                    <th>到期日期</th>
+                    <th>所属仓库</th>
+                    <th>退货单价（元）</th>
+                    <th>数量（个）</th>
+                    <th>小计（元）</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <p class="red">
+                <!--系统计算预计退款金额-->
+                <span name="totalReturnAmount"></span>
+                <!--用户要求退款-->
+                <span name="userExpectTotalReturnAmount"></span>
+                <!--实际退款-->
+                <span name="actualTotalReturnAmount"></span>
+            </p>
+        </div>
+        <h4 class="light-blue">采购信息</h4>
+        <div class="sale-order-detail-rbox-cont">
+            <table class="purchase-return-procurement" name="purchaseInfoTable">
+                <thead>
+                <tr>
+                    <th>商品编号</th>
+                    <th>采购单号</th>
+                    <th>采购时间</th>
+                    <th>采购均摊价（元）</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--退货单详情 end-->
+
+<script>
+    $(document).ready(function() {
+        //  退货单详情锚点跳转效果 start
+        var i=0;
+        $(".sale-order-detail-lbox li a").each(function(){
+            var s = ++i;
+            $(this).attr("href","#linktitle-"+s);
+        });
+        var x=0;
+        $(".sale-order-detail-rbox h4").each(function(){
+            var z = ++x;
+            $(this).attr("id","linktitle-"+z);
+        });
+        $(".sale-order-detail-lbox li a").click(function(){
+            $(this).parent().addClass("currentBlue");
+            $(this).parent().siblings().removeClass("currentBlue");
+        });
+//  退货单详情锚点跳转效果 end
+    });
+</script>
+

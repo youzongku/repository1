@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>首页</title>
+    <meta name="description" content="通淘国际为您提供最质优的进口奶粉,母婴用品,进口零食,进口护肤品等品类最齐全的进口商品!">
+    <meta name="keywords" content="通淘国际,进口母婴用品,进口奶粉,进口商品,通淘海外">
+    <link rel="Shortcut Icon" href="img/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="css/style/style.css">
+    <link rel="stylesheet" href="css/vendors/layui.css"/>
+    <link rel="stylesheet" href="css/vendors/jquery.mCustomScrollbar.min.css"/>
+    <link rel="stylesheet" href="js/lib/layer2.0/skin/layer.css"/>
+    <script data-main="../js/index.js" src="../js/lib/requirejs/require.js"></script>
+</head>
+<body>
+<!--页眉 start-->
+<div class="page-header">
+    <div class="page-head-box main">
+        <!--未登录状态-页眉-左侧内容 start-->
+            <span id="LoginBeforeMenu">
+                <span>
+                    通淘供应链欢迎您！
+                </span>
+                <span class="login-link">
+                    <a href="/personal/login.html">登录</a>
+                    <a href="/personal/login.html?sign=register">免费注册</a>
+                </span>
+            </span>
+        <!--未登录状态-页眉-左侧内容 end-->
+
+        <!--登录状态-页眉-左侧内容 start-->
+            <span class="hide" id="LoginAfterMenu">
+                <span class="page-head-login">
+                    <span class="hotB"></span>
+                    <span class="user-type"></span>
+                    <i class="arrows-top"></i>
+                </span>
+                <span class="page-head-login-down hide">
+                    <a href="/personal/personal.html?emnunum=5" class="current-new">微仓库存</a>
+                    <a href="/personal/personal.html?emnunum=16">我的余额</a>
+                    <a href="javascript:void(0);" class="top_login out last">退出登录</a>
+                </span>
+            </span>
+        <!--登录状态-页眉-左侧内容 end-->
+
+        <ul>
+            <li><a href="javascript:isnulogin(function(e){window.location.href = '/personal/personal.html'});" class="current-new">我的通淘</a></li>
+            <li><a href="../cart/shop-cart.html">购物车(<span id="cartItemCountNew">0</span>)</a></li>
+            <li><a id="onlineService">在线客服</a></li>
+            <li><a href="/product/enter_disturb.html">入驻分销</a></li>
+            <li><a href="/product/contact_us.html" class="last">帮助中心</a></li>
+        </ul>
+    </div>
+</div>
+<!--页眉 end-->
+
+<!--头部 start-->
+<div class="header">
+    <div class="main">
+        <div class="header-logo">
+            <a href="/" class="header-logo-l">
+                <img src="../img/logo.png" alt=""/>
+            </a>
+            <span class="header-logo-r">
+                <span class="search">
+                    <input type="text" class="searchInput" placeholder="请输入商品名称/SKU" onkeyup="enter_keyUp(event,this, searchProduct)"/>
+                    <span onclick="searchProduct();">
+                        <i></i>
+                    </span>
+                </span>
+                <span class="contact">
+                    <a href="">
+                        <img src="../img/tel.png" alt=""/>
+                    </a>
+                    <a href="">
+                        <img src="../img/service.png" alt=""/>
+                    </a>
+                </span>
+            </span>
+        </div>
+    </div>
+    <div class="nav main">
+        <div class="all-classify all-classify-box" onmouseover="showCate()" onmouseout="hideCate()">
+            <div class="all-classify-text">
+                <i class="classify-icon"></i>
+                所有分类
+            </div>
+            <div class="content-top-left">
+                <ul class="content-nav"></ul></div>
+        </div>
+        <ul class="nav-right">
+            <li><a href="/personal/personal.html?emnunum=4">创建终端订单</a></li>
+            <li><a href="/personal/personal.html?emnunum=3">创建微仓进货</a></li>
+            <li><a href="/personal/personal.html?emnunum=15">我的进货记录</a></li>
+            <li><a href="/personal/personal.html?emnunum=5">我的微仓进货</a></li>
+            <li><a href="/product/about_us.html">关于通淘<i class="arrows-solid-icon"></i></a>
+                <ul class="pull-down-menu">
+                    <li><a href="/product/about_us.html">公司简介</a></li>
+                    <li><a href="/product/about_us.html">通淘优势</a></li>
+                    <li><a href="/product/enter_disturb.html">业务流程</a></li>
+                    <li><a href="/product/contact_us.html">联系我们</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="header hide" id="headerFloat">
+    <div class="nav nav-float main">
+        <a href="/" class="header-logo-l">
+            <img src="../img/logo.png" alt=""/>
+        </a>
+        <ul class="nav-right">
+            <li><a href="/personal/personal.html?emnunum=4">创建终端订单</a></li>
+            <li><a href="/personal/personal.html?emnunum=3">创建微仓进货</a></li>
+            <li><a href="/personal/personal.html?emnunum=15">我的进货记录</a></li>
+            <li><a href="/personal/personal.html?emnunum=5">我的微仓进货</a></li>
+            <li><a href="/product/about_us.html">关于通淘<i class="arrows-solid-icon"></i></a>
+                <ul class="pull-down-menu">
+                    <li><a href="####">公司简介</a></li>
+                    <li><a href="####">通淘优势</a></li>
+                    <li><a href="####">业务流程</a></li>
+                    <li><a href="####">联系我们</a></li>
+                </ul>
+            </li>
+            <li>
+                <span class="search2">
+                    <input type="text" class="searchInput2" placeholder="请输入商品名称/SKU" onkeyup="enter_keyUp(event,this, searchProduct2)"/>
+                    <span onclick="searchProduct2();">
+                        <i></i>
+                    </span>
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--头部 end-->
+
+<!--正文 start-->
+<!--正文banner start-->
+<div class="content-top">
+    <div class="main">
+        <!--<div class="content-top-left">-->
+            <!--<ul class="content-nav">-->
+
+            <!--</ul>-->
+
+        <!--</div>-->
+        <div class="content-top-right banner-r-img">
+            <ul>
+
+            </ul>
+            <ol>
+
+            </ol>
+            <span id="content-top-right-span">
+                <a href="" class="bor-b-d">
+                    <img src="" alt=""/>
+                </a>
+                <a href="">
+                    <img alt=""/>
+                </a>
+            </span>
+        </div>
+    </div>
+</div>
+<div class="content-category">
+    <div class="main">
+        <div id="subNavL">
+            <!--<span class="sub-nav-l-t">导航</span>-->
+            <span class="tt a"><i class="icon1"></i></span>
+            <span class="tt b"><i class="icon2"></i></span>
+            <span class="tt c"><i class="icon3"></i></span>
+            <span class="tt d"><i class="icon4"></i></span>
+            <span class="tt e"><i class="icon5"></i></span>
+        </div>
+        <div id="subNavR">
+            <a href="javascript:isnulogin(function(e){window.location.href = '/personal/personal.html'});"><span class="tt"><em>我的</em><i class="pers-icon"></i></span></a>
+            <a href="cart/shop-cart.html"><span class="tt"><em>购物车</em><i class="shop-icon"></i></span></a>
+            <span class="tt"><em>电话</em><i class="tel-icon"></i></span>
+            <span class="tt"><em>在线客服</em><i class="serv-icon"></i></span>
+            <span class="sub-nav-l-t back-top"><i class="top-icon"></i></span>
+        </div>
+    </div>
+</div>
+<!--正文banner end-->
+<!--正文 end-->
+
+<div id="div_footer"></div>
+
+</body>
+</html>

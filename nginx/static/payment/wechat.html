@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Cache-Control" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+	<title>微信二维码支付</title>
+	<link rel="stylesheet"/>
+</head>
+<body>
+	<!-- <div id="div_pay_view" style="display: block; font-family:'微软雅黑';">
+		<div style="text-align:center;margin-top:60px;">
+			<font size="6" >支付金额  ￥0.00，请使用微信扫描下方二维码完成支付</font>
+		</div>
+		<div id="code" style="width:420px;height:400px;margin:auto; margin-top:60px; text-align:center;position: relative;">
+			<img src="../img/WEIXIN.png" style="position: absolute; top: 33%; left: 30%;"/>
+		</div>
+		<div style="text-align:center;margin-top:30px;">
+			<font size="4" >订单号：----</font>
+		</div>
+	</div>
+	-->
+	<div class="modal-backdrop fade in"></div>
+        <div class="weixin-pay-content">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ><span >×</span></button>
+                    <h4 class="modal-title modal-title-wechat" ></h4>
+                </div>
+                <div class="modal-body modal-body-wechat" >
+                    <h4 class="wechat-title">微信扫码支付</h4>
+                    <div id = "code" >
+                    </div>
+                    <span class="wechat-time"><span class="wechat-time-desc"></span>支付成功之前，请勿关闭二维码页面。</span>
+                </div>
+            </div>
+            <div class="wechat-course" style="display: none; right: 0;"><img src="../img/wechat_help.png"></div>
+        </div>
+    </div>
+</body>
+
+</html>

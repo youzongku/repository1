@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.ProductRuleDetailMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.ProductRuleDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="CNname" property="cnname" jdbcType="VARCHAR" />
+    <result column="ENrule" property="enrule" jdbcType="VARCHAR" />
+    <result column="attr1" property="attr1" jdbcType="VARCHAR" />
+    <result column="attr2" property="attr2" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="createuser" property="createuser" jdbcType="VARCHAR" />
+    <result column="deleteflag" property="deleteflag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, CNname, ENrule, attr1, attr2, createdate, createuser, deleteflag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_rule_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_product_rule_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.ProductRuleDetail" >
+    insert into t_product_rule_detail (id, CNname, ENrule, 
+      attr1, attr2, createdate, 
+      createuser, deleteflag)
+    values (#{id,jdbcType=INTEGER}, #{cnname,jdbcType=VARCHAR}, #{enrule,jdbcType=VARCHAR}, 
+      #{attr1,jdbcType=VARCHAR}, #{attr2,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{createuser,jdbcType=VARCHAR}, #{deleteflag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.ProductRuleDetail" >
+    insert into t_product_rule_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cnname != null" >
+        CNname,
+      </if>
+      <if test="enrule != null" >
+        ENrule,
+      </if>
+      <if test="attr1 != null" >
+        attr1,
+      </if>
+      <if test="attr2 != null" >
+        attr2,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="createuser != null" >
+        createuser,
+      </if>
+      <if test="deleteflag != null" >
+        deleteflag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cnname != null" >
+        #{cnname,jdbcType=VARCHAR},
+      </if>
+      <if test="enrule != null" >
+        #{enrule,jdbcType=VARCHAR},
+      </if>
+      <if test="attr1 != null" >
+        #{attr1,jdbcType=VARCHAR},
+      </if>
+      <if test="attr2 != null" >
+        #{attr2,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuser != null" >
+        #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteflag != null" >
+        #{deleteflag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.ProductRuleDetail" >
+    update t_product_rule_detail
+    <set >
+      <if test="cnname != null" >
+        CNname = #{cnname,jdbcType=VARCHAR},
+      </if>
+      <if test="enrule != null" >
+        ENrule = #{enrule,jdbcType=VARCHAR},
+      </if>
+      <if test="attr1 != null" >
+        attr1 = #{attr1,jdbcType=VARCHAR},
+      </if>
+      <if test="attr2 != null" >
+        attr2 = #{attr2,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuser != null" >
+        createuser = #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteflag != null" >
+        deleteflag = #{deleteflag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.ProductRuleDetail" >
+    update t_product_rule_detail
+    set CNname = #{cnname,jdbcType=VARCHAR},
+      ENrule = #{enrule,jdbcType=VARCHAR},
+      attr1 = #{attr1,jdbcType=VARCHAR},
+      attr2 = #{attr2,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
+      createuser = #{createuser,jdbcType=VARCHAR},
+      deleteflag = #{deleteflag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

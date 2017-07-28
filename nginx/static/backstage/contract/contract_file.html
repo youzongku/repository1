@@ -1,0 +1,146 @@
+<script src="../../js/backstage/lib/laydate/laydate.js"></script>
+<div id="contractFile">
+    <h1>合同管理<span>---</span><span>合同管理</span>
+        <span class="record_sendList_do">
+            <button onclick="contractFileEnter();" id="contractFileEnterBtn">录入合同</button>
+        </span>
+    </h1>
+    <ul class="search_category">
+        <li>分销渠道：
+            <select id="models" onchange="reloadContractTable();">
+            </select>
+        </li>
+        <li>合同期限：
+            <input id="start_" placeholder="开始时间" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" class="searchInput">
+            至
+            <input id="end_" placeholder="结束时间" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" class="searchInput">
+        </li>
+        <li>
+            <input style="width:230px" id="search_" class="searchInput" placeholder="合同编码/分销商帐号/名称/对接业务员">
+            <input class="searchButton" value="搜索" type="submit" onclick="reloadContractTable();">
+        </li>
+    </ul>
+
+    <div class="content_list">
+        <table id="contract_file_table"></table>
+        <div id="contract_pagination"></div>
+    </div>
+</div>
+
+<!--录入合同 start-->
+<div id="contractFileEnter" class="display">
+    <h1>录入合同</h1>
+    <form id="contract_create_form" enctype="multipart/form-data" method="post" action="/product/contract/add">
+        <input type="hidden" name="size" value="0">
+        <input type="hidden" name="cno">
+        <div class="contract-cont">
+            <div>
+                <span class="contract-cont-wid"><b class="red">*</b>选择分销商：</span>
+                <input name="email" type="text"><button class="btn-black" type="button" onclick="disturb_choice_pop_div();">选择</button>
+            </div>
+            <div class="contract-cont-t">
+                <span class="contract-cont-t-l">
+                    <span class="contract-cont-wid"><b class="red">*</b>合同期限：</span>
+                    <input name="start" placeholder="开始时间" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                    至
+                    <input name="end" placeholder="结束时间" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                </span>
+                <span class="contract-cont-t-r">
+                    <span><b class="red">*</b>业务员工号(ERP账号)：</span>
+                    <input name="bussiness" type="text" style="width: 280px">
+                </span>
+            </div>
+            <div id="uploader">
+
+
+            </div>
+            <div class="txt-ct">
+                <button class="btn-hui" type="button" onclick="returnButton();">返回</button>
+                <button class="btn-lan" type="button" onclick="saveContract();">保存</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--录入合同 end-->
+
+<!--更新合同 start-->
+<div id="contractNovation" class="display">
+    <h1>更新合同
+        <span class="record_sendList_do">
+            <button onclick="returnButton2();">返回</button>
+        </span>
+    </h1>
+    <div class="contract-cont">
+        <div class="content_list">
+            <table id="contract_novation_table"></table>
+            <div id="contract_novation_pagination"></div>
+        </div>
+        <form id="contract_update_form" enctype="multipart/form-data" method="post" action="/product/contract/update">
+            <input type="hidden" name="size" value="0">
+            <input type="hidden" name="cno">
+            <div class="contract-cont-t">
+                <input name="cid" type="hidden" value=""/>
+                <input name="contractNo" type="hidden" value=""/>
+                <span class="contract-cont-t-l">
+                    <span class="contract-cont-wid"><b class="red">*</b>合同期限：</span>
+                    <input name="start" placeholder="开始时间" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                    至
+                    <input name="end" placeholder="结束时间" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                </span>
+            </div>
+            <div id="updateUploader">
+
+
+            </div>
+            <div class="txt-ct">
+                <button class="btn-hui" type="button" onclick="returnButton();">返回</button>
+                <button class="btn-lan" type="button" onclick="updateContract();">保存</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!--更新合同 end-->
+
+<!--查看附件 start-->
+<div id="checkAttachment" class="display">
+    <h1>查看附件
+        <span class="record_sendList_do">
+            <a id="download_attachment" href="">下载附件</a>
+            <button onclick="returnButton2();">返回</button>
+        </span>
+    </h1>
+    <div class="contract-cont">
+        <ul class="check-att" id="file_list">
+
+        </ul>
+    </div>
+</div>
+<!--查看附件 end-->
+
+<!--操作日志 start-->
+<div id="operationLog" class="display">
+</div>
+<!--操作日志 end-->
+
+<!--选择分销商 start-->
+<div class="disturb_choice_pop display" id="disturb_choice_pop_div">
+    <p>
+        <input id="search_disturb_input" type="text">
+        <button id="search_disturb_btn" type="button" onclick="getHtmlCode(1);">搜索</button>
+    </p>
+    <table>
+        <thead>
+        <tr>
+            <th>勾选</th>
+            <th>分销商账号</th>
+            <th>名称</th>
+            <th>手机号</th>
+        </tr>
+        </thead>
+        <tbody id="member">
+
+        </tbody>
+    </table>
+    <div id="distributions_pagination"></div>
+</div>
+<!--选择分销商 end-->

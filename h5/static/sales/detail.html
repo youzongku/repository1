@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="email=no" name="format-detection" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>订单详情</title>
+    <link rel="stylesheet" href="/css/frozenui-1.3.0/css/frozen.css?time=(new Date()).getTime()">
+    <link rel="stylesheet" href="/css/frozenui-1.3.0/css/icon.css?time=(new Date()).getTime()">
+    <link rel="stylesheet" href="/css/frozenui-1.3.0/css/icon-full.css?time=(new Date()).getTime()">
+    <link rel="stylesheet" type="text/css" href="../../css/main/main.css?time=(new Date()).getTime()">
+
+    <script src="/js/lib/require.js" data-main="/js/sales/sale_detail.js?time=(new Date()).getTime()"></script>
+</head>
+<body class="aa" id="showDetail" v-cloak>
+<header class="posFix head">
+    <a href="/sales/list.html" class="ret-logo"></a>
+    订单详情
+</header>
+<section class="order conTop">
+    <div class="orderCon">
+        <h4>订单信息</h4>
+        <p>
+            <span>订单编号：</span><span>{{sale.saleMain.salesOrderNo}}</span>
+        </p>
+        <p>
+            <span>订单状态：</span><span>{{sale.saleMain.statusDesc}}</span>
+        </p>
+        <p>
+            <span>平台名称：</span><span>{{sale.platformName}}</span>
+        </p>
+        <p>
+            <span>平台单号：</span><span>{{(sale.saleBase.platformOrderNo == null || sale.saleBase.platformOrderNo == "")
+            ? "---" : sale.saleBase.platformOrderNo}}</span>
+        </p>
+        <p>
+            <span>交易号：</span><span style="padding-right: 20px;">{{(sale.saleBase.tradeNo == null
+            || sale.saleBase.tradeNo == "")? "---" : sale.saleBase.tradeNo}}</span></span>
+            <span>运费：</span><span>{{(sale.saleBase.orderPostage == null
+            || sale.saleBase.orderPostage == "")? "0" : sale.saleBase.orderPostage}}</span>
+        </p>
+        <p>
+            <span>收款账户：</span><span>{{(sale.saleBase.collectAccount == null
+            || sale.saleBase.collectAccount == "")? "---" : sale.saleBase.collectAccount}}</span>
+        </p>
+    </div>
+    <div class="orderCon">
+        <h4>收件人信息</h4>
+        <p>
+            <span>姓名：</span><span>{{(sale.saleBase.receiver == null
+            || sale.saleBase.receiver == "")? "---" : sale.saleBase.receiver}}</span>
+        </p>
+        <p>
+            <span>电话：</span><span>{{(sale.saleBase.tel == null
+            || sale.saleBase.tel == "")? "---" : sale.saleBase.tel}}</span>
+        </p>
+        <p>
+            <span>身份证号：</span><span>{{(sale.saleBase.idcard == null
+            || sale.saleBase.idcard == "")? "---" : sale.saleBase.idcard}}</span>
+        </p>
+        <p style="width: 100%;word-break: break-all;">
+            <span>收货地址：</span><span>{{(sale.saleBase.address == null
+            || sale.saleBase.address == "")? "---" : sale.saleBase.address}}</span>
+        </p>
+        <p>
+            <span>邮编：</span><span>{{(sale.saleBase.postCode == null
+            || sale.saleBase.postCode == "")? "---" : sale.saleBase.postCode}}</span>
+        </p>
+    </div>
+    <div class="orderCon">
+        <h4>寄件人信息</h4>
+        <p>
+            <span>姓名：</span><span>{{sale.senderName}}</span>
+        </p>
+        <p>
+            <span>电话：</span><span>{{sale.senderTel}}</span>
+        </p>
+        <p>
+            <span>收货地址：</span><span>{{sale.senderAddress}}</span>
+        </p>
+    </div>
+    <div class="orderCon">
+        <h4>采购进货支付信息</h4>
+        <p>
+            <span>支付交易号：</span><span>{{(sale.saleMain.purchasePaymentNo == null
+            || sale.saleMain.purchasePaymentNo == "")? "---" : sale.saleMain.purchasePaymentNo}}</span>
+        </p>
+        <p>
+            <span>支付时间：</span><span>{{(sale.saleMain.purchasePayDateStr == null
+            || sale.saleMain.purchasePayDateStr == "")? "---" : sale.saleMain.purchasePayDateStr}}</span>
+        </p>
+        <p>
+            <span>支付方式：</span><span>{{sale.saleMain.purchasePaymentType}}</span>
+        </p>
+    </div>
+    <div class="orderCon">
+        <h4>后台审核支付信息</h4>
+        <p>
+            <span>支付人姓名：</span><span>{{(sale.saleMain.payer == null
+            || sale.saleMain.payer == "")? "---" : sale.saleMain.payer}}</span>
+        </p>
+        <p>
+            <span>支付人身份证号：</span><span>{{(sale.saleMain.paryerIdcard == null
+            || sale.saleMain.paryerIdcard == "")? "---" : sale.saleMain.paryerIdcard}}</span>
+        </p>
+        <p>
+            <span>支付交易号：</span><span>{{(sale.saleMain.paymentNo == null
+            || sale.saleMain.paymentNo == "")? "---" : sale.saleMain.paymentNo}}</span>
+        </p>
+        <p>
+            <span>支付时间：</span><span>{{(sale.saleMain.payDateStr == null
+            || sale.saleMain.payDateStr == "")? "---" : sale.saleMain.payDateStr}}</span>
+        </p>
+        <p>
+            <span>支付方式：</span><span>{{sale.saleMain.paymentType}}</span>
+        </p>
+    </div>
+    <div class="orderCon">
+        <h4>订购信息</h4>
+        <p>
+            <span>订购人姓名：</span><span>{{(sale.saleBase.orderer == null
+            || sale.saleBase.orderer == "")? "---" : sale.saleBase.orderer}}</span>
+        </p>
+        <p>
+            <span>订购人身份证号：</span><span>{{(sale.saleBase.ordererIDCard == null
+            || sale.saleBase.ordererIDCard == "")? "---" : sale.saleBase.ordererIDCard}}</span>
+        </p>
+        <p>
+            <span>手机号码：</span><span>{{(sale.saleBase.ordererTel == null
+            || sale.saleBase.ordererTel == "")? "---" : sale.saleBase.ordererTel}}</span>
+        </p>
+    </div>
+    <div class="imporCom" v-for="detail in sale.saleDetails">
+        <div class="imporComR">
+            <div class="impor-img">
+                <a><img  v-bind:data-original='detail.productImg' src="../../img/blank.png" alt="{{detail.productName}}" class="p-goods-img" /></a>
+            </div>
+            <div class="impor-tit">
+                <div class="impor-tit1">
+                    <h5>{{detail.productName}}</h5>
+                    <span>¥<b>{{detail.finalSellingPrice}}</b></span>
+                </div>
+                <div><span>商品编号：<b class="impor-tit2">{{detail.sku}}</b></span></div>
+                <div><span>来源：<b class="impor-tit2">{{detail.warehouseName}}</b></span><span><b>{{detail.qty}}</b></span></div><br />
+            </div>
+        </div>
+    </div>
+    <div class="orderCon">
+        <p class="total">
+            <span>分销平台运费：<b>{{sale.saleBase.bbcPostage}}</b>元 </span>
+            <span style="float: right">共计：<b>{{sale.orderTotal}}</b>元 </span>
+        </p>
+    </div>
+</section>
+<!--<script src="/js/lib/require.js" data-main="/js/sales/sale_detail.js"></script>-->
+</body>
+</html>

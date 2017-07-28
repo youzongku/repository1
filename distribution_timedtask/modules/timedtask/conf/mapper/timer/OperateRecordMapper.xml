@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.OperateRecordMapper" >
+  <resultMap id="BaseResultMap" type="entity.timer.OperateRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="orderid" property="orderId" jdbcType="INTEGER" />
+    <result column="operate_type" property="operateType" jdbcType="INTEGER" />
+    <result column="result" property="result" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, operate_time, comment, orderid, operate_type, result, email
+  </sql>
+  
+  <insert id="insertSelective" parameterType="entity.timer.OperateRecord" >
+    insert into t_operate_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="operateTime != null" >
+        operate_time,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="orderId != null" >
+        orderid,
+      </if>
+      <if test="operateType != null" >
+        operate_type,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="operateType != null" >
+        #{operateType,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+
+  <select id="selectByOrderIdList" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select 
+      <include refid="Base_Column_List"></include>
+      from t_operate_record where orderid in 
+      <foreach item="orderId" collection="list" open="(" separator="," close=")">
+		#{orderId}
+	  </foreach>
+      order by operate_time desc
+  </select>
+  
+  
+</mapper>

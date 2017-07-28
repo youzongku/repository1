@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.DisSpriceActivityMapper" >
+  <resultMap id="BaseResultMap" type="entity.marketing.DisSpriceActivity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+    <result column="show_totitle" property="showTotitle" jdbcType="BIT" />
+    <result column="activity_remark" property="activityRemark" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="activity_pnum" property="activityPnum" jdbcType="INTEGER" />
+    <result column="activity_status" property="activityStatus" jdbcType="INTEGER" />
+    <result column="activity_sort" property="activitySort" jdbcType="INTEGER" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, activity_name, show_totitle, activity_remark, start_time, end_time, activity_pnum, 
+    activity_status, activity_sort, create_user, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_sprice_activity
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_sprice_activity
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.marketing.DisSpriceActivity" >
+    insert into t_dis_sprice_activity (id, activity_name, show_totitle, 
+      activity_remark, start_time, end_time, 
+      activity_pnum, activity_status, activity_sort, 
+      create_user, create_time)
+    values (#{id,jdbcType=INTEGER}, #{activityName,jdbcType=VARCHAR}, #{showTotitle,jdbcType=BIT}, 
+      #{activityRemark,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{activityPnum,jdbcType=INTEGER}, #{activityStatus,jdbcType=INTEGER}, #{activitySort,jdbcType=INTEGER}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.marketing.DisSpriceActivity" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_dis_sprice_activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="activityName != null" >
+        activity_name,
+      </if>
+      <if test="showTotitle != null" >
+        show_totitle,
+      </if>
+      <if test="activityRemark != null" >
+        activity_remark,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="activityPnum != null" >
+        activity_pnum,
+      </if>
+      <if test="activityStatus != null" >
+        activity_status,
+      </if>
+      <if test="activitySort != null" >
+        activity_sort,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="activityName != null" >
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="showTotitle != null" >
+        #{showTotitle,jdbcType=BIT},
+      </if>
+      <if test="activityRemark != null" >
+        #{activityRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activityPnum != null" >
+        #{activityPnum,jdbcType=INTEGER},
+      </if>
+      <if test="activityStatus != null" >
+        #{activityStatus,jdbcType=INTEGER},
+      </if>
+      <if test="activitySort != null" >
+        #{activitySort,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.marketing.DisSpriceActivity" >
+    update t_dis_sprice_activity
+    <set >
+      <if test="activityName != null" >
+        activity_name = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="showTotitle != null" >
+        show_totitle = #{showTotitle,jdbcType=BIT},
+      </if>
+      <if test="activityRemark != null" >
+        activity_remark = #{activityRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activityPnum != null" >
+        activity_pnum = #{activityPnum,jdbcType=INTEGER},
+      </if>
+      <if test="activityStatus != null" >
+        activity_status = #{activityStatus,jdbcType=INTEGER},
+      </if>
+      <if test="activitySort != null" >
+        activity_sort = #{activitySort,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.marketing.DisSpriceActivity" >
+    update t_dis_sprice_activity
+    set activity_name = #{activityName,jdbcType=VARCHAR},
+      show_totitle = #{showTotitle,jdbcType=BIT},
+      activity_remark = #{activityRemark,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      activity_pnum = #{activityPnum,jdbcType=INTEGER},
+      activity_status = #{activityStatus,jdbcType=INTEGER},
+      activity_sort = #{activitySort,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findActivityByCondition" resultMap="BaseResultMap" parameterType="dto.marketing.ActivityDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_sprice_activity
+    <where>
+      <if test="actName != null and actName != ''" >
+        and activity_name like '%'||#{actName,jdbcType=VARCHAR}||'%'
+      </if>
+      <if test="startTime != null and startTime != ''" >
+        <![CDATA[and start_time >= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-mm-dd')]]>
+      </if>
+      <if test="endTime != null and endTime != ''" >
+        <![CDATA[and end_time < (to_date(#{endTime,jdbcType=VARCHAR},'yyyy-mm-dd') + integer '1')]]>
+      </if>
+      <if test="actState != null" >
+        and activity_status = #{actState,jdbcType=INTEGER}
+      </if>
+      <if test="creater != null and creater != ''" >
+        and create_user = #{creater,jdbcType=VARCHAR}
+      </if>
+    </where>
+    <choose>
+      <when test="sidx != null and sidx != '' and sord != null and sord != ''">
+        order by ${sidx} ${sord} nulls last
+      </when>
+      <otherwise>
+        order by create_time desc
+      </otherwise>
+    </choose>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize,jdbcType=INTEGER} offset #{startNum,jdbcType=INTEGER}
+    </if>
+  </select>
+
+  <select id="findActivityCount" resultType="java.lang.Integer" parameterType="dto.marketing.ActivityDTO" >
+    select count(*)
+    from t_dis_sprice_activity
+    <where>
+      <if test="actName != null and actName != ''" >
+        and activity_name like '%'||#{actName,jdbcType=VARCHAR}||'%'
+      </if>
+      <if test="startTime != null and startTime != ''" >
+        <![CDATA[and start_time >= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-mm-dd')]]>
+      </if>
+      <if test="endTime != null and endTime != ''" >
+        <![CDATA[and end_time < (to_date(#{endTime,jdbcType=VARCHAR},'yyyy-mm-dd') + integer '1')]]>
+      </if>
+      <if test="actState != null" >
+        and activity_status = #{actState,jdbcType=INTEGER}
+      </if>
+      <if test="creater != null and creater != ''" >
+        and create_user = #{creater,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <select id="findUnusedOrOpenedActivity" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_sprice_activity
+    where activity_status in (1, 2)
+  </select>
+
+</mapper>

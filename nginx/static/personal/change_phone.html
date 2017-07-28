@@ -1,0 +1,118 @@
+<div class="title-line">
+    <span class="my-means">我的资料-修改资料-更换手机</span>
+</div>
+<!------------邮箱注册用户------------->
+<div id="alter_email_box">
+    <!--第一步-->
+    <form id="alter_phone_form">
+        <table>
+            <tr>
+                <td class="type-name">您的邮箱：</td>
+                <td class="alter-youremail">
+                    iiiii@qq.com
+                </td>
+            </tr>
+            <tr>
+                <td class="type-name">请输入验证码：</td>
+                <td>
+                    <input type="text" name="captcha"/>
+                    <img id="captchaImg" src=""  class = "captchaImg1" onclick="this.src='/member/getcaptcha?' + Math.random();">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="button" class="sure-change">确定</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <!--第二步-->
+    <div id="send_email_div">
+        <h3>尊敬的用户：</h3>
+
+        <p>
+            我们已发送验证邮件到您的<span id="email_result_span" style="display: inline-block;">----</span>邮箱，请<a
+                href="javascript:;" style="display: inline-block; color: #4a7cc7;">注意接收</a>，并按照提示完成后续设置。<br/>
+            未收到邮件，点击<a href="javascript:;" data-email="" style="display: inline-block; color: #4a7cc7;">重新发送</a>。
+            <!-- <a href="javascript:;" style="display: inline-block; color: #4a7cc7;">下一步</a>。 -->
+        </p>
+    </div>
+</div>
+
+
+<!------------手机注册用户------------>
+<div id="alter_phone_box" style="display: none">
+    <!--第一步-->
+    <form id="user_phone_form">
+        <table>
+            <tr>
+                <td class="type-name">您的手机：</td>
+                <td class="alter-youremail">
+                    18216241457
+                </td>
+            </tr>
+            <tr>
+                <td class="type-name">请输入验证码：</td>
+                <td>
+                    <input type="text" name="captcha"/>
+                    <img id="captchaImg"  class = "captchaImg2" src="" onclick="this.src='/member/getcaptcha?' + Math.random();">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="button" class="sub-change">下一步</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <!--第二步-->
+    <div id="code_phone_div" style="display: none">
+        <table>
+            <tr>
+                <td class="type-name">请输入手机号：</td>
+                <td class="alter-yourphone">
+                    <input type="text" name="new_tel_no" placeholder="请输入手机号"/>
+                    <button class="send-ma">发送验证码</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="type-name">请输入验证码：</td>
+                <td>
+                    <input type="text" placeholder="请输入验证码"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="button" class="sub-change">下一步</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!--第三步-->
+    <div id="send_phone_div" style="display: none">
+        <table>
+            <tr>
+                <td class="type-name">请输入密码：</td>
+                <td class="alter-youremail">
+                    <input type="password" name="password" placeholder="请输入密码"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="type-name">请再次输入密码：</td>
+                <td>
+                    <input type="password" placeholder="请再次输入密码"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="button" class="sure-change">确认更换</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

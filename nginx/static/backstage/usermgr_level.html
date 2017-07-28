@@ -1,0 +1,154 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<!--用户管理——等级管理-->
+<h1>用户管理<span>---</span><span>等级设置</span></h1>
+
+<div class="default-level">
+    <ul class="search_category">
+        <li class="s-level">默认等级：
+            <span id="level_default"></span>
+            <select id="level_choose" class="choose-level" style="display: none; width: 100px;">
+                <!--<option value="selected">请选择</option>
+                <option>A级</option>
+                <option>B级</option>
+                <option>C级</option>
+                <option>D级</option>-->
+            </select>
+            <button id="alter_level_btn">更改</button>
+            <button id="save_level_btn" style="display: none">保存</button>
+            <button id="cancel_level_btn" style="display: none">取消</button>
+        </li>
+        <li>
+            <div class="search">
+                <button onclick="newslevel(this,'Ushow')">新增等级</button>
+            </div>
+        </li>
+    </ul>
+
+    <div class="content_list">
+        <table id="level_table">
+            <!--<thead>
+            <tr>
+                <th class="">序号</th>
+                <th class="">等级名称</th>
+                <th class="">折扣</th>
+                <th class="">用户个数</th>
+                <th class="">操作</th>
+            </tr>
+            </thead>
+            <tbody id="level_listContent">
+
+            </tbody>-->
+        </table>
+       <!-- <div class="clear"></div>
+        <div class="list_content">
+        </div>-->
+        <div id="rankself_pagination"></div>
+    </div>
+</div>
+
+
+<!--操作日志弹出窗-->
+<div class="operation-log-pop-box" style="display: none">
+    <div class="operation-log-list">
+    </div>
+</div>
+<!--新增等级-->
+<div class="news-level" style="display: none;">
+    <div class="news-level-box">
+        <ul class="edit-pop-list">
+            <li>
+                <span>等级名称：</span>
+                <input type="text">
+            </li>
+            <li>
+                <span>折扣：</span>
+                <input style="width: 100px;" type="text">
+                <span style="width: 40px;">%</span>
+            </li>
+            <li style="display: none">
+                <button id="save_new_btn" class="e-save">保存</button>
+            </li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    //用户等级操作日志弹出框
+    function operationlog(obj, open) {
+        var goal = $(".operation-log-pop-box");
+        if (open == 'Ushow') {
+            var optionLogEmail = $(obj).parent().parent().parent().find(".level-e-mail").text();
+            goal.children().empty();
+            layer.open({
+                type: 1,
+                title: '操作日志',
+                btn: false,
+                shadeClose: true,
+                content: goal,
+                area: ['450px', '300px'],
+                move: false
+            });
+            $.ajax({
+                url: "../member/user/rankhistory",
+                type: "GET",
+                data: {"email": optionLogEmail},
+                dataType: "json",
+                success: function (result) {
+                    //result是服务器返回的json结果
+                    if (result.suc) {//成功
+                        var aData = result.data;
+                        var itemHTML = '';
+                        for (var i = 0; i < aData.length; i++) {
+                            itemHTML +=
+                                    '<p>' +
+                                    '<span>' + aData[i].createTime + '</span>' +
+                                    '<span>' + aData[i].operator + '</span>' +
+                                    '<span>' + aData[i].operateDesc + '</span>'
+                            '</p>';
+                        }
+                        if (itemHTML == '') {
+                            goal.children().append("该用户账号没有等级变更历史");
+                        } else {
+                            goal.children().append(itemHTML);
+                        }
+                    } else if (result.code == 1) {
+                        window.location.href = "login.html";
+                    } else if (result.code == 2) {
+                        layer.msg("请求参数不存在或格式错误", {icon: 2, time: 1000});
+                    }
+                },
+                error: function () {
+
+                }
+            });
+        }
+        else if (open == 'Uhide') {
+            $(".operation-log-pop").hide();
+        }
+    }
+
+    function defaultlevel(obj, change) {
+        if (change == 'Ushow') {
+            $(".default-level").show();
+            $(".user-level").hide();
+        }
+        else if (change == 'Uhide') {
+            $(".default-level").hide();
+            $(".user-level").show();
+        }
+    }
+    function newslevel() {
+        var $inputs = $(".news-level .edit-pop-list").find("input");
+        var name = $inputs.eq(0).html();
+        var disc = $inputs.eq(1).html();
+        layer.open({
+            type: 1,
+            title: "新增等级",
+            btn: ['保存', '取消'],
+            area: ['430px', '200px'],
+            content: $('.news-level'),
+            yes: function (event) {
+                $(".news-level #save_new_btn").click();
+            }
+        });
+    }
+</script>

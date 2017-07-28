@@ -1,0 +1,37 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<div id="">
+    <h1>用户管理<span>---</span><span>交易记录</span><button id="bill_export" class="btn-black search">导出Excel</button></h1>
+    <ul class="search_category">
+        <li>交易时间：
+            <select id="time">
+                <option value >全部</option>
+                <option value="1">近一个月</option>
+                <option value="3">近三个月</option>
+                <option value="12">近一年</option>
+            </select>
+        </li>
+        <li>操作类型：
+            <select id="purpose">
+                <option value >全部</option>
+                <option value="1">充值记录</option>
+                <option value="2">提现记录</option>
+                <option value="3">采购支付</option>
+                <option value="4">退款记录</option>
+                <option value="5">运费支付</option>
+                <option value="6">采购支付含运费</option>
+                <option value="7">余额核销</option>
+            </select>
+        </li>
+        <li>
+            <div class="search">
+                <input type="text" id="bill_input" class="input-s" placeholder="分销商/名称/业务员" style="width: 260px;">
+                <input type="button" id="bill_search" class="searchButton" value="搜索">
+            </div>
+        </li>
+    </ul>
+
+    <div class="content_list">
+        <table id="bill_table"></table>
+        <div id="bill_pagination"></div>
+    </div>
+</div>

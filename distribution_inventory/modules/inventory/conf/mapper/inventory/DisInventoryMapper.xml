@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.inventory.DisInventoryMapper" >
+  <resultMap id="BaseResultMap" type="entity.inventory.DisInventory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="dis_product_id" property="disProductId" jdbcType="INTEGER" />
+    <result column="purchase_no" property="purchaseNo" jdbcType="VARCHAR" />
+    <result column="purchase_price" property="purchasePrice" jdbcType="REAL" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, warehouse_id, warehouse_name, stock, dis_product_id, purchase_no, purchase_price,
+    create_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_inventory
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_inventory
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.inventory.DisInventory" >
+    insert into t_dis_inventory (id, warehouse_id, warehouse_name, 
+      stock, dis_product_id, purchase_no, 
+      purchase_price, create_date)
+    values (#{id,jdbcType=INTEGER}, #{warehouseId,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR}, 
+      #{stock,jdbcType=INTEGER}, #{disProductId,jdbcType=INTEGER}, #{purchaseNo,jdbcType=VARCHAR}, 
+      #{purchasePrice,jdbcType=REAL}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.inventory.DisInventory" useGeneratedKeys="true" keyProperty="id">
+    insert into t_dis_inventory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="disProductId != null" >
+        dis_product_id,
+      </if>
+      <if test="purchaseNo != null" >
+        purchase_no,
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="disProductId != null" >
+        #{disProductId,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseNo != null" >
+        #{purchaseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasePrice != null" >
+        #{purchasePrice,jdbcType=REAL},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.inventory.DisInventory" >
+    update t_dis_inventory
+    <set >
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="disProductId != null" >
+        dis_product_id = #{disProductId,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseNo != null" >
+        purchase_no = #{purchaseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price = #{purchasePrice,jdbcType=REAL},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.inventory.DisInventory" >
+    update t_dis_inventory
+    set warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      stock = #{stock,jdbcType=INTEGER},
+      dis_product_id = #{disProductId,jdbcType=INTEGER},
+      purchase_no = #{purchaseNo,jdbcType=VARCHAR},
+      purchase_price = #{purchasePrice,jdbcType=REAL},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getStockInWarehouse" resultType="java.lang.Integer">
+    select SUM(i.stock)
+    	from t_dis_product p
+    left join
+    		 t_dis_inventory i
+    on p.id = i.dis_product_id
+    where 
+    	p.email = #{0,jdbcType=VARCHAR}
+    and 
+    	p.sku = #{1,jdbcType=VARCHAR}
+    and
+    	i.warehouse_id = #{2,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getFirstInFirstOutDisIvyInfo" resultType="dto.inventory.FirstInFirstOutDisIvyInfo">    
+    SELECT
+		i. ID,
+		i.stock,
+	i.create_date
+	FROM
+		t_dis_inventory i
+	LEFT JOIN t_dis_product P ON P . ID = i.dis_product_id
+	WHERE
+		P .email = #{0,jdbcType=VARCHAR}
+	AND P .sku = #{1,jdbcType=VARCHAR}
+	AND i.warehouse_id = #{2,jdbcType=INTEGER}
+	ORDER BY
+		i.create_date
+  </select>
+  
+  <update id="updateStockInWarehouse">
+    UPDATE t_dis_inventory
+	SET stock = stock + #{3}
+	WHERE
+		dis_product_id = (
+			SELECT
+				ID
+			FROM
+				t_dis_product pro
+			WHERE
+				pro.sku = #{1}
+			AND pro.email = #{0}
+		)
+	AND warehouse_id = #{2}
+  </update>
+  
+  <update id="updateStockInDisIvyById">
+    UPDATE t_dis_inventory
+	SET stock = stock + #{1}
+	WHERE
+		id = #{0}
+  </update>
+  
+</mapper>

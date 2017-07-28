@@ -1,0 +1,332 @@
+<div id="mine-means">
+    <div class="title-line mine-means-title">
+        <span class="my-means mines-title-current" onclick="toggle_menu_content(11);">我的资料</span>
+        <span class="my-shops" onclick="toggle_menu_content(12);">我的店铺</span>
+        <span class="my-phones" onclick="toggle_menu_content(21);">我的移动端</span>
+        <!--<span class="my-phones">开发者工具</span>-->
+        <a href="/personal/find_password.html" id = "change-login-pwd1"  style = "margin-left:20px" class="change-msg btn" >修改密码</a>
+        <a href="javascript:toggle_menu_content(13);"  class="change-msg btn" id="change-msg">修改资料</a>
+    </div>
+    <table id="myinfo_table">
+        <tr>
+            <td class="type-name">名称：</td>
+            <td class="type"></td>
+        </tr>
+        <tr>
+            <td  class="type-name">姓名：</td>
+            <td class="type"></td>
+        </tr>
+        <tr style="display: none;">
+            <td class="type-name">性别：</td>
+            <td class="type"></td>
+        </tr>
+        <tr style="display: none;">
+            <td class="type-name">生日：</td>
+            <td class="type"></td>
+        </tr>
+        <tr>
+            <td class="type-name">用户账号：</td>
+            <td class="type"></td>
+        </tr>
+        <tr>
+            <td class="type-name">手机：</td>
+            <td class="type"></td>
+        </tr>
+        <tr>
+            <td class="type-name">注册邀请码：</td>
+            <td class="type"></td>
+        </tr>
+        <tr>
+            <td class="type-name">您的邀请码：</td>
+            <td class="type"></td>
+        </tr>
+        <tr>
+            <td class="type-name">简介：</td>
+            <td class="type"></td>
+        </tr>
+    </table>
+</div>
+<div id="mine_shops" style="display:none;">
+    <div class="title-line mine-means-title">
+        <span class="my-means" onclick="toggle_menu_content(11);">我的资料</span>
+        <span class="my-shops mines-title-current" onclick="toggle_menu_content(12);">我的店铺</span>
+         <span class="my-phones" onclick="toggle_menu_content(21);">我的移动端</span>
+        <!--<span class="my-phones">开发者工具</span>-->
+    </div>
+    <a href="/personal/find_password.html" id = "change-login-pwd2"  class="ms_change-msg btn" >修改密码</a>
+    <p>为了您的客户搞清楚此订单包裹是哪个店铺拍的，以便于及时确认收货，快速回款，请务必准确填写， 此名称会打印在物流面单上，和包裹内的清单上面。
+    </p>
+    <table id="store_list" class="my-store-table">
+        <thead>
+        <tr style="">
+            <th style="width: 12%;">店铺名称</th>
+            <th style="width: 10%;">店铺链接</th>
+            <th style="width: 10%;">店铺平台</th>
+            <th style="width: 10%;">收款账号</th>
+            <th style="width: 8%;">店主名称</th>
+            <th style="width: 9%;">联系电话</th>
+            <th style="width: 11%;">身份证号</th>
+            <th style="width: 7%;">邮编</th>
+            <th style="width: 14%;">详细地址</th>
+            <th style="width: 22%;">
+                <button class="add_shops btn">添加店铺</button>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+    
+        </tbody>
+    </table>
+    <div id="pagination_store" style="text-align: center; margin-top: 30px;"></div>
+</div>
+<div id="add-shop-box">
+    <div>
+        <span>店铺平台：</span>
+
+            <div>线下店铺</div>
+        </div>
+        <div>
+            <span>总店名称：</span>
+
+            <div>洋一家进口食品体验店</div>
+        </div>
+        <div>
+            <span><d class="red">*</d>分店名称：</span>
+
+        <div><input type="text" name="part-name"></div>
+    </div>
+    <div>
+        <span><d class="red">*</d>分店店主姓名：</span>
+
+        <div><input type="text" name="part-keeperName"></div>
+    </div>
+    <div>
+        <span><d class="red">*</d>联系电话：</span>
+
+        <div><input type="text" name="part-tel"></div>
+    </div>
+    <div>
+        <span style="vertical-align: top;"><d class="red">*</d>详细地址：</span>
+
+        <div>
+            <select id="part-province">
+                <!--<option>请选择</option>-->
+                <!--<option>广东省</option>-->
+                <!--<option>四川省</option>-->
+            </select>
+            <select id="part-city">
+                <!--<option>请选择</option>-->
+                <!--<option>重庆市</option>-->
+                <!--<option>深圳市</option>-->
+            </select>
+            <select id="part-region">
+                <!--<option>请选择</option>-->
+                <!--<option>平湖街道</option>-->
+            </select>
+
+            <p><input placeholder="请填写详细地址，无需重复填写省市区" type="text" name="part-addr"></p>
+        </div>
+    </div>
+    <div>
+        <span>店铺链接：</span>
+
+        <div><input type="text" name="part-uri"></div>
+    </div>
+
+</div>
+<div id="check_despart" style="display: none;">
+    <div class="title-line mine-means-title">
+        <span class="my-means" onclick="toggle_menu_content(11);">我的资料</span>
+        <span class="my-shops mines-title-current" onclick="toggle_menu_content(12);">我的店铺</span>
+        <span class="my-phones" onclick="toggle_menu_content(21);">我的移动端</span>
+        <!--<span class="my-phones">开发者工具</span>-->
+        <a href="javascript:toggle_menu_content(12)" class="btn back-shop">返回</a>
+    </div>
+    <table id="mine-phone-table">
+        <thead>
+        <tr>
+            <th style="width: 10%;">门店ID</th>
+            <th style="width: 10%;">分店名称</th>
+            <th style="width: 28%;">分店地址</th>
+            <th style="width: 20%;">添加时间</th>
+            <th style="width: 10%;">分店联系人</th>
+            <th style="width: 10%;">联系电话</th>
+            <th style="width: 12%;">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="branchshop">
+            <td style="width: 10%;">M0101</td>
+            <td style="width: 10%;">洋一佳一分店</td>
+            <td style="width: 28%;">广东省深圳市平湖华南城1号交易广场5楼G区403</td>
+            <td style="width: 20%;">2016-06-02 12：01：12</td>
+            <td style="width: 10%;">wang</td>
+            <td style="width: 10%;">136826594</td>
+            <td style="width: 12%;" class="check-edit">
+                <span>编辑</span>
+                <span>删除</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="pagination_partshop" style="text-align: center; margin-top: 30px;"></div>
+</div>
+<div id="mine_phones" style="display:none;">
+    <div class="title-line mine-means-title">
+        <span class="my-means" onclick="toggle_menu_content(11);">我的资料</span>
+        <span class="my-shops" onclick="toggle_menu_content(12);">我的店铺</span>
+        <span class="my-phones mines-title-current" onclick="toggle_menu_content(21);">我的移动端</span>
+        <!--<span class="my-phones">开发者工具</span>-->
+        <button style="display: none;" class="open-phone btn">申请开通移动端</button>
+    </div>
+    <p>
+        为了您的客户更便捷快速地购买到商品，通淘供应链现可免费为您开通移动端站点。您的客户可随心随地使用手机购物啦~
+    </p>
+    <table id="mobile_table" style="display:none;" class="f-14">
+        <tbody>
+            <tr>
+                <td class="type-name">我的移动端：</td>
+                <td class="type"><a href="javascript:void(0);" target="_blank" style="font-size: 12px;"></a></td>
+            </tr>
+            <tr>
+                <td class="type-name">移动端后台：</td>
+                <td class="type">
+                    <a href="http://admin.tomtop.hk" target="_blank" style="font-size: 12px;">http://admin.tomtop.hk</a>（PC访问）&nbsp;&nbsp;
+                    <a href="http://a.tomtop.hk" target="_blank" style="font-size: 12px;">http://a.tomtop.hk</a>（手机访问）
+                </td>
+            </tr>
+            <tr>
+
+                <td class="type-name">站点名称：</td>
+                <td class="type"></td>
+            </tr>
+            <tr>
+                <td class="type-name">申请状态：</td>
+                <td class="type store-handle" style="display: none;">审核不通过<input type="button" value="查看原因" class=" modify_shop_btn btn-small audit-status view-reason btn"></td>
+                <td class="type store-handle" style="display: none;">审核通过</td>
+                <td class="type store-handle" style="display: none;">审核中</td>
+            </tr>
+            <tr>
+                <td class="type-name">申请时间：</td>
+                <td class="type">2016-06-20  14：20：00</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="view-reason" style="display: none;">
+        <span>原因：</span>
+        <span>站点名称与其他分销商冲突。</span>
+    </div>
+    <div id="add-phoneshop-box" style="height:180px;">
+        <div class="apply-eamil">
+            <span>申请人：</span>
+
+            <div>123123@qq.com</div>
+        </div>
+        <div>
+            <span style="vertical-align: top;">站点名称：</span>
+            <div>
+                <input type="text" class="siteName">
+                <span>仅支持中文和数字，字数不超过15个字</span>
+            </div>
+        </div>
+        <div>
+            <span style="vertical-align: top;">站点域名前缀：</span>
+            <div>
+                <input style="width:230px;" type="text" class="sitePrefix">
+                <span>.m.tomtop.hk</span>
+            </div>
+        </div>
+    </div>
+
+    <!--生成安卓App功能-->
+    <div class="app-create display">
+        <!-- 申请安卓版APP -->
+        <ul class="generate-project">
+            <li>
+                <img src="../img/app_phone.png" alt=""/>
+            </li>
+            <li>
+                <p>一键拥有</p>
+                <p>您的电商APP</p>
+            </li>
+            <li>
+                <button class="app-btn"></button>
+            </li>
+        </ul>
+        <!-- 生成安装包 -->
+        <div class="generate-install display">
+            <img src="../img/loading.gif" alt=""/>
+            <span>
+                <p>
+                    <em>正在生成</em>Android APK
+                </p>
+                <p class="waiting-tip">前面有<em class="howmanybeforeyou">0</em>个人在排队</p>
+            </span>
+        </div>
+        <!-- 生成完成 -->
+        <div class="generate-finish display">
+            <span class="generate-l">
+                <p class="app-name">APP名称</p>
+                <!--<p>文件大小：34.5M</p>-->
+            </span>
+            <span class="generate-r">
+                <span class="generate-wm">
+                    <div id="code">
+
+                    </div>
+                    <!--<img src="../img/ww.jpg" alt=""/>-->
+                    <p>扫描二维码安装</p>
+                </span>
+                <span class="generate-down">
+                    <span class="icon-APK">
+                        <i></i>
+                    </span>
+                    <a id="downloadApk" target="_blank" style="width: 100%" href="#">
+                        <span class="icon-and">
+                            <i></i>
+                            安卓版下载
+                        </span>
+                    </a>
+                </span>
+            </span>
+        </div>
+    </div>
+
+    <!-- 申请安卓版APP--弹框 -->
+    <div class="app-pop display">
+
+        <form id="apkapply" method="post" action="/member/applyForApk" enctype="multipart/form-data">
+            <div class="app-name">
+                <span class="app-pop-l"><i class="red">*</i>APP名称：</span>
+                <span class="app-pop-r">
+                    <input id="identifier" name="identifier" type="text"/>
+                    <p>为获得更好的展示效果，建议不超过5个汉字或10个字符</p>
+                </span>
+            </div>
+            <div class="app-icon">
+                <span class="app-pop-l"><i class="red">*</i>应用icon：</span>
+                <span class="app-pop-r">
+                    <span><img id="preview" src="" alt=""/></span>
+                    <span>
+                        <p>建议尺寸（96px*96px）</p>
+                        <p><input type="file" id="appicon" name="appicon" class="appicon"/></p>
+                    </span>
+                </span>
+            </div>
+        </form>
+    </div>
+
+    <!-- 生成安装包--弹框 -->
+    <div class="package-pop display">
+        <p>正在生成</p>
+        <div>
+            <img src="../img/loading.gif" alt=""/>
+            <span>
+                <p>Android APK</p>
+                <p class="waiting-tip">前面有<em class="howmanybeforeyou">6</em>个人在排队</p>
+            </span>
+        </div>
+        <div>安装过程正在后台进行，您可以稍后在我的移动端下载安装包</div>
+    </div>
+</div>

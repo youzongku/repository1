@@ -1,0 +1,244 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<h1>商品管理<span>---</span><span class="label-change">报价单导出</span></h1>
+<span class="show-derive-list check-derive-list" id="look_export_detail_btn">查看导出明细表</span>
+<span class="show-derive-list go-back" id="go_back_disprice_bill_export_btn" style="display: none">返回</span>
+<div class="dis-price-one" style="display: block">
+    <div class="dis-price">
+        <p>
+            第一步：设置利润率折扣
+        </p>
+		<!--<div>
+			设置利润率折扣：&nbsp;&nbsp;
+			<input type="text" class="set-discount" />%&nbsp;&nbsp;
+			<span style="font-size: 14px;display: inline-block">分销商的分销价=总成本 / (1- 利润率*折扣)</span>
+			<br/>
+			<span style="color:red;line-height: 30px">注意：1、利润率*折扣不能低于5% ；2、利润率小于5%不打折。</span>
+		</div>-->
+		<div>设置利润率折扣：&nbsp;&nbsp;<input type="text" class="set-discount"/>&nbsp;%&nbsp;&nbsp;
+            <span style="font-size: 11px;display: inline-block;color:#A8A8A8">（请输入0-100的数字，例如：输入95即95折）</span><br/>
+
+            <span style="line-height: 30px">计算公式：分销商的分销价=总成本 / (1- 利润率*折扣)</span>
+        </div>
+        <p>
+            第二步：选择商品
+        </p>
+		<div>
+			<span class="dis-price-add" id="add_product_btn">+添加商品</span>
+			<span class="dis-price-add" id="delete_product_btn">删除</span>
+			<span class="dis-price-add" id="clear_product_btn">清空</span>
+			<span style="font-size: 11px;display: inline-block;color:#A8A8A8">（勾选框仅对删除有效）</span>
+			<span class="dis-price-add" id="export_product_btn" style="float: right;margin-top: 15px;margin-right: 25px;width:150px;">保存列表并导出Excel</span>
+		</div>
+	</div>
+	<div class="content_list" style="margin-bottom: 50px;">
+		<div id="user_recharge_selected">已添加<span id="selected_product_number">0</span>个商品</div>
+		<!--选择的商品table start-->
+		<table class="user_recharge" style="text-align: center;">
+			<tbody>
+				<tr class="user_recharge_header">
+					<td width="3%" name="">
+						<label><input type="checkbox" class="choose_all_input" style="position: relative;top: 2px;"/>全选</label>
+					</td>
+					<td width="5%" name="cname">商品分类</td>
+					<td width="4%" name="brand">商品品牌</td>
+					<td width="5%" name="csku">SKU</td>
+					<td width="7%" name="interBarCode">国际条码</td>
+					<td width="9%" name="ctitle">商品名称</td>
+					<td width="4%" name="">总成本(元)</td>
+					<td width="4%" style = "color:red" name="disPrice">分销价(元)</td>
+					<td width="4%" name="qty">采购数量(个)</td>
+					<td width="4%" name="localPrice">市场价(元)</td>
+					<td width="3%" name="batchNumber">起批量</td>
+					<td width="3%" name="packageType">包装种类</td>
+					<td width="5%" name="originCountry">原产地</td>
+					<td width="5%" name="plugType">规格</td>
+					<td width="5%" name="warehouseName">所属仓</td>
+					<td width="7%" name="productEnterprise">生产厂家</td>
+					<td width="9%" name="componentContent">成分含量</td>
+					<td width="4%" name="expirationDays">保质期(月)</td>
+					<td width="4%" name="stock">库存</td>
+					<td width="4%" name="packQty">箱规</td>
+				</tr>
+			</tbody>
+		</table>
+		<!--选择的商品table end-->
+		<textarea id="selected_product_table_datum" style="display: none;"></textarea>
+		<div class="clear"></div>
+	</div>
+</div>
+<!--添加商品页面-->
+<div class="dis-price-two dis-price" style="display: none">
+	<div class="dis-price-goods">
+		<a id="return_disprice_bill_export_btn">&lt;&lt;返回</a>
+		商品分类：
+		<select id="product_category_select">
+			<option value="">全部商品</option>
+		</select>&emsp;&emsp;
+		所属仓库：
+		<select id="product_warehouse_select">
+        	<option value="">所有仓库</option>
+        </select>
+		<div class="search">
+			<input id="product_search_input" class="searchInput" placeholder="商品名/SKU">
+			<input id="product_search_btn" class="searchButton" value="搜索" type="button" style="cursor: pointer;">
+		</div>
+	</div>
+	<div class="content_list" style="margin-top: 7px;">
+		<!--待选择商品table start-->
+		<table class="user_recharge" style="min-width:1000px ;text-align: center;">
+			<tbody>
+				<tr class="user_recharge_header">
+					<td width="7%">
+						<label><input type="checkbox" class="choose_all_input" style="position: relative;top: 2px;"/>全选</label>
+					</td>
+					<td width="10%">SKU</td>
+					<td width="23%">商品名称</td>
+					<td width="10%">所属分类</td>
+					<td width="10%">所属仓库</td>
+					<td width="8%">云仓库存</td>
+					<td width="10%">采购数量(个)</td>
+					<td width="8%">总成本(元)</td>
+					<td width="8%" style = "color:red"  >分销价(元)</td>
+					<td width="8%">市场价(元)</td>
+				</tr>
+
+			</tbody>
+		</table>
+		<!--待选择商品table end-->
+		<textarea id="all_product_table_datum" style="display: none;"></textarea>
+		<div class="clear"></div>
+		<div class="list_content">
+			<p>共<span class="total_record" style="display:inline-block;">0</span>条记录，每页显示
+				<select class="list_pagesize">
+					<option value="10" selected="selected">10</option>
+					<option value="20">20</option>
+					<option value="30">30</option>
+					<option value="50">50</option>
+				</select>
+				，共<span class="total_pages" style="display:inline-block;">0</span>页
+			</p>
+		</div>
+		<div class="dis-price-check">
+			<label><input type="checkbox" name="check-method" id="choose_search_all" disabled="disabled" style="cursor: not-allowed;" />选中符合搜索/筛选条件的所有商品</label>
+			<span id="save_selected_product">添加到列表</span>
+		</div>
+	</div>
+	<div id="product_two_pagination" style="text-align: center; margin-top: 30px;"></div>
+</div>
+<!--导出excel页面-->
+<link rel="stylesheet" type="text/css" href="../css/laydate/skins/molv/laydate.css">
+<script type="text/javascript" src="../js/lib/laydate/laydate.js"></script>
+<!--<script type="text/javascript" src="../js/zeroclipboard2.2.0/ZeroClipboard.min.js"></script>-->
+<div class="derive-list" style="display: none;">
+	<ul class="search_category" style="height:62px;">
+		<!--<li><a href="javascript:;" onclick="page_switch('excel')">&lt;&lt;返回列表</a></li>-->
+		<li>Excel名称：
+			<input type="text" class="excel-name input-s" />
+		<li>分销商账号：
+			<input type="text" class="distributor-id input-s" />
+		</li>
+		<li>制作人：
+			<input type="text" class="distributor-producer input-s" />
+		</li>
+		<li>下单时间：
+			<input placeholder="开始日期" id="seachTime0" class="input-s" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"> 至
+			<input placeholder="结束日期" id="seachTime1" class="input-s" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+		</li>
+		<li>
+			<span class="excel-search">搜索</span>
+		</li>
+	</ul>
+	<div class="content_list">
+		<table class="excel-list">
+			<tr class="excel-list-header">
+				<td style="min-width: 8%">序号</td>
+				<td style="width: 7%">利润率折扣</td>
+				<td style="width: 16%">导出Excel名称</td>
+				<td style="width: 16%">分销商账号</td>
+				<td style="width: 11%">制作时间</td>
+				<td style="width: 9%">制作人</td>
+				<td style="width: 8%">是否生成订单</td>
+				<td style="width: 22%">操作</td>
+			</tr>
+		</table>
+		<div class="clear"></div>
+		<div class="list_content">
+			<p>共<span class="total_record" style="display:inline-block;">0</span>条记录，每页显示
+				<select class="list_pagesize">
+					<option value="10" selected="selected">10</option>
+					<option value="20">20</option>
+					<option value="30">30</option>
+					<option value="50">50</option>
+				</select>
+				，共<span class="total_pages" style="display:inline-block;">0</span>页
+			</p>
+		</div>
+	</div>
+    <!--<div id="pagination_recharge" style="text-align: center; margin-top: 30px;">
+        <div name="laypage1.3" class="laypage_main laypageskin_molv" id="laypage_5">
+            <span class="laypage_curr" style="background-color:#55ccc8">1</span>
+            <a href="javascript:;" data-page="2">2</a>
+            <a href="javascript:;" data-page="3">3</a>
+            <a href="javascript:;" data-page="4">4</a>
+            <a href="javascript:;" data-page="5">5</a>
+            <span>…</span>
+            <a href="javascript:;" class="laypage_last" title="尾页" data-page="13">尾页</a>
+            <a href="javascript:;" class="laypage_next" data-page="2">下一页</a>
+            <span class="laypage_total">
+                <label>到第</label>
+                <input type="number" min="1" onkeyup="this.value=this.value.replace(/\D/, '');" class="laypage_skip">
+                <label>页</label>
+                <button type="button"class="laypage_btn">确定</button>
+            </span>
+        </div>
+    </div>-->
+
+    <div id="export_detail_pagination" style="text-align: center; margin-top: 30px;"></div>
+</div>
+<div class="distributor-relevance-pop" style="display:none;">
+    <ul class="distributor-relevance">
+        <li class="distributor-names">
+            Excel名称：<em>洋一佳的报价单</em>
+        </li>
+        <li class="distributor-search">
+            <input type="text"/><span>搜索</span>
+        </li>
+        <li class="distributor-name-list">
+            <ul>
+                <li class="distributor-name-list1">勾选</li>
+                <li class="distributor-name-list3">分销商账号</li>
+                <li class="distributor-name-list2">名称</li>
+                <li class="distributor-name-list4">手机号</li>
+            </ul>
+        </li>
+    </ul>
+    <div class="clear"></div>
+    <div id="export_detail_distribution_pagination" style="text-align: center; margin-top: 30px;"></div>
+</div>
+
+<script>
+    //解决IEplaceholder不兼容问题
+    $(document).ready(function () {
+        $(function () {
+            if (!placeholderSupport()) {
+                $('[placeholder]').focus(function () {
+                    var input = $(this);
+                    if (input.val() == input.attr('placeholder')) {
+                        input.val('');
+                        input.removeClass('placeholder');
+                    }
+                }).blur(function () {
+                    var input = $(this);
+                    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                        input.addClass('placeholder');
+                        input.val(input.attr('placeholder'));
+                    }
+                }).blur();
+            }
+        })
+
+        function placeholderSupport() {
+            return 'placeholder' in document.createElement('input');
+        }
+    })
+</script>

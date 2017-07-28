@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.store.AttributeSetMappingMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.store.AttributeSetMapping" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="set_id" property="setId" jdbcType="INTEGER" />
+    <result column="attribute_id" property="attributeId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, set_id, attribute_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_attrset_attr
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_attrset_attr
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.store.AttributeSetMapping" >
+    insert into t_attrset_attr (id, set_id, attribute_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{setId,jdbcType=INTEGER}, #{attributeId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.store.AttributeSetMapping" >
+    insert into t_attrset_attr
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="setId != null" >
+        set_id,
+      </if>
+      <if test="attributeId != null" >
+        attribute_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="setId != null" >
+        #{setId,jdbcType=INTEGER},
+      </if>
+      <if test="attributeId != null" >
+        #{attributeId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.store.AttributeSetMapping" >
+    update t_attrset_attr
+    <set >
+      <if test="setId != null" >
+        set_id = #{setId,jdbcType=INTEGER},
+      </if>
+      <if test="attributeId != null" >
+        attribute_id = #{attributeId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.store.AttributeSetMapping" >
+    update t_attrset_attr
+    set set_id = #{setId,jdbcType=INTEGER},
+      attribute_id = #{attributeId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,248 @@
+<style>
+    .layui-table td, .layui-table th {
+        padding: 9px 15px;
+        min-height: 20px;
+        line-height: 20px;
+        border: 1px solid #e2e2e2;
+        font-size: 14px;
+    }
+</style>
+<div class="send_product_box">
+    <p class="title send_product_line">我的微仓进货
+        <span class="btn send_product_btn">去发货</span>
+    </p>
+    <ul class="topup_box_tab topup_box_ul">
+        <li class="topup_box_current">微仓库存</li>
+        <li class="">退货记录</li>
+    </ul>
+    <div class="topup_box_content">
+        <!--微仓库存start-->
+        <div class="inventory_cont_box">
+            <div class="five-date">
+                库存：<select name="stock" tag="changEvent" class="select-pub">
+                <option value="" >全部</option>
+                <option value="1" selected>有库存</option>
+                <option value="0">已售完</option>
+            </select>
+                商品类型：<select name="categorys" class="select-pub">
+                <option value="" selected>全部</option>
+            </select>
+                所属仓库：<select name="choose" tag="changEvent" class="select-pub">
+                <option value="" selected>全部</option>
+                <option value="2024">深圳仓</option>
+                <option value="2029">南沙仓</option>
+            </select>
+                <div class="three-search five-search">
+                    <input id="title" type="text" value="" placeholder="商品编号/商品名称" class="search-input-pub"/>
+                    <span name="search" class="search-btn-pub">搜索</span>
+                </div>
+            </div>
+            <div class="three-2 light-gray">
+                <table>
+                    <tr class="five-2-tr1">
+                        <td class="tr1-td1">商品名称</td>
+                        <td class="tr1-td2">商品编号</td>
+                        <td class="tr1-td3">微仓数量(个)</td>
+                        <td class="tr1-td4">所属仓库</td>
+                        <td class="tr1-td4">查看采购信息</td>
+                    </tr>
+                </table>
+                <div id="pagination_invent" style="text-align: center; margin-top: 30px;"></div>
+            </div>
+        </div>
+        <!--微仓库存end-->
+        <!--退货单列表start-->
+        <div class="inventory_cont_box display" id="returnOrdersDiv">
+            <!--退货单查询条件start-->
+            <div class="five-date" name="ro_searchTermsDiv">
+                所属仓库：
+                <select class="select-pub" id="ro_scopeSelect" onchange="getReturnOrders()">
+                    <option value="" selected>全部记录</option>
+                    <option value="3">最近三个月记录</option>
+                    <option value="6">最近六个月记录</option>
+                    <option value="12">最近十二个月记录</option>
+                    <option value="18">最近十八个月记录</option>
+                </select>
+                <div class="three-search five-search">
+                    <input onkeyup="enter_keyUp(event,this, getReturnOrders)" id="ro_returnOrderNo" type="text" placeholder="退货单号" class="search-input-pub"/>
+                    <span class="search-btn-pub" onclick="getReturnOrders()">搜索</span>
+                </div>
+            </div>
+            <!--退货单查询条件end-->
+            <!--return orders append below...-->
+            <div name="returnOrders"></div>
+            <div name="pagination_returnOrders" style="text-align: center; margin-top: 30px;"></div>
+        </div>
+        <!--退货单列表end-->
+    </div>
+</div>
+
+<!--微仓库存-申请退货 start-->
+<div class="send_product_box2 display" id="applyRoDiv">
+    <h2>我的微仓进货-查看明细-申请退货<span class="close_detail btn" onclick="returnFromApplyingRo()">返回</span></h2>
+    <div class="product_box2_cont">
+        <div class="product_box2_cont_l">
+            <div class="product_box2_cont_l_t product_box2_cont_l_t_style">
+                退货申请中......
+            </div>
+            <!--退货申请start-->
+            <div class="product_box2_cont_l_d" id="applyRO_optDiv">
+                <h4>退货申请</h4>
+                <div class="prod_cont_l_d_con" name="productInfoDiv">
+                </div>
+                <div name="productInfoExpirationDateDiv"></div>
+                <!--<div name="expectReturnAmountFormulaDiv"></div>-->
+                <div>
+                    <i class="red">*</i>数量：
+                    <div class="gw_num" name="returnQtyDiv">
+                        <em class="jian" onclick="reduceReturnQty()">-</em>
+                        <input type="text" class="num" onblur="inputReturnQty(this)"/>
+                        <em class="add" onclick="increaseReturnQty()">+</em>
+                    </div>
+                    <span class="dim" name="reminder"></span>
+                </div>
+                <div>
+                    <i class="red">*</i>金额：
+                    <input style="width: 108px" type="text" class="promotion-input" name="userExpectTotalReturnAmount">元
+                </div>
+                <div>
+                    <span name="expectReturnAmount"></span>
+                </div>
+                <div>
+                    <div style="display: inline-block;height: 120px;margin-left: 6px">备注：</div>
+                    <div style="float: right">
+                        <textarea style="resize: none;width: 240px;margin:3px 4px 0px 0px" name="remarks"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!--退货申请end-->
+            <div>
+                <button onclick="applyReturnOrder(this)" class="btn-hyacinthine-small">提交申请</button>
+            </div>
+        </div>
+        <div class="product_box2_cont_r">
+            <!--流程图start-->
+            <div class="product_box2_cont_r_t">
+                <ul class="order_detail_line">
+                    <li class="sure_down">
+                        <div class="line-title-box">
+                            <span class="line-title">提交申请</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="dashed-line">&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+                    </li>
+                    <li class="sure_pay">
+                        <div class="line-title-box">
+                            <span class="line-title">平台审核</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="dashed-line">&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+                    </li>
+                    <li class="sure_depart">
+                        <div class="line-title-box">
+                            <span class="line-title">退款至余额</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--流程图end-->
+            <!--采购信息start-->
+            <div class="product_box2_cont_r_d">
+                <h2>采购信息</h2>
+                <div id="applyRO_purchaseInfoDiv">
+                </div>
+            </div>
+            <!--采购信息end-->
+        </div>
+    </div>
+</div>
+<!--微仓库存-申请退货 end-->
+
+<!--退货记录-查看详情 start-->
+<div class="send_product_box2 display" id="viewRoDiv">
+    <h2>我的微仓进货-退货记录-查看详情<span class="close_detail btn" onclick="gotoReturnOrderListFromDetail()">返回</span></h2>
+    <div class="product_box2_cont">
+        <div class="product_box2_cont_l">
+            <div class="product_box2_cont_l_t" id="viewRoStatusDiv">
+            </div>
+            <div class="product_box2_cont_l_d" id="viewRoInfoDiv">
+                <h4>退货申请</h4>
+                <div class="prod_cont_l_d_con" name="productInfoDiv">
+                </div>
+                <div name="productInfoExpirationDateDiv"></div>
+                <!--<div name="expectReturnAmountFormulaDiv"></div>-->
+                <div name="returnQtyDiv"></div>
+                <div name="actualReturnAmountDiv"></div>
+                <div name="remarksDiv" style="word-break: break-all"></div>
+            </div>
+            <div id="cancelApplyReturnOrderDiv">
+            </div>
+        </div>
+        <div class="product_box2_cont_r">
+            <!--流程图start-->
+            <div class="product_box2_cont_r_t">
+                <ul class="order_detail_line">
+                    <li class="sure_down">
+                        <div class="line-title-box">
+                            <span class="line-title">提交申请</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="dashed-line">&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+                    </li>
+                    <li class="sure_pay">
+                        <div class="line-title-box">
+                            <span class="line-title">平台审核</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="dashed-line">&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+                    </li>
+                    <li class="sure_depart">
+                        <div class="line-title-box">
+                            <span class="line-title">退款至余额</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--流程图end-->
+            <!--采购信息start-->
+            <div class="product_box2_cont_r_d">
+                <h2>采购信息</h2>
+                <div id="viewRO_purchaseInfoDiv">
+                </div>
+            </div>
+            <!--采购信息end-->
+        </div>
+    </div>
+</div>
+<!--退货记录-查看详情 end-->
+
+
+<script> //解决IEplaceholder不兼容问题
+$(document).ready(function () {
+    $(function () {
+        if (!placeholderSupport()) {
+            $('[placeholder]').focus(function () {
+                var input = $(this);
+                if (input.val() == input.attr('placeholder')) {
+                    input.val('');
+                    input.removeClass('placeholder');
+                }
+            }).blur(function () {
+                var input = $(this);
+                if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                    input.addClass('placeholder');
+                    input.val(input.attr('placeholder'));
+                }
+            }).blur();
+        }
+    })
+    function placeholderSupport() {
+        return 'placeholder' in document.createElement('input');
+    }
+});
+</script>
+

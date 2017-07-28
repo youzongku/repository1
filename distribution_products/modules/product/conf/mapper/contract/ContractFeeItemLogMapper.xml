@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.contract.ContractFeeItemLogMapper" >
+  <resultMap id="BaseResultMap" type="entity.contract.ContractFeeItemLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="fee_item_id" property="feeItemId" jdbcType="INTEGER" />
+    <result column="fee_type_name" property="feeTypeName" jdbcType="VARCHAR" />
+    <result column="fee_type" property="feeType" jdbcType="INTEGER" />
+    <result column="content_original" property="contentOriginal" jdbcType="VARCHAR" />
+    <result column="content_new" property="contentNew" jdbcType="VARCHAR" />
+    <result column="opt_type" property="optType" jdbcType="INTEGER" />
+    <result column="opt_user" property="optUser" jdbcType="VARCHAR" />
+    <result column="opt_time" property="optTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, fee_item_id, fee_type_name, fee_type, content_original, content_new, opt_type, 
+    opt_user, opt_time
+  </sql>
+  
+  <select id="selectByFeeItemId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select <include refid="Base_Column_List"/>
+  	from t_contract_fee_item_logs
+  	where fee_item_id = #{feeItemId}
+  	order by id desc
+  </select>
+  
+  <insert id="insert" parameterType="entity.contract.ContractFeeItemLog" >
+    insert into t_contract_fee_item_logs (fee_item_id, fee_type_name, 
+      fee_type, content_original, content_new, opt_type, opt_user, opt_time)
+    values (#{feeItemId,jdbcType=INTEGER}, #{feeTypeName,jdbcType=VARCHAR}, 
+      #{feeType,jdbcType=INTEGER}, #{contentOriginal,jdbcType=VARCHAR}, 
+      #{contentNew,jdbcType=VARCHAR}, #{optType}, #{optUser,jdbcType=VARCHAR}, now())
+  </insert>
+  
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into t_contract_fee_item_logs (fee_item_id, fee_type_name, 
+      fee_type, content_original, content_new, optType, opt_user, opt_time)
+    values 
+    <foreach collection="list" item="item" index="index" separator="," >
+		(#{item.feeItemId,jdbcType=INTEGER}, #{item.feeTypeName,jdbcType=VARCHAR}, 
+      #{item.feeType,jdbcType=INTEGER}, #{item.contentOriginal,jdbcType=VARCHAR}, 
+      #{item.contentNew,jdbcType=VARCHAR}, #{optType}, #{item.optUser,jdbcType=VARCHAR}, now())
+	</foreach>
+  </insert>
+  
+</mapper>

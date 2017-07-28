@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.store.SkuEntityMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.store.SkuEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="content_id" property="contentId" jdbcType="VARCHAR" />
+    <result column="multiselect" property="multiselect" jdbcType="BIT" />
+    <result column="attr_type" property="attrType" jdbcType="VARCHAR" />
+    <result column="attr_id" property="attrId" jdbcType="VARCHAR" />
+    <result column="attr_key" property="attrKey" jdbcType="VARCHAR" />
+    <result column="data_type" property="dataType" jdbcType="VARCHAR" />
+  	<result column="attr_value" property="attrValue" jdbcType="VARCHAR" />	
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, content_id, multiselect, attr_type, attr_id, attr_key, data_type,attr_value
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sku_entity
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_sku_entity
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.store.SkuEntity" >
+    insert into t_sku_entity (id, content_id, multiselect, 
+      attr_type, attr_id, attr_key, 
+      data_type)
+    values (#{id,jdbcType=INTEGER}, #{contentId,jdbcType=VARCHAR}, #{multiselect,jdbcType=BIT}, 
+      #{attrType,jdbcType=VARCHAR}, #{attrId,jdbcType=VARCHAR}, #{attrKey,jdbcType=VARCHAR}, 
+      #{dataType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.store.SkuEntity" >
+    insert into t_sku_entity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="contentId != null" >
+        content_id,
+      </if>
+      <if test="multiselect != null" >
+        multiselect,
+      </if>
+      <if test="attrType != null" >
+        attr_type,
+      </if>
+      <if test="attrId != null" >
+        attr_id,
+      </if>
+      <if test="attrKey != null" >
+        attr_key,
+      </if>
+      <if test="dataType != null" >
+        data_type,
+      </if>
+      <if test="attrValue != null" >
+        attr_value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="contentId != null" >
+        #{contentId,jdbcType=VARCHAR},
+      </if>
+      <if test="multiselect != null" >
+        #{multiselect,jdbcType=BIT},
+      </if>
+      <if test="attrType != null" >
+        #{attrType,jdbcType=VARCHAR},
+      </if>
+      <if test="attrId != null" >
+        #{attrId,jdbcType=VARCHAR},
+      </if>
+      <if test="attrKey != null" >
+        #{attrKey,jdbcType=VARCHAR},
+      </if>
+      <if test="dataType != null" >
+        #{dataType,jdbcType=VARCHAR},
+      </if>
+      <if test="attrValue != null" >
+        #{attrValue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.store.SkuEntity" >
+    update t_sku_entity
+    <set >
+      <if test="contentId != null" >
+        content_id = #{contentId,jdbcType=VARCHAR},
+      </if>
+      <if test="multiselect != null" >
+        multiselect = #{multiselect,jdbcType=BIT},
+      </if>
+      <if test="attrType != null" >
+        attr_type = #{attrType,jdbcType=VARCHAR},
+      </if>
+      <if test="attrId != null" >
+        attr_id = #{attrId,jdbcType=VARCHAR},
+      </if>
+      <if test="attrKey != null" >
+        attr_key = #{attrKey,jdbcType=VARCHAR},
+      </if>
+      <if test="dataType != null" >
+        data_type = #{dataType,jdbcType=VARCHAR},
+      </if>
+       <if test="attrValue != null" >
+        attr_value = #{attrValue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.store.SkuEntity" >
+    update t_sku_entity
+    set content_id = #{contentId,jdbcType=VARCHAR},
+      multiselect = #{multiselect,jdbcType=BIT},
+      attr_type = #{attrType,jdbcType=VARCHAR},
+      attr_id = #{attrId,jdbcType=VARCHAR},
+      attr_key = #{attrKey,jdbcType=VARCHAR},
+      data_type = #{dataType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

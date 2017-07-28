@@ -1,0 +1,302 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                               controllers.sales.Assets.at(path="/public", file)
+
+#---------------------------api modoule-----------------------------------------#
+
+GET         /api                                      	@controllers.api.ApiController.getResources()
+
+GET         /api/:path                             		@controllers.api.ApiController.getResource(path:String)
+
+#------------------------------------------------sales module----------------------------------------------#
+
+#-----receiver address---
+POST        /getRes                                     @controllers.sales.ReceiverAddressController.getReceivers()
+POST        /getRes4Backstage                           @controllers.sales.ReceiverAddressController.getReceivers4Backstage()
+GET         /delRe/:rid                                 @controllers.sales.ReceiverAddressController.delReceiver(rid:Integer)
+
+#-----After Sales for distribution---
+
+POST        /finishSaleOrder                            @controllers.sales.SalesController.finishSaleOrder()
+
+POST        /saveMicroOut 								@controllers.sales.SalesController.saveMicroOut()
+
+GET         /undoClose                                  @controllers.sales.SalesController.undoClose(so : String)
+
+POST        /cancelso                           		@controllers.sales.SalesController.cancelSalesOrder()
+
+POST        /store/cancel		                   		@controllers.sales.SalesController.cancelStoreOrder()
+
+POST        /remicsto					                @controllers.sales.SalesController.remicsto()
+
+
+#-----saleOrder for distribution---
+
+POST        /updPayInfo                                 @controllers.sales.SalesController.updSalesOrderVirtualPayInfo()
+
+POST        /showOrderDetail                            @controllers.sales.SalesController.showSalesOrderDetail()
+
+POST        /changeNickName                             @controllers.sales.SalesController.changeNickName()
+
+#------------------------------------------------------------------------------
+POST        /updStu                                     @controllers.sales.SalesController.updateSalesOrderStatus()
+POST        /cancelNotification                         @controllers.sales.SalesController.cancelNotification()
+POST        /informShipping                         	@controllers.sales.SalesController.informShipping()
+POST        /confirmReceivement                        	@controllers.sales.SalesController.confirmReceivement()
+POST        /toPayFreight	                        	@controllers.sales.SalesController.toPayFreight()
+#------------------------------------------------------------------------------
+
+POST        /updStuByOrderNo                            @controllers.sales.SalesController.upSalesStuByOrderNo()
+
+POST        /erpFetchResult                             @controllers.sales.SalesController.erpFetchResult()
+
+POST        /ctslodr                                    @controllers.sales.SalesController.getSalesOrderCount()
+
+POST        /manager/ctslodr                            @controllers.sales.SalesManagerController.getSalesOrderCount()
+
+POST        /getsl                                      @controllers.sales.SalesController.getSaleOrderList()
+
+POST        /getsdl                                     @controllers.sales.SalesController.getSaleOrderDetailList()
+
+#POST       /gethistorysdl                              @controllers.sales.SalesController.getHistorySaleOrderDetailList()
+
+POST        /purchaseInfo                               @controllers.sales.SalesController.getPurchaseInfo()
+
+POST        /getBase                                    @controllers.sales.SalesController.getSaleOrderBase()
+
+POST        /getMain                                    @controllers.sales.SalesController.getSaleOrderMain()
+
+POST		/postOrder									@controllers.sales.SalesController.postOrder()
+
+POST		/postOrderFPO								@controllers.sales.SalesController.postOrderFromPurchaseOrder()
+
+POST		/postOrder4OpenApi							@controllers.sales.SalesController.postOrder4OpenApi()
+
+POST		/postOrder4Store							@controllers.sales.SalesController.postOrder4Store()
+
+GET         /exportLogisticsInfo                        @controllers.sales.SalesController.exportLogistics()
+
+POST        /saveBufferMemory                           @controllers.sales.SalesController.saveBufferMemory()
+
+GET         /getBufferMemory                            @controllers.sales.SalesController.getBufferMemory()
+
+GET         /clearBufferMemory                          @controllers.sales.SalesController.clearBufferMemory()
+
+POST        /closeSalesFromB2C                          @controllers.sales.SalesController.closeSalesFromB2C()
+
+GET         /invoice/:so                                @controllers.sales.SalesController.getInvoice( so: String)
+
+#-----sale after manager------
+
+POST        /actualAmountCapfee                         @controllers.sales.SaleAfterController.getReturnAmountCapfee4Sku()
+
+POST        /getXssh                                    @controllers.sales.SaleAfterController.getShSaleOrderList()
+
+POST        /getAfterSaleOrderDto                       @controllers.sales.SaleAfterController.getAfterSaleOrderDto()
+
+POST        /saleOrderRefundsApply                      @controllers.sales.SaleAfterController.saleOrderRefundsApply()
+
+POST        /cancleSaleOrderRefundsApply                @controllers.sales.SaleAfterController.cancleSaleOrderRefundsApply()
+
+POST        /saleOrderRefundsApplyLogistics             @controllers.sales.SaleAfterController.saleOrderRefundsApplyLogistics()
+
+POST        /selectEffectiveShOrderCount                @controllers.sales.SaleAfterController.selectEffectiveShOrderCount()
+
+POST        /selectEffectiveShOrderByDetailOrderId      @controllers.sales.SaleAfterController.selectEffectiveShOrderByDetailOrderId()
+
+
+POST        /manager/showSalesOrderRefunds              @controllers.sales.SaleAfterController.showSalesOrderRefunds()
+
+POST        /getSalesOrderRefundsById              		@controllers.sales.SaleAfterController.getSalesOrderRefundsById()
+
+POST        /getShAttachmentListByShOrderId             @controllers.sales.SaleAfterController.getShAttachmentListByShOrderId()
+
+GET         /getShAttachmentImgById                 	@controllers.sales.SaleAfterController.getShAttachmentImgById()
+
+POST        /getShOrderDetails                 			@controllers.sales.SaleAfterController.getShOrderDetails()
+
+POST        /shAudit                 					@controllers.sales.SaleAfterController.shAudit()
+
+POST        /getShLogListByShOrderId                 	@controllers.sales.SaleAfterController.getShLogListByShOrderId()
+
+#-----sale order for manager----
+POST        /manager/getSaleOrderByNo                  	@controllers.sales.SalesManagerController.getSaleOrderByNo()     
+POST        /manager/postOrder                       	@controllers.sales.SalesManagerController.postOrder()
+POST        /manager/cloudSale                        	@controllers.sales.SalesManagerController.cloudSale()          
+POST        /manager/virtualOrder                       @controllers.sales.VirtualHouseOrderController.virtualOrder()          
+
+POST        /manager/cusAudit                           @controllers.sales.SalesManagerController.auditByCustomerService()
+
+POST        /manager/batchcusAudit                      @controllers.sales.SalesManagerController.batchAuditByCustomerService()
+
+POST        /manager/batchAuditByFinance                @controllers.sales.SalesManagerController.batchAuditByFinance()
+
+POST        /manager/finAudit                           @controllers.sales.SalesManagerController.auditByFinance()
+
+POST        /manager/changeOrderPrice                   @controllers.sales.SalesManagerController.changeOrderPrice()
+
+POST        /manager/showAllSalesOrder                  @controllers.sales.SalesManagerController.showAllSaleOrder()
+POST        /manager/showAllSalesOrder4finance          @controllers.sales.SalesManagerController.showAllSaleOrder4finance()
+
+POST        /manager/showCsSalesOrder                   @controllers.sales.SalesManagerController.showCsSaleOrder()
+
+POST        /mamager/showFcSalesOrder                   @controllers.sales.SalesManagerController.showFcSaleOrder()
+
+POST        /manager/getSalesForTel                     @controllers.sales.SalesManagerController.getSalesForTel()
+
+POST        /manager/showOperateRecordOfOrder           @controllers.sales.SalesManagerController.showOperateRecordOfOrder()
+
+POST        /manager/showReason                         @controllers.sales.SalesManagerController.showReason()
+
+POST        /manager/showDeliveryOfOrder                @controllers.sales.SalesManagerController.showDeliveryOfOrder()
+POST        /manager/inputso/expirationdates            @controllers.sales.SalesManagerController.setSelectedProductsExpirationDates()
+POST        /manager/inputso/expirationdates/cloud      @controllers.sales.SalesManagerController.setCloudSelectedProductsExpirationDates()
+POST        /manager/batchPayForOrder                   @controllers.sales.SalesManagerController.batchPayForOrder()
+
+POST        /manager/checkSaleMain                      @controllers.sales.SalesManagerController.checkSaleMain()
+
+POST        /manager/batchVerifyForOrder                @controllers.sales.SalesManagerController.batchVerifyForOrder()
+
+GET         /manager/exportSaleOrder                    @controllers.sales.SalesManagerController.exportSaleOrder()
+
+GET         /manager/getAmount                          @controllers.sales.SalesManagerController.getAmount(sid:Integer)
+
+POST        /manager/getListAmounts                     @controllers.sales.SalesManagerController.getListAmounts()
+
+POST        /receivelogisticsinfo                       @controllers.sales.LogisticsController.receiveLogisticsInfo()
+
+POST        /receivelogisticsTracingInfo                @controllers.sales.LogisticsController.receiveLogisticsTracingInfo()
+
+POST        /showLogisticsinfo                          @controllers.sales.LogisticsController.gainOrderLogisticsInfo()
+
+GET         /getLogisticsTracingInfo                    @controllers.sales.LogisticsController.getLogisticsTracingInfo(orderNo : String)
+
+GET         /pushSalesToB2C                             @controllers.sales.Sales.pushSalesToB2C()
+
+POST        /importOrder                                @controllers.sales.HandOrderImportController.importOrder()
+
+POST        /importOtherOrder                           @controllers.sales.HandOrderImportController.importOtherOrder()
+
+POST        /showOrders                                 @controllers.sales.HandOrderImportController.uploadOrderList()
+
+POST        /orderDetails                               @controllers.sales.HandOrderImportController.getOrderDetails()
+
+POST        /deleteOrder                                @controllers.sales.HandOrderImportController.deleteOrder()
+
+POST        /updateqty                                  @controllers.sales.HandOrderImportController.updateImportItemQty()
+
+POST        /taobao-order                               @controllers.sales.HandOrderImportController.saveOrder()
+
+GET         /taobao-goods                               @controllers.sales.HandOrderImportController.getGoodsInfo()
+
+POST        /saveOrder                                  @controllers.sales.HandOrderImportController.saveOrderInfo()
+
+POST        /getGoods                                   @controllers.sales.HandOrderImportController.getGoodsByOrderNo()
+
+GET         /exportMould                                @controllers.sales.HandOrderImportController.exportMould()
+
+POST        /del-taobao-order                           @controllers.sales.HandOrderImportController.deleteTaobaoOrder()
+
+GET         /deleteTaobaoGood							@controllers.sales.HandOrderImportController.deleteTaobaoGood(goodId : Integer)
+
+GET         /getOrderer                                 @controllers.sales.SalesController.getOrderer()
+
+GET         /getLogisticsByWarehouseId                  @controllers.sales.HandOrderImportController.getLogisticsByWarehouseId()
+
+POST        /checkOrderNo                               @controllers.sales.HandOrderImportController.checkByOrderNoAndWarehouseId()
+
+GET         /coupons									@controllers.sales.SalesController.syncCoupons(md : Integer)
+
+GET         /manager/cloudsale/template                	@controllers.sales.SalesManagerController.downloadSaleOrderExcelTemplate()
+
+POST        /manager/cloudsale/import                	@controllers.sales.SalesManagerController.importSalesOrder()
+
+GET         /manager/caculateprofit/:od                 @controllers.sales.SalesManagerController.caculateProfit(od:String)
+
+
+POST        /updateErpStatus                          	@controllers.sales.SalesManagerController.updateErpStatus()
+
+POST        /tempexport					  				@controllers.sales.CommonExportController.export()
+ 
+GET         /temdownload				  				@controllers.sales.CommonExportController.downLoad()
+
+POST        /salesVolumeProductInfo						@controllers.sales.ProductController.productSalesVolumeCount()
+
+#-----sale order for openapi--
+
+POST        /open/showAllOrder                          @controllers.sales.SalesController.openShowOrder()
+
+#-----jd order----
+
+POST        /jd/pull                   					@controllers.sales.JdOrderController.pull()
+
+POST        /youzan/pull                   		    	@controllers.sales.YouZanOrderController.pull()
+
+POST        /pdd/pull                   		    	@controllers.sales.PinTwoDuoController.pull()
+
+#-----M site  order -----
+
+POST        /msite/order                               	@controllers.sales.MSiteSalesController.getOrder()     
+
+POST        /store/order                               	@controllers.sales.MSiteSalesController.acceptStoreOrder()                   
+
+#-----H5 for input ------
+POST        /input/addProducts       				    @controllers.sales.TypeInController.addProducts()
+
+GET         /input/getInfo                             	@controllers.sales.TypeInController.getInfor(email : String ?= "")
+
+GET         /input/refreshProducts                     	@controllers.sales.TypeInController.refreshProducts(email : String ?= "")
+
+POST        /input/updateInfo       				   	@controllers.sales.TypeInController.updateInfo()
+
+POST        /input/deleteProducts       				@controllers.sales.TypeInController.deleteProducts()
+
+
+#-------- for marketing order-------------
+GET          /mo/list/export                            @controllers.marketing.MarketingOrderController.exportMoList()
+POST         /mo/list                                   @controllers.marketing.MarketingOrderController.getMoList() 
+POST         /mo/expirationdates                        @controllers.marketing.MarketingOrderController.setMOSelectedProductsExpirationDates()
+POST         /mo/auditF                                 @controllers.marketing.MarketingOrderController.auditFirstly()
+POST         /mo/auditS                                 @controllers.marketing.MarketingOrderController.auditSecondly() 
+POST         /mo/create                                 @controllers.marketing.MarketingOrderController.inputMarketingOrder() 
+POST         /mo/auditlogs                              @controllers.marketing.MarketingOrderController.getMoAuditLogs() 
+POST         /mo/auditlogs/latest/af                    @controllers.marketing.MarketingOrderController.getAuditFirstlyLatestLog() 
+GET          /mo/list/sm/export                         @controllers.marketing.MarketingOrderController.smExportMoList()          
+POST         /mo/list/sm  							    @controllers.marketing.MarketingOrderController.smMoList()
+
+#-------- for sale order combination-------------
+GET          /hb/logs/:hbId							    @controllers.sales.CombineSaleController.getCombinedLogs(hbId:Integer)
+POST         /hb/list								    @controllers.sales.CombineSaleController.hbDeliveryList()
+POST         /hb/cslist								    @controllers.sales.CombineSaleController.csAuditHbDeliveryList()
+POST         /hb/financelist							@controllers.sales.CombineSaleController.financeAuditHbDeliveryList()
+POST         /hb/getInfo                                @controllers.sales.CombineSaleController.toCombineInfo()
+POST         /hb/combine                                @controllers.sales.CombineSaleController.combine()
+POST         /hb/audit/cs                               @controllers.sales.CombineSaleController.auditByCustomerService()
+POST         /hb/audit/finance                          @controllers.sales.CombineSaleController.auditByFinance()
+GET          /hb/audit/finance/info/:hbId               @controllers.sales.CombineSaleController.info2auditByFinance(hbId:Integer)
+GET          /hb/:hbId							    	@controllers.sales.CombineSaleController.getACombination(hbId:Integer)
+GET          /hb/calculation/:od                        @controllers.sales.CombineSaleController.calculation(od:String)
+POST         /hb/batchOrder                             @controllers.sales.CombineSaleController.batchOrder()
+POST         /hb/prodetails                             @controllers.sales.CombineSaleController.getConbinedProDetails()
+
+# --------routes for store ------------------------------------
+POST        /store/getOrderLogisticsInfo               	@controllers.sales.LogisticsController.getOrderLogisticsInfo() 
+
+#----------routes for contract ------------------------------------
+
+GET         /contract/getFields/:cno                   	@controllers.sales.SalesContractController.getFieldNames(cno:String)
+
+POST        /contract/pages                            	@controllers.sales.SalesContractController.readContractFee() 
+
+POST        /contract/refresh							@controllers.sales.SalesContractController.refresh()
+
+GET         /contract/fee/:cno                         	@controllers.sales.SalesContractController.contractFee(cno:String)
+
+#----------routes for async export  --------------------------------------------------
+
+GET         /async/export                               @controllers.sales.AsyncExportController.create() 
+
+GET         /async/dowload                              @controllers.sales.AsyncExportController.dowload() 

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.DisCreditMapper">
+	<resultMap id="BaseResultMap" type="entity.dismember.DisCredit">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="credit_limit" property="creditLimit" jdbcType="NUMERIC" />
+		<result column="used_amount" property="usedAmount" jdbcType="NUMERIC" />
+		<result column="createuser" property="createuser" jdbcType="VARCHAR" />
+		<result column="limit_state" property="limitState" jdbcType="INTEGER" />
+		<result column="is_finished" property="isFinished" jdbcType="BIT" />
+		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="audit_code" property="auditCode" jdbcType="VARCHAR" />
+		<result column="redit" property="redit" jdbcType="INTEGER" />
+		<result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+		<result column="updatedate" property="updatedate" jdbcType="TIMESTAMP" />
+		<result column="is_activated" property="isActivated" jdbcType="BIT" />
+		<!-- 信用总额度 -->
+		<result column="totalCreditLimit" property="totalCreditLimit" jdbcType="NUMERIC" />
+		<!-- 已用总额度 -->
+		<result column="totalUsedAmount" property="totalUsedAmount" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, email, credit_limit, used_amount, createuser, limit_state,
+		is_finished, start_time,end_time, audit_code, redit, createdate,
+		updatedate,is_activated
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_dis_credit
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="getCreditsByCondition" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from t_dis_credit
+		where
+		email = #{email,jdbcType=VARCHAR}
+		<if test="limiteState != null">
+			and limit_state = #{limiteState,jdbcType=INTEGER}
+		</if>
+		<if test="invalid != null">
+			and limit_state != #{invalid,jdbcType=INTEGER}
+		</if>
+		<if test="isFinished != null">
+			and is_finished = #{isFinished,jdbcType=BIT}
+		</if>
+		<if test="redit != null">
+			and redit = #{redit,jdbcType=INTEGER}
+		</if>
+		<if test="startTime != null and startTime != '' ">
+        <![CDATA[and start_time >= to_timestamp(''||#{startTime}||'','yyyy-mm-dd HH24:MI:SS')]]>
+		</if>
+		<if test="endTime != null and endTime != '' and redit != 2 and redit !='2'">
+      <![CDATA[and end_time <= to_timestamp(''||#{endTime}||'','yyyy-mm-dd HH24:MI:SS')]]>
+		</if>
+		order by createdate desc
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_dis_credit
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByEmail" parameterType="java.lang.String">
+		delete from t_dis_credit
+		where email = #{email,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="entity.dismember.DisCredit">
+		insert into t_dis_credit (id, email, credit_limit,
+		used_amount, createuser, limit_state,
+		is_finished, start_time, end_time,
+		audit_code, redit, createdate,updatedate
+		)
+		values (#{id,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR},
+		#{creditLimit,jdbcType=NUMERIC},
+		#{usedAmount,jdbcType=NUMERIC}, #{createuser,jdbcType=VARCHAR}, #{limitState,jdbcType=INTEGER},
+		#{isFinished,jdbcType=BIT}, #{startTime,jdbcType=TIMESTAMP},
+		#{endTime,jdbcType=TIMESTAMP},
+		#{auditCode,jdbcType=VARCHAR}, #{redit,jdbcType=INTEGER}, #{createdate,jdbcType=TIMESTAMP},
+		#{updatedate,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="entity.dismember.DisCredit">
+		insert into t_dis_credit
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="creditLimit != null">
+				credit_limit,
+			</if>
+			<if test="usedAmount != null">
+				used_amount,
+			</if>
+			<if test="createuser != null">
+				createuser,
+			</if>
+			<if test="limitState != null">
+				limit_state,
+			</if>
+			<if test="isFinished != null">
+				is_finished,
+			</if>
+			<if test="startTime != null">
+				start_time,
+			</if>
+			<if test="endTime != null">
+				end_time,
+			</if>
+			<if test="auditCode != null">
+				audit_code,
+			</if>
+			<if test="redit != null">
+				redit,
+			</if>
+			<if test="createdate != null">
+				createdate,
+			</if>
+			<if test="updatedate != null">
+				updatedate,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="creditLimit != null">
+				#{creditLimit,jdbcType=NUMERIC},
+			</if>
+			<if test="usedAmount != null">
+				#{usedAmount,jdbcType=NUMERIC},
+			</if>
+			<if test="createuser != null">
+				#{createuser,jdbcType=VARCHAR},
+			</if>
+			<if test="limitState != null">
+				#{limitState,jdbcType=INTEGER},
+			</if>
+			<if test="isFinished != null">
+				#{isFinished,jdbcType=BIT},
+			</if>
+			<if test="startTime != null">
+				#{startTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null">
+				#{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditCode != null">
+				#{auditCode,jdbcType=VARCHAR},
+			</if>
+			<if test="redit != null">
+				#{redit,jdbcType=INTEGER},
+			</if>
+			<if test="createdate != null">
+				#{createdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedate != null">
+				#{updatedate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="entity.dismember.DisCredit">
+		update t_dis_credit
+		<set>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="creditLimit != null">
+				credit_limit = #{creditLimit,jdbcType=NUMERIC},
+			</if>
+			<if test="usedAmount != null">
+				used_amount = #{usedAmount,jdbcType=NUMERIC},
+			</if>
+			<if test="createuser != null">
+				createuser = #{createuser,jdbcType=VARCHAR},
+			</if>
+			<if test="limitState != null">
+				limit_state = #{limitState,jdbcType=INTEGER},
+			</if>
+			<if test="isFinished != null">
+				is_finished = #{isFinished,jdbcType=BIT},
+			</if>
+			<if test="startTime != null">
+				start_time = #{startTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditCode != null">
+				audit_code = #{auditCode,jdbcType=VARCHAR},
+			</if>
+			<if test="redit != null">
+				redit = #{redit,jdbcType=INTEGER},
+			</if>
+			<if test="createdate != null">
+				createdate = #{createdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedate != null">
+				updatedate = #{updatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isActivated != null">
+				is_activated = #{isActivated,jdbcType=BIT}
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateStatusForOverDate">
+		UPDATE t_dis_credit
+		<set>
+			limit_state = 3
+		</set>
+		where end_time <![CDATA[<]]>
+		now() and redit = 1
+	</update>
+	<update id="updatestatusForisFinshed">
+		update t_dis_credit
+		<set>
+			is_finished = true
+		</set>
+		where end_time <![CDATA[<]]>
+		now() and redit = 1 and used_amount = 0 and is_finished = FALSE
+	</update>
+	<update id="updateByPrimaryKey" parameterType="entity.dismember.DisCredit">
+		update t_dis_credit
+		set email = #{email,jdbcType=VARCHAR},
+		credit_limit = #{creditLimit,jdbcType=NUMERIC},
+		used_amount = #{usedAmount,jdbcType=NUMERIC},
+		createuser = #{createuser,jdbcType=VARCHAR},
+		limit_state = #{limitState,jdbcType=INTEGER},
+		is_finished = #{isFinished,jdbcType=BIT},
+		start_time = #{startTime,jdbcType=TIMESTAMP},
+		end_time = #{endTime,jdbcType=TIMESTAMP},
+		audit_code = #{auditCode,jdbcType=VARCHAR},
+		redit = #{redit,jdbcType=INTEGER},
+		updatedate = #{updatedate,jdbcType=TIMESTAMP},
+		createdate = #{createdate,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<select id="getDisCredit" resultMap="BaseResultMap"
+		parameterType="java.util.List">
+		select
+		<include refid="Base_Column_List" />
+		from t_dis_credit
+		where is_finished = 'false'
+		<if test="credit.redit != null">
+			and redit = #{credit.redit,jdbcType=INTEGER}
+		</if>
+		<if test="credit.isActivated != null">
+			and is_activated = #{credit.isActivated,jdbcType=BIT}
+		</if>
+		<if test="credit.redit != null and credit.redit == 1 and optype == null">
+			and (start_time <![CDATA[<=]]>
+			now() and end_time <![CDATA[>=]]>
+			now()) and limit_state != 3
+		</if>
+		<if test="credit.email != null">and email = #{credit.email,jdbcType=VARCHAR}</if>
+		order by createdate desc limit 1 offset 0
+	</select>
+	<update id="updateCredit" parameterType="entity.dismember.DisCredit">
+		update t_dis_credit
+		<set>
+			<if test="usedAmount != null">
+				used_amount = #{usedAmount,jdbcType=NUMERIC},
+			</if>
+			<if test="limitState != null">
+				limit_state = #{limitState,jdbcType=INTEGER},
+			</if>
+			<if test="isFinished != null">
+				is_finished = #{isFinished,jdbcType=BIT},
+			</if>
+			<if test="auditCode != null">
+				audit_code = #{auditCode,jdbcType=VARCHAR},
+			</if>
+			updatedate = now()
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="getDisCreditInfo" resultMap="BaseResultMap"
+		parameterType="String">
+		select
+		sum(credit_limit) as totalCreditLimit,
+		sum(used_amount) as totalUsedAmount
+		from t_dis_credit
+		where is_finished = 'false' and limit_state != 3 and is_activated = true
+		<if test="email != null">and email = #{email,jdbcType=VARCHAR}</if>
+	</select>
+</mapper>

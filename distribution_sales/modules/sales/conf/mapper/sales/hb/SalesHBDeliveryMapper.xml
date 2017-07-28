@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.hb.SalesHBDeliveryMapper" >
+  <resultMap id="BaseResultMap" type="entity.sales.hb.SalesHBDelivery" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sales_hb_no" property="salesHbNo" jdbcType="VARCHAR" />
+    <result column="total_amount_postage_inclusive" property="totalAmountPostageInclusive" jdbcType="DOUBLE" />
+    <result column="total_bbc_postage" property="totalBbcPostage" jdbcType="DOUBLE" />
+    <result column="original_total_bbc_postage" property="originalTotalBbcPostage" jdbcType="DOUBLE" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="qties" property="qties" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="consumer_type" property="consumerType" jdbcType="INTEGER" />
+    <result column="distribution_mode" property="distributionMode" jdbcType="INTEGER" />
+    <result column="salesman" property="salesman" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="logistics_information" property="logisticsInformation" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_user" property="lastUpdateUser" jdbcType="VARCHAR" />
+    <result column="is_need_invoice" property="isNeedInvoice" jdbcType="BIT" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, sales_hb_no, total_amount_postage_inclusive, total_bbc_postage, original_total_bbc_postage, 
+    account, warehouse_id, 
+    warehouse_name, qties, status, consumer_type, distribution_mode, salesman, nick_name, receiver, 
+    telephone, address, logistics_information, create_time, create_user, last_update_time, last_update_user,
+    is_need_invoice
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sales_hb_delivery
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByHbNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sales_hb_delivery
+    where sales_hb_no = #{salesHbNo}
+  </select>
+  
+  <sql id="PAGE_QUERY_CONDITIONS">
+  	<where>
+  		<if test="status!=null">
+  			status = #{status}
+  		</if>
+  		<if test="consumerType!=null">
+  			and consumer_type = #{consumerType}
+  		</if>
+  		<if test="distributionMode!=null">
+  			and distribution_mode = #{distributionMode}
+  		</if>
+  		<if test="warehouseId!=null">
+  			and warehouse_id = #{warehouseId}
+  		</if>
+  		<if test="combinedStartTime!=null">
+  			<![CDATA[and date_trunc('day', create_time)  >= to_timestamp(#{combinedStartTime}, 'yyyy-MM-dd')]]>
+  		</if>
+  		<if test="combinedEndTime!=null">
+  			<![CDATA[and date_trunc('day', create_time)  <= to_timestamp(#{combinedEndTime}, 'yyyy-MM-dd')]]>
+  		</if>
+  		<if test="searchText!=null and searchText!=''">
+  			<![CDATA[
+  				and (lower(sales_hb_no) like lower('%'||#{searchText,jdbcType=VARCHAR}||'%')
+			      or lower(create_user) like lower('%'||#{searchText,jdbcType=VARCHAR}||'%') 
+			      or lower(account) like lower('%'||#{searchText,jdbcType=VARCHAR}||'%') 
+			      or lower(salesman) like lower('%'||#{searchText,jdbcType=VARCHAR}||'%')
+			    )
+  			]]>
+  		</if>
+  	</where>
+  </sql>
+  <select id="selectCountByQueryParam" resultType="java.lang.Integer" parameterType="dto.sales.hb.CombinedSalesPageQueryParam">
+  	select count(*)
+  	from t_sales_hb_delivery
+  	<include refid="PAGE_QUERY_CONDITIONS"/>
+  </select>
+  <select id="selectByQueryParam" resultMap="BaseResultMap" parameterType="dto.sales.hb.CombinedSalesPageQueryParam">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_sales_hb_delivery
+  	<include refid="PAGE_QUERY_CONDITIONS"/>
+  	order by
+	<choose>
+		<when test="sidx != null and sidx != '' and sord != null and sord != ''">
+		   ${sidx} ${sord} nulls last
+		</when>
+		<otherwise>
+			create_time desc
+		</otherwise>
+	</choose>
+  	<if test="currPage!=null and pageSize!=null">
+  		LIMIT #{pageSize} OFFSET (#{currPage}-1)*#{pageSize}
+  	</if>
+  </select>
+  
+  <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="entity.sales.hb.SalesHBDelivery" >
+    insert into t_sales_hb_delivery (sales_hb_no, total_amount_postage_inclusive, total_bbc_postage, 
+      original_total_bbc_postage, account, warehouse_id, warehouse_name, qties, status, consumer_type, 
+      distribution_mode, salesman, nick_name, receiver, telephone, address, 
+      logistics_information, create_time, create_user
+      )
+    values (#{salesHbNo,jdbcType=VARCHAR}, #{totalAmountPostageInclusive}, 
+      #{totalBbcPostage,jdbcType=DOUBLE}, #{originalTotalBbcPostage},
+      #{account,jdbcType=VARCHAR}, #{warehouseId,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR}, 
+      #{qties,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{consumerType,jdbcType=INTEGER}, 
+      #{distributionMode,jdbcType=INTEGER}, #{salesman,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{receiver,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{logisticsInformation,jdbcType=VARCHAR}, now(), #{createUser,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <insert id="insertSelective" keyProperty="id" useGeneratedKeys="true" parameterType="entity.sales.hb.SalesHBDelivery" >
+    insert into t_sales_hb_delivery
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="salesHbNo != null" >
+        sales_hb_no,
+      </if>
+      <if test="totalAmountPostageInclusive != null" >
+        total_amount_postage_inclusive,
+      </if>
+      <if test="totalBbcPostage != null" >
+        total_bbc_postage,
+      </if>
+      <if test="originalTotalBbcPostage != null" >
+        original_total_bbc_postage,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="qties != null" >
+        qties,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="consumerType != null" >
+        consumer_type,
+      </if>
+      <if test="distributionMode != null" >
+        distribution_mode,
+      </if>
+      <if test="salesman != null" >
+        salesman,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="receiver != null" >
+        receiver,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="logisticsInformation != null" >
+        logistics_information,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="isNeedInvoice != null" >
+        is_need_invoice,
+      </if>
+      create_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="salesHbNo != null" >
+        #{salesHbNo,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmountPostageInclusive != null" >
+        #{totalAmountPostageInclusive,jdbcType=DOUBLE},
+      </if>
+      <if test="totalBbcPostage != null" >
+        #{totalBbcPostage,jdbcType=DOUBLE},
+      </if>
+      <if test="originalTotalBbcPostage != null" >
+        #{originalTotalBbcPostage},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="qties != null" >
+        #{qties,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="consumerType != null" >
+        #{consumerType,jdbcType=INTEGER},
+      </if>
+      <if test="distributionMode != null" >
+        #{distributionMode,jdbcType=INTEGER},
+      </if>
+      <if test="salesman != null" >
+        #{salesman,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null" >
+        #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsInformation != null" >
+        #{logisticsInformation,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="isNeedInvoice != null" >
+        #{isNeedInvoice,jdbcType=BIT},
+      </if>
+      now()
+    </trim>
+  </insert>
+  
+  <update id="updateById" parameterType="entity.sales.hb.SalesHBDelivery">
+	update t_sales_hb_delivery
+	<set>
+		<trim suffixOverrides=",">
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="lastUpdateUser != null">
+				last_update_user = #{lastUpdateUser},
+				last_update_time = now(),
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				telephone = #{telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="receiver != null">
+				receiver = #{receiver,jdbcType=VARCHAR},
+			</if>
+			<if test="isNeedInvoice != null">
+				is_need_invoice = #{isNeedInvoice,jdbcType=BIT},
+			</if>
+		</trim>
+	</set>
+	<where>
+		<if test="id!=null">
+			id = #{id}
+		</if>
+	</where>
+</update>
+  
+</mapper>

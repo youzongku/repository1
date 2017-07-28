@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.contract.ContractCostTypeMapper" >
+  <resultMap id="BaseResultMap" type="entity.contract.ContractCostType" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="formula" property="formula" jdbcType="VARCHAR" />
+    <result column="formula_desc" property="formulaDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type, formula, formula_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_contract_cost_type
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="select" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_contract_cost_type
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_contract_cost_type
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.contract.ContractCostType" >
+    insert into t_contract_cost_type (id, type, formula, 
+      formula_desc)
+    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{formula,jdbcType=VARCHAR}, 
+      #{formulaDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.contract.ContractCostType" >
+    insert into t_contract_cost_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="formula != null" >
+        formula,
+      </if>
+      <if test="formulaDesc != null" >
+        formula_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="formula != null" >
+        #{formula,jdbcType=VARCHAR},
+      </if>
+      <if test="formulaDesc != null" >
+        #{formulaDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.contract.ContractCostType" >
+    update t_contract_cost_type
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="formula != null" >
+        formula = #{formula,jdbcType=VARCHAR},
+      </if>
+      <if test="formulaDesc != null" >
+        formula_desc = #{formulaDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.contract.ContractCostType" >
+    update t_contract_cost_type
+    set type = #{type,jdbcType=VARCHAR},
+      formula = #{formula,jdbcType=VARCHAR},
+      formula_desc = #{formulaDesc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

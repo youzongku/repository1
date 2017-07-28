@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.ShAttachmentMapper" >
+  <resultMap id="BaseResultMap" type="entity.sales.ShAttachment" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="sh_order_id" property="shOrderId" jdbcType="INTEGER" />
+    <result column="attachment_name" property="attachmentName" jdbcType="VARCHAR" />
+    <result column="attachment_path" property="attachmentPath" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, sh_order_id, attachment_name,attachment_path, create_time
+  </sql>
+
+  <insert id="insert" parameterType="entity.sales.ShAttachment" >
+    insert into public.t_sh_attachment (id, sh_order_id, attachment_name,
+      attachment_path, create_time)
+    values (#{id,jdbcType=INTEGER}, #{shOrderId,jdbcType=INTEGER}, #{attachmentName,jdbcType=VARCHAR}, 
+      #{attachmentPath,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.sales.ShAttachment" >
+    insert into public.t_sh_attachment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="shOrderId != null" >
+        sh_order_id,
+      </if>
+      <if test="attachmentName != null" >
+        attachment_name,
+      </if>
+      <if test="attachmentPath != null" >
+        attachment_path,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shOrderId != null" >
+        #{shOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="attachmentName != null" >
+        #{attachmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="attachmentPath != null" >
+        #{attachmentPath,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getShAttachmentListByShOrderId" parameterType="int" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    t_sh_attachment
+    where sh_order_id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getImg" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select attachment_path from t_sh_attachment where id = #{id}
+  </select>
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.promotion.PromotionActivityDisModeMapper" >
+  <resultMap id="BaseResultMap" type="entity.marketing.promotion.PromotionActivityDisMode" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pro_act_id" property="proActId" jdbcType="INTEGER" />
+    <result column="dis_mode_id" property="disModeId" jdbcType="INTEGER" />
+    <result column="dis_mode_name" property="disModeName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pro_act_id, dis_mode_id, dis_mode_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_pro_act_dis_mode
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByProActId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_pro_act_dis_mode
+    where pro_act_id = #{proActId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_pro_act_dis_mode
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByProActId" parameterType="java.lang.Integer" >
+    delete from t_pro_act_dis_mode
+    where pro_act_id = #{proActId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="entity.marketing.promotion.PromotionActivityDisMode" >
+    insert into t_pro_act_dis_mode (pro_act_id, dis_mode_id, 
+      dis_mode_name)
+    values (#{proActId,jdbcType=INTEGER}, #{disModeId,jdbcType=INTEGER}, 
+      #{disModeName,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="insertBatch" parameterType="entity.marketing.promotion.PromotionActivityDisMode" >
+    insert into t_pro_act_dis_mode (pro_act_id, dis_mode_id, 
+      dis_mode_name)
+    values
+    <foreach collection="list" item="item" index="index" separator="," >
+		(#{item.proActId,jdbcType=INTEGER}, #{item.disModeId,jdbcType=INTEGER}, 
+      #{item.disModeName,jdbcType=VARCHAR})
+	</foreach>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.marketing.promotion.PromotionActivityDisMode" >
+    update t_pro_act_dis_mode
+    <set >
+      <if test="proActId != null" >
+        pro_act_id = #{proActId,jdbcType=INTEGER},
+      </if>
+      <if test="disModeId != null" >
+        dis_mode_id = #{disModeId,jdbcType=INTEGER},
+      </if>
+      <if test="disModeName != null" >
+        dis_mode_name = #{disModeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

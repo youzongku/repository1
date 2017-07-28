@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.ApBillOrderMappingMapper" >
+  <resultMap id="BaseResultMap" type="entity.timer.ApBillOrderMapping" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="bill_id" property="billId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, bill_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_ap_bill_order_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_ap_bill_order_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.timer.ApBillOrderMapping" >
+    insert into t_ap_bill_order_mapping (id, order_id, bill_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{billId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.timer.ApBillOrderMapping" >
+    insert into t_ap_bill_order_mapping
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="billId != null" >
+        bill_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="billId != null" >
+        #{billId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.timer.ApBillOrderMapping" >
+    update t_ap_bill_order_mapping
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="billId != null" >
+        bill_id = #{billId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.timer.ApBillOrderMapping" >
+    update t_ap_bill_order_mapping
+    set order_id = #{orderId,jdbcType=INTEGER},
+      bill_id = #{billId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByBillId" parameterType="java.lang.Integer">
+  	delete from t_ap_bill_order_mapping where bill_id = #{billId,jdbcType=INTEGER}
+  </delete>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into t_ap_bill_order_mapping
+	  (order_id, bill_id) values
+	  <foreach collection="list" item="item" separator=",">
+		(
+		 #{item.orderId,jdbcType=INTEGER},
+		 #{item.billId,jdbcType=INTEGER}
+		)
+	  </foreach>
+  </insert>
+</mapper>

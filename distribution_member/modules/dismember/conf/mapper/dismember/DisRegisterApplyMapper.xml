@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.DisRegisterApplyMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.DisRegisterApply" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="register_man" property="registerMan" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="register_date" property="registerDate" jdbcType="TIMESTAMP" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="audit_remark" property="auditRemark" jdbcType="VARCHAR" />
+    <result column="audit_reason" property="auditReason" jdbcType="VARCHAR" />
+    <result column="is_back_register" property="isBackRegister" jdbcType="BIT" />
+    <result column="pass_word" property="passWord" jdbcType="VARCHAR" />
+    <result column="salesman_id" property="salesmanId" jdbcType="INTEGER" />
+    <result column="apply_remark" property="applyRemark" jdbcType="VARCHAR" />
+    <result column="audit_man" property="auditMan" jdbcType="VARCHAR"/>
+    <result column="register_invite_code" property="registerInviteCode" jdbcType="VARCHAR" />
+
+    <result column="province_code" property="provinceCode" jdbcType="INTEGER" />
+    <result column="city_code" property="cityCode" jdbcType="INTEGER" />
+    <result column="area_code" property="areaCode" jdbcType="INTEGER" />
+    <result column="distribution_mode" property="distributionMode" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, account, register_man, status, register_date, create_date, update_date, audit_remark, 
+    audit_reason, is_back_register, pass_word,salesman_id,apply_remark,audit_man,register_invite_code, province_code, city_code,area_code,distribution_mode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_register_apply
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_register_apply
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.DisRegisterApply" >
+    insert into t_dis_register_apply (id, account, register_man, 
+      status, register_date, create_date, 
+      update_date, audit_remark, audit_reason, 
+      is_back_register,pass_word)
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{registerMan,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{registerDate,jdbcType=TIMESTAMP}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{auditRemark,jdbcType=VARCHAR}, #{auditReason,jdbcType=VARCHAR}, 
+      #{isBackRegister,jdbcType=BIT},#{passWord,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.DisRegisterApply" useGeneratedKeys="true" keyProperty="id">
+    insert into t_dis_register_apply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="registerMan != null" >
+        register_man,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="registerDate != null" >
+        register_date,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="auditRemark != null" >
+        audit_remark,
+      </if>
+      <if test="auditReason != null" >
+        audit_reason,
+      </if>
+      <if test="isBackRegister != null" >
+        is_back_register,
+      </if>
+      <if test="passWord != null" >
+        pass_word,
+      </if>
+      <if test="salesmanId != null" >
+        salesman_id,
+      </if>
+      <if test="applyRemark != null" >
+        apply_remark,
+      </if>
+      <if test="auditMan != null" >
+        audit_man,
+      </if>
+      <if test="registerInviteCode != null" >
+        register_invite_code,
+      </if>
+
+      <if test="provinceCode != null" >
+        province_code,
+      </if>
+
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+
+      <if test="areaCode != null" >
+        area_code,
+      </if>
+
+      <if test="distributionMode != null" >
+        distribution_mode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="registerMan != null" >
+        #{registerMan,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="registerDate != null" >
+        #{registerDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditRemark != null" >
+        #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditReason != null" >
+        #{auditReason,jdbcType=VARCHAR},
+      </if>
+      <if test="isBackRegister != null" >
+        #{isBackRegister,jdbcType=BIT},
+      </if>
+      <if test="passWord != null" >
+        #{passWord,jdbcType=VARCHAR},
+      </if>
+       <if test="salesmanId != null" >
+        #{salesmanId,jdbcType=INTEGER},
+      </if>
+      <if test="applyRemark != null" >
+        #{applyRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditMan != null" >
+        #{auditMan,jdbcType=VARCHAR},
+      </if>
+      <if test="registerInviteCode != null" >
+        #{registerInviteCode,jdbcType=VARCHAR},
+      </if>
+
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=INTEGER},
+      </if>
+
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=INTEGER},
+      </if>
+
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=INTEGER},
+      </if>
+
+      <if test="distributionMode != null" >
+        #{distributionMode,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.DisRegisterApply" >
+    update t_dis_register_apply
+    <set >
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="registerMan != null" >
+        register_man = #{registerMan,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="registerDate != null" >
+        register_date = #{registerDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditRemark != null" >
+        audit_remark = #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditReason != null" >
+        audit_reason = #{auditReason,jdbcType=VARCHAR},
+      </if>
+      <if test="isBackRegister != null" >
+        is_back_register = #{isBackRegister,jdbcType=BIT},
+      </if>
+      <if test="passWord != null" >
+        pass_word = #{passWord,jdbcType=VARCHAR},
+      </if>
+      <if test="salesmanId != null" >
+        salesman_id = #{salesmanId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyRemark != null" >
+        apply_remark = #{applyRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditMan != null" >
+        audit_man = #{auditMan,jdbcType=VARCHAR},
+      </if>
+      <if test="registerInviteCode != null" >
+        register_invite_code = #{registerInviteCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.DisRegisterApply" >
+    update t_dis_register_apply
+    set account = #{account,jdbcType=VARCHAR},
+      register_man = #{registerMan,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      register_date = #{registerDate,jdbcType=TIMESTAMP},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      audit_remark = #{auditRemark,jdbcType=VARCHAR},
+      audit_reason = #{auditReason,jdbcType=VARCHAR},
+      is_back_register = #{isBackRegister,jdbcType=BIT},
+      pass_word = #{passWord,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getApplysByConditon" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_register_apply
+    where 1=1 
+    <if test="account != null">
+		and account = #{account,jdbcType=VARCHAR}
+	</if>
+    <if test="isbackRegister != null">
+		and is_back_register = #{isbackRegister,jdbcType=BIT}
+	</if>
+	<if test="passWord != null">
+		and pass_word = #{passWord,jdbcType=INTEGER}
+	</if>
+	<if test="status != null">
+	    <if test="status == -1">
+			and status in (0,2)
+		</if>
+		<if test="status != -1">
+			and status = #{status,jdbcType=INTEGER}
+		</if>
+	</if>
+	<if test="search != null and search != '' ">
+		and (
+			lower(account) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(register_man) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+		)
+	</if>
+	<if test="sregdate != null and sregdate != '' ">
+        <![CDATA[and register_date >= to_date(''||#{sregdate}||'','yyyy-mm-dd')]]>
+	</if>
+	<if test="eregdate != null and eregdate != '' ">
+        <![CDATA[and register_date < to_date(''||#{eregdate}||'','yyyy-mm-dd')]]>
+	</if>
+	<if test="sapplydate != null and sapplydate != '' ">
+        <![CDATA[and create_date >= to_date(''||#{sapplydate}||'','yyyy-mm-dd')]]>
+	</if>
+	<if test="eapplydate != null and eapplydate != '' ">
+        <![CDATA[and create_date < to_date(''||#{eapplydate}||'','yyyy-mm-dd')]]>
+	</if>
+	<choose>
+			<when test="sidx != null and sidx != '' and sord != null and sord != ''">
+				order by ${sidx} ${sord} nulls last
+			</when>
+			<otherwise>
+				order by create_date DESC
+			</otherwise>
+	</choose>
+		
+	<if test="pageSize != null">
+		limit #{pageSize,jdbcType=INTEGER} offset (#{currPage,jdbcType=INTEGER} -1) * #{pageSize,jdbcType=INTEGER}
+	</if>
+  </select>
+   <select id="getCountByConditon" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    select 
+    count(*)
+    from t_dis_register_apply
+    where 1=1 
+    <if test="isbackRegister != null">
+		and is_back_register = #{isbackRegister,jdbcType=BIT}
+	</if>
+	<if test="status != null">
+		and status = #{status,jdbcType=INTEGER}
+	</if>
+	<if test="search != null and search != '' ">
+		and (
+			lower(account) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			or lower(register_man) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+		)
+	</if>
+	<if test="sregdate != null and sregdate != '' ">
+        <![CDATA[and create_date >= to_date(''||#{sregdate}||'','yyyy-mm-dd')]]>
+	</if>
+	<if test="eregdate != null and eregdate != '' ">
+        <![CDATA[and create_date < to_date(''||#{eregdate}||'','yyyy-mm-dd')]]>
+	</if>
+	<if test="sapplydate != null and sapplydate != '' ">
+        <![CDATA[and register_date >= to_date(''||#{sapplydate}||'','yyyy-mm-dd')]]>
+	</if>
+	<if test="eapplydate != null and eapplydate != '' ">
+        <![CDATA[and register_date < to_date(''||#{eapplydate}||'','yyyy-mm-dd')]]>
+	</if>
+  </select>
+</mapper>

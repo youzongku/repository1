@@ -1,0 +1,57 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<h1>销售发货<span>---</span><span>库存调拨</span></h1>
+<ul class="search_category">
+	<li>下单时间：
+		<input type="week">至
+		<input type="week">
+	</li>
+	<li>通知发货时间：
+		<input type="week">至
+		<input type="week">
+	</li>
+	<li>
+		<div class="search">
+			<input id="searchInput" class="searchInput" placeholder="订单编号/分销商" style="width: 180px;">
+			<input class="searchButton" value="搜索" type="submit">
+		</div>
+	</li>
+</ul>
+
+<div class="content_list">
+	<ul class="list_title">
+		<li class="save_num">订单编号</li>
+		<li class="save_time">下单时间</li>
+		<li class="save_user">分销商</li>
+		<li class="save_about">相关操作</li>
+	</ul>
+	<div class="clear"></div>
+	<div class="list_content">
+		<ul class="list_message">
+			<li class="save_num">XS-00000001</li>
+			<li class="save_time">2015-12-2 15：56</li>
+			<li class="save_user">user</li>
+			<li class="save_about">库存调拨</li>
+		</ul>
+		<p>共1000记录，每页显示
+			<select>
+				<option value="selected">10</option>
+				<option value="">30</option>
+				<option value="">50</option>
+			</select>
+			，共100页
+		</p>
+	</div>
+
+	<div class="page">
+		<span class=" change_page" id="prev">首页</span>
+		<span id="current">1</span>
+		<span>2</span>
+		<span>3</span>
+		<span>4</span>
+		<span>5</span>
+		<span class="change_page" id="last">末页</span>
+		<div>第
+			<input class="">页</div>
+		<span class="change_page" id="turn">跳转</span>
+	</div>
+</div>

@@ -1,0 +1,97 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<h1>用户管理<span>---</span><span>后台用户</span></h1>
+<ul class="search_category">
+    <li>
+        <select id="selectRole">
+            <option value="0" selected>所有角色</option>
+        </select>
+    </li>
+    <li>
+        <input type="text" onkeyup="enter_keyUp(event,this, searchUser)" id="searchInput" class="input-s" placeholder="用户名/工号">
+        <input id="searchButton"  class="searchButton" value="搜索" type="button">
+    </li>
+    <li>
+        <div class="search">
+            <button class="add-user" onclick="adminmessage()">添加账户</button>
+        </div>
+    </li>
+</ul>
+
+<div class="content_list">
+    <table id="user_table">
+      <!--  <thead>
+        <tr>
+            <th>序号</th>
+            <th >用户名</th>
+            <th >工号</th>
+            <th >权限</th>
+            <th >电话</th>
+            <th >创建人</th>
+            <th >是否有附加权限</th>
+            <th >重置密码</th>
+            <th>修改用户信息</th>
+            <th >删除</th>
+        </tr>
+        </thead>
+        <tbody id="admin_listContent">
+
+        </tbody>-->
+    </table>
+   <!-- <div class="clear"></div>
+    <div class="list_content">
+        <p>共<span id="count" style="display: inline-block; color: #55ccc8;">0</span>条记录，每页显示
+			<select>
+				<option value="10">10</option>
+				<option value="20" selected="selected">20</option>
+				<option value="30">30</option>
+				<option value="50">50</option>
+			</select>
+			，共<span id="page_count" style="display: inline-block; color: #55ccc8;">0</span>页
+		</p>
+	</div>-->
+	<div id="user_pagination"></div>
+</div>
+
+<!--修改用户信息-->
+<div class="user-information" style="display: none;">
+    <div class="user-information-box">
+        <form id="userForm" onsubmit="return false;">
+            <input id="hideData" name="id" type="hidden" value="">
+            <ul class="edit-pop-list">
+                <li>
+                    <span>用户名：</span>
+                    <d class="red">*</d>
+                    <input tag="must" name="email" type="text">
+                </li>
+                <li>
+                    <span>工号：</span>
+                    <d class="red">*</d>
+                    <input tag="must" name="workNo" type="text">
+                </li>
+                <li>
+                    <span>电话：</span>
+                    <d class="red">*</d>
+                    <input name="telphone" type="text">
+                </li>
+                <li>
+                    <span>用户角色：</span>
+                    <d class="red">*</d>
+                    <ul class="userset">
+                    </ul>
+                </li>
+                <li>
+                    <span>是否有附加权限：</span>
+                    <d class="red">*</d>
+                    <div id="user_Jurisdiction" class="user_Jurisdiction">
+                        <label><input type="radio" name="addUserGetMenu" value="1">是</label>
+                        <label><input type="radio" name="addUserGetMenu" value="2" checked="true">否</label>
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <div class="Jurisdiction_panel">
+        <ul id="menuTree" class="ztree">
+        </ul>
+    </div>
+</div>

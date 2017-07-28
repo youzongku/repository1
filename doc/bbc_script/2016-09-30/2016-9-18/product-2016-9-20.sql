@@ -1,0 +1,2 @@
+UPDATE t_product_price_category_brand set status = 'f';
+update t_product_price_rule set field_name = 'arriveWarePrice' where price_classification in ('floorPrice','proposalRetailPrice','disCompanyCost','marketInterventionPrice');

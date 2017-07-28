@@ -1,0 +1,947 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product_inventory.ProductBaseMapper" >
+  <resultMap id="BaseResultMap" type="entity.product_inventory.ProductBase" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+    <result column="csku" property="csku" jdbcType="VARCHAR" />
+    <result column="istatus" property="istatus" jdbcType="INTEGER" />
+    <result column="dnewformdate" property="dnewformdate" jdbcType="TIMESTAMP" />
+    <result column="dnewtodate" property="dnewtodate" jdbcType="TIMESTAMP" />
+    <result column="bspecial" property="bspecial" jdbcType="BIT" />
+    <result column="cvideoaddress" property="cvideoaddress" jdbcType="VARCHAR" />
+    <result column="iqty" property="iqty" jdbcType="INTEGER" />
+    <result column="fprice" property="fprice" jdbcType="DOUBLE" />
+    <result column="fcostprice" property="fcostprice" jdbcType="DOUBLE" />
+    <result column="fweight" property="fweight" jdbcType="DOUBLE" />
+    <result column="bmultiattribute" property="bmultiattribute" jdbcType="BIT" />
+    <result column="cparentsku" property="cparentsku" jdbcType="VARCHAR" />
+    <result column="bvisible" property="bvisible" jdbcType="BIT" />
+    <result column="bpulish" property="bpulish" jdbcType="BIT" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+    <result column="ffreight" property="ffreight" jdbcType="DOUBLE" />
+    <result column="bmain" property="bmain" jdbcType="BIT" />
+    <result column="bactivity" property="bactivity" jdbcType="BIT" />
+    <result column="saleprice" property="saleprice" jdbcType="DOUBLE" />
+    <result column="tariff" property="tariff" jdbcType="DOUBLE" />
+    <result column="carriage" property="carriage" jdbcType="DOUBLE" />
+    <result column="local_ref_price" property="localRefPrice" jdbcType="DOUBLE" />
+    <result column="product_type" property="productType" jdbcType="VARCHAR" />
+    <result column="distprice" property="distprice" jdbcType="DOUBLE" />
+    <result column="dis_profit_rate" property="disProfitRate" jdbcType="DOUBLE" />
+    <result column="re_profit_rate" property="reProfitRate" jdbcType="DOUBLE" />
+    <result column="dis_profit" property="disProfit" jdbcType="DOUBLE" />
+    <result column="re_profit" property="reProfit" jdbcType="DOUBLE" />
+    <result column="dis_vat" property="disVat" jdbcType="DOUBLE" />
+    <result column="re_vat" property="reVat" jdbcType="DOUBLE" />
+    <result column="dis_stock_fee" property="disStockFee" jdbcType="DOUBLE" />
+    <result column="re_stock_fee" property="reStockFee" jdbcType="DOUBLE" />
+    <result column="dis_shipping_type" property="disShippingType" jdbcType="VARCHAR" />
+    <result column="re_shipping_type" property="reShippingType" jdbcType="VARCHAR" />
+    <result column="dis_other_cost" property="disOtherCost" jdbcType="DOUBLE" />
+    <result column="re_other_cost" property="reOtherCost" jdbcType="DOUBLE" />
+    <result column="dis_total_cost" property="disTotalCost" jdbcType="DOUBLE" />
+    <result column="re_total_cost" property="reTotalCost" jdbcType="DOUBLE" />
+    <result column="dis_transfer_fee" property="disTransferFee" jdbcType="DOUBLE" />
+    <result column="re_transfer_fee" property="reTransferFee" jdbcType="DOUBLE" />
+    <result column="batch_number" property="batchNumber" jdbcType="INTEGER" />
+    <result column="postal_rate" property="postalRate" jdbcType="DOUBLE" />
+    <result column="platform_fee" property="platformFee" jdbcType="DOUBLE" />
+    <result column="postal_fee" property="postalFee" jdbcType="DOUBLE" />
+    <result column="import_tar" property="importTar" jdbcType="DOUBLE" />
+    <result column="gst" property="gst" jdbcType="DOUBLE" />
+    <result column="vat" property="vat" jdbcType="DOUBLE" />
+    <result column="pack_qty" property="packQty" jdbcType="INTEGER" />
+    <result column="product_enterprise" property="productEnterprise" jdbcType="VARCHAR" />
+    <result column="component_content" property="componentContent" jdbcType="VARCHAR" />
+    <result column="expiration_days" property="expirationDays" jdbcType="INTEGER" />
+    <result column="package_type" property="packageType" jdbcType="VARCHAR" />
+    <result column="origin_country" property="originCountry" jdbcType="VARCHAR" />
+    <result column="plug_type" property="plugType" jdbcType="VARCHAR" />
+    <result column="inter_bar_code" property="interBarCode" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="list_fee" property="listFee" jdbcType="DOUBLE" />
+    <result column="pay_fee" property="payFee" jdbcType="DOUBLE" />
+    <result column="insurance" property="insurance" jdbcType="DOUBLE" />
+    <result column="dis_list_fee" property="disListFee" jdbcType="DOUBLE" />
+    <result column="dis_trade_fee" property="disTradeFee" jdbcType="DOUBLE" />
+    <result column="dis_pay_fee" property="disPayFee" jdbcType="DOUBLE" />
+    <result column="dis_postal_fee" property="disPostalFee" jdbcType="DOUBLE" />
+    <result column="dis_import_tar" property="disImportTar" jdbcType="DOUBLE" />
+    <result column="dis_gst" property="disGst" jdbcType="DOUBLE" />
+    <result column="dis_insurance" property="disInsurance" jdbcType="DOUBLE" />
+    <result column="dis_total_vat" property="disTotalVat" jdbcType="DOUBLE" />
+    <result column="bbc_visible" property="bbcVisible" jdbcType="BIT" />
+    <result column="ordinary_msite_visible" property="ordinaryMsiteVisible" jdbcType="BIT" />
+    <result column="brand_msite_visible" property="brandMsiteVisible" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, clistingid, iwebsiteid, csku, istatus, dnewformdate, dnewtodate, bspecial, cvideoaddress, 
+    iqty, fprice, fcostprice, fweight, bmultiattribute, cparentsku, bvisible, bpulish, 
+    ccreateuser, dcreatedate, ffreight, bmain, bactivity, saleprice, tariff, carriage, 
+    local_ref_price, product_type, distprice, dis_profit_rate, re_profit_rate, dis_profit, 
+    re_profit, dis_vat, re_vat, dis_stock_fee, re_stock_fee, dis_shipping_type, re_shipping_type, 
+    dis_other_cost, re_other_cost, dis_total_cost, re_total_cost, dis_transfer_fee, re_transfer_fee, 
+    batch_number, postal_rate, platform_fee, postal_fee, import_tar, gst, vat, pack_qty, 
+    product_enterprise, component_content, expiration_days, package_type, origin_country, 
+    plug_type, inter_bar_code, brand, list_fee, pay_fee, insurance, dis_list_fee, dis_trade_fee, 
+    dis_pay_fee, dis_postal_fee, dis_import_tar, dis_gst, dis_insurance, dis_total_vat, 
+    bbc_visible, ordinary_msite_visible, brand_msite_visible
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_base
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_base
+    where istatus = #{status,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getProductsInSalesBySku" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_product_base
+    <where>
+    	<if test="sku !=null">
+    		and csku=#{sku,jdbcType=VARCHAR}
+    	</if>
+    </where>
+    
+  </select>
+  
+  <select id="getProductTitle" resultType="java.lang.String" parameterType="java.lang.String" >
+    SELECT
+		pt.ctitle
+	FROM
+		t_product_base pb
+	LEFT JOIN t_product_translate pt ON pb.csku = pt.csku
+	WHERE
+		pb.csku = #{sku,jdbcType=VARCHAR}
+  </select>
+  <select id="getCategoryBySku" resultType="java.lang.Integer" parameterType="java.lang.String">
+	   	SELECT
+		C.icategory
+		FROM
+			t_product_category_mapper C
+		WHERE
+		C.csku = #{sku,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_product_base
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product_inventory.ProductBase" >
+    insert into t_product_base (iid, clistingid, iwebsiteid, 
+      csku, istatus, dnewformdate, 
+      dnewtodate, bspecial, cvideoaddress, 
+      iqty, fprice, fcostprice, 
+      fweight, bmultiattribute, cparentsku, 
+      bvisible, bpulish, ccreateuser, 
+      dcreatedate, ffreight, bmain, 
+      bactivity, saleprice, tariff, 
+      carriage, local_ref_price, product_type, 
+      distprice, dis_profit_rate, re_profit_rate, 
+      dis_profit, re_profit, dis_vat, 
+      re_vat, dis_stock_fee, re_stock_fee, 
+      dis_shipping_type, re_shipping_type, dis_other_cost, 
+      re_other_cost, dis_total_cost, re_total_cost, 
+      dis_transfer_fee, re_transfer_fee, batch_number, 
+      postal_rate, platform_fee, postal_fee, 
+      import_tar, gst, vat, pack_qty, 
+      product_enterprise, component_content, expiration_days, 
+      package_type, origin_country, plug_type, 
+      inter_bar_code, brand, list_fee, 
+      pay_fee, insurance, dis_list_fee, 
+      dis_trade_fee, dis_pay_fee, dis_postal_fee, 
+      dis_import_tar, dis_gst, dis_insurance, 
+      dis_total_vat, bbc_visible, ordinary_msite_visible, 
+      brand_msite_visible)
+    values (#{iid,jdbcType=INTEGER}, #{clistingid,jdbcType=VARCHAR}, #{iwebsiteid,jdbcType=INTEGER}, 
+      #{csku,jdbcType=VARCHAR}, #{istatus,jdbcType=INTEGER}, #{dnewformdate,jdbcType=TIMESTAMP}, 
+      #{dnewtodate,jdbcType=TIMESTAMP}, #{bspecial,jdbcType=BIT}, #{cvideoaddress,jdbcType=VARCHAR}, 
+      #{iqty,jdbcType=INTEGER}, #{fprice,jdbcType=DOUBLE}, #{fcostprice,jdbcType=DOUBLE}, 
+      #{fweight,jdbcType=DOUBLE}, #{bmultiattribute,jdbcType=BIT}, #{cparentsku,jdbcType=VARCHAR}, 
+      #{bvisible,jdbcType=BIT}, #{bpulish,jdbcType=BIT}, #{ccreateuser,jdbcType=VARCHAR}, 
+      #{dcreatedate,jdbcType=TIMESTAMP}, #{ffreight,jdbcType=DOUBLE}, #{bmain,jdbcType=BIT}, 
+      #{bactivity,jdbcType=BIT}, #{saleprice,jdbcType=DOUBLE}, #{tariff,jdbcType=DOUBLE}, 
+      #{carriage,jdbcType=DOUBLE}, #{localRefPrice,jdbcType=DOUBLE}, #{productType,jdbcType=VARCHAR}, 
+      #{distprice,jdbcType=DOUBLE}, #{disProfitRate,jdbcType=DOUBLE}, #{reProfitRate,jdbcType=DOUBLE}, 
+      #{disProfit,jdbcType=DOUBLE}, #{reProfit,jdbcType=DOUBLE}, #{disVat,jdbcType=DOUBLE}, 
+      #{reVat,jdbcType=DOUBLE}, #{disStockFee,jdbcType=DOUBLE}, #{reStockFee,jdbcType=DOUBLE}, 
+      #{disShippingType,jdbcType=VARCHAR}, #{reShippingType,jdbcType=VARCHAR}, #{disOtherCost,jdbcType=DOUBLE}, 
+      #{reOtherCost,jdbcType=DOUBLE}, #{disTotalCost,jdbcType=DOUBLE}, #{reTotalCost,jdbcType=DOUBLE}, 
+      #{disTransferFee,jdbcType=DOUBLE}, #{reTransferFee,jdbcType=DOUBLE}, #{batchNumber,jdbcType=INTEGER}, 
+      #{postalRate,jdbcType=DOUBLE}, #{platformFee,jdbcType=DOUBLE}, #{postalFee,jdbcType=DOUBLE}, 
+      #{importTar,jdbcType=DOUBLE}, #{gst,jdbcType=DOUBLE}, #{vat,jdbcType=DOUBLE}, #{packQty,jdbcType=INTEGER}, 
+      #{productEnterprise,jdbcType=VARCHAR}, #{componentContent,jdbcType=VARCHAR}, #{expirationDays,jdbcType=INTEGER}, 
+      #{packageType,jdbcType=VARCHAR}, #{originCountry,jdbcType=VARCHAR}, #{plugType,jdbcType=VARCHAR}, 
+      #{interBarCode,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, #{listFee,jdbcType=DOUBLE}, 
+      #{payFee,jdbcType=DOUBLE}, #{insurance,jdbcType=DOUBLE}, #{disListFee,jdbcType=DOUBLE}, 
+      #{disTradeFee,jdbcType=DOUBLE}, #{disPayFee,jdbcType=DOUBLE}, #{disPostalFee,jdbcType=DOUBLE}, 
+      #{disImportTar,jdbcType=DOUBLE}, #{disGst,jdbcType=DOUBLE}, #{disInsurance,jdbcType=DOUBLE}, 
+      #{disTotalVat,jdbcType=DOUBLE}, #{bbcVisible,jdbcType=BIT}, #{ordinaryMsiteVisible,jdbcType=BIT}, 
+      #{brandMsiteVisible,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product_inventory.ProductBase" >
+    insert into t_product_base
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="clistingid != null" >
+        clistingid,
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid,
+      </if>
+      <if test="csku != null" >
+        csku,
+      </if>
+      <if test="istatus != null" >
+        istatus,
+      </if>
+      <if test="dnewformdate != null" >
+        dnewformdate,
+      </if>
+      <if test="dnewtodate != null" >
+        dnewtodate,
+      </if>
+      <if test="bspecial != null" >
+        bspecial,
+      </if>
+      <if test="cvideoaddress != null" >
+        cvideoaddress,
+      </if>
+      <if test="iqty != null" >
+        iqty,
+      </if>
+      <if test="fprice != null" >
+        fprice,
+      </if>
+      <if test="fcostprice != null" >
+        fcostprice,
+      </if>
+      <if test="fweight != null" >
+        fweight,
+      </if>
+      <if test="bmultiattribute != null" >
+        bmultiattribute,
+      </if>
+      <if test="cparentsku != null" >
+        cparentsku,
+      </if>
+      <if test="bvisible != null" >
+        bvisible,
+      </if>
+      <if test="bpulish != null" >
+        bpulish,
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+      <if test="ffreight != null" >
+        ffreight,
+      </if>
+      <if test="bmain != null" >
+        bmain,
+      </if>
+      <if test="bactivity != null" >
+        bactivity,
+      </if>
+      <if test="saleprice != null" >
+        saleprice,
+      </if>
+      <if test="tariff != null" >
+        tariff,
+      </if>
+      <if test="carriage != null" >
+        carriage,
+      </if>
+      <if test="localRefPrice != null" >
+        local_ref_price,
+      </if>
+      <if test="productType != null" >
+        product_type,
+      </if>
+      <if test="distprice != null" >
+        distprice,
+      </if>
+      <if test="disProfitRate != null" >
+        dis_profit_rate,
+      </if>
+      <if test="reProfitRate != null" >
+        re_profit_rate,
+      </if>
+      <if test="disProfit != null" >
+        dis_profit,
+      </if>
+      <if test="reProfit != null" >
+        re_profit,
+      </if>
+      <if test="disVat != null" >
+        dis_vat,
+      </if>
+      <if test="reVat != null" >
+        re_vat,
+      </if>
+      <if test="disStockFee != null" >
+        dis_stock_fee,
+      </if>
+      <if test="reStockFee != null" >
+        re_stock_fee,
+      </if>
+      <if test="disShippingType != null" >
+        dis_shipping_type,
+      </if>
+      <if test="reShippingType != null" >
+        re_shipping_type,
+      </if>
+      <if test="disOtherCost != null" >
+        dis_other_cost,
+      </if>
+      <if test="reOtherCost != null" >
+        re_other_cost,
+      </if>
+      <if test="disTotalCost != null" >
+        dis_total_cost,
+      </if>
+      <if test="reTotalCost != null" >
+        re_total_cost,
+      </if>
+      <if test="disTransferFee != null" >
+        dis_transfer_fee,
+      </if>
+      <if test="reTransferFee != null" >
+        re_transfer_fee,
+      </if>
+      <if test="batchNumber != null" >
+        batch_number,
+      </if>
+      <if test="postalRate != null" >
+        postal_rate,
+      </if>
+      <if test="platformFee != null" >
+        platform_fee,
+      </if>
+      <if test="postalFee != null" >
+        postal_fee,
+      </if>
+      <if test="importTar != null" >
+        import_tar,
+      </if>
+      <if test="gst != null" >
+        gst,
+      </if>
+      <if test="vat != null" >
+        vat,
+      </if>
+      <if test="packQty != null" >
+        pack_qty,
+      </if>
+      <if test="productEnterprise != null" >
+        product_enterprise,
+      </if>
+      <if test="componentContent != null" >
+        component_content,
+      </if>
+      <if test="expirationDays != null" >
+        expiration_days,
+      </if>
+      <if test="packageType != null" >
+        package_type,
+      </if>
+      <if test="originCountry != null" >
+        origin_country,
+      </if>
+      <if test="plugType != null" >
+        plug_type,
+      </if>
+      <if test="interBarCode != null" >
+        inter_bar_code,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="listFee != null" >
+        list_fee,
+      </if>
+      <if test="payFee != null" >
+        pay_fee,
+      </if>
+      <if test="insurance != null" >
+        insurance,
+      </if>
+      <if test="disListFee != null" >
+        dis_list_fee,
+      </if>
+      <if test="disTradeFee != null" >
+        dis_trade_fee,
+      </if>
+      <if test="disPayFee != null" >
+        dis_pay_fee,
+      </if>
+      <if test="disPostalFee != null" >
+        dis_postal_fee,
+      </if>
+      <if test="disImportTar != null" >
+        dis_import_tar,
+      </if>
+      <if test="disGst != null" >
+        dis_gst,
+      </if>
+      <if test="disInsurance != null" >
+        dis_insurance,
+      </if>
+      <if test="disTotalVat != null" >
+        dis_total_vat,
+      </if>
+      <if test="bbcVisible != null" >
+        bbc_visible,
+      </if>
+      <if test="ordinaryMsiteVisible != null" >
+        ordinary_msite_visible,
+      </if>
+      <if test="brandMsiteVisible != null" >
+        brand_msite_visible,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="clistingid != null" >
+        #{clistingid,jdbcType=VARCHAR},
+      </if>
+      <if test="iwebsiteid != null" >
+        #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="csku != null" >
+        #{csku,jdbcType=VARCHAR},
+      </if>
+      <if test="istatus != null" >
+        #{istatus,jdbcType=INTEGER},
+      </if>
+      <if test="dnewformdate != null" >
+        #{dnewformdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dnewtodate != null" >
+        #{dnewtodate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bspecial != null" >
+        #{bspecial,jdbcType=BIT},
+      </if>
+      <if test="cvideoaddress != null" >
+        #{cvideoaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="iqty != null" >
+        #{iqty,jdbcType=INTEGER},
+      </if>
+      <if test="fprice != null" >
+        #{fprice,jdbcType=DOUBLE},
+      </if>
+      <if test="fcostprice != null" >
+        #{fcostprice,jdbcType=DOUBLE},
+      </if>
+      <if test="fweight != null" >
+        #{fweight,jdbcType=DOUBLE},
+      </if>
+      <if test="bmultiattribute != null" >
+        #{bmultiattribute,jdbcType=BIT},
+      </if>
+      <if test="cparentsku != null" >
+        #{cparentsku,jdbcType=VARCHAR},
+      </if>
+      <if test="bvisible != null" >
+        #{bvisible,jdbcType=BIT},
+      </if>
+      <if test="bpulish != null" >
+        #{bpulish,jdbcType=BIT},
+      </if>
+      <if test="ccreateuser != null" >
+        #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ffreight != null" >
+        #{ffreight,jdbcType=DOUBLE},
+      </if>
+      <if test="bmain != null" >
+        #{bmain,jdbcType=BIT},
+      </if>
+      <if test="bactivity != null" >
+        #{bactivity,jdbcType=BIT},
+      </if>
+      <if test="saleprice != null" >
+        #{saleprice,jdbcType=DOUBLE},
+      </if>
+      <if test="tariff != null" >
+        #{tariff,jdbcType=DOUBLE},
+      </if>
+      <if test="carriage != null" >
+        #{carriage,jdbcType=DOUBLE},
+      </if>
+      <if test="localRefPrice != null" >
+        #{localRefPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="productType != null" >
+        #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="distprice != null" >
+        #{distprice,jdbcType=DOUBLE},
+      </if>
+      <if test="disProfitRate != null" >
+        #{disProfitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="reProfitRate != null" >
+        #{reProfitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="disProfit != null" >
+        #{disProfit,jdbcType=DOUBLE},
+      </if>
+      <if test="reProfit != null" >
+        #{reProfit,jdbcType=DOUBLE},
+      </if>
+      <if test="disVat != null" >
+        #{disVat,jdbcType=DOUBLE},
+      </if>
+      <if test="reVat != null" >
+        #{reVat,jdbcType=DOUBLE},
+      </if>
+      <if test="disStockFee != null" >
+        #{disStockFee,jdbcType=DOUBLE},
+      </if>
+      <if test="reStockFee != null" >
+        #{reStockFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disShippingType != null" >
+        #{disShippingType,jdbcType=VARCHAR},
+      </if>
+      <if test="reShippingType != null" >
+        #{reShippingType,jdbcType=VARCHAR},
+      </if>
+      <if test="disOtherCost != null" >
+        #{disOtherCost,jdbcType=DOUBLE},
+      </if>
+      <if test="reOtherCost != null" >
+        #{reOtherCost,jdbcType=DOUBLE},
+      </if>
+      <if test="disTotalCost != null" >
+        #{disTotalCost,jdbcType=DOUBLE},
+      </if>
+      <if test="reTotalCost != null" >
+        #{reTotalCost,jdbcType=DOUBLE},
+      </if>
+      <if test="disTransferFee != null" >
+        #{disTransferFee,jdbcType=DOUBLE},
+      </if>
+      <if test="reTransferFee != null" >
+        #{reTransferFee,jdbcType=DOUBLE},
+      </if>
+      <if test="batchNumber != null" >
+        #{batchNumber,jdbcType=INTEGER},
+      </if>
+      <if test="postalRate != null" >
+        #{postalRate,jdbcType=DOUBLE},
+      </if>
+      <if test="platformFee != null" >
+        #{platformFee,jdbcType=DOUBLE},
+      </if>
+      <if test="postalFee != null" >
+        #{postalFee,jdbcType=DOUBLE},
+      </if>
+      <if test="importTar != null" >
+        #{importTar,jdbcType=DOUBLE},
+      </if>
+      <if test="gst != null" >
+        #{gst,jdbcType=DOUBLE},
+      </if>
+      <if test="vat != null" >
+        #{vat,jdbcType=DOUBLE},
+      </if>
+      <if test="packQty != null" >
+        #{packQty,jdbcType=INTEGER},
+      </if>
+      <if test="productEnterprise != null" >
+        #{productEnterprise,jdbcType=VARCHAR},
+      </if>
+      <if test="componentContent != null" >
+        #{componentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationDays != null" >
+        #{expirationDays,jdbcType=INTEGER},
+      </if>
+      <if test="packageType != null" >
+        #{packageType,jdbcType=VARCHAR},
+      </if>
+      <if test="originCountry != null" >
+        #{originCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="plugType != null" >
+        #{plugType,jdbcType=VARCHAR},
+      </if>
+      <if test="interBarCode != null" >
+        #{interBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="listFee != null" >
+        #{listFee,jdbcType=DOUBLE},
+      </if>
+      <if test="payFee != null" >
+        #{payFee,jdbcType=DOUBLE},
+      </if>
+      <if test="insurance != null" >
+        #{insurance,jdbcType=DOUBLE},
+      </if>
+      <if test="disListFee != null" >
+        #{disListFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disTradeFee != null" >
+        #{disTradeFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disPayFee != null" >
+        #{disPayFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disPostalFee != null" >
+        #{disPostalFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disImportTar != null" >
+        #{disImportTar,jdbcType=DOUBLE},
+      </if>
+      <if test="disGst != null" >
+        #{disGst,jdbcType=DOUBLE},
+      </if>
+      <if test="disInsurance != null" >
+        #{disInsurance,jdbcType=DOUBLE},
+      </if>
+      <if test="disTotalVat != null" >
+        #{disTotalVat,jdbcType=DOUBLE},
+      </if>
+      <if test="bbcVisible != null" >
+        #{bbcVisible,jdbcType=BIT},
+      </if>
+      <if test="ordinaryMsiteVisible != null" >
+        #{ordinaryMsiteVisible,jdbcType=BIT},
+      </if>
+      <if test="brandMsiteVisible != null" >
+        #{brandMsiteVisible,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product_inventory.ProductBase" >
+    update t_product_base
+    <set >
+      <if test="clistingid != null" >
+        clistingid = #{clistingid,jdbcType=VARCHAR},
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="csku != null" >
+        csku = #{csku,jdbcType=VARCHAR},
+      </if>
+      <if test="istatus != null" >
+        istatus = #{istatus,jdbcType=INTEGER},
+      </if>
+      <if test="dnewformdate != null" >
+        dnewformdate = #{dnewformdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dnewtodate != null" >
+        dnewtodate = #{dnewtodate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bspecial != null" >
+        bspecial = #{bspecial,jdbcType=BIT},
+      </if>
+      <if test="cvideoaddress != null" >
+        cvideoaddress = #{cvideoaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="iqty != null" >
+        iqty = #{iqty,jdbcType=INTEGER},
+      </if>
+      <if test="fprice != null" >
+        fprice = #{fprice,jdbcType=DOUBLE},
+      </if>
+      <if test="fcostprice != null" >
+        fcostprice = #{fcostprice,jdbcType=DOUBLE},
+      </if>
+      <if test="fweight != null" >
+        fweight = #{fweight,jdbcType=DOUBLE},
+      </if>
+      <if test="bmultiattribute != null" >
+        bmultiattribute = #{bmultiattribute,jdbcType=BIT},
+      </if>
+      <if test="cparentsku != null" >
+        cparentsku = #{cparentsku,jdbcType=VARCHAR},
+      </if>
+      <if test="bvisible != null" >
+        bvisible = #{bvisible,jdbcType=BIT},
+      </if>
+      <if test="bpulish != null" >
+        bpulish = #{bpulish,jdbcType=BIT},
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ffreight != null" >
+        ffreight = #{ffreight,jdbcType=DOUBLE},
+      </if>
+      <if test="bmain != null" >
+        bmain = #{bmain,jdbcType=BIT},
+      </if>
+      <if test="bactivity != null" >
+        bactivity = #{bactivity,jdbcType=BIT},
+      </if>
+      <if test="saleprice != null" >
+        saleprice = #{saleprice,jdbcType=DOUBLE},
+      </if>
+      <if test="tariff != null" >
+        tariff = #{tariff,jdbcType=DOUBLE},
+      </if>
+      <if test="carriage != null" >
+        carriage = #{carriage,jdbcType=DOUBLE},
+      </if>
+      <if test="localRefPrice != null" >
+        local_ref_price = #{localRefPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="productType != null" >
+        product_type = #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="distprice != null" >
+        distprice = #{distprice,jdbcType=DOUBLE},
+      </if>
+      <if test="disProfitRate != null" >
+        dis_profit_rate = #{disProfitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="reProfitRate != null" >
+        re_profit_rate = #{reProfitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="disProfit != null" >
+        dis_profit = #{disProfit,jdbcType=DOUBLE},
+      </if>
+      <if test="reProfit != null" >
+        re_profit = #{reProfit,jdbcType=DOUBLE},
+      </if>
+      <if test="disVat != null" >
+        dis_vat = #{disVat,jdbcType=DOUBLE},
+      </if>
+      <if test="reVat != null" >
+        re_vat = #{reVat,jdbcType=DOUBLE},
+      </if>
+      <if test="disStockFee != null" >
+        dis_stock_fee = #{disStockFee,jdbcType=DOUBLE},
+      </if>
+      <if test="reStockFee != null" >
+        re_stock_fee = #{reStockFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disShippingType != null" >
+        dis_shipping_type = #{disShippingType,jdbcType=VARCHAR},
+      </if>
+      <if test="reShippingType != null" >
+        re_shipping_type = #{reShippingType,jdbcType=VARCHAR},
+      </if>
+      <if test="disOtherCost != null" >
+        dis_other_cost = #{disOtherCost,jdbcType=DOUBLE},
+      </if>
+      <if test="reOtherCost != null" >
+        re_other_cost = #{reOtherCost,jdbcType=DOUBLE},
+      </if>
+      <if test="disTotalCost != null" >
+        dis_total_cost = #{disTotalCost,jdbcType=DOUBLE},
+      </if>
+      <if test="reTotalCost != null" >
+        re_total_cost = #{reTotalCost,jdbcType=DOUBLE},
+      </if>
+      <if test="disTransferFee != null" >
+        dis_transfer_fee = #{disTransferFee,jdbcType=DOUBLE},
+      </if>
+      <if test="reTransferFee != null" >
+        re_transfer_fee = #{reTransferFee,jdbcType=DOUBLE},
+      </if>
+      <if test="batchNumber != null" >
+        batch_number = #{batchNumber,jdbcType=INTEGER},
+      </if>
+      <if test="postalRate != null" >
+        postal_rate = #{postalRate,jdbcType=DOUBLE},
+      </if>
+      <if test="platformFee != null" >
+        platform_fee = #{platformFee,jdbcType=DOUBLE},
+      </if>
+      <if test="postalFee != null" >
+        postal_fee = #{postalFee,jdbcType=DOUBLE},
+      </if>
+      <if test="importTar != null" >
+        import_tar = #{importTar,jdbcType=DOUBLE},
+      </if>
+      <if test="gst != null" >
+        gst = #{gst,jdbcType=DOUBLE},
+      </if>
+      <if test="vat != null" >
+        vat = #{vat,jdbcType=DOUBLE},
+      </if>
+      <if test="packQty != null" >
+        pack_qty = #{packQty,jdbcType=INTEGER},
+      </if>
+      <if test="productEnterprise != null" >
+        product_enterprise = #{productEnterprise,jdbcType=VARCHAR},
+      </if>
+      <if test="componentContent != null" >
+        component_content = #{componentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationDays != null" >
+        expiration_days = #{expirationDays,jdbcType=INTEGER},
+      </if>
+      <if test="packageType != null" >
+        package_type = #{packageType,jdbcType=VARCHAR},
+      </if>
+      <if test="originCountry != null" >
+        origin_country = #{originCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="plugType != null" >
+        plug_type = #{plugType,jdbcType=VARCHAR},
+      </if>
+      <if test="interBarCode != null" >
+        inter_bar_code = #{interBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="listFee != null" >
+        list_fee = #{listFee,jdbcType=DOUBLE},
+      </if>
+      <if test="payFee != null" >
+        pay_fee = #{payFee,jdbcType=DOUBLE},
+      </if>
+      <if test="insurance != null" >
+        insurance = #{insurance,jdbcType=DOUBLE},
+      </if>
+      <if test="disListFee != null" >
+        dis_list_fee = #{disListFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disTradeFee != null" >
+        dis_trade_fee = #{disTradeFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disPayFee != null" >
+        dis_pay_fee = #{disPayFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disPostalFee != null" >
+        dis_postal_fee = #{disPostalFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disImportTar != null" >
+        dis_import_tar = #{disImportTar,jdbcType=DOUBLE},
+      </if>
+      <if test="disGst != null" >
+        dis_gst = #{disGst,jdbcType=DOUBLE},
+      </if>
+      <if test="disInsurance != null" >
+        dis_insurance = #{disInsurance,jdbcType=DOUBLE},
+      </if>
+      <if test="disTotalVat != null" >
+        dis_total_vat = #{disTotalVat,jdbcType=DOUBLE},
+      </if>
+      <if test="bbcVisible != null" >
+        bbc_visible = #{bbcVisible,jdbcType=BIT},
+      </if>
+      <if test="ordinaryMsiteVisible != null" >
+        ordinary_msite_visible = #{ordinaryMsiteVisible,jdbcType=BIT},
+      </if>
+      <if test="brandMsiteVisible != null" >
+        brand_msite_visible = #{brandMsiteVisible,jdbcType=BIT},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product_inventory.ProductBase" >
+    update t_product_base
+    set clistingid = #{clistingid,jdbcType=VARCHAR},
+      iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      csku = #{csku,jdbcType=VARCHAR},
+      istatus = #{istatus,jdbcType=INTEGER},
+      dnewformdate = #{dnewformdate,jdbcType=TIMESTAMP},
+      dnewtodate = #{dnewtodate,jdbcType=TIMESTAMP},
+      bspecial = #{bspecial,jdbcType=BIT},
+      cvideoaddress = #{cvideoaddress,jdbcType=VARCHAR},
+      iqty = #{iqty,jdbcType=INTEGER},
+      fprice = #{fprice,jdbcType=DOUBLE},
+      fcostprice = #{fcostprice,jdbcType=DOUBLE},
+      fweight = #{fweight,jdbcType=DOUBLE},
+      bmultiattribute = #{bmultiattribute,jdbcType=BIT},
+      cparentsku = #{cparentsku,jdbcType=VARCHAR},
+      bvisible = #{bvisible,jdbcType=BIT},
+      bpulish = #{bpulish,jdbcType=BIT},
+      ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      ffreight = #{ffreight,jdbcType=DOUBLE},
+      bmain = #{bmain,jdbcType=BIT},
+      bactivity = #{bactivity,jdbcType=BIT},
+      saleprice = #{saleprice,jdbcType=DOUBLE},
+      tariff = #{tariff,jdbcType=DOUBLE},
+      carriage = #{carriage,jdbcType=DOUBLE},
+      local_ref_price = #{localRefPrice,jdbcType=DOUBLE},
+      product_type = #{productType,jdbcType=VARCHAR},
+      distprice = #{distprice,jdbcType=DOUBLE},
+      dis_profit_rate = #{disProfitRate,jdbcType=DOUBLE},
+      re_profit_rate = #{reProfitRate,jdbcType=DOUBLE},
+      dis_profit = #{disProfit,jdbcType=DOUBLE},
+      re_profit = #{reProfit,jdbcType=DOUBLE},
+      dis_vat = #{disVat,jdbcType=DOUBLE},
+      re_vat = #{reVat,jdbcType=DOUBLE},
+      dis_stock_fee = #{disStockFee,jdbcType=DOUBLE},
+      re_stock_fee = #{reStockFee,jdbcType=DOUBLE},
+      dis_shipping_type = #{disShippingType,jdbcType=VARCHAR},
+      re_shipping_type = #{reShippingType,jdbcType=VARCHAR},
+      dis_other_cost = #{disOtherCost,jdbcType=DOUBLE},
+      re_other_cost = #{reOtherCost,jdbcType=DOUBLE},
+      dis_total_cost = #{disTotalCost,jdbcType=DOUBLE},
+      re_total_cost = #{reTotalCost,jdbcType=DOUBLE},
+      dis_transfer_fee = #{disTransferFee,jdbcType=DOUBLE},
+      re_transfer_fee = #{reTransferFee,jdbcType=DOUBLE},
+      batch_number = #{batchNumber,jdbcType=INTEGER},
+      postal_rate = #{postalRate,jdbcType=DOUBLE},
+      platform_fee = #{platformFee,jdbcType=DOUBLE},
+      postal_fee = #{postalFee,jdbcType=DOUBLE},
+      import_tar = #{importTar,jdbcType=DOUBLE},
+      gst = #{gst,jdbcType=DOUBLE},
+      vat = #{vat,jdbcType=DOUBLE},
+      pack_qty = #{packQty,jdbcType=INTEGER},
+      product_enterprise = #{productEnterprise,jdbcType=VARCHAR},
+      component_content = #{componentContent,jdbcType=VARCHAR},
+      expiration_days = #{expirationDays,jdbcType=INTEGER},
+      package_type = #{packageType,jdbcType=VARCHAR},
+      origin_country = #{originCountry,jdbcType=VARCHAR},
+      plug_type = #{plugType,jdbcType=VARCHAR},
+      inter_bar_code = #{interBarCode,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      list_fee = #{listFee,jdbcType=DOUBLE},
+      pay_fee = #{payFee,jdbcType=DOUBLE},
+      insurance = #{insurance,jdbcType=DOUBLE},
+      dis_list_fee = #{disListFee,jdbcType=DOUBLE},
+      dis_trade_fee = #{disTradeFee,jdbcType=DOUBLE},
+      dis_pay_fee = #{disPayFee,jdbcType=DOUBLE},
+      dis_postal_fee = #{disPostalFee,jdbcType=DOUBLE},
+      dis_import_tar = #{disImportTar,jdbcType=DOUBLE},
+      dis_gst = #{disGst,jdbcType=DOUBLE},
+      dis_insurance = #{disInsurance,jdbcType=DOUBLE},
+      dis_total_vat = #{disTotalVat,jdbcType=DOUBLE},
+      bbc_visible = #{bbcVisible,jdbcType=BIT},
+      ordinary_msite_visible = #{ordinaryMsiteVisible,jdbcType=BIT},
+      brand_msite_visible = #{brandMsiteVisible,jdbcType=BIT}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

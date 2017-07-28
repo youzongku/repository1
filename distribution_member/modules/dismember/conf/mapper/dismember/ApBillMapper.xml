@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.ApBillMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.ApBill" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="total_amount" property="totalAmount" jdbcType="NUMERIC" />
+    <result column="arear_amount" property="arearAmount" jdbcType="NUMERIC" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="ap_id" property="apId" jdbcType="INTEGER" />
+    <result column="recharge_left" property="rechargeLeft" jdbcType="NUMERIC" />
+    <result column="verification_user" property="verificationUser" jdbcType="VARCHAR" />
+    <result column="verification_date" property="verificationDate" jdbcType="TIMESTAMP" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="is_charge_off" property="isChargeOff" jdbcType="BIT" />
+    <result column="is_force" property="isForce" jdbcType="BIT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, total_amount, arear_amount, account, ap_id, recharge_left, verification_user, 
+    verification_date, create_date, create_user,is_charge_off,is_force,remark
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_ap_bill
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByApId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_ap_bill
+    where ap_id = #{1,jdbcType=INTEGER}
+    limit 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_ap_bill
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.ApBill" >
+    insert into t_ap_bill (id, total_amount, arear_amount, 
+      account, ap_id, recharge_left, 
+      verification_user, verification_date, create_date, 
+      create_user)
+    values (#{id,jdbcType=INTEGER}, #{totalAmount,jdbcType=NUMERIC}, #{arearAmount,jdbcType=NUMERIC}, 
+      #{account,jdbcType=VARCHAR}, #{apId,jdbcType=INTEGER}, #{rechargeLeft,jdbcType=NUMERIC}, 
+      #{verificationUser,jdbcType=VARCHAR}, #{verificationDate,jdbcType=TIMESTAMP}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{createUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="entity.dismember.ApBill" >
+    insert into t_ap_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="totalAmount != null" >
+        total_amount,
+      </if>
+      <if test="arearAmount != null" >
+        arear_amount,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="apId != null" >
+        ap_id,
+      </if>
+      <if test="rechargeLeft != null" >
+        recharge_left,
+      </if>
+      <if test="verificationUser != null" >
+        verification_user,
+      </if>
+      <if test="verificationDate != null" >
+        verification_date,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="arearAmount != null" >
+        #{arearAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="apId != null" >
+        #{apId,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeLeft != null" >
+        #{rechargeLeft,jdbcType=NUMERIC},
+      </if>
+      <if test="verificationUser != null" >
+        #{verificationUser,jdbcType=VARCHAR},
+      </if>
+      <if test="verificationDate != null" >
+        #{verificationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.ApBill" >
+    update t_ap_bill
+    <set >
+      <if test="totalAmount != null" >
+        total_amount = #{totalAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="arearAmount != null" >
+        arear_amount = #{arearAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="apId != null" >
+        ap_id = #{apId,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeLeft != null" >
+        recharge_left = #{rechargeLeft,jdbcType=NUMERIC},
+      </if>
+      <if test="verificationUser != null" >
+        verification_user = #{verificationUser,jdbcType=VARCHAR},
+      </if>
+      <if test="verificationDate != null" >
+        verification_date = #{verificationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="isChargeOff != null" >
+        is_charge_off = #{isChargeOff,jdbcType=BIT},
+      </if>
+      <if test="isForce != null" >
+        is_force = #{isForce,jdbcType=BIT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.ApBill" >
+    update t_ap_bill
+    set total_amount = #{totalAmount,jdbcType=NUMERIC},
+      arear_amount = #{arearAmount,jdbcType=NUMERIC},
+      account = #{account,jdbcType=VARCHAR},
+      ap_id = #{apId,jdbcType=INTEGER},
+      recharge_left = #{rechargeLeft,jdbcType=NUMERIC},
+      verification_user = #{verificationUser,jdbcType=VARCHAR},
+      verification_date = #{verificationDate,jdbcType=TIMESTAMP},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

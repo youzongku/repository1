@@ -1,0 +1,133 @@
+.login-box{
+  background: $cGf3;
+  height: auto;
+  .main{
+    padding: 20px 0;
+    position: relative;
+    .login{
+      width: 428px;
+      height: 420px;
+      border: 1px solid $cGe8;
+      background: $cW;
+      position: absolute;
+      top:50%;
+      right: 0;
+      margin-top: -280px;
+      padding: 34px 60px 34px 66px;
+      @include borderBox;
+      h2{
+        font-size: $f24;
+        color: $cG3;
+        text-indent: -24px;
+        padding-bottom: 37px;
+        span{
+          font-size: $f14;
+          color: $cG59;
+          float: right;
+          padding-top: 10px;
+          a{
+            color: $cB35;
+          }
+        }
+      }
+      .login-form{
+        .inp-box{
+          @include inp;
+          margin-bottom: 20px;
+          span{
+            width: 38px;
+            background: $cGdf;
+            text-align: center;
+            display: inline-block;
+            i{
+              vertical-align: middle;
+            }
+          }
+        }
+        .forget-passw-box{
+          padding-top: 10px;
+          label{
+            color: $cG7b;
+            input{
+              vertical-align: middle;
+              margin-top: -2px;
+            }
+          }
+          a{
+            color: $cG7b;
+            float: right;
+          }
+        }
+        .btn-org-box{
+          margin-top: 42px;
+          font-size: $f0;
+          text-align: center;
+          .btn-org{
+            font-size: $f18;
+            color: $cW;
+            background: $cOrg;
+            padding: 10px 45px;
+            @include borderRadius(50px);
+          }
+        }
+      }
+      .register-form{
+        .inp-box{
+          font-size: 0;
+          margin-bottom: 20px;
+          position: relative;
+          .hotR{
+            font-size: $f14;
+            position: absolute;
+            left: -24px;
+            top: 14px;
+          }
+          input{
+            @include inp;
+            font-size: $f12;
+            margin-right: 10px;
+          }
+          img{
+            width: 100px;
+            height: 40px;
+            line-height: 40px;
+            vertical-align: middle;
+            margin-top: -8px;
+            background: $cGf4;
+            cursor: pointer;
+          }
+          .btn-code{
+            width: 100px;
+            height: 40px;
+            line-height: 40px;
+            vertical-align: middle;
+            margin-top: -8px;
+          }
+        }
+        .i-agree{
+          font-size: $f12;
+          color: $cG7b;
+          input{
+            vertical-align: middle;
+            margin-top: -2px;
+          }
+          a{
+            color: $cB35;
+          }
+        }
+        .btn-org-box{
+          font-size: $f0;
+          margin-top: 42px;
+          text-align: center;
+          .btn-org{
+            font-size: $f18;
+            color: $cW;
+            background: $cOrg;
+            padding: 10px 45px;
+            @include borderRadius(50px);
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product_inventory.ProductMicroInventoryInRecordMapper" >
+  <resultMap id="BaseResultMap" type="entity.product_inventory.ProductMicroInventoryInRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="product_title" property="productTitle" jdbcType="VARCHAR" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="qty" property="qty" jdbcType="INTEGER" />
+    <result column="residue_num" property="residueNum" jdbcType="INTEGER" />
+    <result column="purchase_price" property="purchasePrice" jdbcType="REAL" />
+    <result column="capfee" property="capfee" jdbcType="REAL" />
+    <result column="arrive_ware_price" property="arriveWarePrice" jdbcType="REAL" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="is_gift" property="isGift" jdbcType="SMALLINT" />
+    <result column="order_detail_id" property="orderDetailId" jdbcType="INTEGER" />
+    <result column="container_number" property="containerNumber" jdbcType="VARCHAR" />
+    <result column="storage_location" property="storageLocation" jdbcType="VARCHAR" />
+    <result column="expiration_date" property="expirationDate" jdbcType="DATE" />
+    <result column="purchase_time" property="purchaseTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="contract_no" property="contractNo" jdbcType="VARCHAR" />
+    <result column="clearance_price" property="clearancePrice" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, account, sku, product_title, img_url, qty,residue_num, purchase_price, capfee, arrive_ware_price, warehouse_id, warehouse_name, is_gift, order_detail_id,
+    container_number, storage_location, expiration_date, purchase_time, create_time, update_time, order_no,purchase_time,residue_num,account,contract_no,clearance_price
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from public.t_product_micro_inventory_in_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectMicroInRecordListByParam" resultMap="BaseResultMap" parameterType="entity.product_inventory.ProductMicroInventoryInRecord">
+  	select 
+    <include refid="Base_Column_List" />
+    from public.t_product_micro_inventory_in_record
+    <where>
+      1=1
+      <if test="account != null" >
+        and account = #{account,jdbcType=VARCHAR}
+      </if>
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="qty != null" >
+        and qty = #{qty,jdbcType=INTEGER}
+      </if>
+      <if test="residueNum != null" >
+        and residue_num = #{residueNum,jdbcType=INTEGER}
+      </if>
+      <if test="purchasePrice != null" >
+        and purchase_price = #{purchasePrice,jdbcType=REAL}::FLOAT4
+      </if>
+      <if test="capfee != null" >
+        and capfee = #{capfee,jdbcType=REAL}::FLOAT4
+      </if>
+      <if test="arriveWarePrice != null" >
+        and arrive_ware_price = #{arriveWarePrice,jdbcType=REAL}::FLOAT4
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseName != null" >
+        and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+      </if>
+      <if test="isGift != null" >
+        and is_gift = #{isGift,jdbcType=SMALLINT}
+      </if>
+      <if test="orderDetailId != null" >
+        and order_detail_id = #{orderDetailId,jdbcType=INTEGER}
+      </if>
+      <if test="containerNumber != null" >
+        and container_number = #{containerNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="storageLocation != null" >
+        and storage_location = #{storageLocation,jdbcType=VARCHAR}
+      </if>
+      <if test="expirationDate != null" >
+        and expiration_date = #{expirationDate,jdbcType=DATE}
+      </if>
+      <if test="purchaseTime != null" >
+        and purchase_time = #{purchaseTime,jdbcType=DATE}
+      </if>
+      <if test="createTime != null" >
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateTime != null" >
+        and update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="orderNo != null" >
+        and order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <select id="selectMicroInRecordListForDeduct" resultMap="BaseResultMap" parameterType="entity.product_inventory.ProductMicroInventoryInRecord">
+  	select 
+    <include refid="Base_Column_List" />
+    from public.t_product_micro_inventory_in_record
+    <where>
+      residue_num >0 
+      <if test="account != null" >
+        and account = #{account,jdbcType=VARCHAR}
+      </if>
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="qty != null" >
+        and qty = #{qty,jdbcType=INTEGER}
+      </if>
+      <if test="purchasePrice != null" >
+        and purchase_price = #{purchasePrice,jdbcType=REAL}
+      </if>
+      <if test="capfee != null" >
+        and capfee = #{capfee,jdbcType=REAL}
+      </if>
+      <if test="arriveWarePrice != null" >
+        and arrive_ware_price = #{arriveWarePrice,jdbcType=REAL}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseName != null" >
+        and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+      </if>
+      <if test="isGift != null" >
+        and is_gift = #{isGift,jdbcType=SMALLINT}
+      </if>
+      <if test="expirationDate != null" >
+        and expiration_date = #{expirationDate,jdbcType=DATE}
+      </if>
+      <if test="purchaseTime != null" >
+        and purchase_time = #{purchaseTime,jdbcType=DATE}
+      </if>
+      <if test="orderNo != null" >
+        and order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by purchase_time asc
+  </select>
+  <select id="selectMicroInRecordListForRelease" resultMap="BaseResultMap" parameterType="entity.product_inventory.ProductMicroInventoryInRecord">
+  	select 
+    <include refid="Base_Column_List" />
+    from public.t_product_micro_inventory_in_record
+    <where>
+      residue_num >0 
+      <if test="id != null" >
+        and id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="account != null" >
+        and account = #{account,jdbcType=VARCHAR}
+      </if>
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="expirationDate != null" >
+        and expiration_date = #{expirationDate,jdbcType=DATE}
+      </if>
+      <if test="orderNo != null" >
+        and order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <select id="selectForUpdateResidueNum" resultMap="BaseResultMap" parameterType="entity.product_inventory.ProductMicroInventoryInRecord">
+  	select 
+    <include refid="Base_Column_List" />
+    from public.t_product_micro_inventory_in_record
+    <where>
+      residue_num >0 
+      <if test="account != null" >
+        and account = #{account,jdbcType=VARCHAR}
+      </if>
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="qty != null" >
+        and qty = #{qty,jdbcType=INTEGER}
+      </if>
+      <if test="purchasePrice != null" >
+        and purchase_price = #{purchasePrice,jdbcType=REAL}
+      </if>
+      <if test="capfee != null" >
+        and capfee = #{capfee,jdbcType=REAL}
+      </if>
+      <if test="arriveWarePrice != null" >
+        and arrive_ware_price = #{arriveWarePrice,jdbcType=REAL}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseName != null" >
+        and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+      </if>
+      <if test="isGift != null" >
+        and is_gift = #{isGift,jdbcType=SMALLINT}
+      </if>
+      <if test="expirationDate != null" >
+        and expiration_date = #{expirationDate,jdbcType=DATE}
+      </if>
+      <if test="purchaseTime != null" >
+        and purchase_time = #{purchaseTime,jdbcType=DATE}
+      </if>
+      <if test="orderNo != null" >
+        and order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from public.t_product_micro_inventory_in_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product_inventory.ProductMicroInventoryInRecord" >
+    insert into public.t_product_micro_inventory_in_record (id, account, sku, product_title, img_url, qty, residue_num,
+      purchase_price, capfee, arrive_ware_price, warehouse_id, warehouse_name, 
+      is_gift, order_detail_id, container_number, 
+      storage_location, expiration_date,purchase_time, create_time, 
+      update_time,order_no)
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{sku,jdbcType=VARCHAR}, #{productTitle,jdbcType=VARCHAR},
+      #{qty,jdbcType=INTEGER}, #{residueNum,jdbcType=INTEGER},
+      #{imgUrl,jdbcType=VARCHAR}, #{purchasePrice,jdbcType=REAL}, #{capfee,jdbcType=REAL}, #{arriveWarePrice,jdbcType=REAL}, #{warehouseId,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR}, 
+      #{isGift,jdbcType=SMALLINT}, #{orderDetailId,jdbcType=INTEGER}, #{containerNumber,jdbcType=VARCHAR}, 
+      #{storageLocation,jdbcType=VARCHAR}, #{expirationDate,jdbcType=DATE},#{purchaseTime,jdbcType=DATE},
+       #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{orderNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product_inventory.ProductMicroInventoryInRecord" >
+    insert into public.t_product_micro_inventory_in_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="productTitle != null" >
+        product_title,
+      </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+      <if test="qty != null" >
+        qty,
+      </if>
+      <if test="residueNum != null" >
+        residue_num,
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price,
+      </if>
+      <if test="capfee != null" >
+        capfee,
+      </if>
+      <if test="arriveWarePrice != null" >
+        arrive_ware_price,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="isGift != null" >
+        is_gift,
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id,
+      </if>
+      <if test="containerNumber != null" >
+        container_number,
+      </if>
+      <if test="storageLocation != null" >
+        storage_location,
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date,
+      </if>
+      <if test="purchaseTime != null" >
+        purchase_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="contractNo != null" >
+        contract_no,
+      </if>
+      <if test="clearancePrice != null" >
+        clearance_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="productTitle != null" >
+        #{productTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="residueNum != null" >
+        #{residueNum,jdbcType=INTEGER},
+      </if>
+      <if test="purchasePrice != null" >
+        #{purchasePrice,jdbcType=REAL},
+      </if>
+      <if test="capfee != null" >
+        #{capfee,jdbcType=REAL},
+      </if>
+      <if test="arriveWarePrice != null" >
+        #{arriveWarePrice,jdbcType=REAL},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="isGift != null" >
+        #{isGift,jdbcType=SMALLINT},
+      </if>
+      <if test="orderDetailId != null" >
+        #{orderDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="containerNumber != null" >
+        #{containerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="storageLocation != null" >
+        #{storageLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationDate != null" >
+        #{expirationDate,jdbcType=DATE},
+      </if>
+      <if test="purchaseTime != null" >
+        #{purchaseTime,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contractNo != null" >
+        #{contractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="clearancePrice != null" >
+        #{clearancePrice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product_inventory.ProductMicroInventoryInRecord" >
+    update public.t_product_micro_inventory_in_record
+    <set >
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="productTitle != null" >
+        product_title = #{productTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        qty = #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="residueNum != null" >
+        residue_num = #{residueNum,jdbcType=INTEGER},
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price = #{purchasePrice,jdbcType=REAL},
+      </if>
+      <if test="capfee != null" >
+        capfee = #{capfee,jdbcType=REAL},
+      </if>
+      <if test="arriveWarePrice != null" >
+        arrive_ware_price = #{arriveWarePrice,jdbcType=REAL},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="isGift != null" >
+        is_gift = #{isGift,jdbcType=SMALLINT},
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id = #{orderDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="containerNumber != null" >
+        container_number = #{containerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="storageLocation != null" >
+        storage_location = #{storageLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date = #{expirationDate,jdbcType=DATE},
+      </if>
+      <if test="purchaseTime != null" >
+        purchase_time = #{purchaseTime,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product_inventory.ProductMicroInventoryInRecord" >
+    update public.t_product_micro_inventory_in_record
+    set 
+      account = #{account,jdbcType=VARCHAR},
+      sku = #{sku,jdbcType=VARCHAR},
+      product_title=#{productTitle,jdbcType=VARCHAR},
+      img_url=#{imgUrl,jdbcType=VARCHAR},
+      qty = #{qty,jdbcType=INTEGER},
+      residue_num = #{residueNum,jdbcType=INTEGER},
+      purchase_price = #{purchasePrice,jdbcType=REAL},
+      capfee=#{capfee,jdbcType=REAL},
+      arrive_ware_price = #{arriveWarePrice,jdbcType=REAL},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      is_gift = #{isGift,jdbcType=SMALLINT},
+      order_detail_id = #{orderDetailId,jdbcType=INTEGER},
+      container_number = #{containerNumber,jdbcType=VARCHAR},
+      storage_location = #{storageLocation,jdbcType=VARCHAR},
+      expiration_date = #{expirationDate,jdbcType=DATE},
+      purchase_time = #{purchaseTime,jdbcType=DATE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      order_no = #{orderNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="listMicroInRecordList" resultMap="BaseResultMap" parameterType="dto.product_inventory.ProductMicroInventoryInRecordDto">
+    select
+    <include refid="Base_Column_List" />
+    from t_product_micro_inventory_in_record
+    <where>
+      <if test="paramDto.sku != null and paramDto.sku != '' ">
+        and sku = #{paramDto.sku}
+      </if>
+      <if test="paramDto.account != null and paramDto.account != '' ">
+        and account = #{paramDto.account}
+      </if>
+      <if test="paramDto.warehouseId != null">
+        and warehouse_id = #{paramDto.warehouseId}
+      </if>
+      <if test="paramDto.expirationDate != null">
+        and expiration_date = #{paramDto.expirationDate}
+      </if>
+      <if test="paramDto.isGift != null">
+        and is_gift = #{paramDto.isGift}
+      </if>
+
+      <if test="paramDto.purchasePrice != null">
+        and purchase_price = #{paramDto.purchasePrice,jdbcType=REAL}::FLOAT4
+      </if>
+
+      <if test="paramDto.capfee != null">
+        and capfee = #{paramDto.capfee,jdbcType=REAL}::FLOAT4
+      </if>
+
+      <if test="paramDto.orderNo != null">
+        and order_no = #{paramDto.orderNo,jdbcType=VARCHAR}
+      </if>
+
+      <if test="paramDto.moreThan != null and paramDto.moreThan == 1 ">
+          and residue_num > 0
+      </if>
+    </where>
+    <if test="paramDto.purchaseTimeSort != null ">
+      <if test="paramDto.purchaseTimeSort  == 0 ">
+        order by purchase_time asc
+      </if>
+      <if test="paramDto.purchaseTimeSort  == 1 ">
+        order by purchase_time desc
+      </if>
+    </if>
+  </select>
+  
+  <select id="selectInRecordForHistoryOrderClosed" resultMap="BaseResultMap" parameterType="entity.product_inventory.ProductMicroInventoryInRecord">
+  	select 
+    <include refid="Base_Column_List" />
+    from public.t_product_micro_inventory_in_record
+    <where>
+      <if test="account != null" >
+        and account = #{account,jdbcType=VARCHAR}
+      </if>
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="qty != null" >
+        and qty = #{qty,jdbcType=INTEGER}
+      </if>
+      <if test="residueNum != null" >
+        and residue_num = #{residueNum,jdbcType=INTEGER}
+      </if>
+      <if test="purchasePrice != null" >
+        and purchase_price = #{purchasePrice,jdbcType=REAL}::FLOAT4
+      </if>
+      <if test="capfee != null" >
+        and capfee = #{capfee,jdbcType=REAL}::FLOAT4
+      </if>
+      <if test="arriveWarePrice != null" >
+        and arrive_ware_price = #{arriveWarePrice,jdbcType=REAL}::FLOAT4
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseName != null" >
+        and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+      </if>
+      <if test="isGift != null" >
+        and is_gift = #{isGift,jdbcType=SMALLINT}
+      </if>
+      <if test="expirationDate != null" >
+        and expiration_date = #{expirationDate,jdbcType=DATE}
+      </if>
+      <if test="orderNo != null" >
+        and order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <select id="getMicroInventoryStockpile" resultMap="BaseResultMap" parameterType="entity.product_inventory.ProductMicroInventoryInRecord">
+  	select 
+    COALESCE(SUM(residue_num),0) as qty,expiration_date
+    from public.t_product_micro_inventory_in_record
+    <where>
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+    </where>
+    GROUP BY expiration_date
+  </select>
+    <select id="getTotalMicroInventoryStockpile" resultType="java.lang.Integer">
+  	SELECT
+		COALESCE(SUM(residue_num),0)
+	FROM
+		t_product_micro_inventory_in_record
+	WHERE
+		sku = #{sku}
+	AND warehouse_id = #{warehouseId}
+  </select>
+  <select id="getTotalMicroInventoryStockpileByExpiration" parameterType="entity.product_inventory.ProductInventoryDetail" resultType="java.lang.Integer">
+  	SELECT
+		COALESCE(SUM(residue_num),0)
+	FROM
+		t_product_micro_inventory_in_record
+	WHERE
+		sku = #{sku,jdbcType=VARCHAR}
+	AND warehouse_id = #{warehouseId,jdbcType=INTEGER}
+	<if test="expirationDate !=null">
+	AND expiration_date = #{expirationDate,jdbcType=DATE}
+	</if>
+  </select>
+</mapper>

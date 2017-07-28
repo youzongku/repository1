@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.WarehouseMapper" >
+  <resultMap id="BaseResultMap" type="entity.timer.Warehouse" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="warehouse_no" property="warehouseId" jdbcType="VARCHAR" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="street" property="street" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="batch_no" property="batchNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, warehouse_no, warehouse_name, created, status, last_updated, province, city, 
+    area, street, remarks, batch_no
+  </sql>
+
+  <select id="query" resultMap="BaseResultMap"
+		parameterType="entity.timer.WarehouseForm">
+		select
+			* from t_warehouse 
+		<where>
+			1 = 1
+			<if test="id != null">
+				and id = #{id}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="warehouseId != null and warehouseId !=''">
+				and warehouse_no = #{warehouseId}
+			</if>
+			<if test="warehouseName != null and warehouseName !='' ">
+				and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+			</if>
+			<if test="batchNo != null and batchNo !='' ">
+				and batch_no = #{batchNo,jdbcType=VARCHAR}
+			</if>
+		</where>
+		ORDER BY last_updated desc
+		<if test="pageNo != null and pageNo !=0">
+			limit #{pageSize} offset (#{pageNo}-1)*#{pageSize}
+		</if>
+	</select>
+	
+</mapper>

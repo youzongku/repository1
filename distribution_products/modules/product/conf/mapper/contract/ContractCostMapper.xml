@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.contract.ContractCostMapper" >
+  <resultMap id="BaseResultMap" type="entity.contract.ContractCost" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="contract_no" property="contractNo" jdbcType="VARCHAR" />
+    <result column="cost_type_id" property="costTypeId" jdbcType="INTEGER" />
+    <result column="scale_of_charges" property="scaleOfCharges" jdbcType="DOUBLE" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="formula" property="formula" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="Contract_Dto_Base" type="dto.product.ContractCostDto" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="contract_no" property="contractNo" jdbcType="VARCHAR" />
+    <result column="cost_type_id" property="costTypeId" jdbcType="INTEGER" />
+    <result column="scale_of_charges" property="scaleOfCharges" jdbcType="DOUBLE" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+     <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, contract_no, cost_type_id, scale_of_charges, start_time, end_time, create_time, 
+    update_time, create_user,remark,status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    c.*,t.type
+    from t_contract_cost c
+    left join t_contract_cost_type t on c.cost_type_id = t.id
+    where c.id = #{id,jdbcType=INTEGER}
+  </select>
+   <select id="selectByContractNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List"/>
+    from t_contract_cost
+    where contract_no = #{cno,jdbcType=VARCHAR} and status != 3
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_contract_cost
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.contract.ContractCost" >
+    insert into t_contract_cost (id, contract_no, cost_type_id, 
+      scale_of_charges, start_time, end_time, 
+      create_time, update_time, create_user,remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{contractNo,jdbcType=VARCHAR}, #{costTypeId,jdbcType=INTEGER}, 
+      #{scaleOfCharges,jdbcType=DOUBLE}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR},
+      #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true"  keyProperty="id" parameterType="entity.contract.ContractCost" >
+    insert into t_contract_cost
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="contractNo != null" >
+        contract_no,
+      </if>
+      <if test="costTypeId != null" >
+        cost_type_id,
+      </if>
+      <if test="scaleOfCharges != null" >
+        scale_of_charges,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="contractNo != null" >
+        #{contractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="costTypeId != null" >
+        #{costTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="scaleOfCharges != null" >
+        #{scaleOfCharges,jdbcType=DOUBLE},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+       <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.contract.ContractCost" >
+    update t_contract_cost
+    <set >
+      <if test="contractNo != null" >
+        contract_no = #{contractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="costTypeId != null" >
+        cost_type_id = #{costTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="scaleOfCharges != null" >
+        scale_of_charges = #{scaleOfCharges,jdbcType=DOUBLE},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.contract.ContractCost" >
+    update t_contract_cost
+    set contract_no = #{contractNo,jdbcType=VARCHAR},
+      cost_type_id = #{costTypeId,jdbcType=INTEGER},
+      scale_of_charges = #{scaleOfCharges,jdbcType=DOUBLE},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="pageSearch" parameterType="java.util.Map" resultMap="Contract_Dto_Base">
+  	select
+		c .distribution_mode as model,
+		c .distribution_type as disType,
+		c .phone,
+		c .account,
+		c .distribution_name as disName,
+		ct. type,
+		cc.*
+	from
+		t_contract_cost cc
+	left join t_contract_cost_type ct on cc.cost_type_id = ct. id
+	left join t_contract c on cc.contract_no = c .contract_no
+	where
+		1 = 1
+		<if test="param.typeId != null">
+			and cc.cost_type_id = #{param.typeId,jdbcType=INTEGER}
+		</if>
+		<if test="param.search != null and param.search !='' ">
+			and (
+				lower (c .distribution_name) like lower ('%' || #{param.search,jdbcType=VARCHAR} || '%')
+				or lower (c .account) like lower ('%' || #{param.search,jdbcType=VARCHAR} || '%')
+				or lower (cc.contract_no) like lower ('%' || #{param.search,jdbcType=VARCHAR} || '%')
+			)
+		</if>
+		<if test="param.start != null and param.start !='' ">
+			and <![CDATA[cc.end_time >= to_timestamp(#{param.start,jdbcType=VARCHAR},'yyyy-mm-dd')]]>
+		</if>
+		<if test="param.end != null and param.end != ''">
+			and  <![CDATA[cc.end_time <= to_timestamp(#{param.end,jdbcType=VARCHAR},'yyyy-mm-dd')]]>
+		</if>
+		order by
+		<choose>
+			<when test="param.sidx != null and param.sidx != '' and param.sord != null and param.sord != ''">
+			   ${param.sidx} ${param.sord} nulls last
+			</when>
+			<otherwise>
+				create_time desc nulls last
+			</otherwise>
+		</choose>
+		<if test="param.page != null and param.rows != null">
+    		limit #{param.rows} offset (#{param.page}-1)*#{param.rows}
+    	</if>
+  </select>
+  <select id="pageCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	select
+		count(1)
+	from
+		t_contract_cost cc
+	left join t_contract c on cc.contract_no = c .contract_no
+	where
+		1 = 1
+		<if test="param.typeId != null">
+			and cc.cost_type_id = #{param.typeId,jdbcType=INTEGER}
+		</if>
+		<if test="param.search != null and param.search !='' ">
+			and (
+				lower (c .distribution_name) like lower ('%' || #{param.search,jdbcType=VARCHAR} || '%')
+				or lower (c .account) like lower ('%' || #{param.search,jdbcType=VARCHAR} || '%')
+				or lower (cc.contract_no) like lower ('%' || #{param.search,jdbcType=VARCHAR} || '%')
+			)
+		</if>
+		<if test="param.start != null and param.start !='' ">
+			and <![CDATA[cc.end_time >= to_timestamp(#{param.start,jdbcType=VARCHAR},'yyyy-mm-dd')]]>
+		</if>
+		<if test="param.end != null and param.end != ''">
+			and  <![CDATA[cc.end_time <= to_timestamp(#{param.end,jdbcType=VARCHAR},'yyyy-mm-dd')]]>
+		</if>
+  </select>
+  
+  	<select id="matchCost" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select
+			c.*
+		from
+			(
+				select
+					"row_number" () over (
+						partition by contract_no
+						order by
+							end_time asc,
+							start_time desc
+					) as rownum,
+					t.formula,
+					c.*
+				from
+					t_contract_cost c
+					left join t_contract_cost_type t on t.id = c.cost_type_id
+				where
+					1 = 1
+				and status = 2
+				and contract_no = #{param.cno,jdbcType=VARCHAR}
+				and <![CDATA[start_time <= to_timestamp(
+					#{param.payDate,jdbcType=VARCHAR},
+					'yyyy-mm-dd hh24:mi:ss ms'
+				)]]>
+				and <![CDATA[end_time >= to_timestamp(
+					#{param.payDate,jdbcType=VARCHAR},
+					'yyyy-mm-dd hh24:mi:ss ms'
+				)]]>
+			)  c
+		where
+			c .rownum = 1
+	</select>
+	<update id="updateNotStartCost">
+		update t_contract_cost set status=2,update_time=now() where start_time <![CDATA[<=now()]]> and status = 1 and end_time + INTERVAL '1 D' <![CDATA[>]]> now()
+	</update>
+	<update id="updateEndedCost">
+		update t_contract_cost set status=3,update_time=now() where end_time + INTERVAL '1 D' <![CDATA[<=]]> now() and status != 3;
+	</update>
+</mapper>

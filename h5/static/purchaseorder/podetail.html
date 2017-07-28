@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="email=no" name="format-detection" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>订单详情</title>
+    <link rel="stylesheet" type="text/css" href="/css/main/main.css">
+    <script type="text/javascript" src="/js/lib/iscroll.js"></script>
+</head>
+<body id="body_ele" v-cloak>
+<header class="posFix head">
+    <a href="polist.html" class="ret-logo"></a>
+    订单详情
+</header>
+<section class="order conTop">
+    <div class="orderCon">
+        <h4>订单信息</h4>
+        <p>
+            <span>订单状态：</span><span>{{statusMsg}}</span>
+        </p>
+        <p>
+            <span>订单金额：</span><span>{{purchaseTotalAmount}}</span>
+        </p>
+        <p>
+            <span>订单编号：</span><span>{{purchaseOrderNo}}</span>
+        </p>
+        <p>
+            <span>下单时间：</span><span>{{sorderDate}}</span>
+        </p>
+        <p>
+            <span>下单分销商：</span><span>{{email}}</span>
+        </p>
+        <p>
+            <span>录入人：</span><span>{{inputUser}}</span>
+        </p>
+        <p>
+            <span>审核理由：</span><span>{{reason}}</span>
+        </p>
+    </div>
+    <div class="imporCom">
+        <div class="imporComR" v-for="detail in details">
+            <div class="impor-img">
+                <a><img  v-bind:data-original='detail.productImg' 
+                        src="../../img/blank.png"  alt="{{detail.productName}}" 
+                        class = "p-goods-img" /></a>
+            </div>
+            <div class="impor-tit">
+                <div class="impor-tit1">
+                    <h5><i class="gift" v-if="detail.isgift"></i>{{detail.productName}}</h5>
+                    <span>¥<b>{{detail.purchasePrice}}</b></span>
+                </div>
+                <div>
+                    <span>商品编号：<b class="impor-tit2">{{detail.sku}}</b></span>
+                </div>
+                <div><span>来源：<b class="impor-tit2">{{detail.warehouseName}}</b></span><span><b>x{{detail.qty}}</b></span></div><br />
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/js/lib/require.js" data-main="/js/purchaseorder/podetail.js?time=(new Date()).getTime()"></script>
+</body>
+</html>

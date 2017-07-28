@@ -1,0 +1,16 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file             controllers.rabbitmq.Assets.at(path="/public", file)
+
+#------------------------------------------------rabbitmq module----------------------------------------------#
+
+
+GET         /sentMsg                @controllers.rabbitmq.RabbitController.sentMsg()
+
+GET         /receiveMsg               @controllers.rabbitmq.RabbitController.receiveMsg()
+
+GET         /sentMsgBySer             @controllers.rabbitmq.RabbitController.sentMsgBySer()
+

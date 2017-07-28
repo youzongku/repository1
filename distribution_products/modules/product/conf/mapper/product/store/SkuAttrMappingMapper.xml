@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.store.SkuAttrMappingMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.store.SkuAttrMapping" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="attr_id" property="attrId" jdbcType="INTEGER" />
+    <result column="attr_key" property="attrKey" jdbcType="VARCHAR" />
+    <result column="attr_type" property="attrType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sku, attr_id, attr_key, attr_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sku_attr
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_sku_attr
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="entity.product.store.SkuAttrMapping" >
+    insert into t_sku_attr (id, sku, attr_id, 
+      attr_key, attr_type)
+    values (#{id,jdbcType=VARCHAR}, #{sku,jdbcType=VARCHAR}, #{attrId,jdbcType=INTEGER}, 
+      #{attrKey,jdbcType=VARCHAR}, #{attrType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.store.SkuAttrMapping" >
+    insert into t_sku_attr
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="attrId != null" >
+        attr_id,
+      </if>
+      <if test="attrKey != null" >
+        attr_key,
+      </if>
+      <if test="attrType != null" >
+        attr_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="attrId != null" >
+        #{attrId,jdbcType=INTEGER},
+      </if>
+      <if test="attrKey != null" >
+        #{attrKey,jdbcType=VARCHAR},
+      </if>
+      <if test="attrType != null" >
+        #{attrType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.store.SkuAttrMapping" >
+    update t_sku_attr
+    <set >
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="attrId != null" >
+        attr_id = #{attrId,jdbcType=INTEGER},
+      </if>
+      <if test="attrKey != null" >
+        attr_key = #{attrKey,jdbcType=VARCHAR},
+      </if>
+      <if test="attrType != null" >
+        attr_type = #{attrType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.store.SkuAttrMapping" >
+    update t_sku_attr
+    set sku = #{sku,jdbcType=VARCHAR},
+      attr_id = #{attrId,jdbcType=INTEGER},
+      attr_key = #{attrKey,jdbcType=VARCHAR},
+      attr_type = #{attrType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

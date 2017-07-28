@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.PaymentRecordMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.PaymentRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="orderno" property="orderno" jdbcType="VARCHAR" />
+    <result column="isdeal" property="isdeal" jdbcType="BIT" />
+    <result column="create" property="create" jdbcType="TIMESTAMP" />
+    <result column="update" property="update" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, orderno, isdeal, create, update
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_payment_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_payment_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.PaymentRecord" >
+    insert into t_payment_record (id, orderno, isdeal, 
+      create, update)
+    values (#{id,jdbcType=INTEGER}, #{orderno,jdbcType=VARCHAR}, #{isdeal,jdbcType=BIT}, 
+      #{create,jdbcType=TIMESTAMP}, #{update,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.PaymentRecord" >
+    insert into t_payment_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderno != null" >
+        orderno,
+      </if>
+      <if test="isdeal != null" >
+        isdeal,
+      </if>
+      <if test="create != null" >
+        create,
+      </if>
+      <if test="update != null" >
+        update,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderno != null" >
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="isdeal != null" >
+        #{isdeal,jdbcType=BIT},
+      </if>
+      <if test="create != null" >
+        #{create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update != null" >
+        #{update,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.PaymentRecord" >
+    update t_payment_record
+    <set >
+      <if test="orderno != null" >
+        orderno = #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="isdeal != null" >
+        isdeal = #{isdeal,jdbcType=BIT},
+      </if>
+      <if test="create != null" >
+        create = #{create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update != null" >
+        update = #{update,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.PaymentRecord" >
+    update t_payment_record
+    set orderno = #{orderno,jdbcType=VARCHAR},
+      isdeal = #{isdeal,jdbcType=BIT},
+      create = #{create,jdbcType=TIMESTAMP},
+      update = #{update,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,134 @@
+<!--<p class="title">交易记录</p>
+<div class="six-user">
+	&lt;!&ndash;<img src="../img/userimg.jpg" alt="头像" style="width: 90px; height: 90px;"/>&ndash;&gt;
+    <ul class="six-user-name user-quota">
+        <li id="username"></li>
+        <li class="six-user-name-li2">
+            账户余额：<span id="balance" class="red">0.00</span>&nbsp;元
+        </li>
+        <li class="six-user-name-li2">
+            信用额度：<span id="credit_limit" class="red">0.00</span>&nbsp;元
+        </li>
+    </ul>
+    <ul  class="six-user-name">
+        <li class="six-user-name-li2">
+            可用额度：<span id="available_credit_limit" class="red">0.00</span>&nbsp;元
+        </li>
+        <li class="six-user-name-li2">
+            待还额度：<span id="used_amount" class="red">0.00</span>&nbsp;元
+        </li>
+    </ul>
+    <a href="javascript:;" class="limit-validity limit_validity blue">临时额度有效期</a>
+	&lt;!&ndash;<a href="">立即充值</a>&ndash;&gt;
+</div>-->
+<div class="welcom-head bottom-margin">
+    <div class="welcom-head-title">
+        尊敬的
+        <span id="member" class="blue"></span>
+        <button tag="frozen" class="btn-org display">账户冻结</button>
+        <button tag="frozen" class="btn-line-blue display"  onclick="to_charge();" > 立即去充值</button>
+    </div>
+    <div>
+        <span class="welcom-tomtop">TOMTOP&nbsp;&nbsp;欢迎您！</span>
+        <span class="time-up">您的上一次登录时间：<em class="time-up">--</em></span>
+    </div>
+</div>
+<div class="trading-record-box bottom-margin">
+    <h4>交易记录</h4>
+    <ul class="trading-record">
+        <li>
+            <span>账户余额</span>
+            <span><em id="balance">--</em>元</span>
+        </li>
+        <li>
+            <span>账期额度</span>
+            <span><em id="credit_limit">--</em>元</span>
+        </li>
+        <li>
+            <span>账期剩余额度</span>
+            <span><em id="available_credit_limit">--</em>元</span>
+        </li>
+        <li class="for-reimbur">
+            <span>待还款金额</span>
+            <span><em id="used_amount">--</em>元</span>
+            <button id="disable-the" class="disable-the display">禁用中</button>
+        </li>
+    </ul>
+    <div class="trading-record-con">
+        <h4>账期时间</h4>
+        <div>
+            <span>账期开始时间：<em id="startTime">--</em></span>
+            <span>应还款时间：<em id="forRefundTime" >--</em></span>
+            <span>最迟还款时间：<em id="lastForRefundTime">--</em></span>
+        </div>
+    </div>
+    <div class="topUp-select">
+        <div class="trans-time">交易时间：
+            <select name="purpose_time" id="timeSelect" class="select-pub">
+                <option value="" selected>全部</option>
+                <option value="1">近一个月</option>
+                <option value="3">近三个月</option>
+                <option value="6">半年以内</option>
+            </select>
+        </div>
+        <div class="trans-save">操作类型：
+            <select name="purpose" id="purposeSelect" class="select-pub">
+                <option value="" selected>全部</option>
+                <option value="1">充值记录</option>
+                <option value="2">提现记录</option>
+                <option value="3">采购支付</option>
+                <option value="4">退款记录</option>
+                <option value="5">运费支付</option>
+                <option value="6">采购支付含运费</option>
+                <option value="7">余额核销</option>
+            </select>
+        </div>
+        <div class="shuchu btn" >导出表格</div>
+    </div>
+    <div class="translaste-date light-gray">
+        <ul class="six-handle-header">
+            <li class="six-handle-li0">&nbsp;</li>
+            <li class="six-handle-li4" name="sourceCard">操作凭证</li>
+            <li class="six-handle-li3" name="purpose">操作类型</li>
+            <li class="six-handle-li2" name="paymentType">交易途径</li>
+            <li class="six-handle-li5" name="amount">交易金额（元）</li>
+            <li class="six-handle-li6" name="balance">账户余额（元）</li>
+            <li class="six-handle-li6" name="creditLimitBalance">账期余额（元）</li>
+            <li class="six-handle-li1" name="create">交易时间</li>
+        </ul>
+        <div id="pagination_trans" style="text-align: center; margin-top: 30px;"></div>
+    </div>
+    <!-- 导出表格 -->
+    <div class="shuchu-excel" style="display:none;">
+        <span class="shuchu-excel-top">
+            <p>导出交易记录</p>
+            <p class="cuo">×</p>
+        </span>
+        <ul>
+            <li>
+                <p>月份</p>
+                <p>导出</p>
+            </li>
+            <li>
+                <p>
+                    <span>自定义时间</span>
+                    <input type="text">
+                    <span>至</span>
+                    <input type="text">
+                </p>
+                <p>导出</p>
+            </li>
+            <li>
+                <p>2015年12月份（12-01至12-04）记录</p>
+                <p>导出</p>
+            </li>
+            <li>
+                <p>2015年12月份（12-01至12-04）记录</p>
+                <p>导出</p>
+            </li>
+            <li>
+                <p>您可导出最近半年（含当月）的交易记录</p>
+            </li>
+        </ul>
+    </div>
+</div>

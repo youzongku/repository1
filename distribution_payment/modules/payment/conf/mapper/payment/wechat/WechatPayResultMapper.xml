@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.payment.wechat.WechatPayResultMapper" >
+  <resultMap id="BaseResultMap" type="entity.payment.wechat.WechatPayResult" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
+    <result column="appid" property="appid" jdbcType="VARCHAR" />
+    <result column="attach" property="attach" jdbcType="VARCHAR" />
+    <result column="bankype" property="bankype" jdbcType="VARCHAR" />
+    <result column="cash_fee" property="cashFee" jdbcType="VARCHAR" />
+    <result column="device_info" property="deviceInfo" jdbcType="VARCHAR" />
+    <result column="fee_type" property="feeType" jdbcType="VARCHAR" />
+    <result column="is_subscribe" property="isSubscribe" jdbcType="VARCHAR" />
+    <result column="mch_id" property="mchId" jdbcType="VARCHAR" />
+    <result column="nonce_str" property="nonceStr" jdbcType="VARCHAR" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="result_code" property="resultCode" jdbcType="VARCHAR" />
+    <result column="return_code" property="returnCode" jdbcType="VARCHAR" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+    <result column="time_end" property="timeEnd" jdbcType="VARCHAR" />
+    <result column="total_fee" property="totalFee" jdbcType="VARCHAR" />
+    <result column="trade_type" property="tradeType" jdbcType="VARCHAR" />
+    <result column="transaction_id" property="transactionId" jdbcType="VARCHAR" />
+    <result column="trade_state" property="tradeState" jdbcType="VARCHAR" />
+    <result column="trade_state_desc" property="tradeStateDesc" jdbcType="VARCHAR" />
+    <result column="err_code" property="errCode" jdbcType="VARCHAR" />
+    <result column="err_code_des" property="errCodeDes" jdbcType="VARCHAR" />
+    <result column="cash_fee_type" property="cashFeeType" jdbcType="VARCHAR" />
+    <result column="coupon_fee" property="couponFee" jdbcType="INTEGER" />
+    <result column="coupon_count" property="couponCount" jdbcType="INTEGER" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_user" property="lastUpdateUser" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, out_trade_no, appid, attach, bankype, cash_fee, device_info, fee_type, is_subscribe, 
+    mch_id, nonce_str, openid, result_code, return_code, sign, time_end, total_fee, trade_type, 
+    transaction_id, trade_state, trade_state_desc, err_code, err_code_des, cash_fee_type, 
+    coupon_fee, coupon_count, create_user, create_date, last_update_user, last_update_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_wechat_pay_result
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_wechat_pay_result
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.payment.wechat.WechatPayResult" >
+    insert into t_wechat_pay_result (id, out_trade_no, appid, 
+      attach, bankype, cash_fee, 
+      device_info, fee_type, is_subscribe, 
+      mch_id, nonce_str, openid, 
+      result_code, return_code, sign, 
+      time_end, total_fee, trade_type, 
+      transaction_id, trade_state, trade_state_desc, 
+      err_code, err_code_des, cash_fee_type, 
+      coupon_fee, coupon_count, create_user, 
+      create_date, last_update_user, last_update_date
+      )
+    values (#{id,jdbcType=INTEGER}, #{outTradeNo,jdbcType=VARCHAR}, #{appid,jdbcType=VARCHAR}, 
+      #{attach,jdbcType=VARCHAR}, #{bankype,jdbcType=VARCHAR}, #{cashFee,jdbcType=VARCHAR}, 
+      #{deviceInfo,jdbcType=VARCHAR}, #{feeType,jdbcType=VARCHAR}, #{isSubscribe,jdbcType=VARCHAR}, 
+      #{mchId,jdbcType=VARCHAR}, #{nonceStr,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, 
+      #{resultCode,jdbcType=VARCHAR}, #{returnCode,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, 
+      #{timeEnd,jdbcType=VARCHAR}, #{totalFee,jdbcType=VARCHAR}, #{tradeType,jdbcType=VARCHAR}, 
+      #{transactionId,jdbcType=VARCHAR}, #{tradeState,jdbcType=VARCHAR}, #{tradeStateDesc,jdbcType=VARCHAR}, 
+      #{errCode,jdbcType=VARCHAR}, #{errCodeDes,jdbcType=VARCHAR}, #{cashFeeType,jdbcType=VARCHAR}, 
+      #{couponFee,jdbcType=INTEGER}, #{couponCount,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateUser,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.payment.wechat.WechatPayResult" >
+    insert into t_wechat_pay_result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="outTradeNo != null" >
+        out_trade_no,
+      </if>
+      <if test="appid != null" >
+        appid,
+      </if>
+      <if test="attach != null" >
+        attach,
+      </if>
+      <if test="bankype != null" >
+        bankype,
+      </if>
+      <if test="cashFee != null" >
+        cash_fee,
+      </if>
+      <if test="deviceInfo != null" >
+        device_info,
+      </if>
+      <if test="feeType != null" >
+        fee_type,
+      </if>
+      <if test="isSubscribe != null" >
+        is_subscribe,
+      </if>
+      <if test="mchId != null" >
+        mch_id,
+      </if>
+      <if test="nonceStr != null" >
+        nonce_str,
+      </if>
+      <if test="openid != null" >
+        openid,
+      </if>
+      <if test="resultCode != null" >
+        result_code,
+      </if>
+      <if test="returnCode != null" >
+        return_code,
+      </if>
+      <if test="sign != null" >
+        sign,
+      </if>
+      <if test="timeEnd != null" >
+        time_end,
+      </if>
+      <if test="totalFee != null" >
+        total_fee,
+      </if>
+      <if test="tradeType != null" >
+        trade_type,
+      </if>
+      <if test="transactionId != null" >
+        transaction_id,
+      </if>
+      <if test="tradeState != null" >
+        trade_state,
+      </if>
+      <if test="tradeStateDesc != null" >
+        trade_state_desc,
+      </if>
+      <if test="errCode != null" >
+        err_code,
+      </if>
+      <if test="errCodeDes != null" >
+        err_code_des,
+      </if>
+      <if test="cashFeeType != null" >
+        cash_fee_type,
+      </if>
+      <if test="couponFee != null" >
+        coupon_fee,
+      </if>
+      <if test="couponCount != null" >
+        coupon_count,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="outTradeNo != null" >
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="attach != null" >
+        #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="bankype != null" >
+        #{bankype,jdbcType=VARCHAR},
+      </if>
+      <if test="cashFee != null" >
+        #{cashFee,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceInfo != null" >
+        #{deviceInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="feeType != null" >
+        #{feeType,jdbcType=VARCHAR},
+      </if>
+      <if test="isSubscribe != null" >
+        #{isSubscribe,jdbcType=VARCHAR},
+      </if>
+      <if test="mchId != null" >
+        #{mchId,jdbcType=VARCHAR},
+      </if>
+      <if test="nonceStr != null" >
+        #{nonceStr,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="resultCode != null" >
+        #{resultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="returnCode != null" >
+        #{returnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="timeEnd != null" >
+        #{timeEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null" >
+        #{totalFee,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null" >
+        #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null" >
+        #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeState != null" >
+        #{tradeState,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeStateDesc != null" >
+        #{tradeStateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="errCode != null" >
+        #{errCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errCodeDes != null" >
+        #{errCodeDes,jdbcType=VARCHAR},
+      </if>
+      <if test="cashFeeType != null" >
+        #{cashFeeType,jdbcType=VARCHAR},
+      </if>
+      <if test="couponFee != null" >
+        #{couponFee,jdbcType=INTEGER},
+      </if>
+      <if test="couponCount != null" >
+        #{couponCount,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUser != null" >
+        #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.payment.wechat.WechatPayResult" >
+    update t_wechat_pay_result
+    <set >
+      <if test="outTradeNo != null" >
+        out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null" >
+        appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="attach != null" >
+        attach = #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="bankype != null" >
+        bankype = #{bankype,jdbcType=VARCHAR},
+      </if>
+      <if test="cashFee != null" >
+        cash_fee = #{cashFee,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceInfo != null" >
+        device_info = #{deviceInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="feeType != null" >
+        fee_type = #{feeType,jdbcType=VARCHAR},
+      </if>
+      <if test="isSubscribe != null" >
+        is_subscribe = #{isSubscribe,jdbcType=VARCHAR},
+      </if>
+      <if test="mchId != null" >
+        mch_id = #{mchId,jdbcType=VARCHAR},
+      </if>
+      <if test="nonceStr != null" >
+        nonce_str = #{nonceStr,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="resultCode != null" >
+        result_code = #{resultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="returnCode != null" >
+        return_code = #{returnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="timeEnd != null" >
+        time_end = #{timeEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null" >
+        total_fee = #{totalFee,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null" >
+        trade_type = #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null" >
+        transaction_id = #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeState != null" >
+        trade_state = #{tradeState,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeStateDesc != null" >
+        trade_state_desc = #{tradeStateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="errCode != null" >
+        err_code = #{errCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errCodeDes != null" >
+        err_code_des = #{errCodeDes,jdbcType=VARCHAR},
+      </if>
+      <if test="cashFeeType != null" >
+        cash_fee_type = #{cashFeeType,jdbcType=VARCHAR},
+      </if>
+      <if test="couponFee != null" >
+        coupon_fee = #{couponFee,jdbcType=INTEGER},
+      </if>
+      <if test="couponCount != null" >
+        coupon_count = #{couponCount,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.payment.wechat.WechatPayResult" >
+    update t_wechat_pay_result
+    set out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      appid = #{appid,jdbcType=VARCHAR},
+      attach = #{attach,jdbcType=VARCHAR},
+      bankype = #{bankype,jdbcType=VARCHAR},
+      cash_fee = #{cashFee,jdbcType=VARCHAR},
+      device_info = #{deviceInfo,jdbcType=VARCHAR},
+      fee_type = #{feeType,jdbcType=VARCHAR},
+      is_subscribe = #{isSubscribe,jdbcType=VARCHAR},
+      mch_id = #{mchId,jdbcType=VARCHAR},
+      nonce_str = #{nonceStr,jdbcType=VARCHAR},
+      openid = #{openid,jdbcType=VARCHAR},
+      result_code = #{resultCode,jdbcType=VARCHAR},
+      return_code = #{returnCode,jdbcType=VARCHAR},
+      sign = #{sign,jdbcType=VARCHAR},
+      time_end = #{timeEnd,jdbcType=VARCHAR},
+      total_fee = #{totalFee,jdbcType=VARCHAR},
+      trade_type = #{tradeType,jdbcType=VARCHAR},
+      transaction_id = #{transactionId,jdbcType=VARCHAR},
+      trade_state = #{tradeState,jdbcType=VARCHAR},
+      trade_state_desc = #{tradeStateDesc,jdbcType=VARCHAR},
+      err_code = #{errCode,jdbcType=VARCHAR},
+      err_code_des = #{errCodeDes,jdbcType=VARCHAR},
+      cash_fee_type = #{cashFeeType,jdbcType=VARCHAR},
+      coupon_fee = #{couponFee,jdbcType=INTEGER},
+      coupon_count = #{couponCount,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findWPRsByMap" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from t_wechat_pay_result
+    where 1 = 1
+    <if test="outTradeNo != null and outTradeNo != ''">
+      and out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

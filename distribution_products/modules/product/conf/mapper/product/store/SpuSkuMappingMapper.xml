@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.store.SpuSkuMappingMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.store.SpuSkuMapping" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="spu_no" property="spuNo" jdbcType="VARCHAR" />
+    <result column="spu_id" property="spuId" jdbcType="INTEGER" />
+    <result column="sku_no" property="skuNo" jdbcType="VARCHAR" />
+    <result column="sku_id" property="skuId" jdbcType="INTEGER" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="update_time" property="updateTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, spu_no, spu_id, sku_no, sku_id, create_user, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_spu_sku
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_spu_sku
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.store.SpuSkuMapping" >
+    insert into t_spu_sku (id, spu_no, spu_id, 
+      sku_no, sku_id, create_user, 
+      create_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{spuNo,jdbcType=VARCHAR}, #{spuId,jdbcType=INTEGER}, 
+      #{skuNo,jdbcType=VARCHAR}, #{skuId,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.store.SpuSkuMapping" >
+    insert into t_spu_sku
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="spuNo != null" >
+        spu_no,
+      </if>
+      <if test="spuId != null" >
+        spu_id,
+      </if>
+      <if test="skuNo != null" >
+        sku_no,
+      </if>
+      <if test="skuId != null" >
+        sku_id,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="spuNo != null" >
+        #{spuNo,jdbcType=VARCHAR},
+      </if>
+      <if test="spuId != null" >
+        #{spuId,jdbcType=INTEGER},
+      </if>
+      <if test="skuNo != null" >
+        #{skuNo,jdbcType=VARCHAR},
+      </if>
+      <if test="skuId != null" >
+        #{skuId,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.store.SpuSkuMapping" >
+    update t_spu_sku
+    <set >
+      <if test="spuNo != null" >
+        spu_no = #{spuNo,jdbcType=VARCHAR},
+      </if>
+      <if test="spuId != null" >
+        spu_id = #{spuId,jdbcType=INTEGER},
+      </if>
+      <if test="skuNo != null" >
+        sku_no = #{skuNo,jdbcType=VARCHAR},
+      </if>
+      <if test="skuId != null" >
+        sku_id = #{skuId,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.store.SpuSkuMapping" >
+    update t_spu_sku
+    set spu_no = #{spuNo,jdbcType=VARCHAR},
+      spu_id = #{spuId,jdbcType=INTEGER},
+      sku_no = #{skuNo,jdbcType=VARCHAR},
+      sku_id = #{skuId,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      update_time = #{updateTime,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="email=no" name="format-detection" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>发货单</title>
+    <link rel="stylesheet" type="text/css" href="../css/main/main.css">
+    <script type="text/javascript" src="../../js/lib/iscroll.js"></script>
+    <script src="/js/lib/require.js" data-main="/js/sales/sale_list.js?time=(new Date()).getTime()"></script>
+</head>
+<body id="sale_list" v-cloak>
+    <header class="posFix head">
+        <a href="../user/index/index.html" class="ret-logo"></a>
+        终端订单
+        <a href="searchList.html?ss={{status}}&sc={{searchCondtion}}" class="search-logo"></a>
+        <div class="list-box">
+            <ul class="list ui-row-flex">
+                <li class="current2" @click="chooseStatus($event)" status="0">全部</li>
+                <li @click="chooseStatus($event)" status="3">待客服审核</li>
+                <li @click="chooseStatus($event)" status="11">待财务审核</li>
+                <li @click="chooseStatus($event)" status="6,7,13,104">待发货</li>
+                <li @click="chooseStatus($event)" status="9">待收货</li>
+                <li @click="chooseStatus($event)" status="10,106">已完成</li>
+                <li @click="chooseStatus($event)" status="5,20">已关闭</li>
+            </ul>
+        </div>
+    </header>
+    <section style="margin-top: 84px;padding-bottom: 40px" id="orders">
+        <div v-if="haveOrders">
+            <div class="imporCom" v-for="sale in sales" @click="showDetail($event)" orderid = "{{sale.id}}">
+                <em class="wareNum">
+                    <span>订单号：</span>
+                    <span>{{sale.salesOrderNo}}</span>
+                    <span class="fr red-start">{{sale.statusDesc}}</span>
+                </em>
+                <em class="imporComR">
+                    <em class="impor-img list-img">
+                        <img v-bind:data-original='sale.details.productImg' src="../../img/blank.png" alt="{{sale.details.productName}}" class="p-goods-img"/>
+                    </em>
+                    <em class="impor-tit ware-tit">
+                        <p><span>下单时间：<b class="impor-tit2">{{sale.orderingDateStr}}</b></span></p>
+                        <p class="ware-tit-p"><span class="ware-tit-sp">共<b>{{sale.details.qty}}</b>件</span><span>采购价：<b><i>¥</i>{{sale.details.finalSellingPrice | filterFinalSellingPrice}}</b></span></p>
+                    </em>
+                </em>
+            </div>
+        </div>
+        <div v-else style="text-align: center;margin-top: 160px;">
+            没有订单数据
+        </div>
+    </section>
+    <script src="/js/lib/require.js" data-main="/js/sales/sale_list.js?time="+(new Date()).getTime()></script>
+</body>
+</html>

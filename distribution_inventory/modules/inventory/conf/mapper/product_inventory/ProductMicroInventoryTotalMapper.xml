@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product_inventory.ProductMicroInventoryTotalMapper" >
+  <resultMap id="BaseResultMap" type="entity.product_inventory.ProductMicroInventoryTotal" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="product_title" property="productTitle" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <!--<result column="residue_num" property="residueNum" jdbcType="INTEGER" />-->
+  </resultMap>
+  <resultMap id="InventoryEnquiryMap" type="dto.product_inventory.ProductInventoryEnquiryResult" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sku" property="csku" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="stock" property="stockNum" jdbcType="INTEGER" />
+    <result column="account" property="disAccount" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="MemberViewMap" type="dto.product_inventory.MicroInventoryQueryResult" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="product_title" property="productTitle" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="lockNum" property="lockNum" jdbcType="INTEGER" />
+    <!--<result column="residue_num" property="residueNum" jdbcType="INTEGER" />-->
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sku, warehouse_id, warehouse_name, stock, product_title, update_time, create_time, account,
+    category_id, category_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from public.t_product_micro_inventory_total
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByParam" resultMap="BaseResultMap" parameterType="entity.product_inventory.ProductMicroInventoryTotal">
+  	select
+    <include refid="Base_Column_List" />
+    from public.t_product_micro_inventory_total
+    <where>
+    	1=1
+      <if test="sku != null" >
+       and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="warehouseName != null" >
+        and warehouse_name = #{warehouseName,jdbcType=VARCHAR}
+      </if>
+      <if test="categoryId != null" >
+        and category_id = #{categoryId,jdbcType=INTEGER}
+      </if>
+      <if test="categoryName != null" >
+        and category_name = #{categoryName,jdbcType=VARCHAR}
+      </if>
+      <if test="stock != null" >
+        and stock = #{stock,jdbcType=INTEGER}
+      </if>
+      <if test="productTitle != null" >
+        and product_title = #{productTitle,jdbcType=VARCHAR}
+      </if>
+      <if test="updateTime != null" >
+        and update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createTime != null" >
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="account != null" >
+       and account = #{account,jdbcType=VARCHAR}
+      </if>
+    </where>
+    LiMIT 1
+  </select>
+  <select id="selectMicroTotalListByParam" resultMap="BaseResultMap" parameterType="dto.product_inventory.ProductMicroInventoryDetailSearchDto">
+  	select
+    <include refid="Base_Column_List" />
+    from public.t_product_micro_inventory_total
+    <where>
+      <if test="avaliableStock != null and avaliableStock==1" >
+        and stock > 0
+      </if>
+      <if test="account != null" >
+        and account = #{account,jdbcType=VARCHAR}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="categoryId != null" >
+        and category_id = #{categoryId,jdbcType=INTEGER}
+      </if>
+      <if test="categoryName != null" >
+        and category_name = #{categoryName,jdbcType=VARCHAR}
+      </if>
+      <if test="title != null" >
+        and product_title '%'||#{title}||'%'
+      </if>
+      <if test="key != null">
+		and (sku like '%'||#{key}||'%' or product_title like '%'||#{key}||'%')
+	  </if>
+      <if test="skus != null and skus.size()>0" >
+        and sku in 
+        <foreach collection="skus" index="index" item="item" open="(" separator="," close=")">
+			     #{item}
+	    </foreach>
+      </if>
+    </where>
+  	<if test="pageSize != null">
+	   	limit #{pageSize} offset (#{currPage}-1)*#{pageSize}
+	</if>
+  </select>
+  
+  <select id="selectForMemberViewByParam" resultMap="MemberViewMap" parameterType="dto.product_inventory.ProductMicroInventoryDetailSearchDto">
+  	SELECT
+		b.product_title,b.sku,b.warehouse_id,b.warehouse_name,(b.stock-b.lockNum) as stock,b.lockNum
+		FROM
+			(
+				SELECT
+					*, COALESCE (t2.locked, 0) AS lockNum
+				FROM
+					t_product_micro_inventory_total t1
+				LEFT JOIN (
+					SELECT
+						sku AS sku2,
+						SUM (stock_locked) AS locked
+					FROM
+						t_product_micro_inventory_order_lock
+					WHERE
+						account = #{account,jdbcType=VARCHAR}
+					AND is_effective !=0
+					GROUP BY
+						sku,warehouse_id
+				) AS t2 ON t1.sku = t2.sku2
+				<where>
+      				<if test="account != null" >
+       				 and t1.account = #{account,jdbcType=VARCHAR}
+			     	</if>
+			      <if test="warehouseId != null" >
+			        and t1.warehouse_id = #{warehouseId,jdbcType=INTEGER}
+			      </if>
+			      <if test="categoryId != null" >
+			        and t1.category_id = #{categoryId,jdbcType=INTEGER}
+			      </if>
+			      <if test="categoryName != null" >
+			        and t1.category_name = #{categoryName,jdbcType=VARCHAR}
+			      </if>
+			      <if test="title != null" >
+			        and t1.product_title '%'||#{title}||'%'
+			      </if>
+			      <if test="key != null">
+					and (t1.sku like '%'||#{key}||'%' or t1.product_title like '%'||#{key}||'%')
+				  </if>
+			      <if test="skus != null and skus.size()>0" >
+			        and t1.sku in 
+			        <foreach collection="skus" index="index" item="item" open="(" separator="," close=")">
+						     #{item}
+				    </foreach>
+			      </if>
+    		</where>
+			) AS b
+		<where>
+			<if test="avaliableStock != null and avaliableStock==1" >
+       			and b.stock - b.lockNum > 0
+     		</if>
+     		<if test="avaliableStock != null and avaliableStock==0" >
+       			and b.stock - b.lockNum = #{avaliableStock,jdbcType=INTEGER}
+     		</if>
+		</where>
+	<if test="pageSize != null">
+	   	limit #{pageSize} offset (#{currPage}-1)*#{pageSize}
+	</if>
+  </select>
+  
+  <select id="getTotal" resultType="Integer" parameterType="dto.product_inventory.ProductMicroInventoryDetailSearchDto">
+  SELECT
+		count(1)
+		FROM
+			(
+				SELECT
+					*, COALESCE (t2.locked, 0) AS lockNum
+				FROM
+					t_product_micro_inventory_total t1
+				LEFT JOIN (
+					SELECT
+						sku AS sku2,
+						SUM (stock_locked) AS locked
+					FROM
+						t_product_micro_inventory_order_lock
+					WHERE
+						account = #{account,jdbcType=VARCHAR}
+					AND is_effective !=0
+					GROUP BY
+						sku,warehouse_id
+				) AS t2 ON t1.sku = t2.sku2
+				<where>
+      				<if test="account != null" >
+       				 and t1.account = #{account,jdbcType=VARCHAR}
+			     	</if>
+			      <if test="warehouseId != null" >
+			        and t1.warehouse_id = #{warehouseId,jdbcType=INTEGER}
+			      </if>
+			      <if test="categoryId != null" >
+			        and t1.category_id = #{categoryId,jdbcType=INTEGER}
+			      </if>
+			      <if test="categoryName != null" >
+			        and t1.category_name = #{categoryName,jdbcType=VARCHAR}
+			      </if>
+			      <if test="title != null" >
+			        and t1.product_title '%'||#{title}||'%'
+			      </if>
+			      <if test="key != null">
+					and (t1.sku like '%'||#{key}||'%' or t1.product_title like '%'||#{key}||'%')
+				  </if>
+			      <if test="skus != null and skus.size()>0" >
+			        and t1.sku in 
+			        <foreach collection="skus" index="index" item="item" open="(" separator="," close=")">
+						     #{item}
+				    </foreach>
+			      </if>
+    		</where>
+			) AS b
+		<where>
+			<if test="avaliableStock != null and avaliableStock==1" >
+       			b.stock - b.lockNum > 0
+     		</if>
+     		<if test="avaliableStock != null and avaliableStock==0" >
+       			b.stock - b.lockNum = #{avaliableStock,jdbcType=INTEGER}
+     		</if>
+		</where>
+  </select>
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from public.t_product_micro_inventory_total
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product_inventory.ProductMicroInventoryTotal" >
+    insert into public.t_product_micro_inventory_total (id, sku, warehouse_id, 
+      warehouse_name, stock, product_title, 
+      update_time, create_time,account,category_id,category_name)
+    values (#{id,jdbcType=INTEGER}, #{sku,jdbcType=VARCHAR}, #{warehouseId,jdbcType=INTEGER}, 
+      #{warehouseName,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, #{productTitle,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{account,jdbcType=VARCHAR},
+      #{warehouseId,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product_inventory.ProductMicroInventoryTotal" >
+    insert into public.t_product_micro_inventory_total
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+       <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="productTitle != null" >
+        product_title,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+       <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryName != null" >
+     	#{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="productTitle != null" >
+        #{productTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product_inventory.ProductMicroInventoryTotal" >
+    update public.t_product_micro_inventory_total
+    <set >
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+       <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="productTitle != null" >
+        product_title = #{productTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+
+      <!--<if test="residueNum != null" >-->
+        <!--residue_num = #{residueNum,jdbcType=INTEGER},-->
+      <!--</if>-->
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product_inventory.ProductMicroInventoryTotal" >
+    update public.t_product_micro_inventory_total
+    set sku = #{sku,jdbcType=VARCHAR},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=INTEGER},
+      category_name = #{categoryName,jdbcType=VARCHAR},
+      stock = #{stock,jdbcType=INTEGER},
+      product_title = #{productTitle,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      account = #{account,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateMicroTotalStockNum" parameterType="entity.product_inventory.ProductMicroInventoryTotal" >
+    update public.t_product_micro_inventory_total
+    <set >
+      <if test="stock != null" >
+        stock =stock+ #{stock,jdbcType=INTEGER},
+      </if>
+      <!--<if test="residueNum != null" >-->
+        <!--residue_num =residue_num+ #{residueNum,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <where>
+      <if test="sku != null" >
+        and sku = #{sku,jdbcType=VARCHAR}
+      </if>
+      <if test="warehouseId != null" >
+        and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+      </if>
+      <if test="account != null" >
+        and account = #{account,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </update>
+  
+  <select id="selectbyemail" parameterType="java.lang.String" resultType="dto.warehousing.MicroRealWarehouseDto">
+		SELECT DISTINCT
+			iv.warehouse_id AS warehouseId,
+			iv.warehouse_name warehouseName
+		FROM 
+			(SELECT
+			b.product_title,b.sku,b.warehouse_id,b.warehouse_name,(b.stock-b.lockNum) as stock,b.lockNum
+			FROM
+				(
+					SELECT
+						*, COALESCE (t2.locked, 0) AS lockNum
+					FROM
+						t_product_micro_inventory_total t1
+					LEFT JOIN (
+						SELECT
+							sku AS sku2,
+							SUM (stock_locked) AS locked
+						FROM
+							t_product_micro_inventory_order_lock
+						WHERE
+							account = #{email,jdbcType=VARCHAR}
+						AND is_effective !=0
+						GROUP BY
+							sku,warehouse_id
+					) AS t2 ON t1.sku = t2.sku2
+						where    account = #{email,jdbcType=VARCHAR}
+				) AS b
+				where stock > 0
+			) iv
+	</select>
+  
+  	<select id="microInventory" resultMap="InventoryEnquiryMap" parameterType="dto.product_inventory.ProductInventoryEnquiryRequest">
+		SELECT
+		  	pmt.id,
+			pmt.sku,
+			pmt.warehouse_id,
+			pmt.warehouse_name,
+			pmt.account,
+			(pmt.stock - COALESCE(tmp.stock_locked,0)) stock_num 
+		FROM
+			t_product_micro_inventory_total pmt
+		LEFT JOIN (
+			SELECT
+				oo.sku,
+				oo.warehouse_id,
+				SUM (oo.stock_locked) stock_locked
+			FROM
+				t_product_micro_inventory_order_lock oo
+			WHERE
+				oo.is_effective != 0
+			GROUP BY
+				oo.sku,
+				oo.warehouse_id
+		) tmp ON tmp.sku = pmt.sku
+		AND tmp.warehouse_id = pmt.warehouse_id
+  	</select>
+</mapper>

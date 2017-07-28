@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.ReceiptModeMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.ReceiptMode" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="receipt_account" property="receiptAccount" jdbcType="VARCHAR" />
+    <result column="payee" property="payee" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="bank_id" property="bankId" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, receipt_account, payee, create_date, bank_id, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_receipt_mode
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_receipt_mode
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.ReceiptMode" >
+    insert into t_dis_receipt_mode (id, receipt_account,
+      payee, create_date, bank_id, remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{receiptAccount,jdbcType=VARCHAR},
+      #{payee,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{bankId,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.ReceiptMode" >
+    insert into t_dis_receipt_mode
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="receiptAccount != null" >
+        receipt_account,
+      </if>
+      <if test="payee != null" >
+        payee,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="bankId != null" >
+        bank_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="receiptAccount != null" >
+        #{receiptAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="payee != null" >
+        #{payee,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bankId != null" >
+        #{bankId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.ReceiptMode" >
+    update t_dis_receipt_mode
+    <set >
+      <if test="receiptAccount != null" >
+        receipt_account = #{receiptAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="payee != null" >
+        payee = #{payee,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bankId != null" >
+        bank_id = #{bankId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.ReceiptMode" >
+    update t_dis_receipt_mode
+    set receipt_account = #{receiptAccount,jdbcType=VARCHAR},
+      payee = #{payee,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      bank_id = #{bankId,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getAllReceiptModes" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_receipt_mode
+    order by id asc
+  </select>
+</mapper>

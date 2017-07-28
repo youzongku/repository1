@@ -1,0 +1,290 @@
+
+
+
+GET         /es/index/create                  @controllers.product.EsProductController.createProductIndex()
+
+GET         /es/data/init                     @controllers.product.EsProductController.initProductDatas()
+
+GET         /api/productDetail                @controllers.product.ProductController.product(sku:String,wd:Integer,md:Integer ?= null)
+
+POST		/api/setSalable                   @controllers.product.ProductController.setSalable()
+POST		/api/log/salable                  @controllers.product.ProductController.getSalableSetLogs()
+
+POST        /api/fgetProducts                 @controllers.product.ProductController.fproducts()
+
+POST        /api/fproductsForImport           @controllers.product.ProductController.fproductsForImport()
+
+POST        /api/getProducts                  @controllers.product.ProductController.products() 
+
+POST        /api/getProductsAndStock		  @controllers.product.ProductController.getProductAndStock()
+
+POST        /api/createProductsAndStockFile   @controllers.product.ProductController.createProductAndStockFile()
+
+GET			/api/getProductsAndStockFile      @controllers.product.ProductController.getProductAndStockFileResult()
+
+GET	        /elastic-search/init              @controllers.product.EsProductController.initProductDatas()
+
+POST        /elastic-search/products          @controllers.product.EsProductController.productFromEs()
+
+DELETE      /elastic-search/products/:id      @controllers.product.EsProductController.delete(id : String)
+
+GET			/api/preRender					  @controllers.product.ProductController.indexPreRender()
+
+POST        /elastic-search/products          @controllers.product.EsProductController.productFromEs()
+
+DELETE      /elastic-search/products/:id      @controllers.product.EsProductController.delete(id : String)
+
+POST        /api/totalAWPrice                 @controllers.product.ProductDispriceContoller.getTotalArriveWarePrice()
+
+POST        /api/AWPrices                     @controllers.product.ProductDispriceContoller.batchGetArriveWarePrice()
+
+GET         /api/getSkus                      @controllers.product.ProductController.getSkusList(catId:Integer ?= null)
+
+GET         /api/reload                       @controllers.product.ProductController.reloadCategory(cateName : Boolean ?= true,skuMapping : Boolean ?= true,wareMap : Boolean ?= true)
+
+GET         /api/getUrl                       @controllers.product.ProductController.getImgUrl(sku : String)
+
+POST        /mirc-inventory                	  @controllers.product.ProductController.inventoryGoods()
+
+POST        /api/addProductType 	          @controllers.product.ProductController.addProductType()
+
+POST        /api/changeProductType 	          @controllers.product.ProductController.changeProductType()
+
+GET         /api/getAllTypes                  @controllers.product.ProductController.getAllTypes()
+
+POST        /api/chooseProductType 	          @controllers.product.ProductController.chooseProductType()
+
+GET         /api/deleteType	                  @controllers.product.ProductController.deleteType(tid : Integer)
+
+GET         /api/productInventoryExprot		  @controllers.product.ProductController.productInventoryDataExport()
+
+GET         /api/exportProsStocks             @controllers.product.ProductController.exportProductsStocks()
+
+POST        /api/tempexport					  @controllers.product.CommonExportController.export()
+ 
+GET         /api/temdownload				  @controllers.product.CommonExportController.downLoad()
+#-----------------------------------------------------------------
+
+POST        /api/vcQuery                      @controllers.category.CategoryController.virtualCategoryQuery()
+
+POST        /api/vcQueryAll                   @controllers.category.CategoryController.virtualCategoryQueryAll()
+
+GET         /api/vcQueryParent                @controllers.category.CategoryController.queryVirtualParent(vcId:Integer)
+
+GET         /api/realCateQuery                @controllers.category.CategoryController.realCategoryQuery(level:Integer ?= null)
+
+POST        /api/getProductsByVrtCtgId        @controllers.category.CategoryController.getProductsByVrtCtgId()
+
+POST        /api/getSkuList                   @controllers.category.CategoryController.getSkuListByVrtCtId()
+
+POST        /api/getAllSkuListByParam         @controllers.category.CategoryController.getAllSkuListByParam()
+
+GET         /api/cateDetail                   @controllers.category.CategoryController.queryCateDetail(vcId : Integer)
+
+GET         /assets/*file                             controllers.product.Assets.at(path="/public", file)
+
+GET         /api/getBrand                     @controllers.product.ProductController.getBrand()
+
+#--------------------------------------------Special Price Area---------------------------------------------#
+
+POST        /mktool/activities                @controllers.marketing.SpriceController.findActivities()
+
+POST        /mktool/actposter                 @controllers.marketing.SpriceController.uploadPoster()
+
+POST        /mktool/saveactivity              @controllers.marketing.SpriceController.saveActivity()
+
+POST        /mktool/saveactgoods              @controllers.marketing.SpriceController.saveActProduct()
+
+GET         /mktool/delpro                    @controllers.marketing.SpriceController.delActProduct()
+
+GET         /mktool/openact                   @controllers.marketing.SpriceController.openActivity()
+
+GET         /mktool/getactinfo                @controllers.marketing.SpriceController.getActInfo()
+
+GET         /mktool/closeact                  @controllers.marketing.SpriceController.closeActivity()
+
+GET         /mktool/delposter                 @controllers.marketing.SpriceController.deletePoster()
+
+GET         /spact/opened                     @controllers.marketing.SpriceController.findOpenedActivities()
+
+GET         /spact/poster                     @controllers.marketing.SpriceController.getActPoster()
+
+#---------------------------------------------- fix a price area---------------------------------------------------------#
+
+POST        /fixprice/read                    @controllers.product.ProductController.getProDisPriceList()                   
+
+GET         /fixprice/readrule                @controllers.product.ProductDispriceContoller.getPriceRule()
+
+POST        /fixprice/setrule				  @controllers.product.ProductController.updatePricerule()					
+
+POST        /fixprice/addfactor               @controllers.product.ProductController.addPriceFactor()
+
+GET         /fixprice/getprice                @controllers.product.ProductController.getDisPrice(id:Integer)
+
+POST        /fixprice/setprice                @controllers.product.ProductDispriceContoller.setDisPrice(type:String ?= null)
+
+POST        /fixprice/setprice/base           @controllers.product.ProductDispriceContoller.setBasePrice()
+
+POST        /fixprice/setprice/dis            @controllers.product.ProductDispriceContoller.setDistributorPrice()
+
+POST        /fixprice/setprice/ftz            @controllers.product.ProductDispriceContoller.setFtzPrice()
+
+POST        /fixprice/setprice/ele            @controllers.product.ProductDispriceContoller.setElePrice()
+
+POST        /fixprice/setprice/sup            @controllers.product.ProductDispriceContoller.setSupPrice()
+
+POST        /fixprice/setprice/vip            @controllers.product.ProductDispriceContoller.setVipPrice()
+
+GET         /fixprice/readpricelog            @controllers.product.ProductDispriceContoller.readPriceLog(priceIid:Integer,tp:String) 
+
+POST        /fixprice/bcsetprice              @controllers.product.ProductController.oneKeySetPrice(type : String ?= null)   
+
+POST        /fixprice/bcsetprice/base         @controllers.product.ProductController.oneKeySetBasePrice() 
+
+POST        /fixprice/bcsetprice/dis          @controllers.product.ProductController.oneKeySetDistributorPrice() 
+
+POST        /fixprice/bcsetprice/ftz          @controllers.product.ProductController.oneKeySetFtzPrice() 
+
+POST        /fixprice/bcsetprice/ele          @controllers.product.ProductController.oneKeySetElePrice() 
+
+POST        /fixprice/bcsetprice/sup          @controllers.product.ProductController.oneKeySetSupPrice() 
+
+POST        /fixprice/bcsetprice/vip          @controllers.product.ProductController.oneKeySetVipPrice() 
+
+POST        /fixprice/readpricelog            @controllers.product.ProductController.getPriceOperateRecord()
+
+POST        /fixprice/rulelog                 @controllers.product.ProductDispriceContoller.readRuleLog() 
+
+POST        /fixprice/b2cSyncPrice            @controllers.product.ProductController.b2cUpdatePrice() 
+
+POST        /fixprice/readfactor          	  @controllers.product.ProductDispriceContoller.readPriceFactor()
+
+GET        	/fixprice/initData                @controllers.product.ProductDispriceContoller.initCateData()
+
+GET        	/fixprice/exportBbcPrice          @controllers.product.ProductController.exportBbcPrice()
+
+POST        /fixprice/clearancePrice          @controllers.product.ProductDispriceContoller.clearancePrice()
+
+#---------------------------------------------- banner ---------------------------------------------------------#
+
+POST        /banner/upload                    @controllers.banner.BannerController.uploadBannerImg()
+
+GET         /banner/getBannerInfo             @controllers.banner.BannerController.getPartBanner()
+
+GET         /banner/getBannerImg              @controllers.banner.BannerController.getBannerImg()
+
+POST        /banner/deleteBanner              @controllers.banner.BannerController.deleteBanner()
+
+POST        /banner/getBannerById             @controllers.banner.BannerController.getBannerById()
+
+GET         /banner/getAllBanner              @controllers.banner.BannerController.getAllBanner()
+
+#---------------------------------------------- contract fee---------------------------------------------------------#
+
+POST   		/contract/feetype/addContractFeetype	@controllers.contract.ContractFeetypeController.addContractFeetype()
+
+POST   		/contract/feetype/getContractFeetypes	@controllers.contract.ContractFeetypeController.getContractFeetypes()
+
+POST   		/contract/fee/inputRealFee				@controllers.contract.ContractFeeItemMgrController.inputRealFee()
+GET   		/contract/fee/remove/:feeItemId			@controllers.contract.ContractFeeItemMgrController.deleteContractFeeItem(feeItemId:Integer)
+GET   		/contract/fee/finishEarly/:feeItemId	@controllers.contract.ContractFeeItemMgrController.finishAheadOfTime(feeItemId:Integer)
+POST   		/contract/fee/add						@controllers.contract.ContractFeeItemMgrController.addContractFeeItem()
+POST   		/contract/fee/update					@controllers.contract.ContractFeeItemMgrController.updateContractFeeItem()
+POST   		/contract/fee/items						@controllers.contract.ContractFeeItemMgrController.getContractFeeItemsPage()
+POST   		/contract/fee/items4cal					@controllers.contract.ContractFeeItemMgrController.getContractFeeItems4Calculation()
+GET   		/contract/fee/logs/:feeItemId			@controllers.contract.ContractFeeItemMgrController.getLogs(feeItemId:Integer)
+GET   		/contract/fee/:feeItemId				@controllers.contract.ContractFeeItemMgrController.getContractFeeItemDto(feeItemId:Integer)
+POST   		/contract/fee/contractPros				@controllers.contract.ContractFeeItemMgrController.getContractPros()
+
+#---------------------------------------------- contract ---------------------------------------------------------#
+
+POST   		/contract/add			@controllers.contract.ContractManagerController.addContract()
+
+POST   		/contract/get			@controllers.contract.ContractManagerController.getContract()
+
+POST   		/contract/update		@controllers.contract.ContractManagerController.updateContract()
+
+GET   		/contract/oprecord		@controllers.contract.ContractManagerController.getOprecord(cno : String)
+
+GET   		/contract/attachment	@controllers.contract.ContractManagerController.getAttachment(cno : String)
+
+POST   		/attachment/delete		@controllers.contract.ContractManagerController.deleteAttachment()
+
+GET   		/attachment/view		@controllers.contract.ContractManagerController.pictureView(aid : Integer)
+
+GET   		/attachment/download	@controllers.contract.ContractManagerController.download(cno : String)
+
+POST        /quoted/batch/add       @controllers.contract.QuotedManagerController.quotedBatchAdd()
+
+GET        /quoted/early/:qid        @controllers.contract.QuotedManagerController.earlyTermination(qid:Integer)
+
+POST   		/quoted/add				@controllers.contract.QuotedManagerController.quotedAdd()
+
+GET   		/quoted/del				@controllers.contract.QuotedManagerController.quotedDelete(qid : Integer)
+
+POST   		/quoted/update			@controllers.contract.QuotedManagerController.quotedUpdate()
+
+POST   		/quoted/get				@controllers.contract.QuotedManagerController.quotedGet()
+
+GET         /quoted/rdo/:qid	    @controllers.contract.QuotedManagerController.quotedReadOne(qid : Integer)
+
+GET   		/quoted/oprecord		@controllers.contract.QuotedManagerController.quotedOprecord(qid : Integer)
+
+GET   		/quoted/auto			@controllers.contract.QuotedManagerController.auto()
+
+GET   		/quoted/batchSetCategoryId			@controllers.contract.QuotedManagerController.batchSetCategoryId()
+
+GET         /charges/type/get       @controllers.contract.ChargesManagerController.typeGet()
+
+GET         /charges/:cid/get       @controllers.contract.ChargesManagerController.get(cid : Integer)
+
+POST		/charges/create         @controllers.contract.ChargesManagerController.create()
+
+POST        /charges/update         @controllers.contract.ChargesManagerController.update()
+
+GET         /charges/:cid/oprecord  @controllers.contract.ChargesManagerController.oprecord(cid:Integer)
+
+POST        /charges/pages          @controllers.contract.ChargesManagerController.pages()
+
+POST   		/contract/uploadContractAttachment			@controllers.contract.ContractManagerController.uploadContractAttachment()
+
+POST        /charges/match          @controllers.contract.ChargesManagerController.matchCharge()
+
+GET         /charges/del/:cid		@controllers.contract.ChargesManagerController.delete(cid:Integer)
+
+GET        /charges/early/:cid        @controllers.contract.ChargesManagerController.earlyTermination(cid:Integer)
+#----------------------------------------- inventory lock--------------------------------------------------------#
+
+POST        /lock/create            @controllers.product.InventoryLockController.create()    
+
+GET        	/lock/get/:id           @controllers.product.InventoryLockController.get(id:Integer)  
+
+GET        	/lock/release/:id       @controllers.product.InventoryLockController.release(id:Integer)
+
+POST        /lock/de/page           @controllers.product.InventoryLockController.detailPages()
+
+POST        /lock/page              @controllers.product.InventoryLockController.page()
+
+POST        /lock/cloud             @controllers.product.InventoryLockController.cloud()
+
+POST        /lock/cloudlock         @controllers.product.InventoryLockController.cloudlock()
+
+POST        /lock/microlock         @controllers.product.InventoryLockController.microlock()
+
+GET         /lock/stock             @controllers.product.InventoryLockController.stock(sku:String,wareId:Integer)  
+
+POST        /lock/expro             @controllers.product.InventoryLockController.cloudSelectedExpirationDates()
+
+POST        /lock/reset             @controllers.product.InventoryLockController.reSetLock()
+
+POST        /lock/record            @controllers.product.InventoryLockController.records()
+
+POST        /lock/record/de            @controllers.product.InventoryLockController.resetDetails()
+
+#---------------------------api modoule-----------------------------------------#
+
+GET         /api                                     @controllers.api.ApiController.getResources()
+
+GET         /api/:path                                @controllers.api.ApiController.getResource(path:String)
+
+#------------------------------------------------product module----------------------------------------------#

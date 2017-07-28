@@ -1,0 +1,183 @@
+<script src="../../js/backstage/lib/laydate/laydate.js"></script>
+<!--录入发货单-->
+<div class="addsalesBackStage">
+    <div class="record_sendList_box" style="display: block">
+        <h1><span id="input_sales_order_title">微仓进货</span><span>---</span><span>发货单录入</span>
+        <span class="record_sendList_do">
+            <button onclick="generateSaleOrder()" id="submit_sale" style="cursor: pointer;">生成订单</button>
+        </span>
+        </h1>
+        <div class="commodity_attribute_title">
+            <h2>第一步：选择分销商</h2>
+        </div>
+        <div class="record_sendList_line firstStep">
+            <p>
+                <span>分销商：</span>
+                <input id="inso_email" readonly class="selected_email" type="text">
+                <button style="cursor: pointer;" id="importChoice_disturb">选择</button>
+            </p>
+        </div>
+    </div>
+
+    <div>
+        <div class="commodity_attribute_title">
+            <h2>第二步：选择商品</h2>
+        </div>
+        <button style="cursor: pointer;margin-left: 20px;" onclick="showErpSto()" class="record_sendList_choice" >查看ERP库存</button>
+        <button style="cursor: pointer;" class="record_sendList_choice" onclick="inputso_selectProducts()">选择商品</button>
+        <div class="select-warehouse-product" style="display: none;">
+            我的微仓:&nbsp;&nbsp;
+            <label><input type='radio' name = 'select_ware'>全选深圳仓商品</label>
+        </div>
+        <div style="width: 1085px;max-height: 366px;overflow-y:scroll;overflow-x:hidden;">
+            <table class="record_sendList_table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>商品编号</th>
+                        <th>商品名称</th>
+                        <th>国际条码</th>
+                        <th>所属仓库</th>
+                        <th>云仓库存</th>
+                        <th>微仓库存</th>
+                        <th>到期日期</th>
+                        <th>分销价(元)</th>
+                        <th>真实售价(元)</th>
+                        <th>发货数量(个)</th>
+                        <th>小结(元)</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <div class="commodity_attribute_title">
+            <h2>第三步：收货信息</h2>
+        </div>
+        <div class="record_sendList_line">
+            <p>
+                <b style="color:#E7EBEE">*</b>
+                <span>自动匹配格式：</span>
+                <select id="address_template">
+                    <option value="">请选择地址格式</option>
+                    <option value="1">淘宝千牛格式</option>
+                    <option value="2">淘宝网页格式</option>
+                </select>
+                <input name="address2Parsed" type="text">
+                <button onclick="sureMatch()">确定添加</button>
+            </p>
+            <p>
+                <b class="red">*</b>
+                <span>收货人姓名：</span>
+                <input id="receiveName" type="text">
+            </p>
+            <p>
+                <b class="red">*</b>
+                <span>手机号码：</span>
+                <input id="sale_tel" type="text">
+            </p>
+            <p>
+                <b class="red">*</b>
+                <span>收货地址：</span>
+                <select id="sale_province"><option selected>请选择省</option></select>
+                <select id="sale_city"><option selected>请选择市</option></select>
+                <select id="sale_region"><option selected>请选择区</option></select>
+                <input id="address_detail" type="text" style="width:300px;" placeholder="无需重复填写省市区，必须大于5个字符，小于120个字符">
+            </p>
+            <p>
+                <b style="color:#E7EBEE">*</b>
+                <span>邮政编码：</span>
+                <input id="sale_postcode" type="text">
+            </p>
+        </div>
+    </div>
+
+    <div>
+        <div class="commodity_attribute_title">
+            <h2>第四步：支付信息</h2>
+        </div>
+        <div class="record_sendList_line">
+            <p>
+                <b class="red">*</b>
+                <span>运送方式：</span>
+                <select id="shippings"></select>
+                <input id = "thirdPostfee" style="display: none;width: 120px;height: 22px;margin-left: 5px;" placeholder="第三方物流费用">
+                <span id="sale_freight">运费：￥<b class="red"></b></span>
+            </p>
+            <p>
+                <b class="red">*</b>
+                <span>待付金额：</span>
+                <span class="">￥<b id="total" class="red">0</b></span>
+            </p>
+            <p><input id="auto_check" style="cursor: pointer;" onclick="checkdBanlance(this);" class="autoFreight" type="checkbox" checked="checked">从分销商账户余额扣除费用</p>
+        </div>
+    </div>
+</div>
+
+<!--商品弹窗-->
+<div class="add_sendProduct_pop display">
+    <ul class="search_category" style="min-width:600px;">
+        <li>商品分类：
+            <select id="product_select" onchange="inputso_searchProducts()"></select>
+        </li>
+        <li>所属仓库：
+            <select id="warehouse_select" onchange="inputso_searchProducts()"></select>
+        </li>
+        <li>
+            <div class="search">
+                <input onkeyup="enter_keyUp(event,this, inputso_searchProducts)" class="searchInput" placeholder="商品名称/SKU(，隔开可多个查询)" style="width: 198px;">
+                <input onclick="inputso_searchProducts()" class="searchButton" value="搜索" type="submit">
+            </div>
+        </li>
+    </ul>
+    <table class="my_micro_product">
+        <thead>
+            <tr>
+                <th>商品编号</th>
+                <th>商品名称</th>
+                <th>国际条码</th>
+                <th>所属仓库</th>
+                <th>云仓库存</th>
+                <th>微仓库存</th>
+                <th>分销价(元)</th>
+                <th>市场零售价(元)</th>
+                <th>全选<input type="checkbox" style="cursor:pointer" name="all-check"></th>
+                <!--<th>采购数量(个)</th>-->
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <div class="clear"></div>
+    <div id="myProducts_pagination" style="text-align: center; margin-top: 30px;"></div>
+</div>
+
+<!--分销商弹窗-->
+<div class="display" id="iso_distract_choice_pop_div">
+    <div style="margin-top: 10px;margin-left: 10px;">
+        <input onkeyup="enter_keyUp(event,this, get_distributes_list)" style="width: 204px;" class="searchInput" placeholder="分销账号/名称/手机号"/>
+        <button class="searchButton" onclick="get_distributes_list(1)">搜索</button>
+    </div>
+    <table style="width: 541px;margin-left: 13px;margin-top: 10px;" class="operation_table">
+        <thead>
+        <tr>
+            <th style="width: 10%">勾选</th>
+            <th style="width: 35%">分销商账号</th>
+            <th style="width: 20%">名称</th>
+            <th style="width: 35%">手机号</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <div class="clear"></div>
+    <div id="sales_distribution_pagination" style="text-align: center; margin-top: 30px;"></div>
+    <!--跳转到哪里-->
+    <input type="hidden" id="forword"/>
+</div>
+
+<!-- 生成订单-->
+<span class="record_sendList_do">
+    <button onclick="generateSaleOrder()" id="submit_sale" style="cursor: pointer;">生成订单</button>
+</span>

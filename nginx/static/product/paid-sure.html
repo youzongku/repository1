@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="shortcut icon" href="../img/favicon.ico"/>
+    <link rel="stylesheet" href="../css/public.css"/>
+    <link rel="stylesheet" href="../css/sub-details.css"/>
+    <link rel="stylesheet" href="../css/style/style.css"/>
+    <script type="text/javascript" src="/js/lib/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <!--<script charset="utf-8" src="https://wpa.b.qq.com/cgi/wpa.php"></script>-->
+    <script type="text/javascript">
+    </script>
+    <title>余额支付</title>
+</head>
+
+<body>
+<div id="div_head"></div>
+<div>
+    <div class="cart-borld content">
+        <h1 class="titile" style="margin:20px 0 10px 0;">收银台</h1>
+        <div class="cart-list">
+            <div class="product_table">
+                <table class="paid-order-list">
+                    <tr>
+                        <td style = "width:20%">订单编号</td>
+                        <td>卖家</td>
+                        <td>订单金额(元)</td>
+                        <td>运费(元)</td>
+                        <td>总金额(元)</td>
+                        <td>优惠金额(元)</td>
+                    </tr>
+                    <tr>
+                        <td class="purchaseNo" style = "width:20%"></td>
+                        <td>通淘供应链</td>
+                        <td class="productAmount"></td>
+                        <td class="bbcPostage"></td>
+                        <td class="totalAmount"></td>
+                        <td class="couponsAcount"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="paid-content">
+            <div class="padding-box">
+                <ul>
+                    <li><span class="">您的付款账户：</span></li>
+                    <li><span id="pay_accounts" style="text-align: left;"></span></li>
+                </ul>
+                <ul>
+                    <li><span class="">可支付余额：</span></li>
+                    <li><span id="mem_balance" style="text-align: left;"></span></li>
+                    <li><span class="money-less" style="display:none">您当前的余额不足，请立即充值。</span></li>
+                </ul>
+                <ul>
+                    <li><span class="">使用余额支付：</span></li>
+                    <li><b class="b-price"></b></li>
+                </ul>
+                <ul>
+                    <li><span class="">余额支付密码：</span></li>
+                    <li><input type="password" class="pay-code"/><span style="text-align: left;margin-left: 20px"></span></li>
+                    <li><a href="/personal/personal.html?emnunum=16" style="margin-left: 15px;">忘记密码？</a></li>
+                </ul>
+                <ul style="display: none;">
+                    <li><span class="">验证码：</span></li>
+                    <li>
+                    	<input type="text" id="pay_captcha" name="pay_captcha" style="width: 182px;height: 27px;">
+                    	<img id="wb_pay_img" src="" onclick="this.src='/member/getcaptcha?v='+Math.random();" style="display: inline-block; height: 28px; width: 92px; margin-left: 10px; vertical-align: -8px;cursor: pointer">
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="settle_accounts">
+            <input type="button" value="确认支付" id="paid">
+        </div>
+    </div>
+    <div id="div_footer"></div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="../js/product/payment.js"></script>
+<script type="text/javascript" src="../js/lib/layer2.0/layer.js"></script>

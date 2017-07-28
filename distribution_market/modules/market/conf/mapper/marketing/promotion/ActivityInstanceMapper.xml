@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.marketing.promotion.ActivityInstanceMapper" >
+  <resultMap id="BaseResultMap" type="entity.marketing.promotion.ActivityInstance" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pro_act_id" property="proActId" jdbcType="INTEGER" />
+    <result column="pro_type_id" property="proTypeId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="match_type" property="matchType" jdbcType="SMALLINT" />
+    <result column="is_delete" property="isDelete" jdbcType="BOOLEAN" />
+    <result column="attr" property="attr" jdbcType="SMALLINT" />
+  </resultMap>
+  
+  <select id="getActInstCountByProActId" resultType="java.lang.Integer">
+  	select count(*) from t_act_inst
+  	where is_delete=false and pro_act_id=#{proActId}
+  </select>
+  
+  <update id="deleteSoftlyByProTypeId" parameterType="java.lang.Integer">
+  	update t_act_inst set is_delete=true where pro_type_id = #{proTypeId,jdbcType=INTEGER}
+  </update>
+  
+  <update id="deleteSoftlyByPrimaryKey" parameterType="java.lang.Integer">
+  	update t_act_inst set is_delete=true where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="deleteSoftlyByIdList" parameterType="java.util.List">
+  	update t_act_inst set is_delete=true
+  	<where>
+    	<if test="idList!=null and idList.size>0">
+    		id in
+    		<foreach collection="idList" item="id" open="(" separator="," close=")">
+		      #{id}
+		    </foreach>
+    	</if>
+    </where>
+  </update>
+  
+  <sql id="Base_Column_List" >
+    id, pro_act_id, pro_type_id, name, is_delete,match_type, attr
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_act_inst
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByProActId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  	select 
+    <include refid="Base_Column_List" />
+    from t_act_inst
+    where pro_act_id = #{proActId} and is_delete = false
+  </select>
+  
+  <insert id="insert" parameterType="entity.marketing.promotion.ActivityInstance"  useGeneratedKeys="true" keyProperty="id">
+    insert into t_act_inst (pro_act_id, pro_type_id, name, is_delete, match_type, attr)
+    values (#{proActId,jdbcType=INTEGER}, #{proTypeId,jdbcType=INTEGER}, #{name}, 
+    #{isDelete}, #{matchType}, #{attr})
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.marketing.promotion.ActivityInstance" >
+    update t_act_inst
+    <set >
+      <if test="matchType != null" >
+        match_type = #{matchType},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getActivityInstanceAndType" parameterType="java.lang.Integer" resultType="dto.marketing.promotion.ActInstWithProTypeDto">
+	  select 
+	  ai.id actInstId, pt.id proTypeId, pt."name" "name", pt.description description, pt.attr attr
+	  from t_act_inst ai 
+	  LEFT JOIN t_pro_type pt 
+	  on ai.pro_type_id = pt."id"  
+	  where 
+	  ai.pro_act_id = #{id} and ai.is_delete = false
+  </select>
+</mapper>

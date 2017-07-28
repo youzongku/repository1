@@ -1,0 +1,247 @@
+.content-list{
+  width: 100%;
+  height: auto;
+  background: $cGf8;
+  .crumbs{
+    font-size: $f0;
+    padding: 20px 0;
+    .crumbs-l{
+      width: 1160px;
+      font-size: $f14;
+      display: inline-block;
+      i{
+        margin: 0 5px;
+      }
+      a{
+        color:nth($linkColor,1);
+        &:hover{
+          color:nth($linkColor,2);
+        }
+      }
+    }
+    .crumbs-r{
+      width: 40px;
+      font-size: $f14;
+      text-align: center;
+      display: inline-block;
+      a{
+        color:nth($linkColor,2);
+        &:hover{
+          color:nth($linkColor,3);
+        }
+      }
+    }
+  }
+  .classify{
+    background: $cW;
+    border: 1px solid $cGe9;
+    border-bottom: none;
+    .classify-box{
+      font-size: $f0;
+      padding: 15px 20px;
+      border-bottom: 1px solid $cGe9;
+      position: relative;
+      div{
+        width: 932px;
+        height: 39px;
+        overflow: hidden;
+        display: inline-block;
+      }
+      .classify-tit{
+        width: 80px;
+        font-size: $f14;
+        font-weight: 600;
+        padding: 10px 0;
+        display: inline-block;
+      }
+      a{
+        font-size: $f14;
+        padding: 10px;
+        display: inline-block;
+        vertical-align: top;
+        label{
+          font-size: $f0;
+          em{
+            font-size: $f14;
+            padding-left: 6px;
+          }
+        }
+      }
+    }
+    .classify-btn-box{
+      width: 228px;
+      font-size: 0;
+      display: inline-block;
+      position: absolute;
+      top: 14px;
+      text-align: right;
+      a{
+        font-size: $f14;
+        border:1px solid $cG9;
+        padding: 10px 16px;
+        margin-left: 14px;
+        cursor: pointer;
+        @include borderBox;
+        &:hover{
+          border:1px solid $cB1;
+        }
+      }
+    }
+  }
+  .search-box{
+    height: 48px;
+    margin: 15px 0 20px;
+    border: 1px solid $cGe9;
+    background: $cGf2;
+    font-size: $f0;
+    position: relative;
+    .search-box-span{
+      height: 48px;
+      line-height: 48px;
+      font-size: $f14;
+      border-right: 1px solid $cGe9;
+      text-align: center;
+      display: inline-block;
+      cursor: pointer;
+      position: relative;
+      span{
+        height: 48px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        display: inline-block;
+      }
+    }
+    .search-price{
+      &:hover ul{
+        display: block;
+        z-index: 1;
+      }
+      span{
+        width: 98px;
+      }
+    }
+    .search-warehouse{
+      background: url(../../img/arrows-b-g.png) no-repeat 78px center;
+      ul{
+        height: auto;
+        max-height: 220px;
+        overflow: auto;
+        z-index: 1;
+      }
+      span{
+        width: 70px;
+        padding: 0 20px 0 6px;
+      }
+    }
+    .search-price-interval{
+      height: 48px;
+      line-height: 48px;
+      font-size: $f14;
+      padding-left: 14px;
+      vertical-align: top;
+      display: inline-block;
+      span{
+        color: $cG9;
+      }
+      .btn-bule-min{
+        margin-left: 30px;
+      }
+    }
+    ul{
+      width: 98px;
+      display: none;
+      position: absolute;
+      top: 49px;
+      left: -1px;
+      background: $cW;
+      border-left: 1px solid $cGe9;
+      border-right: 1px solid $cGe9;
+      li{
+        border-bottom: 1px solid $cGe9;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .goods-category{
+    width: 100%;
+    overflow: hidden;
+    display: inline-block;
+    li{
+      width: 232px;
+      height: 380px;
+      margin: 0 10px 20px 0;
+      border: 1px solid $cGe9;
+      background: $cW;
+      @include borderBox;
+      float: left;
+      position: relative;
+      &:hover{
+        border: 1px solid $cOrgffc;
+      }
+      .product-top{
+        div{
+          width: 230px;
+          height: 232px;
+          line-height: 232px;;
+          overflow: hidden;
+          text-align: center;
+          position: relative;
+          margin-bottom: 10px;
+          float: left;
+          img{
+            vertical-align: middle;
+          }
+        }
+        p{
+          width: 192px;
+          padding: 0 20px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .bar-code{
+          color: $cG9;
+          padding-bottom: 3px;
+        }
+        .product-title{
+          color: $cG5;
+          padding-bottom: 9px;
+        }
+        .product-price{
+          color: $cRec;
+          font-size: $f18;
+        }
+      }
+      .product-bottom{
+        width: 100%;
+        height: 56px;
+        line-height: 56px;
+        border: 1px solid $cOrgffc;
+        position: absolute;
+        bottom: -1px;
+        left: -1px;
+        font-size: $f0;
+        span{
+          width: 50%;
+          font-size: $f14;
+          color: $cOrgff8;
+          text-align: center;
+          display: inline-block;
+          cursor: pointer;
+          box-sizing: border-box;
+        }
+      }
+    }
+  }
+}
+
+.all-classify-box{
+  .content-top-left{
+    padding-top: 2px;
+    display: none;
+  }
+}

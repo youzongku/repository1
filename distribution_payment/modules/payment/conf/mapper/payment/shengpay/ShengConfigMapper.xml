@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.payment.shengpay.ShengConfigMapper" >
+  <resultMap id="BaseResultMap" type="entity.payment.shengpay.ShengConfig" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ws_url" property="wsUrl" jdbcType="VARCHAR" />
+    <result column="verify_url" property="verifyUrl" jdbcType="VARCHAR" />
+    <result column="balance_query_url" property="balanceQueryUrl" jdbcType="VARCHAR" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="payer" property="payer" jdbcType="VARCHAR" />
+    <result column="receipt" property="receipt" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="account_type" property="accountType" jdbcType="VARCHAR" />
+    <result column="sign_type" property="signType" jdbcType="VARCHAR" />
+    <result column="sign_charset" property="signCharset" jdbcType="VARCHAR" />
+    <result column="ckey" property="ckey" jdbcType="VARCHAR" />
+    <result column="currency_type" property="currencyType" jdbcType="VARCHAR" />
+    <result column="invoke_ip" property="invokeIp" jdbcType="VARCHAR" />
+    <result column="verify_charset" property="verifyCharset" jdbcType="VARCHAR" />
+    <result column="user_ip" property="userIp" jdbcType="VARCHAR" />
+    <result column="machine_name" property="machineName" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ws_url, verify_url, balance_query_url, merchant_no, payer, receipt, version, account_type, sign_type,
+    sign_charset, ckey, currency_type, invoke_ip, verify_charset, user_ip, machine_name, create_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sheng_config
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_sheng_config
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.payment.shengpay.ShengConfig" >
+    insert into t_sheng_config (id, ws_url, verify_url, 
+      merchant_no, payer, receipt, 
+      version, account_type, sign_type, 
+      sign_charset, ckey, currency_type,
+      invoke_ip, verify_charset, user_ip, 
+      machine_name, create_date, balance_query_url)
+    values (#{id,jdbcType=INTEGER}, #{wsUrl,jdbcType=VARCHAR}, #{verifyUrl,jdbcType=VARCHAR}, 
+      #{merchantNo,jdbcType=VARCHAR}, #{payer,jdbcType=VARCHAR}, #{receipt,jdbcType=VARCHAR}, 
+      #{version,jdbcType=VARCHAR}, #{accountType,jdbcType=VARCHAR}, #{signType,jdbcType=VARCHAR}, 
+      #{signCharset,jdbcType=VARCHAR}, #{ckey,jdbcType=VARCHAR}, #{currencyType,jdbcType=VARCHAR}, 
+      #{invokeIp,jdbcType=VARCHAR}, #{verifyCharset,jdbcType=VARCHAR}, #{userIp,jdbcType=VARCHAR},
+      #{machineName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{balanceQueryUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.payment.shengpay.ShengConfig" >
+    insert into t_sheng_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="wsUrl != null" >
+        ws_url,
+      </if>
+      <if test="verifyUrl != null" >
+        verify_url,
+      </if>
+      <if test="balanceQueryUrl != null" >
+        balance_query_url,
+      </if>
+      <if test="merchantNo != null" >
+        merchant_no,
+      </if>
+      <if test="payer != null" >
+        payer,
+      </if>
+      <if test="receipt != null" >
+        receipt,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="accountType != null" >
+        account_type,
+      </if>
+      <if test="signType != null" >
+        sign_type,
+      </if>
+      <if test="signCharset != null" >
+        sign_charset,
+      </if>
+      <if test="ckey != null" >
+        ckey,
+      </if>
+      <if test="currencyType != null" >
+        currency_type,
+      </if>
+      <if test="invokeIp != null" >
+        invoke_ip,
+      </if>
+      <if test="verifyCharset != null" >
+        verify_charset,
+      </if>
+      <if test="userIp != null" >
+        user_ip,
+      </if>
+      <if test="machineName != null" >
+        machine_name,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="wsUrl != null" >
+        #{wsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyUrl != null" >
+        #{verifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="balanceQueryUrl != null" >
+        #{balanceQueryUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payer != null" >
+        #{payer,jdbcType=VARCHAR},
+      </if>
+      <if test="receipt != null" >
+        #{receipt,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        #{signType,jdbcType=VARCHAR},
+      </if>
+      <if test="signCharset != null" >
+        #{signCharset,jdbcType=VARCHAR},
+      </if>
+      <if test="ckey != null" >
+        #{ckey,jdbcType=VARCHAR},
+      </if>
+      <if test="currencyType != null" >
+        #{currencyType,jdbcType=VARCHAR},
+      </if>
+      <if test="invokeIp != null" >
+        #{invokeIp,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyCharset != null" >
+        #{verifyCharset,jdbcType=VARCHAR},
+      </if>
+      <if test="userIp != null" >
+        #{userIp,jdbcType=VARCHAR},
+      </if>
+      <if test="machineName != null" >
+        #{machineName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.payment.shengpay.ShengConfig" >
+    update t_sheng_config
+    <set >
+      <if test="wsUrl != null" >
+        ws_url = #{wsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyUrl != null" >
+        verify_url = #{verifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="balanceQueryUrl != null" >
+        balance_query_url = #{balanceQueryUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payer != null" >
+        payer = #{payer,jdbcType=VARCHAR},
+      </if>
+      <if test="receipt != null" >
+        receipt = #{receipt,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        account_type = #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        sign_type = #{signType,jdbcType=VARCHAR},
+      </if>
+      <if test="signCharset != null" >
+        sign_charset = #{signCharset,jdbcType=VARCHAR},
+      </if>
+      <if test="ckey != null" >
+        ckey = #{ckey,jdbcType=VARCHAR},
+      </if>
+      <if test="currencyType != null" >
+        currency_type = #{currencyType,jdbcType=VARCHAR},
+      </if>
+      <if test="invokeIp != null" >
+        invoke_ip = #{invokeIp,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyCharset != null" >
+        verify_charset = #{verifyCharset,jdbcType=VARCHAR},
+      </if>
+      <if test="userIp != null" >
+        user_ip = #{userIp,jdbcType=VARCHAR},
+      </if>
+      <if test="machineName != null" >
+        machine_name = #{machineName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.payment.shengpay.ShengConfig" >
+    update t_sheng_config
+    set ws_url = #{wsUrl,jdbcType=VARCHAR},
+      verify_url = #{verifyUrl,jdbcType=VARCHAR},
+      balance_query_url = #{balanceQueryUrl,jdbcType=VARCHAR},
+      merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      payer = #{payer,jdbcType=VARCHAR},
+      receipt = #{receipt,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      account_type = #{accountType,jdbcType=VARCHAR},
+      sign_type = #{signType,jdbcType=VARCHAR},
+      sign_charset = #{signCharset,jdbcType=VARCHAR},
+      ckey = #{ckey,jdbcType=VARCHAR},
+      currency_type = #{currencyType,jdbcType=VARCHAR},
+      invoke_ip = #{invokeIp,jdbcType=VARCHAR},
+      verify_charset = #{verifyCharset,jdbcType=VARCHAR},
+      user_ip = #{userIp,jdbcType=VARCHAR},
+      machine_name = #{machineName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.NodeHeaderMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.NodeHeader" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="headerid" property="headerid" jdbcType="INTEGER" />
+    <result column="organizationid" property="organizationid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, headerid, organizationid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_node_header_mapper
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getNodeHeaderMapper" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_node_header_mapper
+    order by id asc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_node_header_mapper
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.NodeHeader" >
+    insert into t_dis_node_header_mapper (id, headerid, organizationid
+      )
+    values (#{id,jdbcType=INTEGER}, #{headerid,jdbcType=INTEGER}, #{organizationid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.NodeHeader" >
+    insert into t_dis_node_header_mapper
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="headerid != null" >
+        headerid,
+      </if>
+      <if test="organizationid != null" >
+        organizationid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="headerid != null" >
+        #{headerid,jdbcType=INTEGER},
+      </if>
+      <if test="organizationid != null" >
+        #{organizationid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.NodeHeader" >
+    update t_dis_node_header_mapper
+    <set >
+      <if test="headerid != null" >
+        headerid = #{headerid,jdbcType=INTEGER},
+      </if>
+      <if test="organizationid != null" >
+        organizationid = #{organizationid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.NodeHeader" >
+    update t_dis_node_header_mapper
+    set headerid = #{headerid,jdbcType=INTEGER},
+      organizationid = #{organizationid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="NodeHeaderMap" type="dto.dismember.NodeHeaderDto" >
+    <result column="organizationid" property="organizationId" jdbcType="INTEGER" />
+    <result column="organizationname" property="organizationName" jdbcType="VARCHAR" />
+    <result column="parentid" property="parentId" jdbcType="INTEGER" />
+    <result column="headerid" property="headerId" jdbcType="INTEGER" />
+    <result column="headername" property="headerName" jdbcType="VARCHAR" />
+    <result column="headeraccount" property="headerAccount" jdbcType="VARCHAR" />
+    <result column="headertel" property="headerTel" jdbcType="VARCHAR" />
+    <result column="hedererp" property="hederErp" jdbcType="VARCHAR" />
+    <result column="createdate" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="updatedate" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+   <select id="queryHeaderByOrganizationId" resultMap="NodeHeaderMap" parameterType="java.lang.Integer" >
+    select
+      o.id as organizationId,
+      o.name as organizationName,
+      o.parentid as parentId,
+      h.id as headerId,
+      h.name as headerName,
+      h.account as headerAccount,
+      h.tel as headerTel,
+      h.erp as hederErp,
+      h.create_date as createDate,
+      h.update_date as updateDate
+      from 
+      t_dis_organizational o,
+      t_dis_header h,
+      t_dis_node_header_mapper nh
+      where o.id = nh.organizationid and h.id = nh.headerid AND
+      o.id = #{id} order by createdate desc
+  </select>
+  <delete id="deleteByCondition" parameterType="entity.dismember.NodeHeader">
+	delete from t_dis_node_header_mapper
+	where 1 = 1
+	<if test="headerid != null">
+		and headerid = #{headerid,jdbcType=INTEGER}
+	</if>
+	<if test="organizationid != null">
+		and organizationid = #{organizationid,jdbcType=INTEGER}
+	</if>
+</delete>
+</mapper>

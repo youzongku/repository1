@@ -1,0 +1,626 @@
+<script type="text/javascript" src="../js/lib/laydate/laydate.js"></script>
+<!-- 充值说明
+<div id="Top-up-instructions">
+	<h1>充值说明</h1>
+	<div>
+		您好，欢迎来到通淘分销充值中心。
+	</div>
+	<button class="top-up-next" id="instructions-next">确定</button>
+</div>
+ -->
+<!-- <div class="six-user">
+     &lt;!&ndash;<img src="../img/userimg.jpg" alt="头像" />&ndash;&gt;
+     <ul class="six-user-name user-quota">
+         <li id="username"></li>
+         <li class="six-user-name-li2">
+             账户余额：<span id="balance" class="red">0.00</span>&nbsp;元
+         </li>
+         <li class="six-user-name-li2">
+             信用额度：<span id="credit_limit" class="red">0.00</span>&nbsp;元
+         </li>
+         <li class="six-user-name-li2">
+             暂冻结余额：<span id="frozen_balance" class="red">0.00</span>&nbsp;元
+         </li>
+     </ul>
+     <ul class="six-user-name">
+         <li class="six-user-name-li2">
+             可用额度：<span id="available_credit_limit" class="red">0.00</span>&nbsp;元
+         </li>
+         <li class="six-user-name-li2">
+             待还额度：<span id="used_amount" class="red">0.00</span>&nbsp;元
+         </li>
+     </ul>
+     <a href="javascript:;" class="limit-validity limit_validity blue">临时额度有效期</a>
+ </div>-->
+<!--new start-->
+<div id="apply-list">
+<div class="welcom-head bottom-margin">
+    <div class="welcom-head-title">
+        尊敬的
+        <span id="member" class="blue"></span>
+        <button tag="frozen" class="btn-org display">账户冻结</button>
+        <button tag="frozen" class="btn-line-blue display"  onclick="to_charge();" > 立即去充值</button>
+    </div>
+    <div>
+        <span class="welcom-tomtop">TOMTOP&nbsp;&nbsp;欢迎您！</span>
+        <span class="time-up">您的上一次登录时间：<em class="time-up">--</em></span>
+    </div>
+</div>
+<div class="trading-record-box bottom-margin">
+    <h4>充值提现</h4>
+    <ul class="trading-record">
+        <li>
+            <span>账户余额</span>
+            <span><em id="balance">--</em>元</span>
+        </li>
+        <li>
+            <span>账期额度</span>
+            <span><em id="credit_limit">--</em>元</span>
+        </li>
+        <li>
+            <span>账期剩余额度</span>
+            <span><em id="available_credit_limit">--</em>元</span>
+        </li>
+        <li class="for-reimbur">
+            <span>待还款金额</span>
+            <span><em id="used_amount">--</em>元</span>
+            <button id="disable-the" class="disable-the display">禁用中</button>
+        </li>
+    </ul>
+    <ul class="six-user-name">
+        <li id="immediately-mony" class="btn">立即充值</li>
+        <li id="Payment-password" class="btn" onclick="paypw_set();" style="width:100px;">付款密码设置</li>
+        <li id="withdraw_balance" class="btn" onclick="">余额提现</li>
+    </ul>
+    <div class="trading-record-con">
+        <h4>账期时间</h4>
+        <div>
+            <span>账期开始时间：<em id="startTime">--</em></span>
+            <span>应还款时间：<em id="forRefundTime" >--</em></span>
+            <span>最迟还款时间：<em id="lastForRefundTime">--</em></span>
+        </div>
+    </div>
+    <!--线上充值/线下充值的条件 start-->
+    <div class="float-select cz_apply">
+        <div class="Topup-time">申请时间：
+            <select name="purpose_time" id="timeSelect" class="select-pub">
+                <option value="" selected>所有时间</option>
+                <option value="1">近一个月</option>
+                <option value="3">近三个月</option>
+                <option value="6">半年以内</option>
+            </select>
+        </div>
+        <div class="TOPup-status">申请状态：
+            <select name="purpose" id="purposeSelect" class="select-pub">
+                <option value="" selected>所有状态</option>
+                <option value="100">未支付</option>
+                <option value="101">已支付</option>
+            </select>
+        </div>
+    </div>
+    <!--线上充值/线下充值的条件 end-->
+    <!--提现申请的条件 start-->
+    <div class="float-select withdraw-bala" style="display:none;">
+        <div class="Topup-time">申请时间：
+            <select name="purpose_time" id="wb_create_date" class="select-pub">
+                <option value="" selected>所有时间</option>
+                <option value="1">近一个月</option>
+                <option value="3">近三个月</option>
+                <option value="6">半年以内</option>
+            </select>
+        </div>
+        <div class="Topup-time">转账时间：
+            <select name="purpose_time" id="wb_transfer_time" class="select-pub">
+                <option value="" selected>所有时间</option>
+                <option value="1">近一个月</option>
+                <option value="3">近三个月</option>
+                <option value="6">半年以内</option>
+            </select>
+        </div>
+        <div class="TOPup-status">状态：
+            <select name="purpose" id="wb_audit_state" class="select-pub">
+                <option value="" selected>所有状态</option>
+                <option value="0">处理中</option>
+                <option value="2">已完成</option>
+                <option value="1">处理失败</option>
+            </select>
+        </div>
+    </div>
+    <!--提现申请的条件 end-->
+    <div class="topup_box_tab">
+        <ul class="topup_box_ul">
+            <li class="topup_box_current">线上充值</li>
+            <li>线下充值</li>
+            <li>提现申请</li>
+        </ul>
+    </div>
+    <!--<div>-->
+        <div class="topup_box_content">
+            <!--线下充值start-->
+            <div class="topup-date">
+                <table class="order-handle-header bg-blue all_table" style="line-height:inherit;">
+                    <thead>
+                    <tr>
+                        <th class="">收款账户</th>
+                        <th class="">付款账户</th>
+                        <th class="">付款金额(元)</th>
+                        <th class="">付款流水号</th>
+                        <th class="" style="display:none"></th>
+                        <th class="">转账时间</th>
+                        <th class="">申请状态</th>
+                        <th class="" style="display:none"></th>
+                    </tr>
+                    </thead>
+                    <tbody class="order-handle-detail">
+                    </tbody>
+                </table>
+                <div id="pagination_apply" style="text-align: center; margin-top: 30px;"></div>
+            </div>
+            <!--线下充值end-->
+            <!--提现申请start-->
+            <div class="commission_stageBox" style="display: none">
+                <table class="commission_stage">
+                    <thead>
+                    <tr>
+                        <th>提现单号</th>
+                        <th>开户银行</th>
+                        <th>提现账户</th>
+                        <th>提现金额(元)</th>
+                        <th>申请时间</th>
+                        <th>转账时间</th>
+                        <th>申请状态</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>TX201609121412</td>
+                        <td>中国建设银行</td>
+                        <td>****************12</td>
+                        <td>2000</td>
+                        <td>2015-11-17<br>12：05</td>
+                        <td>2015-11-17<br>12：05</td>
+                        <td>申请不通过</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--提现申请end-->
+        </div>
+    <!--</div>-->
+</div>
+</div>
+<!-- 充值汇款 -->
+<div id="Top-up-remittance">
+    <div>
+        <ul class="Topup-remittance-tab">
+            <li class="topup_box_current">线上充值</li>
+            <li>线下充值</li>
+        </ul>
+    </div>
+    <div class="Topup-remittance-box">
+        <div>
+            <p class="Top-up-remittance-title">充值汇款--线上充值</p>
+            <div class="remittance-content">
+                <form id="online-sendApply">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <span>*</span><span>请输入充值金额：</span>
+                            </td>
+                            <td>
+                                <input type="text" name="transferAmount" class="onlinePayTransferAmount" ,/>&nbsp;元
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span></span><span>选择支付方式：</span>
+                            </td>
+                            <td>
+                                <label>
+                                    <input type="radio" name="online-pay-type" checked value="支付宝"><img
+                                        src="../img/u228.jpg">
+                                </label>
+                                <label>
+                                    <input type="radio" name="online-pay-type" value="微信"><img src="../img/u232.jpg">
+                                </label>
+                                <label>
+                                    <input type="radio" name="online-pay-type" value="易极付"><img src="../img/u244.png">
+
+                                    <div style="display:none;" id="yjf_type_choice">
+                                        <label>
+                                            <input type="radio" name="yjf-type" value="yjf_card"
+                                                   checked="checked"><span>银行卡</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="yjf-type" value="yjf_wx"><span>微信扫码</span>
+                                        </label>
+                                    </div>
+                                </label>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <button class="top-up-money btn" type="button" id="online_top_up">充值</button>
+                        <button class="top-up-button btn" type="button">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div style="display: none">
+            <p class="Top-up-remittance-title">充值汇款--线下充值</p>
+            <div class="remittance-content">
+                <p class="remittance-tishi red">温馨提示：请选择收款银行后将所要充值汇款转至您选择的收款账户里，并留下您的汇款信息，请确保信息真实有效。</p>
+                <form id="sendApply" enctype="multipart/form-data" method="post" action="/member/sendApply">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <span>*</span><span>收款渠道：</span>
+                            </td>
+                            <td>
+                                <select name="recipientId">
+                                    <option value="">请选择</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span></span><span>收款账户：</span>
+                            </td>
+                            <td id="receipt_account"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span></span><span>收款人：</span>
+                            </td>
+                            <td id="receipt_payee"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div id="pay-account">
+                                    <b class="add-pay-account blue" onclick="add_payer()">添加付款账户</b>
+                                    <b class="change-pay-account blue" onclick="list_payer()">管理付款账户</b>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>*</span><span>付款账户：</span>
+                            </td>
+                            <td style="position: relative;">
+                                <select name="transferType" style="width:157px">
+                                </select>
+                                <input type="text" class="sendApply-user" name="transferCard" tag="validate"
+                                       readonly="true"/>
+                                <!-- 不支持可选 -->
+                                <!-- <select name="transferCard" style = "position: absolute; top: 6px;left: 189px;width: 157px;">
+                                </select> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>*</span><span>付款人：</span>
+                            </td>
+                            <td>
+                                <input type="text" name="distributorName" tag="validate"
+                                       style="border: 0;background-color: #fff;"
+                                       disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>*</span><span>付款金额：</span>
+                            </td>
+                            <td>
+                                <input type="text" name="transferAmount" tag="validate"/>&nbsp;元
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>*</span><span>付款流水号：</span>
+                            </td>
+                            <td>
+                                <input type="text" name="transferNumber" maxlength="50" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span></span><span>付款截图：</span>
+                            </td>
+                            <td>
+                                <input type="file" name="image" onchange="readImg(this)" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span></span><span>图片预览：</span>
+                            </td>
+                            <td>
+                                <img id="preview" class="preview-img" alt="暂无图片" title="点击预览大图" onclick="previewImg(this)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span></span><span>实际付款日期：</span>
+                            </td>
+                            <td>
+                                <input placeholder="开始日期" id="sregdate" name="transTime"
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss',max:laydate.now()})" readonly="true" />
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <button class="top-up-submit btn" id="instructions-submit" type="button">提交</button>
+                    </div>
+                </form>
+            </div>
+            <!-- 弹出窗 -->
+            <div id="Topup-submit-alert">
+                <p>提交成功，汇款后请提交客服</p>
+                <p><span>客服电话：</span>0755-83998006</p>
+                <p><span>客服QQ：</span> 2851823789</p>
+                <button class="top-up-sure" id="instructions-sure">确定</button>
+            </div>
+        </div>
+        <div style="display: none">
+            <p class="Top-up-remittance-title">充值汇款--线上充值</p>
+            <div class="remittance-content">
+                <form id="online-sendApply">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <span>*</span><span>请输入充值金额：</span>
+                            </td>
+                            <td>
+                                <input type="text" name="transferAmount" class="onlinePayTransferAmount" ,/>&nbsp;元
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span></span><span>选择支付方式：</span>
+                            </td>
+                            <td>
+                                <label>
+                                    <input type="radio" name="online-pay-type" checked value="支付宝"><img
+                                        src="../img/u228.jpg">
+                                </label>
+                                <label>
+                                    <input type="radio" name="online-pay-type" value="微信"><img src="../img/u232.jpg">
+                                </label>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <button class="top-up-money btn" type="button" id="online_top_up">充值</button>
+                        <button class="top-up-button btn" type="button">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 付款密码设置 -->
+<!--邮箱用户-->
+<div class="email-user">
+    <div id="Topup-paycode-set">
+        <p class="Topup-paycode-set-title">付款密码设置</p>
+        <div id="tips" style="display: none">
+            <p style="width:100%"></p>
+        </div>
+        <div>
+            <p>您的邮箱：</p>
+            <span class="pay_email"></span>
+        </div>
+        <div>
+            <p>验证码：</p>
+            <input type="text" name="captcha" style="width: 100px"/>
+            <img id="captchaImg" src="" onclick="this.src='/member/getcaptcha?' + Math.random();">
+        </div>
+        <button class="paycode-delet" id="instructions-sure" onclick="paypw_cancel();">取消</button>
+        <button class="paycode-sure" id="instructions-sure" onclick="sendEmailforpwd();">确定</button>
+    </div>
+    <!--第二步-->
+    <div id="send_email_pay" style="display: none;text-align: center;padding-top: 75px">
+        <h3>尊敬的用户：</h3>
+        <p>
+            我们已发送验证邮件到您的<span id="email_result_span" style="display: inline-block;">----</span>邮箱，请<a
+                href="javascript:;" style="display: inline-block; color: #4a7cc7;">注意接收</a>，并按照提示完成后续设置。<br/>
+            未收到邮件，点击<a href="javascript:;" data-email="" style="display: inline-block; color: #4a7cc7;">重新发送</a>。
+            <!-- <a href="javascript:;" style="display: inline-block; color: #4a7cc7;">下一步</a>。 -->
+        </p>
+    </div>
+</div>
+<!--手机用户-->
+<!--第一步-->
+<div class="phone-user">
+    <div id="Topup-phone-set">
+        <p class="Topup-paycode-set-title">付款密码设置</p>
+        <div id="tips" style="display: none">
+            <p></p>
+        </div>
+        <div>
+            <p style="width:100px;">您的手机账号：</p>
+            <span class="pay_phone"></span>
+        </div>
+        <div>
+            <p style="width:100px;">验证码：</p>
+            <input type="text" name="captcha" style="width: 100px"/>
+            <img id="captchaImg" src="" onclick="this.src='/member/getcaptcha?' + Math.random();">
+        </div>
+        <button class="paycode-delet" id="instructions-del" onclick="paypw_cancel();">取消</button>
+        <button class="paycode-sure" id="instructions-next" onclick="sendPhoneforpwd();">下一步</button>
+    </div>
+    <!--第二步-->
+    <div id="Topup-paycode-phone" style="display: none;">
+        <p class="Topup-paycode-set-title">付款密码设置</p>
+        <div>
+            <p style="width:100px;">请输入手机号：</p>
+            <input type="text" style="width: 150px" name="cell" placeholder="请输入您的手机"/>
+            <button class="btn" onclick="sendMessgePhone(this);">发送验证码</button>
+        </div>
+        <div>
+            <p style="width:100px;">请输入验证码：</p>
+            <input type="text" style="width: 150px" name="smsc" placeholder="请输入您的验证码"/>
+        </div>
+        <button class="paycode-delet" id="instructions-back" onclick="go_back_one();">返回</button>
+        <button class="paycode-sure" id="instructions-sub" onclick="sendCheckCode();">下一步</button>
+    </div>
+    <!--第三步-->
+    <div id="Topup-paycode-sure" style="display: none;">
+        <p class="Topup-paycode-set-title">付款密码设置</p>
+        <div>
+            <p style="width:110px;">请输入密码：</p>
+            <input type="password" name="newpass" style="width: 150px" placeholder="请输入密码"/>
+        </div>
+        <div>
+            <p style="width:110px;">请再次输入密码：</p>
+            <input type="password" name="affirmPW" style="width: 150px" placeholder="请再次输入密码"/>
+        </div>
+        <button class="paycode-delet" id="instructions-reback" onclick="go_back_two();">返回</button>
+        <button class="paycode-sure" id="instructions-change" onclick="resetPwd();">确定</button>
+    </div>
+</div>
+<div id="winxin_content" class="modal fade in"></div>
+<!--余额提现-->
+<div class="balanceCommission_one display all_pop">
+    <p id="apply_limit" class="red">注：每月最多可提现*次，单次提现最低限额*元</p>
+    <p>
+        <span> <strong style="color:red;">*</strong>支付密码：</span>
+        <input type="password" id="wb_pay_pwd" style="width: 300px;">
+    </p>
+    <div style="display: none;">
+        <span style="width: 120px;"> <strong style="color:red;">*</strong>验证码：</span>
+        <input type="text" id="pay_captcha" name="pay_captcha" style="width: 195px;height: 28px;">
+        <img id="wb_pay_img" src="" onclick="this.src='/member/getcaptcha?v='+Math.random();"
+             style="display: inline-block; height: 28px; width: 92px; margin-left: 10px; vertical-align: -8px;cursor: pointer">
+    </div>
+    <p class="align-right">
+        <a class="" onclick="forgetPwd()">忘记密码？</a>
+    </p>
+</div>
+<!--余额提现-第二步-->
+<div class="balanceCommission_two display all_pop">
+    <input type="hidden" id="counterFee" />
+    <p id="apply_limit" class="red">温馨提示：提现将产生一定手续费，手续费为银行收取，具体金额以银行实收为准，手续费将在您提现金额内扣除</p>
+    <p>
+        <span>可提现金额：</span>
+        <span id="wb_balance">2000</span>
+    </p>
+    <p>
+        <span><strong style="color:red;">*</strong>提现金额：</span>
+        <input type="text" style="width: 150px;" placeholder="请输入您的提现金额" id="wb_amount">
+        <span style="width: 30px;"></span>
+        <span style="display: none;" class="red" id="counter_fee">手续费： 0 元</span>
+    </p>
+    <p>
+        <span></span>
+        <button class="AddCard btn">+添加银行卡</button>
+        <button class="ChargeCard btn" onclick="chargeCard()">管理银行卡</button>
+    </p>
+    <p>
+        <span><strong style="color:red;">*</strong>提现账户：</span>
+        <select id="wb_select">
+            <option>请选择</option>
+        </select>
+    </p>
+</div>
+<!--银行卡绑定-->
+<div class="balanceCommission_bind display all_pop">
+    <p>
+        <span><strong style="color:red;">*</strong>开户所在省/市：</span>
+        <select id="wb_province" style="width: 135px">
+            <option value="">请选择省</option>
+        </select>
+        <select id="wb_city" style="width: 135px">
+            <option value="">请选择市</option>
+        </select>
+    </p>
+    <p>
+        <span><strong style="color:red;">*</strong>持卡人姓名：</span>
+        <input type="text" placeholder="请输入您的开户姓名" id="wb_name">
+    </p>
+    <p>
+        <span><strong style="color:red;">*</strong>开户银行名称：</span>
+        <select id="wb_describe" style="width: 135px">
+            <option value="">请选择银行</option>
+            <option value="中国工商银行">中国工商银行</option>
+            <option value="中国建设银行">中国建设银行</option>
+            <option value="中国银行">中国银行</option>
+            <option value="中国农业银行">中国农业银行</option>
+            <option value="交通银行">交通银行</option>
+            <option value="上海浦东发展银行">上海浦东发展银行</option>
+            <option value="招商银行">招商银行</option>
+            <option value="民生银行">民生银行</option>
+            <option value="兴业银行">兴业银行</option>
+            <option value="平安银行">平安银行</option>
+            <option value="广东发展银行">广东发展银行</option>
+            <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+        </select>
+    </p>
+    <p>
+        <span><strong style="color:red;">*</strong>银行卡号：</span>
+        <input type="text" oninput="check_wb_no(this)" placeholder="请输入您的银行卡号" id="wb_no">
+    </p>
+</div>
+<!--身份验证-->
+<div class="balanceCommission_id all_pop display">
+    <div id="wb_tel">
+        <p class="red">
+            为了保证您的资金安全，我们已向您的分销账号尾号为<b id="wb_tel_no">2727</b>的手机发送了一条验证短信，
+            请输入短信中的验证码。
+        </p>
+        <p>
+            <input type="text" placeholder="请输入您的短信验证码" id="wb_tel_code">
+            <input class="secondsremained" id="secondsremained" value="重新发送" >
+        </p>
+    </div>
+    <div id="wb_eml" style="margin-top: 80px;">
+        <p class="red">
+            为了保证您的资金安全，我们已向您的分销账号<span id="wb_email">12***@qq.com</span>
+            发送了验证邮件，请进入邮箱激活验证链接。
+        </p>
+        <p style="margin-left: 200px;">
+            <input style="width: 85px;" id="re_send_mail" class="btn" value="重新发送" />
+        </p>
+    </div>
+</div>
+<!-- 绑定成功 -->
+<div class="wb_bind_suc display all_pop">
+    <p><span>绑定成功</span></p>
+    <p><span>恭喜您，银行帐户已成功绑定</span></p>
+</div>
+<!--管理银行卡-->
+<div id="bindBankCardMgr" class="balanceCommission_charge display all_pop">
+</div>
+<!--解绑-->
+<div class="balanceCommission_del display all_pop">
+    <p>您确定要解绑尾号为<i class="red">2778</i>的银行账户吗？</p>
+</div>
+<!--new end-->
+
+<script>
+    var wait=60;
+    function time(o) {
+        if (wait == 0) {
+            o.removeAttribute("disabled");
+            o.style.cursor = "pointer";
+            o.style.backgroundColor = "#35A3F4";
+            o.value="重新发送";
+            wait = 60;
+        } else { // www.jbxue.com
+            o.setAttribute("disabled", true);
+            o.style.cursor = "not-allowed";
+            o.style.backgroundColor = "#dcdcdc";
+            o.value="重新发送(" + wait + ")";
+            wait--;
+            setTimeout(function() {time(o);}, 1000);
+        }
+    }
+    document.getElementById("secondsremained").onclick=function(){time(this);};
+</script>

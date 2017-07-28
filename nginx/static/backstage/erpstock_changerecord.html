@@ -1,0 +1,52 @@
+<!--erp库存变更同步-->
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<script type="text/javascript" src="../js/backstage/goodsmgr/cloud_inventory.js"></script>
+ <div class="purchase_order_box">
+    <h1><span id="purchase_order_title">商品管理</span><span>---</span><span>erp库存变更记录</span></h1>
+    <ul class="search_category" style="height:110px;">
+        <li>选择时间：
+            <input class="searchInput" placeholder="开始日期" id="begin_time"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"/>
+            至
+            <input class="searchInput" placeholder="结束日期" id="end_time"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"/>
+            <input class="searchInput" placeholder="SKU" id="sku"/>
+            <input class="searchButton" value="搜索" type="button" id="stockchange">
+        </li>
+    </ul>
+    <script>  //解决IEplaceholder不兼容问题
+    $(document).ready(function () {
+        $(function () {
+            if (!placeholderSupport()) {
+                $('[placeholder]').focus(function () {
+                    var input = $(this);
+                    if (input.val() == input.attr('placeholder')) {
+                        input.val('');
+                        input.removeClass('placeholder');
+                    }
+                }).blur(function () {
+                    var input = $(this);
+                    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                        input.addClass('placeholder');
+                        input.val(input.attr('placeholder'));
+                    }
+                }).blur();
+            }
+        })
+        function placeholderSupport() {
+            return 'placeholder' in document.createElement('input');
+        }
+    })
+    </script>
+</div> 
+
+<!--采购单详情 start-->
+ <div class="content_list" id="product_init_list">
+    <table class="list_title all_table" id="erpstock_changerecord_table">
+         
+    </table>
+
+    <div id="erpstock_changerecord_pagination" style="text-align: center; margin-top: 30px;">
+        
+    </div>
+</div>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.purchase.returnod.ReturnAmountCoefficientMapper" >
+  <resultMap id="BaseResultMap" type="entity.purchase.returnod.ReturnAmountCoefficient" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="coefficient_value" property="coefficientValue" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_user" property="lastUpdateUser" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, sku, warehouse_id, coefficient_value, create_time, create_user, last_update_time, last_update_user
+  </sql>
+  
+  <select id="selectBySkuWarehouseId" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_return_amount_coefficient
+    where sku = #{sku} and warehouse_id = #{warehouseId}
+  </select>
+  
+  <insert id="insert" parameterType="entity.purchase.returnod.ReturnAmountCoefficient" keyProperty="id" useGeneratedKeys="true">
+    insert into t_return_amount_coefficient 
+    (sku, warehouse_id, coefficient_value, create_time, create_user, last_update_time)
+    values 
+    (#{sku}, #{warehouseId}, #{coefficientValue}, now(), #{createUser}, now())
+  </insert>
+  
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into t_return_amount_coefficient 
+    (sku, warehouse_id, coefficient_value, create_time, create_user, last_update_time)
+    values 
+    <foreach collection="list" item="item" index="index" separator="," >
+    	(#{item.sku}, #{item.warehouseId}, #{item.coefficientValue}, now(), #{item.createUser}, now())
+    </foreach>
+  </insert>
+  
+  <update id="batchUpdateByConditions" parameterType="java.util.List" >
+    <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+		update t_return_amount_coefficient
+	    <set >
+	    	last_update_time = now(), 
+	      <if test="item.coefficientValue != null" >
+	        coefficient_value = #{item.coefficientValue},
+	      </if>
+	      <if test="item.lastUpdateUser != null" >
+	        last_update_user = #{item.lastUpdateUser},
+	      </if>
+	    </set>
+	    <where>
+	    	<choose>
+	    		<when test="item.id != null">
+	    			id = #{item.id,jdbcType=INTEGER}
+	    		</when>
+	    		<otherwise>
+	    			<if test="item.sku != null and item.warehouseId != null">
+			    		sku = #{item.sku} and warehouse_id = #{item.warehouseId}
+			    	</if>
+	    		</otherwise>
+	    	</choose>
+	    </where>
+    </foreach>
+  </update>
+  
+  <update id="updateByConditions" parameterType="entity.purchase.returnod.ReturnAmountCoefficient" >
+    update t_return_amount_coefficient
+    <set >
+    	last_update_time = now(), 
+      <if test="coefficientValue != null" >
+        coefficient_value = #{coefficientValue},
+      </if>
+      <if test="lastUpdateUser != null" >
+        last_update_user = #{lastUpdateUser},
+      </if>
+    </set>
+    <where>
+    	<choose>
+			<when test="id != null">
+				id = #{id,jdbcType=INTEGER}
+			</when>
+			<otherwise>
+			<if test="sku != null and warehouseId != null">
+				sku = #{sku} and warehouse_id = #{warehouseId}
+			</if>
+		</otherwise>
+</choose>
+    </where>
+  </update>
+  
+</mapper>

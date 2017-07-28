@@ -1,0 +1,21 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+#-------------------------------------------product cloud inventory---------------------------------------------------------
+
+#POST        /cloud/erpStockInDetail			@controllers.product_inventoy.ProductCloudInventoyController.erpStockInDetail()		
+
+#POST        /cloud/stockOut					@controllers.product_inventoy.ProductCloudInventoyController.read()		
+
+#GET        /cloud/forceStockOut				@controllers.product_inventoy.ProductCloudInventoyController.read()		
+
+#GET        /cloud/list						@controllers.product_inventoy.ProductCloudInventoyController.read()		
+
+#-------------------------------------------product micro inventory---------------------------------------------------------
+
+#POST        /micro/stockOut				@controllers.product_inventoy.ProductMicroInventoyController.microStoctOut_()
+
+#POST       /micro/stockIn                 	@controllers.product_inventoy.ProductMicroInventoyController.microStoctIn_()
+
+#POST       /micro/getList                 	@controllers.product_inventoy.ProductMicroInventoyController.microList()			

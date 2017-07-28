@@ -1,0 +1,159 @@
+<script src="../../js/backstage/lib/laydate/laydate.js"></script>
+<div>
+    <h1>营销单管理<span>---</span><span>营销单</span></h1>
+    <ul class="search_category">
+        <li>下单时间：
+            <input class="searchInput" placeholder="开始日期" id="mo_createdate_start"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+            至
+            <input class="searchInput" placeholder="结束日期" id="mo_createdate_end"
+                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"/>
+        </li>
+        <li>
+            <select id="mo_distributor_type" onchange="getMarketingOrderByConditions()">
+                <option value="">所有分销商类型</option>
+                <option value="1">普通分销商</option>
+                <option value="2">合营分销商</option>
+                <option value="3">内部分销商</option>
+            </select>
+        </li>
+        <li>
+            <select id="mo_status" onchange="getMarketingOrderByConditions()">
+                <option value="">所有状态</option>
+                <option value="1">待初审</option>
+                <option value="2">待复审</option>
+                <option value="3">审核通过</option>
+                <option value="4">审核不通过</option>
+            </select>
+        </li>
+        <li>
+            <input onkeyup="enter_keyUp(event,this, getMarketingOrderByConditions)" style="width:230px" id="mo_searchText" class="searchInput" placeholder="营销单号/发货单号/分销商/录入人/业务员/名称">
+            <input class="searchButton" id="mo_search_btn" value="搜索" type="submit" onclick="getMarketingOrderByConditions()">
+            <input style="position: absolute;right:0;top:16px;" class="searchButton" value="导出" type="button" id="exportMarketingOrderBtn" onclick="exportMarketingOrderByConditions()">
+        </li>
+    </ul>
+    <script>  //解决IEplaceholder不兼容问题
+    $(document).ready(function () {
+        $(function () {
+            if (!placeholderSupport()) {
+                $('[placeholder]').focus(function () {
+                    var input = $(this);
+                    if (input.val() == input.attr('placeholder')) {
+                        input.val('');
+                        input.removeClass('placeholder');
+                    }
+                }).blur(function () {
+                    var input = $(this);
+                    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                        input.addClass('placeholder');
+                        input.val(input.attr('placeholder'));
+                    }
+                }).blur();
+            }
+        })
+        function placeholderSupport() {
+            return 'placeholder' in document.createElement('input');
+        }
+    })
+    </script>
+
+    <!--营销单列表start-->
+    <div class="content_list" id="mo_list">
+        <table class="list_title all_table" id="mo_table">
+            <!--
+            <thead>
+            <tr>
+                <th></th>
+                <th>订单编号</th>
+                <th>下单时间</th>
+                <th>发货单号</th>
+                <th>订单状态</th>
+                <th>分销商</th>
+                <th>分销商名称</th>
+                <th>分销商类型</th>
+                <th>录入人</th>
+                <th>业务员</th>
+                <th>业务备注</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody class="tbodyTrHover"></tbody>
+            -->
+        </table>
+        <!--<div class="list_content" >
+            <p>共<span id="mo_totalCount" style="display:inline-block;">0</span>记录，每页显示
+                <select id="mo_pageSize" onchange="getMoList(1)">
+                    <option value="10" selected>10</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                </select>
+                ，共<span id="mo_pages" style="display:inline-block;">0</span>页
+            </p>
+        </div>-->
+        <div id="mo_pagination" style="text-align: center; margin-top: 30px;"></div>
+    </div>
+    <!--营销单列表end-->
+</div>
+
+<!--操作日志-->
+<div id="mo_audit_logs_div" class="mo_audit_logs_div" style="display: none">
+    <table>
+        <tbody></tbody>
+    </table>
+</div>
+
+<!--营销单详情 start-->
+<div id="mo_detail_div" class="sale-order-detail display">
+    <ul class="sale-order-detail-lbox">
+        <li class="currentBlue"><a>收件人信息</a></li>
+        <li><a>商品信息</a></li>
+    </ul>
+    <div class="sale-order-detail-rbox">
+        <h4>收件人信息</h4>
+        <div class="sale-order-detail-rbox-cont" name="receiverInfoDiv">
+        </div>
+        <h4 class="light-blue">商品信息</h4>
+        <div class="sale-order-detail-rbox-cont">
+            <table name="productInfoTable">
+                <thead>
+                <tr>
+                    <th>商品编码</th>
+                    <th>商品名称</th>
+                    <th>国际条码</th>
+                    <th>所属仓库</th>
+                    <th>到期日期</th>
+                    <th>分销价（元）</th>
+                    <th>数量（个）</th>
+                    <th>小计（元）</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <p class="red" name="sumInfoP">
+            </p>
+        </div>
+    </div>
+</div>
+<!--营销单详情 end-->
+
+<script>
+    $(document).ready(function() {
+//  营销单详情锚点跳转效果 start
+        var i=0;
+        $(".sale-order-detail-lbox li a").each(function(){
+            var s = ++i;
+            $(this).attr("href","#linktitle-"+s);
+        });
+        var x=0;
+        $(".sale-order-detail-rbox h4").each(function(){
+            var z = ++x;
+            $(this).attr("id","linktitle-"+z);
+        });
+        $(".sale-order-detail-lbox li a").click(function(){
+            $(this).parent().addClass("currentBlue");
+            $(this).parent().siblings().removeClass("currentBlue");
+        });
+//  营销单详情锚点跳转效果 end
+    });
+</script>

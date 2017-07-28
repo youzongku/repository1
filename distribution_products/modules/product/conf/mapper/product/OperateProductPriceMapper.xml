@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.OperateProductPriceMapper">
+	<resultMap id="BaseResultMap" type="entity.product.OperateProductPrice">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="sku" property="sku" jdbcType="VARCHAR" />
+		<result column="product_title" property="productTitle"
+			jdbcType="VARCHAR" />
+		<result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+		<result column="category_id" property="categoryId" jdbcType="INTEGER" />
+		<result column="operator_time" property="operatorTime" jdbcType="TIMESTAMP" />
+		<result column="operate_desc" property="operateDesc" jdbcType="VARCHAR" />
+		<result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+		<result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+		<result column="price_iid" property="priceIid" jdbcType="INTEGER" />
+		<result column="operator" property="operator" jdbcType="VARCHAR" />
+		<result column="change_price" property="changePrice" jdbcType="DOUBLE" />
+		<result column="field_name" property="fieldName" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, sku, product_title, category_name, category_id,
+		operator_time,
+		operate_desc,warehouse_id,
+		warehouse_name,price_iid,operator,change_price,field_name,remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_operate_product_price
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_operate_product_price
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="entity.product.OperateProductPrice">
+		insert into
+		t_operate_product_price (id, sku, product_title,
+		category_name,
+		category_id, operator_time,
+		operate_desc)
+		values
+		(#{id,jdbcType=INTEGER}, #{sku,jdbcType=VARCHAR},
+		#{productTitle,jdbcType=VARCHAR},
+		#{categoryName,jdbcType=VARCHAR},
+		#{categoryId,jdbcType=INTEGER}, #{operatorTime,jdbcType=TIMESTAMP},
+		#{operateDesc,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="entity.product.OperateProductPrice">
+		insert into t_operate_product_price
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="sku != null">
+				sku,
+			</if>
+			<if test="productTitle != null">
+				product_title,
+			</if>
+			<if test="categoryName != null">
+				category_name,
+			</if>
+			<if test="categoryId != null">
+				category_id,
+			</if>
+			<if test="operatorTime != null">
+				operator_time,
+			</if>
+			<if test="operateDesc != null">
+				operate_desc,
+			</if>
+			<if test="warehouseId != null">
+				warehouse_id,
+			</if>
+			<if test="warehouseName != null">
+				warehouse_name,
+			</if>
+			<if test="priceIid != null">
+				price_iid,
+			</if>
+			<if test="operator != null">
+				operator,
+			</if>
+			<if test="changePrice != null">
+				change_price,
+			</if>
+			<if test="fieldName != null">
+				field_name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="sku != null">
+				#{sku,jdbcType=VARCHAR},
+			</if>
+			<if test="productTitle != null">
+				#{productTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryName != null">
+				#{categoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryId != null">
+				#{categoryId,jdbcType=INTEGER},
+			</if>
+			<if test="operatorTime != null">
+				#{operatorTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operateDesc != null">
+				#{operateDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="warehouseId != null">
+				#{warehouseId,jdbcType=INTEGER},
+			</if>
+			<if test="warehouseName != null">
+				#{warehouseName,jdbcType=VARCHAR},
+			</if>
+			<if test="priceIid != null">
+				#{priceIid,jdbcType=INTEGER},
+			</if>
+			<if test="operator != null">
+				#{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="changePrice != null">
+				#{changePrice,jdbcType=DOUBLE},
+			</if>
+			<if test="fieldName != null">
+				#{fieldName,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="entity.product.OperateProductPrice">
+		update t_operate_product_price
+		<set>
+			<if test="sku != null">
+				sku = #{sku,jdbcType=VARCHAR},
+			</if>
+			<if test="productTitle != null">
+				product_title = #{productTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryName != null">
+				category_name = #{categoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryId != null">
+				category_id = #{categoryId,jdbcType=INTEGER},
+			</if>
+			<if test="operatorTime != null">
+				operator_time = #{operatorTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operateDesc != null">
+				operate_desc = #{operateDesc,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="entity.product.OperateProductPrice">
+		update
+		t_operate_product_price
+		set sku = #{sku,jdbcType=VARCHAR},
+		product_title = #{productTitle,jdbcType=VARCHAR},
+		category_name =
+		#{categoryName,jdbcType=VARCHAR},
+		category_id =
+		#{categoryId,jdbcType=INTEGER},
+		operator_time =
+		#{operatorTime,jdbcType=TIMESTAMP},
+		operate_desc =
+		#{operateDesc,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<insert id="batchInsert" parameterType="java.util.List">
+		insert into t_operate_product_price
+		(sku, product_title, category_name, category_id,
+		operator_time,
+		operate_desc,warehouse_id,warehouse_name,price_iid
+		,operator,change_price,field_name,remark)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.sku,jdbcType=VARCHAR},
+			#{item.productTitle,jdbcType=VARCHAR},#{item.categoryName,jdbcType=VARCHAR},
+			#{item.categoryId,jdbcType=INTEGER},#{item.operatorTime,jdbcType=TIMESTAMP},#{item.operateDesc,jdbcType=VARCHAR},
+			#{item.warehouseId,jdbcType=INTEGER},#{item.warehouseName,jdbcType=VARCHAR},#{item.priceIid,jdbcType=INTEGER},
+			#{item.operator,jdbcType=INTEGER},#{item.changePrice,jdbcType=DOUBLE},#{item.fieldName,jdbcType=VARCHAR},#{item.remark,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	<select id="getRecordList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from t_operate_product_price
+		where price_iid =  #{priceIid,jdbcType=INTEGER}
+		<if test="fNameList != null and fNameList.size()>0">
+			and field_name in 
+			<foreach collection="fNameList" item="item" open="(" close=")" separator=",">
+				#{item,jdbcType=VARCHAR}
+			</foreach>
+		</if>
+		order by operator_time desc 
+	</select>
+	<select id="getRecordPages" parameterType="dto.product.OperatePriceLogDto" resultMap= "BaseResultMap">
+		select 
+		o.sku , 
+		o.product_title,
+		o.category_name, 
+		o.category_id,
+		o.operator_time,
+		o.operate_desc,
+		o.warehouse_id,
+		o.warehouse_name,
+		o.price_iid,
+		o.operator as operator,
+		o.change_price
+		from t_operate_product_price o
+		<if test="skuList != null and skuList.size() > 0">
+			,
+			<foreach item="item" index="index" collection="skuList" open="("
+				separator=" union all " close=" ">select #{item} as sku</foreach>
+			union all select 'aa' as sku) skus
+		</if>
+		where 1 = 1
+		<if test="skuList != null and skuList.size() > 0">
+			and o.sku =  skus.sku
+		</if>
+		<if test="key != null ">
+			and (o.sku like '%'||#{key,jdbcType=VARCHAR}||'%' 
+			or  o.product_title like '%'||#{key,jdbcType=VARCHAR}||'%'
+			or o.operator like '%'||#{key,jdbcType=VARCHAR}||'%')
+		</if>
+		<if test="startDate != null and startDate != '' ">
+        	<![CDATA[AND o.operator_time >= to_timestamp(''||#{startDate}||'','yyyy-mm-dd hh24:mi:ss')]]>
+		</if>
+		<if test="endDate != null and endDate != '' ">
+	        <![CDATA[AND o.operator_time < to_timestamp(''||#{endDate}||'','yyyy-mm-dd hh24:mi:ss')]]>
+		</if>
+		<if test="fNameList != null and fNameList.size()>0 ">
+			and o.field_name  in 
+			<foreach collection="fNameList" open="(" close=")"  separator="," item="item">
+				#{item,jdbcType=VARCHAR}
+			</foreach>		
+		</if>
+		order by o.operator_time desc 
+		<if test="pageSize != null and pageNo != null">
+			limit #{pageSize,jdbcType=INTEGER} offset (#{pageNo,jdbcType=INTEGER} -1)
+			* #{pageSize,jdbcType=INTEGER}
+		</if>
+	</select>
+	
+	<select id="getRecordCount" parameterType="dto.product.OperatePriceLogDto" resultType="java.lang.Integer">
+		select
+		count(o.*)
+		from t_operate_product_price o
+		<if test="skuList != null and skuList.size() > 0">
+			,
+			<foreach item="item" index="index" collection="skuList" open="("
+				separator=" union all " close=" ">select #{item} as sku</foreach>
+			union all select 'aa' as sku) skus
+		</if>
+		where 1 = 1
+		<if test="skuList != null and skuList.size() > 0">
+			and o.sku =  skus.sku
+		</if>
+		<if test="fNameList != null and fNameList.size()>0 ">
+			and o.field_name in 
+			<foreach collection="fNameList" open="(" close=")" separator="," item="item">
+				#{item,jdbcType=VARCHAR}
+			</foreach>		
+		</if>
+		<if test="key != null ">
+			and (o.sku like '%'||#{key,jdbcType=VARCHAR}||'%' 
+			or  o.product_title like '%'||#{key,jdbcType=VARCHAR}||'%'
+			or o.operator like '%'||#{key,jdbcType=VARCHAR}||'%')
+		</if>
+		<if test="startDate != null and startDate != '' ">
+        	<![CDATA[AND o.operator_time >= to_timestamp(''||#{startDate}||'','yyyy-mm-dd hh24:mi:ss')]]>
+		</if>
+		<if test="endDate != null and endDate != '' ">
+	        <![CDATA[AND o.operator_time < to_timestamp(''||#{endDate}||'','yyyy-mm-dd hh24:mi:ss')]]>
+		</if>
+	</select>
+</mapper>

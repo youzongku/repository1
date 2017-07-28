@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Cache-Control" content="no-cache"/>
+		<meta http-equiv="Expires" content="0"/>
+		<title>易极付合并支付跳转</title>
+	</head>
+<body>
+<div id="yijifu_detail">
+	<form id="yijifusubmit" name="yijifusubmit"  method="post" onsubmit="return beforeSubmit()">
+		<input name="orderNo" readonly type="hidden" id="orderNo" />
+		<input name="service" type="hidden" id="service" />
+		<input name="version" type="hidden" id="version" />
+		<input name="partnerId" type="hidden" id="partnerId" />
+		<input name="signType" type="hidden" id="signType" />
+		<input name="merchOrderNo" type="hidden" id="merchOrderNo" />
+		<input name="notifyUrl" type="hidden" id="notifyUrl" />
+		<input name="returnUrl" type="hidden" id="returnUrl" />
+		<input name="buyerUserId" type="hidden" id="buyerUserId" />
+		<input name="tradeInfo" type="hidden" id="tradeInfo" />
+		<input name="paymentType" type="hidden" id="paymentType" />
+		<input name="userTerminalType" type="hidden" id="userTerminalType" />
+		<input name="sign" type="hidden" id="sign" />
+	</form>
+</div>
+</body>
+<script type="text/javascript" src="../js/lib/jquery-1.11.3.min.js" ></script>
+<script type="text/javascript" src="../js/payment/yijifu.js" ></script>	
+</html>

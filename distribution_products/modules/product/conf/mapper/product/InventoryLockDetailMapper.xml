@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.InventoryLockDetailMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.InventoryLockDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="expiration_date" property="expirationDate" jdbcType="TIMESTAMP" />
+    <result column="lock_num" property="lockNum" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="inter_bar_code" property="interBarCode" jdbcType="VARCHAR" />
+    <result column="left_num" property="leftNum" jdbcType="INTEGER" />
+    <result column="lock_id" property="lockId" jdbcType="INTEGER" />
+    <result column="lock_no" property="lockNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sku, expiration_date, lock_num, warehouse_id, warehouse_name, title, inter_bar_code, 
+    left_num, lock_id, lock_no
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_inventory_lock_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_inventory_lock_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.InventoryLockDetail" >
+    insert into t_inventory_lock_detail (id, sku, expiration_date, 
+      lock_num, warehouse_id, warehouse_name, 
+      title, inter_bar_code, left_num, 
+      lock_id, lock_no)
+    values (#{id,jdbcType=INTEGER}, #{sku,jdbcType=VARCHAR}, #{expirationDate,jdbcType=TIMESTAMP}, 
+      #{lockNum,jdbcType=INTEGER}, #{warehouseId,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{interBarCode,jdbcType=VARCHAR}, #{leftNum,jdbcType=INTEGER}, 
+      #{lockId,jdbcType=INTEGER}, #{lockNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.InventoryLockDetail" >
+    insert into t_inventory_lock_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date,
+      </if>
+      <if test="lockNum != null" >
+        lock_num,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="interBarCode != null" >
+        inter_bar_code,
+      </if>
+      <if test="leftNum != null" >
+        left_num,
+      </if>
+      <if test="lockId != null" >
+        lock_id,
+      </if>
+      <if test="lockNo != null" >
+        lock_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationDate != null" >
+        #{expirationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lockNum != null" >
+        #{lockNum,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="interBarCode != null" >
+        #{interBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="leftNum != null" >
+        #{leftNum,jdbcType=INTEGER},
+      </if>
+      <if test="lockId != null" >
+        #{lockId,jdbcType=INTEGER},
+      </if>
+      <if test="lockNo != null" >
+        #{lockNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.InventoryLockDetail" >
+    update t_inventory_lock_detail
+    <set >
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date = #{expirationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lockNum != null" >
+        lock_num = #{lockNum,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="interBarCode != null" >
+        inter_bar_code = #{interBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="leftNum != null" >
+        left_num = #{leftNum,jdbcType=INTEGER},
+      </if>
+      <if test="lockId != null" >
+        lock_id = #{lockId,jdbcType=INTEGER},
+      </if>
+      <if test="lockNo != null" >
+        lock_no = #{lockNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.InventoryLockDetail" >
+    update t_inventory_lock_detail
+    set sku = #{sku,jdbcType=VARCHAR},
+      expiration_date = #{expirationDate,jdbcType=TIMESTAMP},
+      lock_num = #{lockNum,jdbcType=INTEGER},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      inter_bar_code = #{interBarCode,jdbcType=VARCHAR},
+      left_num = #{leftNum,jdbcType=INTEGER},
+      lock_id = #{lockId,jdbcType=INTEGER},
+      lock_no = #{lockNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="pageSearch" resultMap="BaseResultMap" parameterType="dto.product.search.InventoryLockDeSearch">
+  	select
+		<include refid="Base_Column_List"/>
+		,length(sku)
+	from
+		t_inventory_lock_detail
+	where
+		1 = 1
+		<if test="lockId != null">
+			and lock_id = #{lockId,jdbcType=INTEGER}
+		</if>
+		<if test="search != null and search != ''">
+			and (
+				lower (title) like lower ('%' || #{search,jdbcType=VARCHAR} || '%')
+				or lower (sku) like lower ('%' || #{search,jdbcType=VARCHAR}|| '%')
+				or lower (inter_bar_code) like lower ('%' || #{search,jdbcType=VARCHAR}|| '%')
+			)
+		</if>
+		order by
+		<choose>
+			<when test="sidx != null and sidx != '' and sord != null and sord != ''">
+			   ${sidx} ${sord} nulls last
+			</when>
+			<otherwise>
+				length asc nulls last
+			</otherwise>
+		</choose>
+		<if test="page != null and rows != null">
+    		limit #{rows} offset (#{page}-1)*#{rows}
+    	</if>
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="dto.product.search.InventoryLockDeSearch">
+  	select
+		count(1)
+	from
+		t_inventory_lock_detail
+	where
+		1 = 1
+		<if test="lockId != null">
+			and lock_id = #{lockId,jdbcType=INTEGER}
+		</if>
+		<if test="search != null and search != ''">
+			and (
+				lower (title) like lower ('%' || #{search,jdbcType=VARCHAR} || '%')
+				or lower (sku) like lower ('%' || #{search,jdbcType=VARCHAR}|| '%')
+				or lower (inter_bar_code) like lower ('%' || #{search,jdbcType=VARCHAR}|| '%')
+			)
+		</if>
+  </select>
+  <select id="querySubstock" parameterType="java.util.Map" resultType="dto.product.InvetoryLockNumDto">
+  	select
+		sku,
+		warehouse_id as warehouseId,
+		total - mystock as substock
+	from
+		(
+			select
+				sku,
+				warehouse_id,
+				sum (mystock) mystock,
+				sum (total) as total
+			from
+				(
+					select
+						sku,
+						warehouse_id,
+						sum (
+							case (account = #{param.account,jdbcType=VARCHAR})
+							when 'true' then
+								left_num
+							else
+								0
+							end
+						) as mystock,
+						sum (left_num) as total
+					from
+						t_inventory_lock_detail d
+					left join t_inventory_lock l on d.lock_id = l. id
+					where
+						l.status = 1
+					group by
+						sku,
+						warehouse_id,
+						account
+						having 1 =  1 
+						<if test="param.skus != null and param.skus.size>0 ">
+							and sku in 
+							<foreach collection="param.skus" item="item" open="(" separator="," close=")">
+								#{item,jdbcType=VARCHAR}
+							</foreach>
+						</if>
+				) foo
+			group by
+				sku,
+				warehouse_id
+		) foo
+  </select>
+  <select id="querySubstockByExpirationDate" parameterType="java.util.Map" resultType="dto.product.InvetoryLockNumDto" >
+  	select
+		sku,
+		warehouse_id as warehouseId,
+		total - mystock as substock,
+		to_char(expiration_date,'yyyy-MM-dd') as expirationDate
+	from
+		(
+			select
+				sku,
+				warehouse_id,
+				expiration_date,
+				sum (mystock) mystock,
+				sum (total) as total
+			from
+				(
+					select
+						sku,
+						warehouse_id,
+						expiration_date,
+						sum (
+							case (account = #{param.account,jdbcType=VARCHAR})
+							when 'true' then
+								left_num
+							else
+								0
+							end
+						) as mystock,
+						sum (left_num) as total
+					from
+						t_inventory_lock_detail d
+					left join t_inventory_lock l on d.lock_id = l. id
+					where
+						l.status = 1
+					group by
+						sku,
+						warehouse_id,
+						account,
+						expiration_date
+						having 1 =  1 
+						<if test="param.skus != null and param.skus.size>0 ">
+							and sku in 
+							<foreach collection="param.skus" item="item" open="(" separator="," close=")">
+								#{item,jdbcType=VARCHAR}
+							</foreach>
+						</if>
+				) foo
+			group by
+				sku,
+				warehouse_id,
+				expiration_date
+		) foo;
+  </select>
+  <select id="getDetail" resultMap="BaseResultMap">
+	 	select
+			d.*
+		from
+			t_inventory_lock_detail d
+		left join 
+			t_inventory_lock l on d.lock_id = l.id
+		where
+		 	account = #{1,jdbcType=VARCHAR}
+			and l.status = 1
+			and left_num > 0
+		order by expiration_date asc
+  </select>
+  <select id="getDetailByLockId" resultMap="BaseResultMap">
+	select
+		d.*
+	from
+		t_inventory_lock_detail d
+	left join
+		t_inventory_lock l on d.lock_id = l.id
+	where
+		d.lock_id = #{1,jdbcType=INTEGER}
+		and l.status = 1
+  </select>
+  <update id="autoChange">
+	update t_inventory_lock set 
+		is_left_stock = 0 
+		where "id" in (
+		select d.lock_id from 
+		(select d.lock_id,sum(d.left_num) from
+			t_inventory_lock_detail d group by d.lock_id) d
+		where <![CDATA[d.sum <= 0]]>
+	)
+  </update>
+  <select id="getLockStock" resultType="dto.product.inventory.InventoryLockStock">
+  	select
+		d.sku,d.warehouse_id warehouseId,sum(d.left_num) as stock
+	from
+		t_inventory_lock_detail d
+	left join t_inventory_lock l
+	on d.lock_id = l.id
+	where l.status = 1
+	and d.sku = #{sku,jdbcType=VARCHAR}
+	and d.warehouse_id = #{wareId,jdbcType=INTEGER}
+	group by d.sku,d.warehouse_id
+  </select>
+</mapper>

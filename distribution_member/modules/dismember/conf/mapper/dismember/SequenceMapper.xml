@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.SequenceMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.Sequence" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="seq_name" property="seqName" jdbcType="VARCHAR" />
+    <result column="current_value" property="currentValue" jdbcType="BIGINT" />
+    <result column="increment_" property="increment" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, seq_name, current_value, increment_, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sequence
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_sequence
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.Sequence" >
+    insert into t_sequence (id, seq_name, current_value, 
+      increment_, remark)
+    values (#{id,jdbcType=INTEGER}, #{seqName,jdbcType=VARCHAR}, #{currentValue,jdbcType=BIGINT}, 
+      #{increment,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.Sequence" >
+    insert into t_sequence
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="seqName != null" >
+        seq_name,
+      </if>
+      <if test="currentValue != null" >
+        current_value,
+      </if>
+      <if test="increment != null" >
+        increment_,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="seqName != null" >
+        #{seqName,jdbcType=VARCHAR},
+      </if>
+      <if test="currentValue != null" >
+        #{currentValue,jdbcType=BIGINT},
+      </if>
+      <if test="increment != null" >
+        #{increment,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.Sequence" >
+    update t_sequence
+    <set >
+      <if test="seqName != null" >
+        seq_name = #{seqName,jdbcType=VARCHAR},
+      </if>
+      <if test="currentValue != null" >
+        current_value = #{currentValue,jdbcType=BIGINT},
+      </if>
+      <if test="increment != null" >
+        increment_ = #{increment,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.Sequence" >
+    update t_sequence
+    set seq_name = #{seqName,jdbcType=VARCHAR},
+      current_value = #{currentValue,jdbcType=BIGINT},
+      increment_ = #{increment,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateCurrentValue" parameterType="java.lang.String" >
+    update t_sequence
+    set current_value = current_value + increment_
+    where seq_name = #{seqName,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectCurrentValue" parameterType="java.lang.String" resultType="java.lang.String" >
+    select current_value from t_sequence
+    where seq_name = #{seqName,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 初始化 -->
+  <update id="restoreCurrentValue" parameterType="java.lang.String" >
+    update t_sequence
+    set current_value = 1
+    where seq_name = #{seqName,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

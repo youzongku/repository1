@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<link rel="shortcut icon" href="../img/favicon.ico"/>
+	<link rel="stylesheet" href="../css/public.css" />
+	<link rel="stylesheet" href="../css/sub-details.css" />
+	<script type="text/javascript" src="/js/lib/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="/js/common.js"></script>
+	<!--<script charset="utf-8" src="https://wpa.b.qq.com/cgi/wpa.php"></script>-->
+	<script type="text/javascript">
+	</script>
+	<title>order-sure</title>
+</head>
+
+<body>
+	<div id="div_head"></div>
+	<div>
+		<div class="cart-line"></div>
+		<div class="cart-borld content">
+			<h1 class="titile">商品列表</h1>
+			<div class="cart-list" >
+				<ul class="product-list">
+					<li id="order-product_title">荷兰Nutrilon牛栏奶粉5段(24-36个月宝宝) 800g</li>
+					<li class="product_price">价格</li>
+					<li class="product_number">数量</li>
+					<li class="product_sum">总额</li>
+				</ul>
+				<div class="product_table">
+					<table id="product_content" class="product_content">
+						<tr>
+							<td id="product_descrption"><img src="/img/buy.jpg" /><p>荷兰Nutrilon牛栏奶粉5段(24-36个月宝宝) 800g</p></td>
+							<td>￥128.22</td>
+							<td>
+								<ul class="cart_num">
+									<li id="cart_num_Reduction" name="submit.add-to-cart">—</li>
+									<li id="cart_nums"  >
+										<input id="cart-button-num" type="text" value="1" name="qty">
+									</li>
+									<li id="cart_num_add"  name="submit.add-to-cart">+</li>
+								</ul>
+							</td>
+							<td>￥128.88</td>
+							<td><span class="delete"></span></td>
+						</tr>
+					</table>
+					<div class="clear"></div>
+					<div class="order-list-bottom">
+						<div class="order-message">
+							留言：<textarea name="message" class="message-box"></textarea>
+						</div>
+						<div class="order-freight">合计(含运费)：<span class="freight_price">￥10</span></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="settle_accounts">
+				<p class="order-sum_price" style="font-size:18px;">待支付:<span class="all_price" style="color:#d22147;">￥240</span>元</p>
+				<button id="accounts" onclick="submitOrder()">提交订单</button>
+			</div>
+		</div>
+		<div id="div_footer" ></div>
+	</div>
+</body>

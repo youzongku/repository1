@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.ProductDispriceMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.ProductDisprice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="dis_stock_id" property="disStockId" jdbcType="INTEGER" />
+    <result column="dis_profit_rate" property="disProfitRate" jdbcType="DOUBLE" />
+    <result column="dis_profit" property="disProfit" jdbcType="DOUBLE" />
+    <result column="dis_vat" property="disVat" jdbcType="DOUBLE" />
+    <result column="dis_stock_fee" property="disStockFee" jdbcType="DOUBLE" />
+    <result column="dis_shipping_type" property="disShippingType" jdbcType="VARCHAR" />
+    <result column="dis_other_cost" property="disOtherCost" jdbcType="DOUBLE" />
+    <result column="dis_total_cost" property="disTotalCost" jdbcType="DOUBLE" />
+    <result column="dis_transfer_fee" property="disTransferFee" jdbcType="DOUBLE" />
+    <result column="dis_list_fee" property="disListFee" jdbcType="DOUBLE" />
+    <result column="dis_trade_fee" property="disTradeFee" jdbcType="DOUBLE" />
+    <result column="dis_pay_fee" property="disPayFee" jdbcType="DOUBLE" />
+    <result column="dis_postal_fee" property="disPostalFee" jdbcType="DOUBLE" />
+    <result column="dis_import_tar" property="disImportTar" jdbcType="DOUBLE" />
+    <result column="dis_gst" property="disGst" jdbcType="DOUBLE" />
+    <result column="dis_insurance" property="disInsurance" jdbcType="DOUBLE" />
+    <result column="dis_total_vat" property="disTotalVat" jdbcType="DOUBLE" />
+    <result column="cost" property="cost" jdbcType="DOUBLE" />
+    <result column="dis_freight" property="disFreight" jdbcType="DOUBLE" />
+    <result column="dis_price" property="disPrice" jdbcType="DOUBLE" />
+    <result column="dis_cif_price" property="disCifPrice" jdbcType="DOUBLE" />
+    <result column="operate_date" property="operateDate" jdbcType="TIMESTAMP" />
+    <result column="floor_price" property="floorPrice" jdbcType="DOUBLE" />
+    <result column="proposal_retail_price" property="proposalRetailPrice" jdbcType="DOUBLE" />
+    <result column="distributor_price" property="distributorPrice" jdbcType="DOUBLE" />
+    <result column="electricity_prices" property="electricityPrices" jdbcType="DOUBLE" />
+    <result column="supermarket_price" property="supermarketPrice" jdbcType="DOUBLE" />
+    <result column="arrive_ware_price" property="arriveWarePrice" jdbcType="DOUBLE" />
+    <result column="dis_company_cost" property="disCompanyCost" jdbcType="DOUBLE" />
+    <result column="commission_fees" property="commissionFees" jdbcType="DOUBLE" />
+    <result column="ocean_freight" property="oceanFreight" jdbcType="DOUBLE" />
+    <result column="delivery_taking_fee" property="deliveryTakingFee" jdbcType="DOUBLE" />
+    <result column="customs_inspection_fee" property="customsInspectionFee" jdbcType="DOUBLE" />
+    <result column="stock_fee" property="stockFee" jdbcType="DOUBLE" />
+    <result column="logistic_fee" property="logisticFee" jdbcType="DOUBLE" />
+    <result column="lable_making_fee" property="lableMakingFee" jdbcType="DOUBLE" />
+    <result column="other_incidentals" property="otherIncidentals" jdbcType="DOUBLE" />
+    <result column="postal_fee_rate" property="postalFeeRate" jdbcType="DOUBLE" />
+    <result column="import_tar_rate" property="importTarRate" jdbcType="DOUBLE" />
+    <result column="gst_rate" property="gstRate" jdbcType="DOUBLE" />
+    <result column="vat_rate" property="vatRate" jdbcType="DOUBLE" />
+    <result column="market_intervention_price" property="marketInterventionPrice" jdbcType="DOUBLE" />
+    <result column="ftz_price" property="ftzPrice" jdbcType="DOUBLE" />
+    <result column="destination_incidentals" property="destinationIncidentals" jdbcType="DOUBLE" />
+    <result column="costoms_declarence_charges" property="costomsDeclarenceCharges" jdbcType="DOUBLE" />
+    <result column="costoms_censoring_charges" property="costomsCensoringCharges" jdbcType="DOUBLE" />
+    <result column="customs_inspection_charges" property="customsInspectionCharges" jdbcType="DOUBLE" />
+    <result column="label_record_charges" property="labelRecordCharges" jdbcType="DOUBLE" />
+    <result column="inspection_and_quarantine_charges" property="inspectionAndQuarantineCharges" jdbcType="DOUBLE" />
+    <result column="label_service_charges" property="labelServiceCharges" jdbcType="DOUBLE" />
+    <result column="import_agent_service_charges" property="importAgentServiceCharges" jdbcType="DOUBLE" />
+    <result column="other_reimbursed_expenses" property="otherReimbursedExpenses" jdbcType="DOUBLE" />
+    <result column="labeling_charge" property="labelingCharge" jdbcType="DOUBLE" />
+    <result column="minimum_profit_rate" property="minimumProfitRate" jdbcType="DOUBLE" />
+    <result column="other_finance_incidentals" property="otherFinanceIncidentals" jdbcType="DOUBLE" />
+    <result column="type_id" property="typeId" jdbcType="INTEGER" />
+    <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sku, dis_stock_id, dis_profit_rate, dis_profit, dis_vat, dis_stock_fee, dis_shipping_type, 
+    dis_other_cost, dis_total_cost, dis_transfer_fee, dis_list_fee, dis_trade_fee, dis_pay_fee, 
+    dis_postal_fee, dis_import_tar, dis_gst, dis_insurance, dis_total_vat, cost, dis_freight, 
+    dis_price, dis_cif_price, operate_date, floor_price, proposal_retail_price, distributor_price, 
+    electricity_prices, supermarket_price, arrive_ware_price, dis_company_cost, commission_fees, 
+    ocean_freight, delivery_taking_fee, customs_inspection_fee, stock_fee, logistic_fee, 
+    lable_making_fee, other_incidentals, postal_fee_rate, import_tar_rate, gst_rate, 
+    vat_rate, market_intervention_price, ftz_price, destination_incidentals, costoms_declarence_charges, 
+    costoms_censoring_charges, customs_inspection_charges, label_record_charges, inspection_and_quarantine_charges, 
+    label_service_charges, import_agent_service_charges, other_reimbursed_expenses, labeling_charge, 
+    minimum_profit_rate, other_finance_incidentals, type_id, type_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_disprice
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_product_disprice
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.ProductDisprice" >
+    insert into t_product_disprice (id, sku, dis_stock_id, 
+      dis_profit_rate, dis_profit, dis_vat, 
+      dis_stock_fee, dis_shipping_type, dis_other_cost, 
+      dis_total_cost, dis_transfer_fee, dis_list_fee, 
+      dis_trade_fee, dis_pay_fee, dis_postal_fee, 
+      dis_import_tar, dis_gst, dis_insurance, 
+      dis_total_vat, cost, dis_freight, 
+      dis_price, dis_cif_price, operate_date, 
+      floor_price, proposal_retail_price, distributor_price, 
+      electricity_prices, supermarket_price, arrive_ware_price, 
+      dis_company_cost, commission_fees, ocean_freight, 
+      delivery_taking_fee, customs_inspection_fee, 
+      stock_fee, logistic_fee, lable_making_fee, 
+      other_incidentals, postal_fee_rate, import_tar_rate, 
+      gst_rate, vat_rate, market_intervention_price, 
+      ftz_price, destination_incidentals, costoms_declarence_charges, 
+      costoms_censoring_charges, customs_inspection_charges, 
+      label_record_charges, inspection_and_quarantine_charges, 
+      label_service_charges, import_agent_service_charges, 
+      other_reimbursed_expenses, labeling_charge, 
+      minimum_profit_rate, other_finance_incidentals, 
+      type_id, type_name)
+    values (#{id,jdbcType=INTEGER}, #{sku,jdbcType=VARCHAR}, #{disStockId,jdbcType=INTEGER}, 
+      #{disProfitRate,jdbcType=DOUBLE}, #{disProfit,jdbcType=DOUBLE}, #{disVat,jdbcType=DOUBLE}, 
+      #{disStockFee,jdbcType=DOUBLE}, #{disShippingType,jdbcType=VARCHAR}, #{disOtherCost,jdbcType=DOUBLE}, 
+      #{disTotalCost,jdbcType=DOUBLE}, #{disTransferFee,jdbcType=DOUBLE}, #{disListFee,jdbcType=DOUBLE}, 
+      #{disTradeFee,jdbcType=DOUBLE}, #{disPayFee,jdbcType=DOUBLE}, #{disPostalFee,jdbcType=DOUBLE}, 
+      #{disImportTar,jdbcType=DOUBLE}, #{disGst,jdbcType=DOUBLE}, #{disInsurance,jdbcType=DOUBLE}, 
+      #{disTotalVat,jdbcType=DOUBLE}, #{cost,jdbcType=DOUBLE}, #{disFreight,jdbcType=DOUBLE}, 
+      #{disPrice,jdbcType=DOUBLE}, #{disCifPrice,jdbcType=DOUBLE}, #{operateDate,jdbcType=TIMESTAMP}, 
+      #{floorPrice,jdbcType=DOUBLE}, #{proposalRetailPrice,jdbcType=DOUBLE}, #{distributorPrice,jdbcType=DOUBLE}, 
+      #{electricityPrices,jdbcType=DOUBLE}, #{supermarketPrice,jdbcType=DOUBLE}, #{arriveWarePrice,jdbcType=DOUBLE}, 
+      #{disCompanyCost,jdbcType=DOUBLE}, #{commissionFees,jdbcType=DOUBLE}, #{oceanFreight,jdbcType=DOUBLE}, 
+      #{deliveryTakingFee,jdbcType=DOUBLE}, #{customsInspectionFee,jdbcType=DOUBLE}, 
+      #{stockFee,jdbcType=DOUBLE}, #{logisticFee,jdbcType=DOUBLE}, #{lableMakingFee,jdbcType=DOUBLE}, 
+      #{otherIncidentals,jdbcType=DOUBLE}, #{postalFeeRate,jdbcType=DOUBLE}, #{importTarRate,jdbcType=DOUBLE}, 
+      #{gstRate,jdbcType=DOUBLE}, #{vatRate,jdbcType=DOUBLE}, #{marketInterventionPrice,jdbcType=DOUBLE}, 
+      #{ftzPrice,jdbcType=DOUBLE}, #{destinationIncidentals,jdbcType=DOUBLE}, #{costomsDeclarenceCharges,jdbcType=DOUBLE}, 
+      #{costomsCensoringCharges,jdbcType=DOUBLE}, #{customsInspectionCharges,jdbcType=DOUBLE}, 
+      #{labelRecordCharges,jdbcType=DOUBLE}, #{inspectionAndQuarantineCharges,jdbcType=DOUBLE}, 
+      #{labelServiceCharges,jdbcType=DOUBLE}, #{importAgentServiceCharges,jdbcType=DOUBLE}, 
+      #{otherReimbursedExpenses,jdbcType=DOUBLE}, #{labelingCharge,jdbcType=DOUBLE}, 
+      #{minimumProfitRate,jdbcType=DOUBLE}, #{otherFinanceIncidentals,jdbcType=DOUBLE}, 
+      #{typeId,jdbcType=INTEGER}, #{typeName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.ProductDisprice" >
+    insert into t_product_disprice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="disStockId != null" >
+        dis_stock_id,
+      </if>
+      <if test="disProfitRate != null" >
+        dis_profit_rate,
+      </if>
+      <if test="disProfit != null" >
+        dis_profit,
+      </if>
+      <if test="disVat != null" >
+        dis_vat,
+      </if>
+      <if test="disStockFee != null" >
+        dis_stock_fee,
+      </if>
+      <if test="disShippingType != null" >
+        dis_shipping_type,
+      </if>
+      <if test="disOtherCost != null" >
+        dis_other_cost,
+      </if>
+      <if test="disTotalCost != null" >
+        dis_total_cost,
+      </if>
+      <if test="disTransferFee != null" >
+        dis_transfer_fee,
+      </if>
+      <if test="disListFee != null" >
+        dis_list_fee,
+      </if>
+      <if test="disTradeFee != null" >
+        dis_trade_fee,
+      </if>
+      <if test="disPayFee != null" >
+        dis_pay_fee,
+      </if>
+      <if test="disPostalFee != null" >
+        dis_postal_fee,
+      </if>
+      <if test="disImportTar != null" >
+        dis_import_tar,
+      </if>
+      <if test="disGst != null" >
+        dis_gst,
+      </if>
+      <if test="disInsurance != null" >
+        dis_insurance,
+      </if>
+      <if test="disTotalVat != null" >
+        dis_total_vat,
+      </if>
+      <if test="cost != null" >
+        cost,
+      </if>
+      <if test="disFreight != null" >
+        dis_freight,
+      </if>
+      <if test="disPrice != null" >
+        dis_price,
+      </if>
+      <if test="disCifPrice != null" >
+        dis_cif_price,
+      </if>
+      <if test="operateDate != null" >
+        operate_date,
+      </if>
+      <if test="floorPrice != null" >
+        floor_price,
+      </if>
+      <if test="proposalRetailPrice != null" >
+        proposal_retail_price,
+      </if>
+      <if test="distributorPrice != null" >
+        distributor_price,
+      </if>
+      <if test="electricityPrices != null" >
+        electricity_prices,
+      </if>
+      <if test="supermarketPrice != null" >
+        supermarket_price,
+      </if>
+      <if test="arriveWarePrice != null" >
+        arrive_ware_price,
+      </if>
+      <if test="disCompanyCost != null" >
+        dis_company_cost,
+      </if>
+      <if test="commissionFees != null" >
+        commission_fees,
+      </if>
+      <if test="oceanFreight != null" >
+        ocean_freight,
+      </if>
+      <if test="deliveryTakingFee != null" >
+        delivery_taking_fee,
+      </if>
+      <if test="customsInspectionFee != null" >
+        customs_inspection_fee,
+      </if>
+      <if test="stockFee != null" >
+        stock_fee,
+      </if>
+      <if test="logisticFee != null" >
+        logistic_fee,
+      </if>
+      <if test="lableMakingFee != null" >
+        lable_making_fee,
+      </if>
+      <if test="otherIncidentals != null" >
+        other_incidentals,
+      </if>
+      <if test="postalFeeRate != null" >
+        postal_fee_rate,
+      </if>
+      <if test="importTarRate != null" >
+        import_tar_rate,
+      </if>
+      <if test="gstRate != null" >
+        gst_rate,
+      </if>
+      <if test="vatRate != null" >
+        vat_rate,
+      </if>
+      <if test="marketInterventionPrice != null" >
+        market_intervention_price,
+      </if>
+      <if test="ftzPrice != null" >
+        ftz_price,
+      </if>
+      <if test="destinationIncidentals != null" >
+        destination_incidentals,
+      </if>
+      <if test="costomsDeclarenceCharges != null" >
+        costoms_declarence_charges,
+      </if>
+      <if test="costomsCensoringCharges != null" >
+        costoms_censoring_charges,
+      </if>
+      <if test="customsInspectionCharges != null" >
+        customs_inspection_charges,
+      </if>
+      <if test="labelRecordCharges != null" >
+        label_record_charges,
+      </if>
+      <if test="inspectionAndQuarantineCharges != null" >
+        inspection_and_quarantine_charges,
+      </if>
+      <if test="labelServiceCharges != null" >
+        label_service_charges,
+      </if>
+      <if test="importAgentServiceCharges != null" >
+        import_agent_service_charges,
+      </if>
+      <if test="otherReimbursedExpenses != null" >
+        other_reimbursed_expenses,
+      </if>
+      <if test="labelingCharge != null" >
+        labeling_charge,
+      </if>
+      <if test="minimumProfitRate != null" >
+        minimum_profit_rate,
+      </if>
+      <if test="otherFinanceIncidentals != null" >
+        other_finance_incidentals,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="typeName != null" >
+        type_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="disStockId != null" >
+        #{disStockId,jdbcType=INTEGER},
+      </if>
+      <if test="disProfitRate != null" >
+        #{disProfitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="disProfit != null" >
+        #{disProfit,jdbcType=DOUBLE},
+      </if>
+      <if test="disVat != null" >
+        #{disVat,jdbcType=DOUBLE},
+      </if>
+      <if test="disStockFee != null" >
+        #{disStockFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disShippingType != null" >
+        #{disShippingType,jdbcType=VARCHAR},
+      </if>
+      <if test="disOtherCost != null" >
+        #{disOtherCost,jdbcType=DOUBLE},
+      </if>
+      <if test="disTotalCost != null" >
+        #{disTotalCost,jdbcType=DOUBLE},
+      </if>
+      <if test="disTransferFee != null" >
+        #{disTransferFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disListFee != null" >
+        #{disListFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disTradeFee != null" >
+        #{disTradeFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disPayFee != null" >
+        #{disPayFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disPostalFee != null" >
+        #{disPostalFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disImportTar != null" >
+        #{disImportTar,jdbcType=DOUBLE},
+      </if>
+      <if test="disGst != null" >
+        #{disGst,jdbcType=DOUBLE},
+      </if>
+      <if test="disInsurance != null" >
+        #{disInsurance,jdbcType=DOUBLE},
+      </if>
+      <if test="disTotalVat != null" >
+        #{disTotalVat,jdbcType=DOUBLE},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=DOUBLE},
+      </if>
+      <if test="disFreight != null" >
+        #{disFreight,jdbcType=DOUBLE},
+      </if>
+      <if test="disPrice != null" >
+        #{disPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="disCifPrice != null" >
+        #{disCifPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="operateDate != null" >
+        #{operateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="floorPrice != null" >
+        #{floorPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="proposalRetailPrice != null" >
+        #{proposalRetailPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="distributorPrice != null" >
+        #{distributorPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="electricityPrices != null" >
+        #{electricityPrices,jdbcType=DOUBLE},
+      </if>
+      <if test="supermarketPrice != null" >
+        #{supermarketPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="arriveWarePrice != null" >
+        #{arriveWarePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="disCompanyCost != null" >
+        #{disCompanyCost,jdbcType=DOUBLE},
+      </if>
+      <if test="commissionFees != null" >
+        #{commissionFees,jdbcType=DOUBLE},
+      </if>
+      <if test="oceanFreight != null" >
+        #{oceanFreight,jdbcType=DOUBLE},
+      </if>
+      <if test="deliveryTakingFee != null" >
+        #{deliveryTakingFee,jdbcType=DOUBLE},
+      </if>
+      <if test="customsInspectionFee != null" >
+        #{customsInspectionFee,jdbcType=DOUBLE},
+      </if>
+      <if test="stockFee != null" >
+        #{stockFee,jdbcType=DOUBLE},
+      </if>
+      <if test="logisticFee != null" >
+        #{logisticFee,jdbcType=DOUBLE},
+      </if>
+      <if test="lableMakingFee != null" >
+        #{lableMakingFee,jdbcType=DOUBLE},
+      </if>
+      <if test="otherIncidentals != null" >
+        #{otherIncidentals,jdbcType=DOUBLE},
+      </if>
+      <if test="postalFeeRate != null" >
+        #{postalFeeRate,jdbcType=DOUBLE},
+      </if>
+      <if test="importTarRate != null" >
+        #{importTarRate,jdbcType=DOUBLE},
+      </if>
+      <if test="gstRate != null" >
+        #{gstRate,jdbcType=DOUBLE},
+      </if>
+      <if test="vatRate != null" >
+        #{vatRate,jdbcType=DOUBLE},
+      </if>
+      <if test="marketInterventionPrice != null" >
+        #{marketInterventionPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="ftzPrice != null" >
+        #{ftzPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="destinationIncidentals != null" >
+        #{destinationIncidentals,jdbcType=DOUBLE},
+      </if>
+      <if test="costomsDeclarenceCharges != null" >
+        #{costomsDeclarenceCharges,jdbcType=DOUBLE},
+      </if>
+      <if test="costomsCensoringCharges != null" >
+        #{costomsCensoringCharges,jdbcType=DOUBLE},
+      </if>
+      <if test="customsInspectionCharges != null" >
+        #{customsInspectionCharges,jdbcType=DOUBLE},
+      </if>
+      <if test="labelRecordCharges != null" >
+        #{labelRecordCharges,jdbcType=DOUBLE},
+      </if>
+      <if test="inspectionAndQuarantineCharges != null" >
+        #{inspectionAndQuarantineCharges,jdbcType=DOUBLE},
+      </if>
+      <if test="labelServiceCharges != null" >
+        #{labelServiceCharges,jdbcType=DOUBLE},
+      </if>
+      <if test="importAgentServiceCharges != null" >
+        #{importAgentServiceCharges,jdbcType=DOUBLE},
+      </if>
+      <if test="otherReimbursedExpenses != null" >
+        #{otherReimbursedExpenses,jdbcType=DOUBLE},
+      </if>
+      <if test="labelingCharge != null" >
+        #{labelingCharge,jdbcType=DOUBLE},
+      </if>
+      <if test="minimumProfitRate != null" >
+        #{minimumProfitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="otherFinanceIncidentals != null" >
+        #{otherFinanceIncidentals,jdbcType=DOUBLE},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="typeName != null" >
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.ProductDisprice" >
+    update t_product_disprice
+    <set >
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="disStockId != null" >
+        dis_stock_id = #{disStockId,jdbcType=INTEGER},
+      </if>
+      <if test="disProfitRate != null" >
+        dis_profit_rate = #{disProfitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="disProfit != null" >
+        dis_profit = #{disProfit,jdbcType=DOUBLE},
+      </if>
+      <if test="disVat != null" >
+        dis_vat = #{disVat,jdbcType=DOUBLE},
+      </if>
+      <if test="disStockFee != null" >
+        dis_stock_fee = #{disStockFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disShippingType != null" >
+        dis_shipping_type = #{disShippingType,jdbcType=VARCHAR},
+      </if>
+      <if test="disOtherCost != null" >
+        dis_other_cost = #{disOtherCost,jdbcType=DOUBLE},
+      </if>
+      <if test="disTotalCost != null" >
+        dis_total_cost = #{disTotalCost,jdbcType=DOUBLE},
+      </if>
+      <if test="disTransferFee != null" >
+        dis_transfer_fee = #{disTransferFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disListFee != null" >
+        dis_list_fee = #{disListFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disTradeFee != null" >
+        dis_trade_fee = #{disTradeFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disPayFee != null" >
+        dis_pay_fee = #{disPayFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disPostalFee != null" >
+        dis_postal_fee = #{disPostalFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disImportTar != null" >
+        dis_import_tar = #{disImportTar,jdbcType=DOUBLE},
+      </if>
+      <if test="disGst != null" >
+        dis_gst = #{disGst,jdbcType=DOUBLE},
+      </if>
+      <if test="disInsurance != null" >
+        dis_insurance = #{disInsurance,jdbcType=DOUBLE},
+      </if>
+      <if test="disTotalVat != null" >
+        dis_total_vat = #{disTotalVat,jdbcType=DOUBLE},
+      </if>
+      <if test="cost != null" >
+        cost = #{cost,jdbcType=DOUBLE},
+      </if>
+      <if test="disFreight != null" >
+        dis_freight = #{disFreight,jdbcType=DOUBLE},
+      </if>
+      <if test="disPrice != null" >
+        dis_price = #{disPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="disCifPrice != null" >
+        dis_cif_price = #{disCifPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="operateDate != null" >
+        operate_date = #{operateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="floorPrice != null" >
+        floor_price = #{floorPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="proposalRetailPrice != null" >
+        proposal_retail_price = #{proposalRetailPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="distributorPrice != null" >
+        distributor_price = #{distributorPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="electricityPrices != null" >
+        electricity_prices = #{electricityPrices,jdbcType=DOUBLE},
+      </if>
+      <if test="supermarketPrice != null" >
+        supermarket_price = #{supermarketPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="arriveWarePrice != null" >
+        arrive_ware_price = #{arriveWarePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="disCompanyCost != null" >
+        dis_company_cost = #{disCompanyCost,jdbcType=DOUBLE},
+      </if>
+      <if test="commissionFees != null" >
+        commission_fees = #{commissionFees,jdbcType=DOUBLE},
+      </if>
+      <if test="oceanFreight != null" >
+        ocean_freight = #{oceanFreight,jdbcType=DOUBLE},
+      </if>
+      <if test="deliveryTakingFee != null" >
+        delivery_taking_fee = #{deliveryTakingFee,jdbcType=DOUBLE},
+      </if>
+      <if test="customsInspectionFee != null" >
+        customs_inspection_fee = #{customsInspectionFee,jdbcType=DOUBLE},
+      </if>
+      <if test="stockFee != null" >
+        stock_fee = #{stockFee,jdbcType=DOUBLE},
+      </if>
+      <if test="logisticFee != null" >
+        logistic_fee = #{logisticFee,jdbcType=DOUBLE},
+      </if>
+      <if test="lableMakingFee != null" >
+        lable_making_fee = #{lableMakingFee,jdbcType=DOUBLE},
+      </if>
+      <if test="otherIncidentals != null" >
+        other_incidentals = #{otherIncidentals,jdbcType=DOUBLE},
+      </if>
+      <if test="postalFeeRate != null" >
+        postal_fee_rate = #{postalFeeRate,jdbcType=DOUBLE},
+      </if>
+      <if test="importTarRate != null" >
+        import_tar_rate = #{importTarRate,jdbcType=DOUBLE},
+      </if>
+      <if test="gstRate != null" >
+        gst_rate = #{gstRate,jdbcType=DOUBLE},
+      </if>
+      <if test="vatRate != null" >
+        vat_rate = #{vatRate,jdbcType=DOUBLE},
+      </if>
+      <if test="marketInterventionPrice != null" >
+        market_intervention_price = #{marketInterventionPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="ftzPrice != null" >
+        ftz_price = #{ftzPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="destinationIncidentals != null" >
+        destination_incidentals = #{destinationIncidentals,jdbcType=DOUBLE},
+      </if>
+      <if test="costomsDeclarenceCharges != null" >
+        costoms_declarence_charges = #{costomsDeclarenceCharges,jdbcType=DOUBLE},
+      </if>
+      <if test="costomsCensoringCharges != null" >
+        costoms_censoring_charges = #{costomsCensoringCharges,jdbcType=DOUBLE},
+      </if>
+      <if test="customsInspectionCharges != null" >
+        customs_inspection_charges = #{customsInspectionCharges,jdbcType=DOUBLE},
+      </if>
+      <if test="labelRecordCharges != null" >
+        label_record_charges = #{labelRecordCharges,jdbcType=DOUBLE},
+      </if>
+      <if test="inspectionAndQuarantineCharges != null" >
+        inspection_and_quarantine_charges = #{inspectionAndQuarantineCharges,jdbcType=DOUBLE},
+      </if>
+      <if test="labelServiceCharges != null" >
+        label_service_charges = #{labelServiceCharges,jdbcType=DOUBLE},
+      </if>
+      <if test="importAgentServiceCharges != null" >
+        import_agent_service_charges = #{importAgentServiceCharges,jdbcType=DOUBLE},
+      </if>
+      <if test="otherReimbursedExpenses != null" >
+        other_reimbursed_expenses = #{otherReimbursedExpenses,jdbcType=DOUBLE},
+      </if>
+      <if test="labelingCharge != null" >
+        labeling_charge = #{labelingCharge,jdbcType=DOUBLE},
+      </if>
+      <if test="minimumProfitRate != null" >
+        minimum_profit_rate = #{minimumProfitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="otherFinanceIncidentals != null" >
+        other_finance_incidentals = #{otherFinanceIncidentals,jdbcType=DOUBLE},
+      </if>
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="typeName != null" >
+        type_name = #{typeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.ProductDisprice" >
+    update t_product_disprice
+    set sku = #{sku,jdbcType=VARCHAR},
+      dis_stock_id = #{disStockId,jdbcType=INTEGER},
+      dis_profit_rate = #{disProfitRate,jdbcType=DOUBLE},
+      dis_profit = #{disProfit,jdbcType=DOUBLE},
+      dis_vat = #{disVat,jdbcType=DOUBLE},
+      dis_stock_fee = #{disStockFee,jdbcType=DOUBLE},
+      dis_shipping_type = #{disShippingType,jdbcType=VARCHAR},
+      dis_other_cost = #{disOtherCost,jdbcType=DOUBLE},
+      dis_total_cost = #{disTotalCost,jdbcType=DOUBLE},
+      dis_transfer_fee = #{disTransferFee,jdbcType=DOUBLE},
+      dis_list_fee = #{disListFee,jdbcType=DOUBLE},
+      dis_trade_fee = #{disTradeFee,jdbcType=DOUBLE},
+      dis_pay_fee = #{disPayFee,jdbcType=DOUBLE},
+      dis_postal_fee = #{disPostalFee,jdbcType=DOUBLE},
+      dis_import_tar = #{disImportTar,jdbcType=DOUBLE},
+      dis_gst = #{disGst,jdbcType=DOUBLE},
+      dis_insurance = #{disInsurance,jdbcType=DOUBLE},
+      dis_total_vat = #{disTotalVat,jdbcType=DOUBLE},
+      cost = #{cost,jdbcType=DOUBLE},
+      dis_freight = #{disFreight,jdbcType=DOUBLE},
+      dis_price = #{disPrice,jdbcType=DOUBLE},
+      dis_cif_price = #{disCifPrice,jdbcType=DOUBLE},
+      operate_date = #{operateDate,jdbcType=TIMESTAMP},
+      floor_price = #{floorPrice,jdbcType=DOUBLE},
+      proposal_retail_price = #{proposalRetailPrice,jdbcType=DOUBLE},
+      distributor_price = #{distributorPrice,jdbcType=DOUBLE},
+      electricity_prices = #{electricityPrices,jdbcType=DOUBLE},
+      supermarket_price = #{supermarketPrice,jdbcType=DOUBLE},
+      arrive_ware_price = #{arriveWarePrice,jdbcType=DOUBLE},
+      dis_company_cost = #{disCompanyCost,jdbcType=DOUBLE},
+      commission_fees = #{commissionFees,jdbcType=DOUBLE},
+      ocean_freight = #{oceanFreight,jdbcType=DOUBLE},
+      delivery_taking_fee = #{deliveryTakingFee,jdbcType=DOUBLE},
+      customs_inspection_fee = #{customsInspectionFee,jdbcType=DOUBLE},
+      stock_fee = #{stockFee,jdbcType=DOUBLE},
+      logistic_fee = #{logisticFee,jdbcType=DOUBLE},
+      lable_making_fee = #{lableMakingFee,jdbcType=DOUBLE},
+      other_incidentals = #{otherIncidentals,jdbcType=DOUBLE},
+      postal_fee_rate = #{postalFeeRate,jdbcType=DOUBLE},
+      import_tar_rate = #{importTarRate,jdbcType=DOUBLE},
+      gst_rate = #{gstRate,jdbcType=DOUBLE},
+      vat_rate = #{vatRate,jdbcType=DOUBLE},
+      market_intervention_price = #{marketInterventionPrice,jdbcType=DOUBLE},
+      ftz_price = #{ftzPrice,jdbcType=DOUBLE},
+      destination_incidentals = #{destinationIncidentals,jdbcType=DOUBLE},
+      costoms_declarence_charges = #{costomsDeclarenceCharges,jdbcType=DOUBLE},
+      costoms_censoring_charges = #{costomsCensoringCharges,jdbcType=DOUBLE},
+      customs_inspection_charges = #{customsInspectionCharges,jdbcType=DOUBLE},
+      label_record_charges = #{labelRecordCharges,jdbcType=DOUBLE},
+      inspection_and_quarantine_charges = #{inspectionAndQuarantineCharges,jdbcType=DOUBLE},
+      label_service_charges = #{labelServiceCharges,jdbcType=DOUBLE},
+      import_agent_service_charges = #{importAgentServiceCharges,jdbcType=DOUBLE},
+      other_reimbursed_expenses = #{otherReimbursedExpenses,jdbcType=DOUBLE},
+      labeling_charge = #{labelingCharge,jdbcType=DOUBLE},
+      minimum_profit_rate = #{minimumProfitRate,jdbcType=DOUBLE},
+      other_finance_incidentals = #{otherFinanceIncidentals,jdbcType=DOUBLE},
+      type_id = #{typeId,jdbcType=INTEGER},
+      type_name = #{typeName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByParam" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from t_product_disprice 
+  	where sku = #{sku,jdbcType=VARCHAR}
+  	and  dis_stock_id = #{wareId,jdbcType=INTEGER}
+  	limit 1 offset 0 
+  </select>
+</mapper>

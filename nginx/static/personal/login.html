@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>登录页</title>
+    <meta name="description" content="通淘国际为您提供最质优的进口奶粉,母婴用品,进口零食,进口护肤品等品类最齐全的进口商品!">
+    <meta name="keywords" content="通淘国际,进口母婴用品,进口奶粉,进口商品,通淘海外">
+    <link rel="shortcut icon" href="../img/favicon.ico"/>
+    <link type="text/css" rel="stylesheet" href="../css/style/style.css">
+    <link rel="stylesheet" href="../css/index.css"/>
+    <link rel="stylesheet" href="../css/sub-details.css"/>
+    <link rel="stylesheet" href="../css/public.css"/>
+    <link rel="stylesheet" href="../js/lib/layer2.0/skin/layer.css"/>
+</head>
+<body>
+<!--头部 start-->
+<div class="header2">
+    <div class="main">
+        <div class="header-logo2">
+            <a href="/" class="header-logo-l">
+                <img src="/img/logo.png" alt=""/>
+            </a>
+            <span class="header-logo-r">
+                <span class="contact">
+                    <a href="">
+                        <img src="/img/tel.png" alt=""/>
+                    </a>
+                    <a href="">
+                        <img src="/img/service.png" alt=""/>
+                    </a>
+                </span>
+            </span>
+        </div>
+    </div>
+</div>
+<!--头部 end-->
+
+<!--正文 start-->
+<div class="login-box" id="loginIndex">
+    <div class="main">
+        <img src="/img/login-bg.jpg" alt=""/>
+        <div class="login" id="login-content">
+            <h2>
+                账号登录
+                <span id="2">
+                    没有账号？请
+                    <a href="javascript:toRegister();" title="点击注册" id="toRegister">注册</a>
+                </span>
+            </h2>
+            <form class="login-form" id="login-form" onSubmit="return false;">
+                <div class="inp-box">
+                    <span>
+                        <i class="acco-icon"></i>
+                    </span>
+                    <input type="text" placeholder="请输入您的账号" class="width256" name="email" />
+                </div>
+                <div class="inp-box">
+                    <span>
+                        <i class="passw-icon"></i>
+                    </span>
+                    <input type="password" placeholder="请输入您的登录密码" class="width256" name="passWord" />
+                </div>
+                <div style="display: none;">
+                    <input class="width256" type="text" name="login_captcha"
+                           placeholder="请输入验证码" style="height: 39px;"><span class="reg-red">*</span>
+                    <img id="login_img" src=""
+                         onclick="this.src='/member/getcaptcha?v='+Math.random();"
+                         style="display: inline-block; height: 40px; width: 92px; margin-left: 10px; vertical-align: -15px;">
+                </div>
+                <div class="forget-passw-box">
+                    <label>
+                        <input class="remenber-password" type="checkbox"/>
+                        记住密码
+                    </label>
+                    <a href="javascript:void(0);" id="findBackPwd">忘记密码？</a>
+                </div>
+                <div class="btn-org-box">
+                    <button class="btn-org" id="login-btn">登录</button>
+                </div>
+            </form>
+        </div>
+        <div class="login hide" id="register-cont">
+            <h2>
+                注册账号
+                <span>
+                    已有账号？请
+                    <a href="javascript:toLogin();" title="点击登录" id="toLogin">登录</a>
+                </span>
+            </h2>
+            <form action="" class="register-form" id="reg-form" onSubmit="return false;">
+                <div class="inp-box">
+                    <i class="hotR">*</i>
+                    <input type="text" placeholder="请输入您的手机号" class="width290" name="telNo"/>
+                </div>
+                <div class="inp-box">
+                    <i class="hotR">*</i>
+                    <input type="text" placeholder="请输入验证码" class="width180" name="telCAPTCHA"/>
+                    <img src="" id="phone_captcha_img" alt="" onclick="this.src='/member/getcaptcha?v='+Math.random();"/>
+                </div>
+                <div class="inp-box">
+                    <i class="hotR">*</i>
+                    <input type="text" placeholder="请输入短信验证码" class="width180" name="smsc"/>
+                    <button class="btn-code" onclick="sendMsg(this);">获取验证码</button>
+                </div>
+                <div class="i-agree user_protalcol">
+                    <input type="checkbox" id="user_protalcol"/>
+                    我同意通淘供应链
+                    <a href="/product/user_protalcol.html">《用户注册协议》</a>
+                </div>
+                <div class="btn-org-box">
+                    <button class="btn-org" id="tel_next_btn">下一步</button>
+                </div>
+            </form>
+        </div>
+        <!-- 注册-普通分销商-->
+        <div class="cart-content" style="display: none;" id="normal-distribution-cont">
+            <span class="login-title" style="top: -85px;">登录&nbsp;/&nbsp;注册</span>
+            <div class="distributor">
+                <a href="####" class="distributor1">普通分销商</a>
+                <a href="javascript:toDistribution();" class="distributor2">经销商</a>
+            </div>
+            <form id="normal-form">
+                <h2>注册<span class="reggist">已有账号？请<a href="javascript:toLogin();" title="点击登录" style="color: #35A3F4;">登录</a></span></h2>
+                <label class="input-info">
+                    <span class="red login-res">*</span>
+                    <input class="login-button login-res-input" type="password" name="passWord2" value="" placeholder="请输入您的登录密码"
+                           autocomplete="off">
+                </label>
+                <label class="input-info">
+                    <span class="red login-res">*</span>
+                    <input class="login-button login-res-input" type="password" name="affirmPW2" value="" placeholder="请确认密码"
+                           autocomplete="off">
+                </label>
+                <label class="input-info">
+                    <span class="red login-res">*</span>
+                    <input class="login-button login-res-input" type="text" name="registerCode" value="" placeholder="请输入邀请码，如果没有请联系客服"
+                           autocomplete="off">
+                </label>
+                <!--<label class="input-info red" style="margin-left: 35px;">-->
+                <!--请联系客服索要邀请码，无邀请码不填即可-->
+                <!--</label>-->
+                <div style="text-align: center;padding-top: 20px;">
+                    <input type="button" id="phone_next_btn" class="reggist-span btn" value="注册">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--正文 end-->
+
+<!-- 注册-经销商-->
+<div class="detail-body" style="display: none;" id="distribution-cont">
+    <div class="content">
+        <div class="cart-content" style="width: 80%;margin-left: auto;margin-right: auto;float: none;">
+            <span class="login-title" style="top: -90px;left: -90px;font-size: 18px;">登录&nbsp;/&nbsp;注册</span>
+            <div class="distributor">
+                <a href="javascript:toNormalDistribution2();" class="distributor2">普通分销商</a>
+                <a href="javascript:toDistribution();" class="distributor1" style="">经销商</a>
+            </div>
+            <form enctype="multipart/form-data" method="post" action="/member/registerApply" id="distributor2-form">
+                <input type="hidden" name="account">
+                <h2>注册<span class="reggist">已有账号？请<a href="javascript:toLogin();" title="点击登录" style="color: #35A3F4;">登录</a></span></h2>
+                <label class="input-info">
+                    <span class="red login-res">*</span>
+                    <input class="login-button login-res-input" type="password" name="password" value="" placeholder="请输入您的登录密码"
+                           autocomplete="off">
+                </label>
+                <label class="input-info">
+                    <span class="red login-res">*</span>
+                    <input class="login-button login-res-input" type="password" name="againPassword" value="" placeholder="请确认密码"
+                           autocomplete="off">
+                </label>
+                <label class="input-info">
+                    <span class="red login-res">*</span>
+                    <input class="login-button login-res-input" type="text" name="invitationCode" value="" placeholder="请输入邀请码，如果没有请联系客服"
+                           autocomplete="off">
+                </label>
+                <div class="input-info upload-bottom certificates">
+                    <span class="upload">
+                        <span class="red login-res">*</span>
+                        <span class="upload-files upload-files2">
+                            <i>营业执照</i>
+                            <a class="file btn btn-file">
+                                <span>上传附件</span>
+                                <input type="file" name="business-licence">
+                            </a>
+                            <a id="preview" style="color: #3399ff;width: 80px;"></a>
+                        </span>
+                    </span>
+                    <span class="upload common-file">
+                        <span class="red login-res">*</span>
+                        <span class="upload-files upload-files2">
+                            <i>组织机构代码</i>
+                            <a class="file btn btn-file">
+                                <span>上传附件</span>
+                                <input type="file" name="organization-code">
+                            </a>
+                            <a id="preview" style="color: #3399ff;width: 80px;"></a>
+                        </span>
+                    </span>
+                    <span class="upload common-file">
+                        <span class="red login-res">*</span>
+                        <span class="upload-files upload-files2">
+                            <i>税务登记证</i>
+                            <a class="file btn btn-file">
+                                <span>上传附件</span>
+                                <input type="file" name="tax-licence">
+                            </a>
+                            <a id="preview" style="color: #3399ff;width: 80px;"></a>
+                        </span>
+                    </span>
+                    <label style="float: right;margin-top: 10px;">
+                        <input class="select-lience" type="checkbox"/>
+                        三证合一
+                    </label>
+                </div>
+                <div class="input-info upload-top certificates">
+                    <span class="upload">
+                        <span class="red login-res">*</span>
+                        <span class="upload-files upload-files2">
+                            <i>一般纳税人资格证</i>
+                            <a class="file btn btn-file">
+                                <span>上传附件</span>
+                                <input type="file" name="taxpayer-licence">
+                            </a>
+                            <a id="preview" style="color: #3399ff;width: 80px;"></a>
+                        </span>
+                    </span>
+                    <span class="upload">
+                        <!--<span class="red login-res">*</span>-->
+                        <span class="upload-files upload-files2">
+                            <i>食品流通许可证</i>
+                            <a class="file btn btn-file">
+                                <span>上传附件</span>
+                                <input type="file" name="food-licence">
+                            </a>
+                            <a id="preview" style="color: #3399ff;width: 80px;"></a>
+                        </span>
+                    </span>
+                    <span class="upload">
+                        <span class="red login-res">*</span>
+                        <span class="upload-files upload-files2">
+                            <i>收货授权书</i>
+                            <a class="file btn btn-file">
+                                <span>上传附件</span>
+                                <input type="file" name="goods-licence">
+                            </a>
+                            <a href="../files/通淘国际--收货授权书.docx"  class="file btn btn-file">模板下载</a>
+                        </span>
+                    </span>
+                </div>
+                <div style="padding: 15px 5px;">备注：</div>
+                <textarea name="remark" rows="12" class="res-taxtarea" placeholder="不超过500字"></textarea>
+                <div style="text-align: center;padding-top: 20px;">
+                    <button class="btn-org" id="register-apply" type="button" style="width:69px;height: 27px; background-color:#ddd;cursor: pointer;">注册</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 注册-审核-->
+<div class="detail-body" style="display : none;" id="reggist-audit">
+    <div class="content">
+        <div class="cart-content" style="width: 80%;margin-left: auto;margin-right: auto;float: none;margin-top: 50px;">
+            <span class="login-title" style="top: -42px;left: -90px;font-size: 18px;"> 注册申请：<span class="statusDesc"></span></span>
+            <div class="res-audit">
+                <h3 class="remind-message">您的注册申请（成为经销商），已经成功提交，请耐心等待审核</h3>
+                <span>
+                    <a href="javascript:toDistribution();" class="btn btn-blue again-apply audit-reject">再次申请</a>
+                    <a class="btn btn-blue-deep becomeNormol wait-audit">成为普通分销商</a>
+                </span>
+            </div>
+            <ul class="approval_process">
+                <li>
+                    <i class="approvalIcon approve-icon"></i>
+                    <span class="fc-1">提交成功</span>
+                </li>
+                <li>
+                    <label>审核</label>
+                    <i class="approvalIcon approve-arrows1"></i>
+                </li>
+                <li>
+                    <i class="approvalIcon auditNot-icon"></i>
+                    <span class="fc-2">审核中</span>
+                </li>
+                <li>
+                    <label>审核结果</label>
+                    <i class="approvalIcon approve-arrows2"></i>
+                </li>
+                <li>
+                    <!--<div style="display: none">-->
+                    <!--<i class="approvalIcon approve-icon"></i>-->
+                    <!--<span class="fc-1">审核通过</span>-->
+                    <!--</div>-->
+                    <div class="wait-audit">
+                        <i class="approvalIcon review-icon"></i>
+                        <span class="fc-3">待审核</span>
+                    </div>
+                    <div class="audit-reject" style="display: none">
+                        <i class="approvalIcon reviewNot-icon"></i>
+                        <span>审核不通过</span>
+                    </div>
+                </li>
+            </ul>
+            <p class="audit-accessory apply-files">
+                附件(点击查看)：<br />
+                <!--<a href="####" class="btn-blue-linear">营业执照</a>-->
+                <!--<a href="####" class="btn-blue-linear">组织架构代码</a>-->
+                <!--<a href="####" class="btn-blue-linear">税务登记证</a>-->
+                <!--<a href="####" class="btn-blue-linear">一般纳税人资格证</a>-->
+                <!--<a href="####" class="btn-blue-linear">食品流通许可证</a>-->
+                <!--<a href="####" class="btn-blue-linear">收货授权书</a>-->
+            </p>
+            <p class="upload-bottom" style="display: block;padding-top: 20px;">
+                申请时间：<span class="apply-date"></span>
+            </p>
+            <h3 class="audit-h3">申请记录</h3>
+            <div class="apply-history">
+                <!--<p class="audit-accessory apply-history">-->
+                <!--附件(点击查看)：<br />-->
+                <!--<a href="####" class="btn-blue-linear">营业执照</a>-->
+                <!--<a href="####" class="btn-blue-linear">组织架构代码</a>-->
+                <!--<a href="####" class="btn-blue-linear">税务登记证</a>-->
+                <!--<a href="####" class="btn-blue-linear">一般纳税人资格证</a>-->
+                <!--<a href="####" class="btn-blue-linear">食品流通许可证</a>-->
+                <!--<a href="####" class="btn-blue-linear">收货授权书</a>-->
+                <!--</p>-->
+                <!--<p class="audit-accessory">-->
+                <!--申请时间：<span>2016-07-06 10:03:14</span>-->
+                <!--</p>-->
+                <!--<p class="audit-accessory">-->
+                <!--审核结果：<span class="red">审核未通过</span>-->
+                <!--</p>-->
+                <!--<p class="audit-accessory">-->
+                <!--审核理由：<span>资料不齐全</span>-->
+                <!--</p>-->
+                <!--<p class="audit-accessory">-->
+                <!--备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：<span>需详细提供资料</span>-->
+                <!--</p>-->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+<div id="div_footer"></div>
+
+</body>
+<script data-main="../js/personal/login-reg.js" src="../js/lib/requirejs/require.js"></script>
+</html>

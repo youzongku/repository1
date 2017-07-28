@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="shortcut icon" href="../img/favicon.ico"/>
+<link rel="stylesheet" href="../css/public.css" />
+<link rel="stylesheet" href="../css/sub-details.css" />
+<script type="text/javascript" src="/js/lib/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/cart.js"></script>
+<script type="text/javascript" src="../js/personal/purchase_list.js"></script>
+<!--<script charset="utf-8" src="https://wpa.b.qq.com/cgi/wpa.php"></script>-->
+
+<title>购物车</title>
+</head>
+
+<body>
+ <div id="div_head"></div>
+<div>
+      <div class="">
+            <div class="cart-line"></div>
+            <div class="cart-borld content">
+            		<h1 class="titile">购物车 <a href="../personal/personal.html?emnunum=3" style="display: inline-block;">添加商品</a></h1>
+                    <div class="cart-list">
+                        <ul class="product-list">
+                            <li class="product_title" id="product_title"></li>
+                            <li class="product_price">价格</li>
+                            <li class="product_number">数量</li>
+                            <li class="product_sum">总额</li>
+                            <li class="product_del">操作</li>
+                        </ul>
+                        <div class="product_table">
+                                <table id="product_content" class="product_content">
+
+                                </table>
+                                <div class="freight">运费：<span class="freight_price"></span></div>
+                        </div>
+                    </div>
+                    <div class="settle_accounts">
+                        <button id="cart-num" type="text" >继续购物</button>
+                        <button id="cart-num" type="text" >继续购物</button>
+                        <p class="num_pro">已选<span class="product_num"></span>件商品</p>
+                        <p class="sum_price">总计<span class="all_price"></span>元</p>
+                        <button id="accounts" onclick="submitOrder()">提交订单</button>
+                   </div>
+            </div>
+      </div>
+      </div> 
+      <div class="clear"></div>
+   <iframe width="100%" height="290" margin="0 auto" padding="0"  frameborder="0" scrolling="no" src="/footer.html"></iframe> 
+              
+</body>
+</html>

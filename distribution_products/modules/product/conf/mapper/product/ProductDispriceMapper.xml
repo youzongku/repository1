@@ -1,0 +1,1083 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.ProductDispriceMapper">
+	<resultMap id="BaseResultMap" type="entity.product.ProductDisprice">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="sku" property="sku" jdbcType="VARCHAR" />
+		<result column="dis_stock_id" property="disStockId" jdbcType="INTEGER" />
+		<result column="dis_profit_rate" property="disProfitRate" jdbcType="DOUBLE" />
+		<result column="dis_profit" property="disProfit" jdbcType="DOUBLE" />
+		<result column="dis_vat" property="disVat" jdbcType="DOUBLE" />
+		<result column="dis_stock_fee" property="disStockFee" jdbcType="DOUBLE" />
+		<result column="dis_shipping_type" property="disShippingType" jdbcType="VARCHAR" />
+		<result column="dis_other_cost" property="disOtherCost" jdbcType="DOUBLE" />
+		<result column="dis_total_cost" property="disTotalCost" jdbcType="DOUBLE" />
+		<result column="dis_transfer_fee" property="disTransferFee" jdbcType="DOUBLE" />
+		<result column="dis_list_fee" property="disListFee" jdbcType="DOUBLE" />
+		<result column="dis_trade_fee" property="disTradeFee" jdbcType="DOUBLE" />
+		<result column="dis_pay_fee" property="disPayFee" jdbcType="DOUBLE" />
+		<result column="dis_postal_fee" property="disPostalFee" jdbcType="DOUBLE" />
+		<result column="dis_import_tar" property="disImportTar" jdbcType="DOUBLE" />
+		<result column="dis_gst" property="disGst" jdbcType="DOUBLE" />
+		<result column="dis_insurance" property="disInsurance" jdbcType="DOUBLE" />
+		<result column="dis_total_vat" property="disTotalVat" jdbcType="DOUBLE" />
+		<result column="cost" property="cost" jdbcType="DOUBLE" />
+		<result column="dis_freight" property="disFreight" jdbcType="DOUBLE" />
+		<result column="dis_price" property="disPrice" jdbcType="DOUBLE" />
+		<result column="dis_cif_price" property="disCifPrice" jdbcType="DOUBLE" />
+		<result column="operate_date" property="operateDate" jdbcType="TIMESTAMP" />
+		<result column="floor_price" property="floorPrice" jdbcType="DOUBLE" />
+		<result column="proposal_retail_price" property="proposalRetailPrice" jdbcType="DOUBLE" />
+		<result column="distributor_price" property="distributorPrice" jdbcType="DOUBLE" />
+		<result column="electricity_prices" property="electricityPrices" jdbcType="DOUBLE" />
+		<result column="supermarket_price" property="supermarketPrice" jdbcType="DOUBLE" />
+		<result column="arrive_ware_price" property="arriveWarePrice" jdbcType="DOUBLE" />
+		<result column="dis_company_cost" property="disCompanyCost" jdbcType="DOUBLE" />
+		<result column="market_intervention_price" property="marketInterventionPrice" jdbcType="DOUBLE" />
+		<result column="ftz_price" property="ftzPrice" jdbcType="DOUBLE" />
+		<result column="type_id" property="typeId" jdbcType="INTEGER" />
+		<result column="type_name" property="typeName" jdbcType="VARCHAR" />
+		<result column="vip_price" property="vipPrice" jdbcType="DOUBLE" />
+		<result column="sale_status" property="saleStatus" jdbcType="INTEGER" />
+		<result column="clearance_rate" property="clearanceRate" jdbcType="DOUBLE" />
+		<result column="clearance_price" property="clearancePrice" jdbcType="DOUBLE" />
+	</resultMap>
+	<resultMap id="BaseMap" type="dto.product.ProductDispriceDto">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="sku" property="sku" jdbcType="VARCHAR" />
+		<result column="dis_stock_id" property="disStockId" jdbcType="INTEGER" />
+		<result column="dis_profit_rate" property="disProfitRate" jdbcType="DOUBLE" />
+		<result column="dis_profit" property="disProfit" jdbcType="DOUBLE" />
+		<result column="dis_vat" property="disVat" jdbcType="DOUBLE" />
+		<result column="dis_stock_fee" property="disStockFee" jdbcType="DOUBLE" />
+		<result column="dis_shipping_type" property="disShippingType" jdbcType="VARCHAR" />
+		<result column="dis_other_cost" property="disOtherCost" jdbcType="DOUBLE" />
+		<result column="dis_total_cost" property="disTotalCost" jdbcType="DOUBLE" />
+		<result column="dis_transfer_fee" property="disTransferFee" jdbcType="DOUBLE" />
+		<result column="dis_list_fee" property="disListFee" jdbcType="DOUBLE" />
+		<result column="dis_trade_fee" property="disTradeFee" jdbcType="DOUBLE" />
+		<result column="dis_pay_fee" property="disPayFee" jdbcType="DOUBLE" />
+		<result column="dis_postal_fee" property="disPostalFee" jdbcType="DOUBLE" />
+		<result column="dis_import_tar" property="disImportTar" jdbcType="DOUBLE" />
+		<result column="dis_gst" property="disGst" jdbcType="DOUBLE" />
+		<result column="dis_insurance" property="disInsurance" jdbcType="DOUBLE" />
+		<result column="dis_total_vat" property="disTotalVat" jdbcType="DOUBLE" />
+		<result column="cost" property="cost" jdbcType="DOUBLE" />
+		<result column="dis_freight" property="disFreight" jdbcType="DOUBLE" />
+		<result column="dis_price" property="disPrice" jdbcType="DOUBLE" />
+		<result column="dis_cif_price" property="disCifPrice" jdbcType="DOUBLE" />
+		<result column="operate_date" property="operateDate" jdbcType="TIMESTAMP" />
+		<result column="floor_price" property="floorPrice" jdbcType="DOUBLE" />
+		<result column="proposal_retail_price" property="proposalRetailPrice" jdbcType="DOUBLE" />
+		<result column="distributor_price" property="distributorPrice" jdbcType="DOUBLE" />
+		<result column="electricity_prices" property="electricityPrices" jdbcType="DOUBLE" />
+		<result column="supermarket_price" property="supermarketPrice" jdbcType="DOUBLE" />
+		<result column="arrive_ware_price" property="arriveWarePrice" jdbcType="DOUBLE" />
+		<result column="dis_company_cost" property="disCompanyCost" jdbcType="DOUBLE" />
+		<result column="market_intervention_price" property="marketInterventionPrice" jdbcType="DOUBLE" />
+		<result column="ftz_price" property="ftzPrice" jdbcType="DOUBLE" />
+		<result column="type_id" property="typeId" jdbcType="INTEGER" />
+		<result column="type_name" property="typeName" jdbcType="VARCHAR" />
+		<result column="vip_price" property="vipPrice" jdbcType="DOUBLE" />
+		<result column="sale_status" property="saleStatus" jdbcType="INTEGER" />
+		<result column="clearance_rate" property="clearanceRate" jdbcType="DOUBLE" />
+		<result column="clearance_price" property="clearancePrice" jdbcType="DOUBLE" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, sku, dis_stock_id, dis_profit_rate, dis_profit, dis_vat,
+		dis_stock_fee, dis_shipping_type, dis_other_cost, dis_total_cost, 
+		dis_transfer_fee, dis_list_fee, dis_trade_fee,
+		dis_pay_fee, dis_postal_fee, dis_import_tar, dis_gst, dis_insurance, 
+		dis_total_vat, cost, dis_freight, dis_price, dis_cif_price, operate_date, 
+		floor_price, proposal_retail_price, distributor_price, electricity_prices, 
+		supermarket_price, arrive_ware_price,dis_company_cost,
+		ftz_price,market_intervention_price,type_id,type_name,vip_price,sale_status,
+		clearance_rate,clearance_price
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_product_disprice
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectDisprice" resultMap="BaseMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_product_disprice
+		where sku = #{sku,jdbcType=VARCHAR} and dis_stock_id = #{warehouseId,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getProductDispriceBySkuAndStockId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_product_disprice
+		where sku = #{sku,jdbcType=VARCHAR} and dis_stock_id = #{stockId,jdbcType=INTEGER}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_product_disprice
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<insert id="insert" parameterType="entity.product.ProductDisprice">
+		insert into t_product_disprice (id, sku, dis_stock_id,
+		dis_profit_rate, dis_profit, dis_vat,
+		dis_stock_fee, dis_shipping_type, dis_other_cost,
+		dis_total_cost, dis_transfer_fee, dis_list_fee,
+		dis_trade_fee, dis_pay_fee, dis_postal_fee,
+		dis_import_tar, dis_gst, dis_insurance,
+		dis_total_vat, cost, dis_freight,
+		dis_price, dis_cif_price, operate_date,
+		floor_price, proposal_retail_price, distributor_price,
+		electricity_prices, supermarket_price, arrive_ware_price
+		)
+		values (#{id,jdbcType=INTEGER}, #{sku,jdbcType=VARCHAR},
+		#{disStockId,jdbcType=INTEGER},
+		#{disProfitRate,jdbcType=DOUBLE}, #{disProfit,jdbcType=DOUBLE}, #{disVat,jdbcType=DOUBLE},
+		#{disStockFee,jdbcType=DOUBLE}, #{disShippingType,jdbcType=VARCHAR},
+		#{disOtherCost,jdbcType=DOUBLE},
+		#{disTotalCost,jdbcType=DOUBLE}, #{disTransferFee,jdbcType=DOUBLE}, #{disListFee,jdbcType=DOUBLE},
+		#{disTradeFee,jdbcType=DOUBLE}, #{disPayFee,jdbcType=DOUBLE},
+		#{disPostalFee,jdbcType=DOUBLE},
+		#{disImportTar,jdbcType=DOUBLE}, #{disGst,jdbcType=DOUBLE}, #{disInsurance,jdbcType=DOUBLE},
+		#{disTotalVat,jdbcType=DOUBLE}, #{cost,jdbcType=DOUBLE},
+		#{disFreight,jdbcType=DOUBLE},
+		#{disPrice,jdbcType=DOUBLE}, #{disCifPrice,jdbcType=DOUBLE}, #{operateDate,jdbcType=TIMESTAMP},
+		#{floorPrice,jdbcType=DOUBLE}, #{proposalRetailPrice,jdbcType=DOUBLE},
+		#{distributorPrice,jdbcType=DOUBLE},
+		#{electricityPrices,jdbcType=DOUBLE},
+		#{supermarketPrice,jdbcType=DOUBLE},
+		#{arriveWarePrice,jdbcType=DOUBLE}
+		)
+	</insert>
+	
+	<insert id="insertSelective" parameterType="entity.product.ProductDisprice">
+		insert into t_product_disprice
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="sku != null">
+				sku,
+			</if>
+			<if test="disStockId != null">
+				dis_stock_id,
+			</if>
+			<if test="disProfitRate != null">
+				dis_profit_rate,
+			</if>
+			<if test="disProfit != null">
+				dis_profit,
+			</if>
+			<if test="disVat != null">
+				dis_vat,
+			</if>
+			<if test="disStockFee != null">
+				dis_stock_fee,
+			</if>
+			<if test="disShippingType != null">
+				dis_shipping_type,
+			</if>
+			<if test="disOtherCost != null">
+				dis_other_cost,
+			</if>
+			<if test="disTotalCost != null">
+				dis_total_cost,
+			</if>
+			<if test="disTransferFee != null">
+				dis_transfer_fee,
+			</if>
+			<if test="disListFee != null">
+				dis_list_fee,
+			</if>
+			<if test="disTradeFee != null">
+				dis_trade_fee,
+			</if>
+			<if test="disPayFee != null">
+				dis_pay_fee,
+			</if>
+			<if test="disPostalFee != null">
+				dis_postal_fee,
+			</if>
+			<if test="disImportTar != null">
+				dis_import_tar,
+			</if>
+			<if test="disGst != null">
+				dis_gst,
+			</if>
+			<if test="disInsurance != null">
+				dis_insurance,
+			</if>
+			<if test="disTotalVat != null">
+				dis_total_vat,
+			</if>
+			<if test="cost != null">
+				cost,
+			</if>
+			<if test="disFreight != null">
+				dis_freight,
+			</if>
+			<if test="disPrice != null">
+				dis_price,
+			</if>
+			<if test="disCifPrice != null">
+				dis_cif_price,
+			</if>
+			<if test="operateDate != null">
+				operate_date,
+			</if>
+			<if test="floorPrice != null">
+				floor_price,
+			</if>
+			<if test="proposalRetailPrice != null">
+				proposal_retail_price,
+			</if>
+			<if test="distributorPrice != null">
+				distributor_price,
+			</if>
+			<if test="electricityPrices != null">
+				electricity_prices,
+			</if>
+			<if test="supermarketPrice != null">
+				supermarket_price,
+			</if>
+			<if test="arriveWarePrice != null">
+				arrive_ware_price,
+			</if>
+			<if test="disCompanyCost != null">
+				dis_company_cost,
+			</if>
+			<if test="vipPrice != null">
+				vip_price,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="sku != null">
+				#{sku,jdbcType=VARCHAR},
+			</if>
+			<if test="disStockId != null">
+				#{disStockId,jdbcType=INTEGER},
+			</if>
+			<if test="disProfitRate != null">
+				#{disProfitRate,jdbcType=DOUBLE},
+			</if>
+			<if test="disProfit != null">
+				#{disProfit,jdbcType=DOUBLE},
+			</if>
+			<if test="disVat != null">
+				#{disVat,jdbcType=DOUBLE},
+			</if>
+			<if test="disStockFee != null">
+				#{disStockFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disShippingType != null">
+				#{disShippingType,jdbcType=VARCHAR},
+			</if>
+			<if test="disOtherCost != null">
+				#{disOtherCost,jdbcType=DOUBLE},
+			</if>
+			<if test="disTotalCost != null">
+				#{disTotalCost,jdbcType=DOUBLE},
+			</if>
+			<if test="disTransferFee != null">
+				#{disTransferFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disListFee != null">
+				#{disListFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disTradeFee != null">
+				#{disTradeFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disPayFee != null">
+				#{disPayFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disPostalFee != null">
+				#{disPostalFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disImportTar != null">
+				#{disImportTar,jdbcType=DOUBLE},
+			</if>
+			<if test="disGst != null">
+				#{disGst,jdbcType=DOUBLE},
+			</if>
+			<if test="disInsurance != null">
+				#{disInsurance,jdbcType=DOUBLE},
+			</if>
+			<if test="disTotalVat != null">
+				#{disTotalVat,jdbcType=DOUBLE},
+			</if>
+			<if test="cost != null">
+				#{cost,jdbcType=DOUBLE},
+			</if>
+			<if test="disFreight != null">
+				#{disFreight,jdbcType=DOUBLE},
+			</if>
+			<if test="disPrice != null">
+				#{disPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="disCifPrice != null">
+				#{disCifPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="operateDate != null">
+				#{operateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="floorPrice != null">
+				#{floorPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="proposalRetailPrice != null">
+				#{proposalRetailPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="distributorPrice != null">
+				#{distributorPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="electricityPrices != null">
+				#{electricityPrices,jdbcType=DOUBLE},
+			</if>
+			<if test="supermarketPrice != null">
+				#{supermarketPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="arriveWarePrice != null">
+				#{arriveWarePrice,jdbcType=DOUBLE},
+			</if>
+			<if test="disCompanyCost != null">
+				#{disCompanyCost,jdbcType=DOUBLE},
+			</if>
+			<if test="vipPrice != null">
+				#{vipPrice,jdbcType=DOUBLE},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="entity.product.ProductDisprice">
+		update t_product_disprice
+		<set>
+			<if test="sku != null">
+				sku = #{sku,jdbcType=VARCHAR},
+			</if>
+			<if test="disStockId != null">
+				dis_stock_id = #{disStockId,jdbcType=INTEGER},
+			</if>
+			<if test="disProfitRate != null">
+				dis_profit_rate = #{disProfitRate,jdbcType=DOUBLE},
+			</if>
+			<if test="disProfit != null">
+				dis_profit = #{disProfit,jdbcType=DOUBLE},
+			</if>
+			<if test="disVat != null">
+				dis_vat = #{disVat,jdbcType=DOUBLE},
+			</if>
+			<if test="disStockFee != null">
+				dis_stock_fee = #{disStockFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disShippingType != null">
+				dis_shipping_type = #{disShippingType,jdbcType=VARCHAR},
+			</if>
+			<if test="disOtherCost != null">
+				dis_other_cost = #{disOtherCost,jdbcType=DOUBLE},
+			</if>
+			<if test="disTotalCost != null">
+				dis_total_cost = #{disTotalCost,jdbcType=DOUBLE},
+			</if>
+			<if test="disTransferFee != null">
+				dis_transfer_fee = #{disTransferFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disListFee != null">
+				dis_list_fee = #{disListFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disTradeFee != null">
+				dis_trade_fee = #{disTradeFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disPayFee != null">
+				dis_pay_fee = #{disPayFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disPostalFee != null">
+				dis_postal_fee = #{disPostalFee,jdbcType=DOUBLE},
+			</if>
+			<if test="disImportTar != null">
+				dis_import_tar = #{disImportTar,jdbcType=DOUBLE},
+			</if>
+			<if test="disGst != null">
+				dis_gst = #{disGst,jdbcType=DOUBLE},
+			</if>
+			<if test="disInsurance != null">
+				dis_insurance = #{disInsurance,jdbcType=DOUBLE},
+			</if>
+			<if test="disTotalVat != null">
+				dis_total_vat = #{disTotalVat,jdbcType=DOUBLE},
+			</if>
+			<if test="cost != null">
+				cost = #{cost,jdbcType=DOUBLE},
+			</if>
+			<if test="disFreight != null">
+				dis_freight = #{disFreight,jdbcType=DOUBLE},
+			</if>
+			<if test="disPrice != null">
+				dis_price = #{disPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="disCifPrice != null">
+				dis_cif_price = #{disCifPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="operateDate != null">
+				operate_date = #{operateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="floorPrice != null">
+				floor_price = #{floorPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="proposalRetailPrice != null">
+				proposal_retail_price = #{proposalRetailPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="distributorPrice != null">
+				distributor_price = #{distributorPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="electricityPrices != null">
+				electricity_prices = #{electricityPrices,jdbcType=DOUBLE},
+			</if>
+			<if test="supermarketPrice != null">
+				supermarket_price = #{supermarketPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="arriveWarePrice != null">
+				arrive_ware_price = #{arriveWarePrice,jdbcType=DOUBLE},
+			</if>
+			<if test="disCompanyCost != null">
+				dis_company_cost = #{disCompanyCost,jdbcType=DOUBLE},
+			</if>
+			<if test="typeId != null">
+				type_id = #{typeId,jdbcType=INTEGER},
+			</if>
+			<if test="typeName != null">
+				type_name = #{typeName,jdbcType=VARCHAR},
+			</if>
+			<if test="vipPrice != null">
+				vip_price = #{vipPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="saleStatus != null">
+				sale_status = #{saleStatus,jdbcType=INTEGER},
+			</if>
+			<if test="clearanceRate != null">
+				clearance_rate = #{clearanceRate,jdbcType=DOUBLE},
+			</if>
+			<if test="clearancePrice != null">
+				clearance_price = #{clearancePrice,jdbcType=DOUBLE},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="entity.product.ProductDisprice">
+		update t_product_disprice
+		set sku = #{sku,jdbcType=VARCHAR},
+		dis_stock_id = #{disStockId,jdbcType=INTEGER},
+		dis_profit_rate = #{disProfitRate,jdbcType=DOUBLE},
+		dis_profit = #{disProfit,jdbcType=DOUBLE},
+		dis_vat = #{disVat,jdbcType=DOUBLE},
+		dis_stock_fee = #{disStockFee,jdbcType=DOUBLE},
+		dis_shipping_type = #{disShippingType,jdbcType=VARCHAR},
+		dis_other_cost = #{disOtherCost,jdbcType=DOUBLE},
+		dis_total_cost = #{disTotalCost,jdbcType=DOUBLE},
+		dis_transfer_fee = #{disTransferFee,jdbcType=DOUBLE},
+		dis_list_fee = #{disListFee,jdbcType=DOUBLE},
+		dis_trade_fee = #{disTradeFee,jdbcType=DOUBLE},
+		dis_pay_fee = #{disPayFee,jdbcType=DOUBLE},
+		dis_postal_fee = #{disPostalFee,jdbcType=DOUBLE},
+		dis_import_tar = #{disImportTar,jdbcType=DOUBLE},
+		dis_gst = #{disGst,jdbcType=DOUBLE},
+		dis_insurance = #{disInsurance,jdbcType=DOUBLE},
+		dis_total_vat = #{disTotalVat,jdbcType=DOUBLE},
+		cost = #{cost,jdbcType=DOUBLE},
+		dis_freight = #{disFreight,jdbcType=DOUBLE},
+		dis_price = #{disPrice,jdbcType=DOUBLE},
+		dis_cif_price = #{disCifPrice,jdbcType=DOUBLE},
+		operate_date = #{operateDate,jdbcType=TIMESTAMP},
+		floor_price = #{floorPrice,jdbcType=DOUBLE},
+		proposal_retail_price = #{proposalRetailPrice,jdbcType=DOUBLE},
+		distributor_price = #{distributorPrice,jdbcType=DOUBLE},
+		electricity_prices = #{electricityPrices,jdbcType=DOUBLE},
+		supermarket_price = #{supermarketPrice,jdbcType=DOUBLE},
+		arrive_ware_price = #{arriveWarePrice,jdbcType=DOUBLE},
+		dis_company_cost = #{disCompanyCost,jdbcType=DOUBLE},
+		market_intervention_price = #{marketInterventionPrice,jdbcType=DOUBLE},
+		ftz_price = #{ftzPrice,jdbcType=DOUBLE},
+		vip_price = #{vipPrice,jdbcType=DOUBLE}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="batchUpdateClearancePrice" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+		update t_product_disprice
+		<set>
+	      <if test="item.saleStatus != null">
+				sale_status = #{item.saleStatus,jdbcType=INTEGER},
+			</if>
+			<if test="item.clearanceRate != null">
+				clearance_rate = #{item.clearanceRate,jdbcType=DOUBLE},
+			</if>
+			<if test="item.clearancePrice != null">
+				clearance_price = #{item.clearancePrice,jdbcType=DOUBLE},
+			</if> 
+		</set>
+		where id = #{item.id,jdbcType=INTEGER}
+	    </foreach>
+	</update>
+	
+	<select id="getProductDisPrice" resultType="dto.product.ProductDispriceDto"
+		parameterType="dto.product.ProductDispriceSearch">
+		SELECT
+		p.id,
+		b.brand,
+		t.ctitle productTitle,
+		p.arrive_ware_price arriveWarePrice,
+		p.dis_total_cost disTotalCost,
+		length(p.sku),
+		p.sku sku,
+		p.dis_stock_id disStockId,
+		p.dis_cif_price disCifPrice,
+		p.cost as cost,
+		p.floor_price floorPrice,
+		p.proposal_retail_price proposalRetailPrice,
+		p.distributor_price distributorPrice,
+		p.electricity_prices electricityPrices,
+		p.supermarket_price supermarketPrice,
+		p.dis_company_cost disCompanyCost,
+		p.market_intervention_price marketInterventionPrice,
+		p.ftz_price ftzPrice,
+		p.type_name typeName,
+		p.type_id typeId,
+		p.vip_price vipPrice
+		from t_product_disprice p
+		LEFT JOIN t_product_translate t ON p.sku = t.csku
+		LEFT JOIN t_product_base b ON p.sku = b.csku
+		<if test="skuList != null and skuList.size() > 0">
+			,
+			<foreach item="item" index="index" collection="skuList" open="("
+				separator=" union all " close=" ">select #{item} as sku</foreach>
+			union all select 'aa' as sku) skus
+		</if>
+		where 1 = 1
+		<if test="skuList != null and skuList.size() > 0">
+			and p.sku = skus.sku
+		</if>
+		<if test="key != null">
+			and (p.sku like '%'||#{key,jdbcType=VARCHAR}||'%' or t.ctitle like
+			'%'||#{key,jdbcType=VARCHAR}||'%')
+		</if>
+		<if test="typeId != null">
+			and p.type_id = #{typeId,jdbcType=INTEGER}
+		</if>
+		<if test="warehouseId != null">
+			and p.dis_stock_id = #{warehouseId,jdbcType=INTEGER}
+		</if>
+		<if test="minCost != null">
+			and p.cost <![CDATA[>=]]>
+			#{minCost,jdbcType=DOUBLE}
+		</if>
+		<if test="maxCost != null">
+			and p.cost <![CDATA[<=]]>
+			#{maxCost,jdbcType=DOUBLE}
+		</if>
+		<if test="minFloorPrice != null">
+			and p.floor_price <![CDATA[>=]]>
+			#{minFloorPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="maxFloorPrice != null">
+			and p.floor_price <![CDATA[<=]]>
+			#{maxFloorPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="minProposalRetailPrice != null">
+			and p.proposal_retail_price <![CDATA[>=]]>
+			#{minProposalRetailPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="maxProposalRetailPrice != null">
+			and p.proposal_retail_price <![CDATA[<=]]>
+			#{maxProposalRetailPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="minDistributorPrice != null">
+			and p.distributor_price <![CDATA[>=]]>
+			#{minDistributorPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="maxDistributorPrice != null">
+			and p.distributor_price  <![CDATA[<=]]>
+			#{maxDistributorPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="minElectricityPrices != null">
+			and p.electricity_prices <![CDATA[>=]]>
+			#{minElectricityPrices,jdbcType=DOUBLE}
+		</if>
+		<if test="maxElectricityPrices != null">
+			and p.electricity_prices <![CDATA[<=]]>
+			#{maxElectricityPrices,jdbcType=DOUBLE}
+		</if>
+		<if test="minSupermarketPrice != null">
+			and p.supermarket_price  <![CDATA[>=]]>
+			#{minSupermarketPrice,jdbcType=DOUBLE}  
+		</if>
+		<if test="maxSupermarketPrice != null">
+			and p.supermarket_price <![CDATA[<=]]>
+			#{maxSupermarketPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="minDisTotalCost != null">
+			and p.dis_total_cost  <![CDATA[>=]]>
+			#{minDisTotalCost,jdbcType=DOUBLE}  
+		</if>
+		<if test="maxDisTotalCost != null">
+			and p.dis_total_cost <![CDATA[<=]]>
+			#{maxDisTotalCost,jdbcType=DOUBLE}
+		</if>
+		<if test="minArriveWarePrice != null">
+			and p.arrive_ware_price  <![CDATA[>=]]>
+			#{minArriveWarePrice,jdbcType=DOUBLE}  
+		</if>
+		<if test="maxArriveWarePrice != null">
+			and p.arrive_ware_price <![CDATA[<=]]>
+			#{maxArriveWarePrice,jdbcType=DOUBLE}
+		</if>
+		<if test="minDisCompanyCost != null">
+			and p.dis_company_cost  <![CDATA[>=]]>
+			#{minDisCompanyCost,jdbcType=DOUBLE}  
+		</if>
+		<if test="maxDisConpanyCost != null">
+			and p.dis_company_cost <![CDATA[<=]]>
+			#{maxDisConpanyCost,jdbcType=DOUBLE}
+		</if>
+		<if test="minMarketInterventionPrice != null">
+			and p.market_intervention_price  <![CDATA[>=]]>
+			#{minMarketInterventionPrice,jdbcType=DOUBLE}  
+		</if>
+		<if test="maxMarketInterventionPrice != null">
+			and p.market_intervention_price <![CDATA[<=]]>
+			#{maxMarketInterventionPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="minFtzPrice != null">
+			and p.ftz_price  <![CDATA[>=]]>
+			#{minFtzPrice,jdbcType=DOUBLE}  
+		</if>
+		<if test="maxFtzPrice != null">
+			and p.ftz_price <![CDATA[<=]]>
+			#{maxFtzPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="minVipPrice != null">
+			and p.vip_price <![CDATA[>=]]>
+			#{minVipPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="maxVipPrice != null">
+			and p.vip_price <![CDATA[<=]]>
+			#{maxVipPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="brand != null and brand != '' ">
+			and b.brand = #{brand,jdbcType=VARCHAR}
+		</if>
+		<if test="typeId != null">
+			and p.type_id = #{typeId,jdbcType=INTEGER}
+		</if>
+		<if test="hasNull != null and hasNull == true">
+			<if test="fNameList != null and fNameList.size()>0">
+				and 
+				<foreach collection="fNameList" open="(" close=")" item="item" separator="or">
+					p.${item} is null
+				</foreach>
+			</if>
+		</if>
+		<choose>
+			<when test="filter != null and sort != null and sort !='' ">
+				order by ${sort} ${filter} nulls last 
+			</when>
+			<otherwise>
+				order by sku asc,length asc
+			</otherwise>
+		</choose>
+		<if test="pageSize != null and pageNo != null">
+			limit #{pageSize,jdbcType=INTEGER} offset (#{pageNo,jdbcType=INTEGER} -1)
+			* #{pageSize,jdbcType=INTEGER}
+		</if>
+	</select>
+	
+	<select id="getProductDisPriceCount" resultType="java.lang.Integer"
+		parameterType="dto.product.ProductDispriceSearch">
+		SELECT
+		count(*)
+		from t_product_disprice p
+		LEFT JOIN t_product_translate t ON p.sku = t.csku
+		LEFT JOIN t_product_base b ON p.sku = b.csku
+		<if test="skuList != null and skuList.size() > 0">
+			,
+			<foreach item="item" index="index" collection="skuList" open="("
+				separator=" union all " close=" ">select #{item} as sku</foreach>
+			union all select 'aa' as sku) skus
+		</if>
+		where 1 = 1
+		<if test="skuList != null and skuList.size() > 0">
+			and p.sku = skus.sku
+		</if>
+		<if test="key != null">
+			and (p.sku like '%'||#{key,jdbcType=VARCHAR}||'%' or t.ctitle like
+			'%'||#{key,jdbcType=VARCHAR}||'%')
+		</if>
+		<if test="typeId != null">
+			and p.type_id = #{typeId,jdbcType=INTEGER}
+		</if>
+		<if test="warehouseId != null">
+			and p.dis_stock_id = #{warehouseId,jdbcType=INTEGER}
+		</if>
+		<if test="minCost != null">
+			and p.cost <![CDATA[>=]]>
+			#{minCost,jdbcType=DOUBLE}
+		</if>
+		<if test="maxCost != null">
+			and p.cost <![CDATA[<=]]>
+			#{maxCost,jdbcType=DOUBLE}
+		</if>
+		<if test="minFloorPrice != null">
+			and p.floor_price <![CDATA[>=]]>
+			#{minFloorPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="maxFloorPrice != null">
+			and p.floor_price <![CDATA[<=]]>
+			#{maxFloorPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="minProposalRetailPrice != null">
+			and p.proposal_retail_price <![CDATA[>=]]>
+			#{minProposalRetailPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="maxProposalRetailPrice != null">
+			and p.proposal_retail_price <![CDATA[<=]]>
+			#{maxProposalRetailPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="minDistributorPrice != null">
+			and p.distributor_price <![CDATA[>=]]>
+			#{minDistributorPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="maxDistributorPrice != null">
+			and p.distributor_price  <![CDATA[<=]]>
+			#{maxDistributorPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="minElectricityPrices != null">
+			and p.electricity_prices <![CDATA[>=]]>
+			#{minElectricityPrices,jdbcType=DOUBLE}
+		</if>
+		<if test="maxElectricityPrices != null">
+			and p.electricity_prices <![CDATA[<=]]>
+			#{maxElectricityPrices,jdbcType=DOUBLE}
+		</if>
+			<if test="minSupermarketPrice != null">
+			and p.supermarket_price  <![CDATA[>=]]>
+			#{minSupermarketPrice,jdbcType=DOUBLE}  
+		</if>
+		<if test="maxSupermarketPrice != null">
+			and p.supermarket_price <![CDATA[<=]]>
+			#{maxSupermarketPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="minDisTotalCost != null">
+			and p.dis_total_cost  <![CDATA[>=]]>
+			#{minDisTotalCost,jdbcType=DOUBLE}  
+		</if>
+		<if test="maxDisTotalCost != null">
+			and p.dis_total_cost <![CDATA[<=]]>
+			#{maxDisTotalCost,jdbcType=DOUBLE}
+		</if>
+		<if test="minArriveWarePrice != null">
+			and p.arrive_ware_price  <![CDATA[>=]]>
+			#{minArriveWarePrice,jdbcType=DOUBLE}  
+		</if>
+		<if test="maxArriveWarePrice != null">
+			and p.arrive_ware_price <![CDATA[<=]]>
+			#{maxArriveWarePrice,jdbcType=DOUBLE}
+		</if>
+		<if test="minDisCompanyCost != null">
+			and p.dis_company_cost  <![CDATA[>=]]>
+			#{minDisCompanyCost,jdbcType=DOUBLE}  
+		</if>
+		<if test="maxDisConpanyCost != null">
+			and p.dis_company_cost <![CDATA[<=]]>
+			#{maxDisConpanyCost,jdbcType=DOUBLE}
+		</if>
+		<if test="minMarketInterventionPrice != null">
+			and p.market_intervention_price  <![CDATA[>=]]>
+			#{minMarketInterventionPrice,jdbcType=DOUBLE}  
+		</if>
+		<if test="maxMarketInterventionPrice != null">
+			and p.market_intervention_price <![CDATA[<=]]>
+			#{maxMarketInterventionPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="minFtzPrice != null">
+			and p.ftz_price  <![CDATA[>=]]>
+			#{minFtzPrice,jdbcType=DOUBLE}  
+		</if>
+		<if test="maxFtzPrice != null">
+			and p.ftz_price <![CDATA[<=]]>
+			#{maxFtzPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="minVipPrice != null">
+			and p.vip_price <![CDATA[>=]]>
+			#{minVipPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="maxVipPrice != null">
+			and p.vip_price <![CDATA[<=]]>
+			#{maxVipPrice,jdbcType=DOUBLE}
+		</if>
+		<if test="brand != null and brand != '' ">
+			and b.brand = #{brand,jdbcType=VARCHAR}
+		</if>
+		<if test="typeId != null">
+			and p.type_id = #{typeId,jdbcType=INTEGER}
+		</if>
+		<if test="hasNull != null and hasNull == true">
+			<if test="fNameList != null and fNameList.size()>0">
+				and 
+				<foreach collection="fNameList" open="(" close=")" item="item" separator="or">
+					p.${item} is null
+				</foreach>
+			</if>
+		</if>
+	</select>
+	
+	<select id="getEditPriceList" resultType="dto.product.ProductDispriceDto"
+		parameterType="dto.product.ProductDispriceSearch">
+		SELECT
+		p.id,
+		t.ctitle productTitle,
+		p.arrive_ware_price arriveWarePrice,
+		p.dis_total_cost disTotalCost,
+		p.sku sku,
+		p.dis_stock_id disStockId,
+		p.floor_price floorPrice,
+		p.proposal_retail_price proposalRetailPrice,
+		p.distributor_price distributorPrice,
+		p.electricity_prices electricityPrices,
+		p.supermarket_price supermarketPrice,
+		p.dis_company_cost disCompanyCost,
+		p.market_intervention_price marketInterventionPrice,
+		p.ftz_price ftzPrice
+		from t_product_disprice p
+		LEFT JOIN t_product_translate t ON p.sku = t.csku
+		LEFT JOIN t_product_base b ON p.sku = b.csku
+		<if test="skuList != null and skuList.size() > 0">
+			,
+			<foreach item="item" index="index" collection="skuList" open="("
+				separator=" union all " close=" ">select #{item} as sku</foreach>
+			union all select 'aa' as sku) skus
+		</if>
+		where 1 = 1
+		<if test="warehouseId != null">
+			and p.dis_stock_id = #{warehouseId}
+		</if>
+		<if test="skuList != null and skuList.size() > 0">
+			and p.sku = skus.sku
+		</if>
+		<if test="brand != null ">
+			and b.sku = #{brand,jdbcType=VARCHAR}
+		</if>
+		<choose>
+			<when test="operateType == 'floorPrice' ">
+				and p.floor_price is null
+			</when>
+			<when test="operateType == 'proposalRetailPrice'">
+				and p.proposal_retail_price is null
+			</when>
+			<when test="operateType == 'distributorPrice'">
+				and p.distributor_price is null and p.floor_price is not null
+			</when>
+			<when test="operateType == 'electricityPrices'">
+				and p.electricity_prices is null and p.floor_price is not null
+			</when>
+			<when test="operateType == 'supermarketPrice'">
+				and p.supermarket_price is null and p.proposal_retail_price is not null
+			</when>
+			<otherwise>
+			 </otherwise>
+		</choose>
+		<if test="idList != null and idList.size() > 0">
+			and p.id in 
+			<foreach collection="idList" open="(" separator="," close=")" item="item">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+	
+	<select id="getB2cEditList" resultType="dto.product.ProductDispriceDto"
+		parameterType="java.util.List">
+		SELECT
+		p.id,
+		t.ctitle productTitle,
+		p.arrive_ware_price arriveWarePrice,
+		p.dis_total_cost disTotalCost,
+		p.sku sku,
+		p.dis_stock_id disStockId,
+		p.floor_price floorPrice,
+		p.proposal_retail_price proposalRetailPrice,
+		p.distributor_price distributorPrice,
+		p.electricity_prices electricityPrices,
+		p.supermarket_price supermarketPrice,
+		p.market_intervention_price marketInterventionPrice,
+		p.ftz_price ftzPrice
+		from t_product_disprice p
+		LEFT JOIN t_product_translate t ON p.sku = t.csku
+		where 1 = 1
+		<if test="proList != null and proList.size() > 0">
+			and  
+			<foreach collection="proList" open="(" separator="or" close=")" item="item">
+				p.sku = #{item.sku,jdbcType=VARCHAR} 
+				and p.dis_stock_id = #{item.warehouseId,jdbcType=INTEGER}
+			</foreach>
+		</if>
+	</select>
+	
+	<update id="batchUpdate" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index"
+			separator=";">
+			update t_product_disprice
+			<trim prefix="set" suffix="" suffixOverrides=",">
+				<if test="item.floorPrice != null">
+					floor_price = #{item.floorPrice,jdbcType=DOUBLE},
+				</if>
+				<if test="item.proposalRetailPrice != null">
+					proposal_retail_price = #{item.proposalRetailPrice,jdbcType=DOUBLE},
+				</if>
+				<if test="item.distributorPrice != null">
+					distributor_price = #{item.distributorPrice,jdbcType=DOUBLE},
+				</if>
+				<if test="item.electricityPrices != null">
+					electricity_prices = #{item.electricityPrices,jdbcType=DOUBLE},
+				</if>
+				<if test="item.supermarketPrice != null">
+					supermarket_price = #{item.supermarketPrice,jdbcType=DOUBLE},
+				</if>
+				<if test="item.marketInterventionPrice != null">
+					market_intervention_price = #{item.marketInterventionPrice,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disCompanyCost != null">
+					dis_company_cost = #{item.disCompanyCost,jdbcType=DOUBLE},
+				</if>
+				<if test="item.ftzPrice != null">
+					ftz_price = #{item.ftzPrice,jdbcType=DOUBLE},
+				</if>
+				<if test="item.vipPrice != null">
+					vip_price = #{item.vipPrice,jdbcType=DOUBLE},
+				</if>
+			</trim>
+			where id = ${item.id}
+		</foreach>
+	</update>
+	
+	<update id="updateType" parameterType="entity.product.ProductDisprice">
+		update t_product_disprice
+		<set>
+			<if test="typeId != null">
+				type_id = #{typeId,jdbcType=INTEGER},
+			</if>
+			<if test="typeName != null">
+				type_name = #{typeName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where sku = #{sku,jdbcType=VARCHAR} and dis_stock_id = #{disStockId,jdbcType=INTEGER}
+	</update>
+	
+	<update id="batchUpdateType" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index"
+			separator=";">
+			update t_product_disprice
+			<trim prefix="set" suffix="" suffixOverrides=",">
+				<if test="item.typeId != null">
+					type_id = #{item.typeId,jdbcType=INTEGER},
+				</if>
+				<if test="item.typeName != null">
+					type_name = #{item.typeName,jdbcType=VARCHAR},
+				</if>
+			</trim>
+			where sku = #{item.sku,jdbcType=VARCHAR} and dis_stock_id = #{item.disStockId,jdbcType=INTEGER}
+		</foreach>
+	</update>
+	
+	<select id="pageSearch" resultType="dto.product.ClearancePriceDto" parameterType="dto.product.ProductDispriceSearch">
+		select
+			t .ctitle as productTitle, 
+			length(pd.sku),
+			pd.sku,
+			pd.type_name as typeName,
+			cat.cname as categoryName,
+			pd.arrive_ware_price as arriveWarePrice,
+			pd.clearance_rate as clearanceRate,
+			round(cast(pd.clearance_price as numeric),2) as clearancePrice
+		from
+			t_product_disprice pd
+		left join (
+			select
+				pcm.csku,
+				cb.iid,
+				cn.cname
+			from
+				t_category_base cb,
+				t_category_name cn,
+				t_product_category_mapper pcm
+			where
+				cb.iid = pcm.icategory
+			and cb.ilevel = 1
+			and cb.iid = cn.icategoryid
+		) cat on pd.sku = cat.csku
+		left join t_product_translate t on t .csku = pd.sku
+		where pd.sale_status = 20
+		<if test="categoryId != null">
+			and cat.iid = #{categoryId,jdbcType=INTEGER}
+		</if>
+		<if test="typeId != null">
+			and type_id = #{typeId,jdbcType=INTEGER}
+		</if>
+		<if test="key != null and key != ''">
+			and (
+					lower(pd.sku) like lower('%'||#{key,jdbcType=VARCHAR}||'%')
+					or lower(t.ctitle) like lower('%'||#{key,jdbcType=VARCHAR}||'%' )
+				)
+		</if>
+		<choose>
+			<when test="filter != null and sort != null and sort !='' ">
+				order by ${sort} ${filter} nulls last 
+			</when>
+			<otherwise>
+				order by sku asc,length asc
+			</otherwise>
+		</choose>
+		<if test="pageSize != null and pageNo != null">
+			limit #{pageSize} offset (#{pageNo} -1)* #{pageSize}
+		</if>
+	</select>
+	
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="dto.product.ProductDispriceSearch">
+		select
+			count(1)
+		from
+			t_product_disprice pd
+		left join (
+			select
+				pcm.csku,
+				cb.iid,
+				cn.cname
+			from
+				t_category_base cb,
+				t_category_name cn,
+				t_product_category_mapper pcm
+			where
+				cb.iid = pcm.icategory
+			and cb.ilevel = 1
+			and cb.iid = cn.icategoryid
+		) cat on pd.sku = cat.csku
+		left join t_product_translate t on t .csku = pd.sku
+		where  pd.sale_status = 20
+		<if test="categoryId != null">
+			and cat.iid = #{categoryId,jdbcType=INTEGER}
+		</if>
+		<if test="typeId != null">
+			and type_id = #{typeId,jdbcType=INTEGER}
+		</if>
+		<if test="key != null and key != ''">
+			and (
+					lower(pd.sku) like lower('%'||#{key,jdbcType=VARCHAR}||'%')
+					or lower(t.ctitle) like lower('%'||#{key,jdbcType=VARCHAR}||'%' )
+				)
+		</if>
+	</select>
+</mapper>

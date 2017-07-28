@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.store.ImageMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.store.Image" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="entity_id" property="entityId" jdbcType="INTEGER" />
+    <result column="imgurl" property="imgurl" jdbcType="VARCHAR" />
+    <result column="bthumbnail" property="bthumbnail" jdbcType="BIT" />
+    <result column="position" property="position" jdbcType="INTEGER" />
+    <result column="bsmallimage" property="bsmallimage" jdbcType="BIT" />
+    <result column="bmainimage" property="bmainimage" jdbcType="BIT" />
+  </resultMap>
+  <insert id="insert" parameterType="entity.product.store.Image" >
+    insert into t_image (id, entity_id, imgurl, 
+      bthumbnail, position, bsmallimage, 
+      bmainimage)
+    values (#{id,jdbcType=INTEGER}, #{entityId,jdbcType=INTEGER}, #{imgurl,jdbcType=VARCHAR}, 
+      #{bthumbnail,jdbcType=BIT}, #{position,jdbcType=INTEGER}, #{bsmallimage,jdbcType=BIT}, 
+      #{bmainimage,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.store.Image" >
+    insert into t_image
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="entityId != null" >
+        entity_id,
+      </if>
+      <if test="imgurl != null" >
+        imgurl,
+      </if>
+      <if test="bthumbnail != null" >
+        bthumbnail,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="bsmallimage != null" >
+        bsmallimage,
+      </if>
+      <if test="bmainimage != null" >
+        bmainimage,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="entityId != null" >
+        #{entityId,jdbcType=INTEGER},
+      </if>
+      <if test="imgurl != null" >
+        #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="bthumbnail != null" >
+        #{bthumbnail,jdbcType=BIT},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=INTEGER},
+      </if>
+      <if test="bsmallimage != null" >
+        #{bsmallimage,jdbcType=BIT},
+      </if>
+      <if test="bmainimage != null" >
+        #{bmainimage,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

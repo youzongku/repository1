@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="email=no" name="format-detection" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>录入发货单</title>
+    <link rel="stylesheet" href="/css/frozenui-1.3.0/css/frozen.css">
+    <link rel="stylesheet" href="/css/frozenui-1.3.0/css/icon.css">
+    <link rel="stylesheet" href="/css/frozenui-1.3.0/css/icon-full.css">
+    <link rel="stylesheet" type="text/css" href="../../css/main/main.css">
+    <!--<script src="../../js/lib/jquerysession.js"></script>-->
+</head>
+<body id="body_distributor" v-cloak>
+    <header class="posFix head">
+        <a href="../../user/index/index.html" class="ret-logo"></a>
+        录入发货单
+        <a href="####" class="home-logo"></a>
+        <nav class="imporNav">
+            <p>请选择分销商</p>
+            <p>
+                <a>
+                    <input type="text" v-model="searchInputText" placeholder="请输入分销商账号或手机号" />
+                    <span class="del" style="display: none;"></span>
+                </a>
+            </p>
+        </nav>
+    </header>
+    <section class="imporCon2" id="distributors_list">
+        <p v-for="distributor in distributors" class="imporP" id="p_{{distributor.id}}" v-bind:style="distributor.email | setStyle distributor.nick"
+           @click="selectDistributor('p_'+distributor.id,distributor.email,distributor.distributionMode,distributor.comsumerType)">
+            <a>
+                <span>{{distributor.nick?distributor.nick:"---"}}</span>
+                <span>{{distributor.email}}</span>
+            </a>
+        </p>
+    </section>
+<footer class="foot">
+     <span class="invo-sele">已选：
+            <span class="invo-sele-1">{{nick != null?nick:"---"}}</span>
+            <span class="invo-sele-1">{{disAccount}}</span>
+     </span>
+    <a>
+        <input @click="goStep2" type="button" value="下一步" class="inp-1 btn-blue"/>
+    </a>
+</footer>
+<script src="/js/lib/require.js" data-main="/js/sales/choose_distributor.js?time=new Date()"></script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.payment.yijipay.YijiResultMapper" >
+  <resultMap id="BaseResultMap" type="entity.payment.yijipay.YijiResult" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="partner_id" property="partnerId" jdbcType="VARCHAR" />
+    <result column="out_order_no" property="outOrderNo" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="notify_url" property="notifyUrl" jdbcType="VARCHAR" />
+    <result column="return_url" property="returnUrl" jdbcType="VARCHAR" />
+    <result column="success" property="success" jdbcType="VARCHAR" />
+    <result column="protocol" property="protocol" jdbcType="VARCHAR" />
+    <result column="service" property="service" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="notify_time" property="notifyTime" jdbcType="VARCHAR" />
+    <result column="sign_type" property="signType" jdbcType="VARCHAR" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+    <result column="result_code" property="resultCode" jdbcType="VARCHAR" />
+    <result column="result_message" property="resultMessage" jdbcType="VARCHAR" />
+    <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+    <result column="trade_status" property="tradeStatus" jdbcType="VARCHAR" />
+    <result column="trade_type" property="tradeType" jdbcType="VARCHAR" />
+    <result column="account_day" property="accountDay" jdbcType="VARCHAR" />
+    <result column="trade_amount" property="tradeAmount" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, partner_id, out_order_no, order_no, notify_url, return_url, success, protocol, 
+    service, version, notify_time, sign_type, sign, result_code, result_message, trade_no, 
+    trade_status, trade_type, account_day, trade_amount,create_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_yijifu_result
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_yijifu_result
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.payment.yijipay.YijiResult" >
+    insert into t_yijifu_result (id, partner_id, out_order_no,
+      order_no, notify_url, return_url, 
+      success, protocol, service, 
+      version, notify_time, sign_type, 
+      sign, result_code, result_message, 
+      trade_no, trade_status, trade_type, 
+      account_day, create_date,trade_amount)
+    values (#{id,jdbcType=INTEGER}, #{partnerId,jdbcType=VARCHAR}, #{outOrderNo,jdbcType=VARCHAR}, 
+      #{orderNo,jdbcType=VARCHAR}, #{notifyUrl,jdbcType=VARCHAR}, #{returnUrl,jdbcType=VARCHAR}, 
+      #{success,jdbcType=VARCHAR}, #{protocol,jdbcType=VARCHAR}, #{service,jdbcType=VARCHAR}, 
+      #{version,jdbcType=VARCHAR}, #{notifyTime,jdbcType=VARCHAR}, #{signType,jdbcType=VARCHAR}, 
+      #{sign,jdbcType=VARCHAR}, #{resultCode,jdbcType=VARCHAR}, #{resultMessage,jdbcType=VARCHAR}, 
+      #{tradeNo,jdbcType=VARCHAR}, #{tradeStatus,jdbcType=VARCHAR}, #{tradeType,jdbcType=VARCHAR}, 
+      #{accountDay,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},#{tradeAmount,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.payment.yijipay.YijiResult" >
+    insert into t_yijifu_result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="partnerId != null" >
+        partner_id,
+      </if>
+      <if test="outOrderNo != null" >
+        out_order_no,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="notifyUrl != null" >
+        notify_url,
+      </if>
+      <if test="returnUrl != null" >
+        return_url,
+      </if>
+      <if test="success != null" >
+        success,
+      </if>
+      <if test="protocol != null" >
+        protocol,
+      </if>
+      <if test="service != null" >
+        service,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="notifyTime != null" >
+        notify_time,
+      </if>
+      <if test="signType != null" >
+        sign_type,
+      </if>
+      <if test="sign != null" >
+        sign,
+      </if>
+      <if test="resultCode != null" >
+        result_code,
+      </if>
+      <if test="resultMessage != null" >
+        result_message,
+      </if>
+      <if test="tradeNo != null" >
+        trade_no,
+      </if>
+      <if test="tradeStatus != null" >
+        trade_status,
+      </if>
+      <if test="tradeType != null" >
+        trade_type,
+      </if>
+      <if test="accountDay != null" >
+        account_day,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="tradeAmount != null" >
+        trade_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="partnerId != null" >
+        #{partnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="outOrderNo != null" >
+        #{outOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrl != null" >
+        #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="returnUrl != null" >
+        #{returnUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="success != null" >
+        #{success,jdbcType=VARCHAR},
+      </if>
+      <if test="protocol != null" >
+        #{protocol,jdbcType=VARCHAR},
+      </if>
+      <if test="service != null" >
+        #{service,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyTime != null" >
+        #{notifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        #{signType,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="resultCode != null" >
+        #{resultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resultMessage != null" >
+        #{resultMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNo != null" >
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeStatus != null" >
+        #{tradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null" >
+        #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDay != null" >
+        #{accountDay,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tradeAmount != null">
+        #{tradeAmount,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.payment.yijipay.YijiResult" >
+    update t_yijifu_result
+    <set >
+      <if test="partnerId != null" >
+        partner_id = #{partnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="outOrderNo != null" >
+        out_order_no = #{outOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrl != null" >
+        notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="returnUrl != null" >
+        return_url = #{returnUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="success != null" >
+        success = #{success,jdbcType=VARCHAR},
+      </if>
+      <if test="protocol != null" >
+        protocol = #{protocol,jdbcType=VARCHAR},
+      </if>
+      <if test="service != null" >
+        service = #{service,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyTime != null" >
+        notify_time = #{notifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        sign_type = #{signType,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="resultCode != null" >
+        result_code = #{resultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resultMessage != null" >
+        result_message = #{resultMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNo != null" >
+        trade_no = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeStatus != null" >
+        trade_status = #{tradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null" >
+        trade_type = #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDay != null" >
+        account_day = #{accountDay,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tradeAmount != null">
+        trade_amount = #{tradeAmount,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.payment.yijipay.YijiResult" >
+    update t_yijifu_result
+    set partner_id = #{partnerId,jdbcType=VARCHAR},
+      out_order_no = #{outOrderNo,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      return_url = #{returnUrl,jdbcType=VARCHAR},
+      success = #{success,jdbcType=VARCHAR},
+      protocol = #{protocol,jdbcType=VARCHAR},
+      service = #{service,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      notify_time = #{notifyTime,jdbcType=VARCHAR},
+      sign_type = #{signType,jdbcType=VARCHAR},
+      sign = #{sign,jdbcType=VARCHAR},
+      result_code = #{resultCode,jdbcType=VARCHAR},
+      result_message = #{resultMessage,jdbcType=VARCHAR},
+      trade_no = #{tradeNo,jdbcType=VARCHAR},
+      trade_status = #{tradeStatus,jdbcType=VARCHAR},
+      trade_type = #{tradeType,jdbcType=VARCHAR},
+      account_day = #{accountDay,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      trade_amount = #{tradeAmount,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getYijiResultByCondition" resultMap="BaseResultMap" parameterType="entity.payment.yijipay.YijiResult" >
+    select
+    <include refid="Base_Column_List" />
+    from t_yijifu_result
+    where 1 = 1
+    <if test="outOrderNo != null" >
+      and out_order_no = #{outOrderNo,jdbcType=VARCHAR}
+    </if>
+    <if test="orderNo != null" >
+      and order_no = #{orderNo,jdbcType=VARCHAR}
+    </if>
+    order by create_date desc
+    limit 1 offset 0
+  </select>
+</mapper>

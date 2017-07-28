@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.timer.ApOptRecordMapper" >
+  <resultMap id="BaseResultMap" type="entity.timer.ApOptRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="operate_type" property="operateType" jdbcType="INTEGER" />
+    <result column="operate_desc" property="operateDesc" jdbcType="VARCHAR" />
+    <result column="slave_id" property="slaveId" jdbcType="INTEGER" />
+    <result column="master_id" property="masterId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, operator, operate_time, operate_type, operate_desc, slave_id, master_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_ap_opt_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByMasterId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_ap_opt_record
+    where master_id = #{masterId,jdbcType=INTEGER}
+    order by operate_time desc
+  </select>
+  <select id="selectBySlaveId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_ap_opt_record
+    where slave_id = #{slaveId,jdbcType=INTEGER}
+    order by operate_time desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_ap_opt_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.timer.ApOptRecord" >
+    insert into t_ap_opt_record (id, operator, operate_time, 
+      operate_type, operate_desc, slave_id, 
+      master_id)
+    values (#{id,jdbcType=INTEGER}, #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
+      #{operateType,jdbcType=INTEGER}, #{operateDesc,jdbcType=VARCHAR}, #{slaveId,jdbcType=INTEGER}, 
+      #{masterId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.timer.ApOptRecord" >
+    insert into t_ap_opt_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="operateTime != null" >
+        operate_time,
+      </if>
+      <if test="operateType != null" >
+        operate_type,
+      </if>
+      <if test="operateDesc != null" >
+        operate_desc,
+      </if>
+      <if test="slaveId != null" >
+        slave_id,
+      </if>
+      <if test="masterId != null" >
+        master_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateType != null" >
+        #{operateType,jdbcType=INTEGER},
+      </if>
+      <if test="operateDesc != null" >
+        #{operateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="slaveId != null" >
+        #{slaveId,jdbcType=INTEGER},
+      </if>
+      <if test="masterId != null" >
+        #{masterId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.timer.ApOptRecord" >
+    update t_ap_opt_record
+    <set >
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateType != null" >
+        operate_type = #{operateType,jdbcType=INTEGER},
+      </if>
+      <if test="operateDesc != null" >
+        operate_desc = #{operateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="slaveId != null" >
+        slave_id = #{slaveId,jdbcType=INTEGER},
+      </if>
+      <if test="masterId != null" >
+        master_id = #{masterId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.timer.ApOptRecord" >
+    update t_ap_opt_record
+    set operator = #{operator,jdbcType=VARCHAR},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      operate_type = #{operateType,jdbcType=INTEGER},
+      operate_desc = #{operateDesc,jdbcType=VARCHAR},
+      slave_id = #{slaveId,jdbcType=INTEGER},
+      master_id = #{masterId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

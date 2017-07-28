@@ -1,0 +1,423 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<link rel="shortcut icon" href="../img/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="../css/back_stage.css">
+	<link rel="stylesheet" type="text/css" href="../css/vendors/zTreeStyle.css">
+	<link rel="stylesheet" href="../js/lib/layer2.0/skin/layer.css"/>
+	<link rel="stylesheet" href="../js/lib/laypage1.3/skin/laypage.css"/>
+	<link rel="stylesheet" href="../css/vendors/jquery.mCustomScrollbar.min.css">
+	<link rel="stylesheet" href="../js/lib/jqGrid/css/ui.jqgrid.css"/>
+	<link rel="stylesheet" href="../js/lib/jqGrid/css/jquery-ui-themes-1.12.1/themes/base/jquery-ui.min.css"/>
+	<link rel="stylesheet" href="../js/lib/webuploader/webuploader.css"/>
+	<title>首页 - B2B后台</title>
+</head>
+<body>
+	<div class="content-T">
+		<div class="logo_back" onclick="window.location.href='/backstage/index.html';" style="cursor: pointer;">
+			<span class="back_stage_logo"></span>
+		</div>
+		<div class="top_right">
+			<div class="small-menu">
+				<span class="small-menu-icon"></span>
+			</div>
+			<p class="wel">
+				<span class="wel_icon"></span>
+			</p>
+			<span title="修改密码" class="change-code" onclick="changecode()">修改密码</span>
+			<label class='erweima-box'>
+				<div class='erweima'>
+					手机版
+				</div>
+				<ul class='erweima-pict'>
+					<li>
+						<p>应用下载：</p>
+						<img src="../img/ewm.png">
+						<p class='handle' onclick='pophandleExplain()'>操作说明</p>
+					</li>
+				</ul>
+			</label>
+			
+			<div class="time">
+				<span class="time_day">2015\12\15</span>
+				<span class="time_clock">00.00</span>
+				<span class="time_week">星期一</span>
+				<div style="cursor: pointer;" title="退出登录"><span id="close" class="displayBlock"></span></div>
+			</div>
+		</div>
+	</div>
+	<!-- 右边内容 -->
+	<div class="right_menu content-B" id="page-wrapper">
+
+		<!-- 左边导航 -->
+		<div class="nav-L" id="content_1"  data-mcs-theme="minimal-dark">
+			<div class="main-support skyblue">
+				<h1>BBC</h1>
+				<h4>员工后台</h4>
+			</div>
+			<ul id="nav-left">
+			</ul>
+		</div>
+
+		<!-- 欢迎页面 -->
+		<div class="content-R change content-R-zero">
+		</div>
+		
+		<!-- 商品管理——商品库存 -->
+		<div class="content-R change content-R-one" style="display:none;">
+		</div>
+		
+		<!-- 商品管理——分销价导出 -->
+		<div class="content-R change content-R-thirteen" style="display:none;">
+		</div>
+
+		<!-- 商品管理——价格体系 -->
+		<div class="content-R change content-R-eighteen" style="display:none;">
+		</div>
+
+		<!-- 商品管理——商品价格 -->
+		<div class="content-R change content-R-twentyfive" style="display:none;">
+		</div>
+
+		<!-- 采购进货——所有订单 -->
+		<div class="content-R change content-R-two" style="display:none;">
+		</div>
+
+		<!-- 销售发货——所有订单 -->
+		<div class="content-R change content-R-three" style="display:none;">
+		</div>
+
+		<!-- 销售发货——库存调拨 -->
+		<div class="content-R change content-R-four" style="display:none;">
+		</div>
+
+		<!-- 销售发货——等待审核 -->
+		<div class="content-R change content-R-five" style="display:none;">
+		</div>
+		
+		<!-- 用户充值——所有充值 -->
+		<div class="content-R change content-R-nine" style="display:none;">
+		</div>
+		
+		<!-- 用户充值——充值初审 -->
+		<div class="content-R change content-R-ten" style="display:none;">
+		</div>
+		
+		<!-- 用户充值——充值复审 -->
+		<div class="content-R change content-R-eleven" style="display:none;">
+		</div>
+
+		<!-- 用户充值——提现审核 -->
+		<div class="content-R change content-R-thirty-four" style="display:none;">
+		</div>
+
+		<!-- 用户管理——角色设置 -->
+		<div class="content-R change content-R-six" style="display:none;">
+		</div>
+
+		<!-- 用户管理——等级设置 -->
+		<div class="content-R change content-R-twelve" style="display:none;">
+		</div>
+
+		<!-- 用户管理——后台用户 -->
+		<div class="content-R change content-R-seven" style="display:none;">
+		</div>
+
+		<!-- 用户管理——普通用户 -->
+		<div class="content-R change content-R-eight" style="display:none;">
+		</div>
+
+		<!-- 用户管理——额度管理 -->
+		<div class="content-R change content-R-nineteen" style="display:none;">
+		</div>
+
+		<!-- 用户管理——等级设置 -->
+		<div class="content-R change content-R-fourteen" style="display:none;">
+		</div>
+
+		<!-- 用户管理——组织架构 -->
+		<div class="content-R change content-R-twentyfour" style="display:none;">
+		</div>
+
+		<!-- 用户管理——账期管理 -->
+		<div class="content-R change content-R-sixty-nine" style="display:none;">
+		</div>
+
+		<!-- 用户管理——查看账期 -->
+		<div class="content-R change content-R-seventy" style="display:none;">
+		</div>
+
+		<!-- 营销工具——优惠码 -->
+		<div class="content-R change content-R-sixteen" style="display:none;">
+		</div>
+
+		<!-- 用户充值——返佣记录 -->
+		<div class="content-R change content-R-seventeen" style="display:none;">
+		</div>
+
+		<!--营销工具——特价管理-->
+		<div class="content-R change content-R-twenty" style="display:none;">
+		</div>
+
+		<!--额度管理-->
+		<div class="content-R change content-R-fifteenth" style="display:none;">
+		</div>
+
+		<!--促销管理——促销一览表-->
+		<div class="content-R change content-R-twentyone" style="display:none;">
+		</div>
+
+		<!--促销管理——添加促销-->
+		<div class="content-R change content-R-twentytwo" style="display:none;">
+		</div>
+
+		<!--促销管理——促销类型管理-->
+		<div class="content-R change content-R-twentythree" style="display:none;">
+		</div>
+
+		<!--系统配置——banner管理-->
+		<div class="content-R change content-R-twentysix" style="display:none;">
+		</div>
+
+		<!--系统配置——浮窗管理-->
+		<div class="content-R change content-R-sixty-five" style="display:none;">
+		</div>
+
+		<!--系统配置——楼层广告位管理-->
+		<div class="content-R change content-R-sixty-six" style="display:none;">
+		</div>
+
+		<!--系统配置——通栏广告位管理-->
+		<div class="content-R change content-R-sixty-seven" style="display:none;">
+		</div>
+
+		<!--业务员录单——采购单-->
+		<div class="content-R change content-R-twentyseven" style="display:none;">
+		</div>
+
+		<!--业务员录单——发货单-->
+		<div class="content-R change content-R-twentyeight" style="display:none;">
+		</div>
+
+		<!-- 采购进货——录入采购单 -->
+		<div class="content-R change content-R-thirty" style="display:none;">
+		</div>
+
+		<!--业务员录单——采购单录入-->
+		<div class="content-R change content-R-thirty-one" style="display:none;">
+		</div>
+
+		<!--销售发货——发货单录入-->
+		<div class="content-R change content-R-thirty-two" style="display:none;">
+		</div>
+
+		<!--业务员录单——发货单录入-->
+		<div class="content-R change content-R-thirty-three" style="display:none;">
+		</div>
+
+		<!-- 采购进货——等待审核 -->
+		<div class="content-R change content-R-thirty-five" style="display:none;">
+		</div>
+
+		<!-- 微仓进货——线下转账待审核 -->
+        <div class="content-R change content-R-thirty-six" style="display:none;">
+        </div>
+
+        <!-- 用户管理——模式审核 -->
+        <div class="content-R change content-R-thirty-seven" style="display:none;">
+        </div>
+
+		<!-- 商品管理——价格设置 -->
+		<div class="content-R change content-R-thirty-eight" style="display:none;">
+		</div>
+
+		<!-- 商品管理——基础价格设置-->
+		<div class="content-R change content-R-thirty-nine" style="display:none;">
+		</div>
+
+		<!-- 商品管理——经销商供货价设置 -->
+		<div class="content-R change content-R-forty" style="display:none;">
+		</div>
+
+		<!-- 商品管理——进口专营供货价设置-->
+		<div class="content-R change content-R-forty-one" style="display:none;">
+		</div>
+
+		<!-- 商品管理——电商供货价设置   -->
+		<div class="content-R change content-R-forty-two" style="display:none;">
+		</div>
+
+		<!-- 商品管理——KA直营供货价设置 -->
+		<div class="content-R change content-R-forty-three" style="display:none;">
+		</div>
+
+		<!-- 销售发货——待付款订单 -->
+		<div class="content-R change content-R-forty-four" style="display:none;">
+		</div>
+
+		<!-- 商品管理——属性管理 -->
+		<div class="content-R change content-R-forty-seven" style="display:none;">
+		</div>
+
+		<!-- 商品管理——属性集管理 -->
+		<div class="content-R change content-R-forty-eight" style="display:none;">
+		</div>
+
+		<!-- 商品管理——分类属性集管理 -->
+		<div class="content-R change content-R-forty-nine" style="display:none;">
+		</div>
+
+		<!-- 商品管理——商品预览表 -->
+		<div class="content-R change content-R-fifty" style="display:none;">
+		</div>
+
+		<!-- 充值提现——录入充值记录-->
+		<div class="content-R change content-R-fifty-one" style="display:none;">
+		</div>
+
+		<!-- 用户管理——账户余额-->
+		<div class="content-R change content-R-fifty-two" style="display:none;">
+		</div>
+
+		<!-- 商品管理——VIP价格-->
+		<div class="content-R change content-R-fifty-three" style="display:none;">
+		</div>
+
+		<!-- 用户管理——账户余额管理-->
+		<div class="content-R change content-R-fifty-four" style="display:none;">
+		</div>
+
+		<!-- 销售发货——财务确认-->
+		<div class="content-R change content-R-fifty-five" style="display:none;">
+		</div>
+
+		<!-- 商品管理——商品云仓库存管理-->
+		<div class="content-R change content-R-fifty-six" style="display:none;">
+		</div>
+
+		<!-- 商品管理——商品微仓库存管理-->
+		<div class="content-R change content-R-fifty-seven" style="display:none;">
+		</div>
+
+		<!-- 营销单管理——营销单-->
+		<div class="content-R change content-R-fifty-eight" style="display:none;">
+		</div>
+
+		<!-- 营销单管理——营销单录入-->
+		<div class="content-R change content-R-fifty-nine" style="display:none;">
+		</div>
+
+		<!-- 营销单管理——营销单初审-->
+		<div class="content-R change content-R-sixty" style="display:none;">
+		</div>
+
+		<!-- 营销单管理——营销单复审-->
+		<div class="content-R change content-R-sixty-one" style="display:none;">
+		</div>
+
+		<!-- 销售发货——云仓发货-->
+		<div class="content-R change content-R-sixty-two" style="display:none;">
+		</div>
+
+		<!-- 微仓退货——退货单-->
+		<div class="content-R change content-R-sixty-three" style="display:none;">
+		</div>
+
+		<!-- 微仓退货——商品退款比例-->
+		<div class="content-R change content-R-sixty-four" style="display:none;">
+		</div>
+
+		<!-- sku库存初始化-->
+		<div class="content-R change content-R-seventy-two" style="display:none;">
+		</div>
+
+		<!-- erp库存变更记录-->
+		<div class="content-R change content-R-seventy-three" style="display:none;">
+		</div>
+
+		<!-- 同步指定时间erp库存变更信息-->
+		<div class="content-R change content-R-seventy-four" style="display:none;">
+		</div>
+
+		<!-- 合同管理——合同文件管理-->
+		<div class="content-R change content-R-seventy-six" style="display:none;">
+		</div>
+
+		<!-- 合同管理——报价管理-->
+		<div class="content-R change content-R-seventy-seven" style="display:none;">
+		</div>
+
+
+		<!-- 合同管理——费用管理-->
+		<div class="content-R change content-R-eighty-three" style="display:none;">
+		</div>
+		<!-- 合同管理——报价管理-->
+		<div class="content-R change content-R-seventy-one" style="display:none;">
+		</div>
+
+		<!-- 营销单管理——营销单导出-业务-->
+		<div class="content-R change content-R-eighty-two" style="display:none;">
+		</div>
+		<!-- 发货单售后——退款单-->
+		<div class="content-R change content-R-seven-eight" style="display:none;">
+		</div>
+
+		<!-- 发货单售后——客服确认-->
+		<div class="content-R change content-R-eight-nine" style="display:none;">
+		</div>
+
+		<!-- 发货单售后——财务确认-->
+		<div class="content-R change content-R-eight-zero" style="display:none;">
+		</div>
+
+		<!-- 发货单售后——确认收货-->
+		<div class="content-R change content-R-eight-one" style="display:none;">
+		</div>
+
+	</div>
+
+		<!--修改密码-->
+		<div class="user-changecode" style="display: none">
+			<div class="user-information-box">
+				<form id="modifyPws" onsubmit="return false;">
+					<ul class="edit-pop-list">
+						<li>
+							<span>旧密码</span>
+							<input  name="oldcode" type="password">
+						</li>
+						<li>
+							<span>新密码</span>
+							<input  name="newcode" type="password">
+						</li>
+						<li>
+							<span>确认密码</span>
+							<input name="surecode" type="password">
+						</li>
+						<!--<li>-->
+						<!--<button  class="e-save">保存</button>-->
+						<!--<button class="e-dip" onclick="changecode(this,'Uhide')">取消</button>-->
+						<!--</li>-->
+					</ul>
+				</form>
+			</div>
+		</div>
+	 </div>
+</body>
+<script src="../js/lib/jquery.min.js"></script>
+<script src="../js/backstage/lib/jquery.mCustomScrollbar.min.js"></script>
+<script src="../js/lib/requirejs/require.js" data-main="../js/backstage/index.js"></script>
+<script>
+	(function($){
+		$(window).load(function(){
+			$("#content_1").mCustomScrollbar({
+				themes:"minimal-dark",
+				advanced:{ updateOnBrowserResize:true },
+				scrollInertia:300
+			});
+		});
+	})(jQuery);
+</script>
+
+</html>

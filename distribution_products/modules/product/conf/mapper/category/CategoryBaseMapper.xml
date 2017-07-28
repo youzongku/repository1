@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.category.CategoryBaseMapper" >
+  <resultMap id="BaseResultMap" type="entity.category.CategoryBase" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="iparentid" property="iparentid" jdbcType="INTEGER" />
+    <result column="cpath" property="cpath" jdbcType="VARCHAR" />
+    <result column="ilevel" property="ilevel" jdbcType="INTEGER" />
+    <result column="iposition" property="iposition" jdbcType="INTEGER" />
+    <result column="ichildrencount" property="ichildrencount" jdbcType="INTEGER" />
+    <result column="cname" property="cname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, iparentid, cpath, ilevel, iposition, ichildrencount
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_category_base
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_category_base
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.category.CategoryBase" >
+    insert into t_category_base (iid, iparentid, cpath, 
+      ilevel, iposition, ichildrencount
+      )
+    values (#{iid,jdbcType=INTEGER}, #{iparentid,jdbcType=INTEGER}, #{cpath,jdbcType=VARCHAR}, 
+      #{ilevel,jdbcType=INTEGER}, #{iposition,jdbcType=INTEGER}, #{ichildrencount,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.category.CategoryBase" >
+    insert into t_category_base
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="iparentid != null" >
+        iparentid,
+      </if>
+      <if test="cpath != null" >
+        cpath,
+      </if>
+      <if test="ilevel != null" >
+        ilevel,
+      </if>
+      <if test="iposition != null" >
+        iposition,
+      </if>
+      <if test="ichildrencount != null" >
+        ichildrencount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="iparentid != null" >
+        #{iparentid,jdbcType=INTEGER},
+      </if>
+      <if test="cpath != null" >
+        #{cpath,jdbcType=VARCHAR},
+      </if>
+      <if test="ilevel != null" >
+        #{ilevel,jdbcType=INTEGER},
+      </if>
+      <if test="iposition != null" >
+        #{iposition,jdbcType=INTEGER},
+      </if>
+      <if test="ichildrencount != null" >
+        #{ichildrencount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.category.CategoryBase" >
+    update t_category_base
+    <set >
+      <if test="iparentid != null" >
+        iparentid = #{iparentid,jdbcType=INTEGER},
+      </if>
+      <if test="cpath != null" >
+        cpath = #{cpath,jdbcType=VARCHAR},
+      </if>
+      <if test="ilevel != null" >
+        ilevel = #{ilevel,jdbcType=INTEGER},
+      </if>
+      <if test="iposition != null" >
+        iposition = #{iposition,jdbcType=INTEGER},
+      </if>
+      <if test="ichildrencount != null" >
+        ichildrencount = #{ichildrencount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.category.CategoryBase" >
+    update t_category_base
+    set iparentid = #{iparentid,jdbcType=INTEGER},
+      cpath = #{cpath,jdbcType=VARCHAR},
+      ilevel = #{ilevel,jdbcType=INTEGER},
+      iposition = #{iposition,jdbcType=INTEGER},
+      ichildrencount = #{ichildrencount,jdbcType=INTEGER}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  
+  <select id="realCateQuery" resultType="entity.category.CategoryBase" parameterType="dto.category.CategorySearchParamDto">
+  		SELECT
+	  		cb.iid iid,
+			cb.ilevel ilevel,
+			cn.cname cname
+		FROM 
+  			t_category_base cb 
+  			LEFT JOIN 
+  			t_category_name cn 
+  			ON cb.iid=cn.icategoryid
+  			where 1=1 
+  			<if test="paramDto.level != null">
+	  			and cb.ilevel=#{paramDto.level}   			
+  			</if>
+  </select>
+  
+   <select id="getInitCate" resultType="entity.category.CategoryBase" >
+  		SELECT
+	  		cb.iid iid,
+			cb.ilevel ilevel,
+			cn.cname cname
+		FROM 
+  			t_category_base cb 
+  			LEFT JOIN 
+  			t_category_name cn 
+  			ON cb.iid=cn.icategoryid
+			LEFT JOIN 
+			t_product_price_category_brand pc 
+			ON pc.category_id = cb.iid
+  			where 1=1 
+	  		and cb.ilevel= 1
+	  		and pc.category_id is null 
+  </select>
+  <select id="queryChild" resultType="java.lang.Integer" parameterType="java.util.List">
+		select iid from t_category_base
+		where 1=1
+		<if test="list != null and list.size() > 0">
+			and iparentid in
+			<foreach collection="list" open="(" separator="," close=")"
+				item="id">
+				#{id}
+			</foreach>
+		</if>
+	</select>
+	
+	<select id="getSkusMapper" resultType="java.lang.String"  parameterType="java.util.List">
+		select DISTINCT csku from t_product_category_mapper where 1=1
+		<if test="list != null and list.size() > 0">
+			and icategory in 
+			<foreach collection="list" open="(" separator="," close=")" item="id">
+				#{id,jdbcType=INTEGER}
+			</foreach>
+		</if>
+	</select>
+	
+	<select id="queryCategory" resultType="entity.category.CategoryBase"  parameterType="java.lang.Integer">
+		SELECT
+			cn.cname cname,
+			tb.*
+		FROM
+			t_category_base tb
+		LEFT JOIN t_category_name cn
+		ON tb.iid = cn.icategoryid
+		WHERE tb.iid = #{0}
+	</select>
+	
+</mapper>

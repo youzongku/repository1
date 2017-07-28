@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.IvyOptDetailMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.IvyOptDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="inter_bar_code" property="interBarCode" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="expiration_date" property="expirationDate" jdbcType="TIMESTAMP" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="oprecord_id" property="oprecordId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sku, title, inter_bar_code, warehouse_id, warehouse_name, expiration_date, num, 
+    oprecord_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_ivy_opt_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_ivy_opt_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.IvyOptDetail" >
+    insert into t_ivy_opt_detail (id, sku, title, 
+      inter_bar_code, warehouse_id, warehouse_name, 
+      expiration_date, num, oprecord_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{sku,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{interBarCode,jdbcType=VARCHAR}, #{warehouseId,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR}, 
+      #{expirationDate,jdbcType=TIMESTAMP}, #{num,jdbcType=INTEGER}, #{oprecordId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.IvyOptDetail" >
+    insert into t_ivy_opt_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="interBarCode != null" >
+        inter_bar_code,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="oprecordId != null" >
+        oprecord_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="interBarCode != null" >
+        #{interBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationDate != null" >
+        #{expirationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="oprecordId != null" >
+        #{oprecordId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.IvyOptDetail" >
+    update t_ivy_opt_detail
+    <set >
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="interBarCode != null" >
+        inter_bar_code = #{interBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date = #{expirationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="oprecordId != null" >
+        oprecord_id = #{oprecordId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.IvyOptDetail" >
+    update t_ivy_opt_detail
+    set sku = #{sku,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      inter_bar_code = #{interBarCode,jdbcType=VARCHAR},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      expiration_date = #{expirationDate,jdbcType=TIMESTAMP},
+      num = #{num,jdbcType=INTEGER},
+      oprecord_id = #{oprecordId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="dto.product.search.InventoryLockDeSearch">
+  	select
+		count(1)
+	from
+		t_ivy_opt_detail
+	where
+		1 = 1
+		<if test="recordId">
+			and oprecord_id = #{recordId,jdbcType=INTEGER}
+		</if>
+		<if test="search != null and search != ''">
+		   and 
+			(	lower(sku) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or
+				lower(title) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or
+				lower(inter_bar_code) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			)
+		</if>
+  </select>
+  <select id="pageSearch" resultMap="BaseResultMap" parameterType="dto.product.search.InventoryLockDeSearch">
+		select
+		<include refid="Base_Column_List"/>
+		,length(sku)
+	from
+		t_ivy_opt_detail
+	where
+		1 = 1
+		<if test="recordId">
+			and oprecord_id = #{recordId,jdbcType=INTEGER}
+		</if>
+		<if test="search != null and search != ''">
+			and (
+				lower(sku) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or
+				lower(title) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+				or
+				lower(inter_bar_code) like lower('%'||#{search,jdbcType=VARCHAR}||'%')
+			)
+		</if>
+		order by
+		<choose>
+			<when test="sidx != null and sidx != '' and sord != null and sord != ''">
+			   ${sidx} ${sord} nulls last
+			</when>
+			<otherwise>
+				length asc,id desc
+			</otherwise>
+		</choose>
+		<if test="page != null and rows != null">
+    		limit #{rows} offset (#{page}-1)*#{rows}
+    	</if>
+  </select>
+</mapper>

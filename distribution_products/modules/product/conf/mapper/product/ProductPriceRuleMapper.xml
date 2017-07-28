@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.ProductPriceRuleMapper" >
+  <resultMap id="BaseResultMap" type="entity.product.ProductPriceRule" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="c_rule" property="cRule" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="last_operator" property="lastOperator" jdbcType="VARCHAR" />
+    <result column="last_operator_time" property="lastOperatorTime" jdbcType="TIMESTAMP" />
+    <result column="factor" property="factor" jdbcType="DOUBLE" />
+    <result column="default_factor" property="defaultFactor" jdbcType="DOUBLE" />
+    <result column="price_classification" property="priceClassification" jdbcType="VARCHAR" />
+    <result column="price_classification_desc" property="priceClassificationDesc" jdbcType="VARCHAR" />
+    <result column="field_name" property="fieldName" jdbcType="VARCHAR" />
+    <!-- add by zbc 设置利润，价格设置计算公式 -->
+    <result column="profit_rule" property="profitRule" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, c_rule, status, last_operator, last_operator_time, factor, default_factor, price_classification, 
+    price_classification_desc,field_name,profit_rule
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_price_rule
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+   <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_price_rule
+    order by id
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_product_price_rule
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.product.ProductPriceRule" >
+    insert into t_product_price_rule (id, c_rule, status, 
+      last_operator, last_operator_time, factor, 
+      default_factor, price_classification, price_classification_desc
+      )
+    values (#{id,jdbcType=INTEGER}, #{cRule,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
+      #{lastOperator,jdbcType=VARCHAR}, #{lastOperatorTime,jdbcType=TIMESTAMP}, #{factor,jdbcType=DOUBLE}, 
+      #{defaultFactor,jdbcType=DOUBLE}, #{priceClassification,jdbcType=VARCHAR}, #{priceClassificationDesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.product.ProductPriceRule" >
+    insert into t_product_price_rule
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cRule != null" >
+        c_rule,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="lastOperator != null" >
+        last_operator,
+      </if>
+      <if test="lastOperatorTime != null" >
+        last_operator_time,
+      </if>
+      <if test="factor != null" >
+        factor,
+      </if>
+      <if test="defaultFactor != null" >
+        default_factor,
+      </if>
+      <if test="priceClassification != null" >
+        price_classification,
+      </if>
+      <if test="priceClassificationDesc != null" >
+        price_classification_desc,
+      </if>
+      <if test="profitRule != null" >
+        profit_rule,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cRule != null" >
+        #{cRule,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="lastOperator != null" >
+        #{lastOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="lastOperatorTime != null" >
+        #{lastOperatorTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="factor != null" >
+        #{factor,jdbcType=DOUBLE},
+      </if>
+      <if test="defaultFactor != null" >
+        #{defaultFactor,jdbcType=DOUBLE},
+      </if>
+      <if test="priceClassification != null" >
+        #{priceClassification,jdbcType=VARCHAR},
+      </if>
+      <if test="priceClassificationDesc != null" >
+        #{priceClassificationDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="profitRule != null" >
+        #{profitRule,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.product.ProductPriceRule" >
+    update t_product_price_rule
+    <set >
+      <if test="cRule != null" >
+        c_rule = #{cRule,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="lastOperator != null" >
+        last_operator = #{lastOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="lastOperatorTime != null" >
+        last_operator_time = #{lastOperatorTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="factor != null" >
+        factor = #{factor,jdbcType=DOUBLE},
+      </if>
+      <if test="defaultFactor != null" >
+        default_factor = #{defaultFactor,jdbcType=DOUBLE},
+      </if>
+      <if test="priceClassification != null" >
+        price_classification = #{priceClassification,jdbcType=VARCHAR},
+      </if>
+      <if test="priceClassificationDesc != null" >
+        price_classification_desc = #{priceClassificationDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldName != null" >
+        field_name = #{fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="profitRule != null" >
+        profit_rule = #{profitRule,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.product.ProductPriceRule" >
+    update t_product_price_rule
+    set c_rule = #{cRule,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
+      last_operator = #{lastOperator,jdbcType=VARCHAR},
+      last_operator_time = #{lastOperatorTime,jdbcType=TIMESTAMP},
+      factor = #{factor,jdbcType=DOUBLE},
+      default_factor = #{defaultFactor,jdbcType=DOUBLE},
+      price_classification = #{priceClassification,jdbcType=VARCHAR},
+      price_classification_desc = #{priceClassificationDesc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

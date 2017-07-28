@@ -1,0 +1,649 @@
+<link rel="stylesheet" type="text/css" href="../css/laydate/skins/molv/laydate.css">
+<link rel="stylesheet" type="text/css" href="../css/market/market.css">
+<script type="text/javascript" src="../js/lib/laydate/laydate.js"></script>
+<link rel="stylesheet" type="text/css" href="../js/lib/webuploader/webuploader.css">
+<!--<link rel="stylesheet" type="text/css" href="../css/webuploader.extentsion.css">-->
+<div id="sale_send">
+    <input type="hidden" id="sstatus" value="0">
+    <input type="hidden" id="pageSizeTemp" value="10">
+    <input type="hidden" id="currPageTemp" value="1">
+    <p class="title">创建终端订单</p>
+    <ul class="four-orders eight-orders" id="statusli">
+        <li onclick="salesSelected(this)" class="sales-current" data-status="0">所有订单</li>
+        <li onclick="salesSelected(this)" data-status="1,103">待付款</li>
+        <!--<li onclick="salesSelected(this)" data-status="2">待确认</li>-->
+        <li onclick="salesSelected(this)" data-status="3">待审核</li>
+        <li onclick="salesSelected(this)" data-status="4">审核不通过</li>
+        <li onclick="salesSelected(this)" data-status="9">待收货</li>
+        <li onclick="salesSelected(this)" data-status="10">已完成</li>
+        <li onclick="salesSelected(this)" data-status="ats">退款/售后</li>
+    </ul>
+    <ul class="four-orders-handle" style="z-index: 9999">
+        <li id="addodr" class="btn">+客户订单</li>
+        <li id="leadodr" class="btn" onclick = "toggle_menu_content(18);">订单导入</li>
+        <li style="display: none;" class="btn logisticsExport">物流导出</li>
+    </ul>
+    <div class="three-search" style="display: block;padding-right: 20px;">
+        <input type="text" placeholder="收货人/订单编号/第三方平台单号/交易号" id="desc" value="" style="width:280px" class="search-input-pub"/>
+        <span id="search" class="search-btn-pub" style="margin-left: 5px;">搜索</span>
+    </div>
+    <!--销售单列表-->
+    <div class="three-2-box">
+        <div id="sales_div"></div>
+        <!--销售单分页条-->
+        <div id='pagination_sales' style='text-align: center; margin-top: 30px;'></div>
+    </div>
+
+    <!--退款/售后 start-->
+    <div id="after-div" style="display:none;">
+        <div class="three-2 light-gray purchase-list">
+            <ul>
+                <li>订单编号:<span>XS2016052515474800000684</span></li>
+                <li>平台订单编号:<span>11</span></li>
+                <li>下单时间:<span>2016-05-25 15:47:48</span></li>
+                <li>收货人:<span>qw</span></li>
+                <li style="display: none">商品总数:<span>1</span></li>
+            </ul>
+            <div class="purchase-table">
+                <table>
+                    <tbody>
+                    <tr class="four-2-tr1 bg-gray word-black">
+                        <td class="tr1-td1">商品名称</td>
+                        <td class="tr1-td2">商品编号</td>
+                        <td class="tr1-td3">发货数量(个)</td>
+                        <td class="tr1-td5">所属仓库</td>
+                        <td class="tr1-td6">订单状态</td>
+                        <td class="tr1-td7">订单操作</td>
+                    </tr>
+                    <tr class="three-2-tr2">
+                        <td class="tr2-td1">
+                            <div>
+                                <a href="/product/product-detail.html?sku=IF109-2&amp;warehouseId=2024" target="_blank">
+                                    <img class="bbclazy" src="https://static.tomtop.com.cn/imaging/imaging/product/IF109-2/80-80-100/IF109-2-1-4c5a-ZyrX.jpg" data-original="https://static.tomtop.com.cn/imaging/imaging/product/IF109-2/80-80-100/IF109-2-1-4c5a-ZyrX.jpg" style="display: inline-block;"></a>
+                            </div>
+                            <p style="width: 230px;">
+                                <a href="/product/product-detail.html?sku=IF109-2&amp;warehouseId=2024" class="pnamelk brk" target="_blank">小老板辛辣味香脆紫菜（盒装）36g</a>
+                            </p>
+                        </td>
+                        <td class="tr2-td2"><span class="sku">IF109-2</span></td>
+                        <td>
+                            <p><span class="qty blk">1</span></p>
+                        </td>
+                        <td class="tr2-td5">
+                            <span class="warehousename">深圳仓</span>
+                        </td>
+                        <td class="tr2-td6" rowspan="1">
+                            <p>待审核</p>
+                            <p class="see_detail2" onclick="applicationDrawback();">查看详情</p>
+                        </td>
+                        <td class="tr2-td7" rowspan="1">
+                            <a href="javascript:;" class="btn-hyacinthine-small" style="margin-top: 5px">取消订单</a>
+                            <a href="javascript:;" class="btn-hyacinthine-small display" style="margin-top: 5px">去付款</a>
+                            <a href="javascript:;" class="btn-hyacinthine-small display" style="margin-top: 5px">确认收货</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="searchUD" onclick="CustomerSilder(this)" style="display: none;">
+                <b>
+                    <span class="attMs" style="display: inline;"><span>查看更多</span></span>
+                    <span class="attLs" style="display: none;">上拉</span><em></em>
+                </b>
+            </div>
+            <input type="hidden" class="bbcPostage" value="4.5">
+        </div>
+    </div>
+    <div id='pagination_xssh_sales' style='text-align: center; margin-top: 30px;'></div>
+    <!--退款/售后 end-->
+</div>
+
+<!-- 销售发货的订单详情start -->
+<div class="order_detial_list" id="order_detial_list" style="display:none;">
+    <p class="customer_detail">销售发货--订单详情</p>
+    <span class="close_detail">返回</span>
+    <hr>
+    <h4>订单信息
+        <p>订单编号： <span></span></p>
+        <p>订单状态： <span></span></p>
+        <p>下单时间： <span></span></p>
+        <p>物流信息： <span>暂无相关物流信息</span>
+            <span style="display: none;">深圳市 龙岗区 平湖镇平湖街道平安大道乾隆物流园2期3楼&nbsp;&nbsp;&nbsp;发货人：刘先生&nbsp;&nbsp;&nbsp;电话：18826551638</span>
+        </p>
+    </h4>
+    <h4>收货人信息
+        <p>收货人信息： <span></span></p>
+        <p>手机号： <span></span></p>
+        <p>地址： <span></span></p>
+        <p>邮编： <span></span></p>
+        <p>身份证号： <span></span></p>
+    </h4>
+    <h4>寄件人信息
+        <p>寄件人姓名： <span></span></p>
+        <p>寄件人电话： <span></span></p>
+        <p>寄件人地址： <span></span></p>
+    </h4>
+    <h4>基本信息
+        <p>平台店铺： <span></span></p>
+        <p>收款账号： <span></span></p>
+        <p>实付款： <span></span></p>
+        <p>运费： <span></span></p>
+        <p>客户名称： <span></span></p>
+        <p>备注： <span></span></p>
+    </h4>
+    <h4>买家信息
+        <p>姓名：<span></span></p>
+        <p>手机号：<span></span></p>
+        <p>身份证号：<span></span></p>
+    </h4>
+    <h4>商品列表
+        <ul style='text-align: center;background: #eee;margin-top: 10px;'>
+            <li style="width:420px;">商品名称</li>
+            <li style="width:150px;">商品编号</li>
+            <li style="width:150px;">所属仓库</li>
+            <li style="width:150px;">真实售价(元)</li>
+            <li style="width:150px;">数量(个)</li>
+        </ul>
+    </h4>
+    <!--采购信息-->
+    <h4 class="market-purchas-infor">
+    </h4>
+    <div class="promotion-subbox" style="display:none">
+        <div class="promotion-sub">
+            <div class="discount-p" style="float:right">
+                <p>
+                    实际支付：￥<span class="red b-price"></span>(总计<span class="red"></span>---优惠码<span class="red"></span>)
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 销售发货的订单详情end -->
+
+<!-- 编辑订单start -->
+<div id="edit_detail" style="display:none;">
+    <input type="hidden" id="orderId">
+    <p class="edit_title">客户订单</p>
+    <span style="float: right" id="close_detail" class="btn">返回</span>
+    <div>
+        <div class="detail-list">
+            <div>
+                <span class="detail-title">商品清单</span>
+                <span class="add-detail-pro"><a href="javascript:;" class="btn">添加商品</a></span>
+                <div class="clr"></div>
+            </div>
+            <div class="select-warehouse-product">
+                我的微仓:&nbsp;&nbsp;
+            </div>
+            <!--要发送的商品start-->
+            <div id="pro4send" class="pro-detail-list">
+                <table>
+                    <thead class="bg-gray">
+                    <tr style="border:1px solid #dadada">
+                        <th width="5%">序号</th>
+                        <th width="35%">商品名称</th>
+                        <th width="10%">商品编号</th>
+                        <th width="10%">单价(元)</th>
+                        <th width="10%">真实售价(元)</th>
+                        <th width="5%">数量(个)</th>
+                        <th width="5%">仓库</th>
+                        <th width="10%">小结(元)</th>
+                        <th width="10%">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="pro-detail-list-tbody" style="font-size: 12px;">
+                    <tr><td colspan="8" style="text-align: center;">暂无已选商品</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--要发送的商品end-->
+        </div>
+        <div class="clr"></div>
+    </div>
+    <h3 class="details-form">基本信息
+        <hr>
+        <div>
+            <p><span><span>*</span>平台店铺：</span>
+                <select id="shop"></select>
+                <select style="display: none;margin-right:5px;margin-left: 5px;" id="site-type" class="site-type site-shop"></select>
+                <span style="display: none;width:128px;" class="site-shop"><span>*</span>店铺名称：</span>
+                <input style="display: none;margin-top: 10px;margin-left: -4px;" type="text" name="site-name" placeholder="请输入分销商店铺名称" class="site-name site-shop">
+                <em class="shop-question site-shop" style="display: none;">?</em>
+            </p>
+            <p><span><span></span>收款账号：</span><input id="collectionAccount" disabled="true" value=""></p>
+        </div>
+        <div>
+            <p class="outLine"><span><span id="platformNo_span">*</span>平台订单号：</span><input id="platformNo" value="" placeholder="分销商的平台销售订单号"></p>
+            <p class="outLine"><span><span id="tradeNo_span">*</span>交易号：</span><input id="tradeNo" value=""><em class="pay-question">?</em></p>
+        </div>
+        <div>
+            <p class="amount_">
+                <span><span id="actualAmount_span">*</span>实付款：</span>
+                <input id="actualAmount" class="formatMoney" value="" placeholder="包裹对应的实际支付金额">
+                <em class="real-pay-question">?</em>
+            </p>
+            <p class="amount_"><span><span id="postage_span">*</span>运费：</span><input id="postage" value="" placeholder="收货人物流费用"></p>
+        </div>
+        <div>
+            <p><span><span></span>客户名称：</span><input  style = "margin-left: 0;" id="buyerID" value=""></p>
+        </div>
+        <div>
+            <p class="order-textarea"><span style="vertical-align: top;margin-top: 2px;">备注：</span><textarea id="remark"></textarea></p>
+        </div>
+    </h3>
+    <h3 class="details-form" style = "position:relative;" >收货人信息
+        <hr>
+        <button class="btn" id="deleteRe" disabled = "disabled" style = "background:#eaeaea;color:#000;">删除</button>
+        <button class="btn" id = "saveRe" style="position: absolute;left: 83%;bottom:5%;height:30px;">保存该收货信息</button>
+        <div style = "width:200%">
+            <p class="" >
+                <span style = "width:129px">已保存收货人信息：</span>
+                <select id = "exit_receiver" style = "width:400px" ><option value = "">请选择收货人信息</option></select>
+            </p>
+        </div>
+        <div style = "width:158%">
+            <p class="" >
+                <span style = "width:129px">自动匹配格式：</span>
+                <select id="address-template" style = "width:200px" >
+                    <option value="0">请选择地址格式</option>
+                    <option value="1">淘宝千牛格式</option>
+                    <option value="2">淘宝网页格式</option>
+                </select>
+                <input name="waitInfo" type="text">
+                <button style="width: 80px;height: 30px;margin-left: 20px;" id="sure-match" onclick="sureMatch(this)">确定添加</button>
+            </p>
+        </div>
+        <div>
+            <p class=""><span><span >*</span>收货人姓名：</span><input id = "receiver" value=""></p>
+            <p class=""><span><span >*</span>手机号码：</span><input id = "tel" value=""></p>
+        </div>
+        <div>
+            <p class="address-select" style="width: 100%;">
+                <span><span >*</span>收货地址：</span>
+                <select id = "province" style = "margin-left: 0;"></select>
+                <select id = "city"></select>
+                <select id = "region"></select>
+                <input id = "addr" value="" maxlength = "120" style = "width:400px" placeholder="不需重复填写省市区，必须大于5个字符，小于120个字符">
+            </p>
+        </div>
+        <div>
+            <p tag = "order"><span><span >*</span>收货人身份证：</span><input id = "idcard" value=""><em class="id-question">?</em></p>
+            <p class=""><span><span ></span>邮政编码：</span><input  id = "postCode" value=""></p>
+        </div>
+    </h3>
+    <h3 class="details-form isShow" tag = "order">
+        <div tag = "order" class = "isShow"><input type = "checkbox" id = "ck" onclick = "addBuyerMsg(this)">买家信息与收货人信息一致</div>
+        <br>
+        买家信息
+        <hr>
+        <div>
+            <p tag="order"><span><span >*</span>买家姓名：</span><input id="orderer" value=""></p>
+            <p tag="order"><span><span >*</span>买家身份证：</span><input id="ordererIDCard" value=""><em class="buy-question">?</em></p>
+        </div>
+        <div>
+            <p tag="order"><span><span >*</span>买家手机号：</span><input id="ordererTel" value=""></p>
+        </div>
+    </h3>
+</div>
+<!-- 编辑订单end -->
+
+<!--提交订单start-->
+<div class="promotion-code-box hide">
+    <div class="promotion-code" style="height: 159px">
+        <div class="is-shipping" style="display: none;" >
+            <input type="checkbox" id="isNotify" checked="checked" value="1" style="width: 20px;height: 20px"/>
+            <label for="isNotify" class="deliver_goods">确认发货？<em class="sure-question">?</em></label>
+        </div>
+        <div class="promotion-freight freight-methods">
+            <span>运送方式：</span><select></select>
+            <span class="freight-methods-price red">￥<b id="freight">0</b>元</span>
+            <span class="myself-take" style="display: none;margin-left: 110px">&nbsp;深圳市 龙岗区 平湖镇平湖街道平安大道乾隆物流园2期3楼&nbsp;&nbsp;&nbsp;发货人：刘先生&nbsp;&nbsp;&nbsp;电话：18826551638</span>
+        </div>
+        <div>
+            <span>输入优惠码：</span><input class="promotion-input">
+            <label>
+                <button class="btn promotion-user">验证并使用</button>
+                <span class="des-promotion">
+                    <button>验证通过,面值</button><span class="red">0</span>元,满<span class="red">0</span>元可使用
+                </span>
+            </label>
+        </div>
+        <div class="promotion_total">
+            <span>您还需支付：</span>
+            <div class="promotion-price">
+                <span class="red p-mainprice">0</span>元(商品总价<span class="red">0</span>元
+                -优惠码抵扣<span class="red">0</span>元
+                +运费<span class="red">0</span>元)
+            </div>
+        </div>
+        <input id="updsalor" type="button" value="提交订单" class="promotion-submit btn">
+        <span class="promotion-close">X</span>
+    </div>
+</div>
+<!--提交订单end-->
+
+<div class="pro-to-select">
+</div>
+
+
+<!--发起退款/售后 start-->
+<div class="application-drawback display" id="applyApplicationDrawback">
+    <p class="customer_detail">创建终端订单-申请退款</p><span class="close_detail" onclick="applicationDrawbackBack1();">返回</span>
+    <div class="return-flow-chat">
+        <img src="../img/return-flow-chart/1.png" alt=""/>
+        <img src="../img/return-flow-chart/2.png" alt="" class="hide"/>
+        <img src="../img/return-flow-chart/3.png" alt="" class="hide"/>
+        <img src="../img/return-flow-chart/4.png" alt="" class="hide"/>
+    </div>
+    <div>
+        <form enctype="multipart/form-data" method="post" action="/sales/saleOrderRefundsApply" id="refunds-apply-form" onsubmit="return false;">
+            <input type="hidden" id="hidden_orderId" name="orderId"/>
+            <input type="hidden" id="hidden_detailOrderId" name="detailOrderId"/>
+            <input type="hidden" id="hidden_sku" name="sku"/>
+            <input type="hidden" id="hidden_warehouseId" name="warehouseId"/>
+            <input type="hidden" id="hidden_warehouseName" name="warehouseName"/>
+            <input type="hidden" id="hidden_productImg" name="productImg"/>
+            <input type="hidden" id="hidden_productName" name="productName"/>
+            <input type="hidden" id="hidden_orderNo" name="xsOrderNo"/>
+            <h4 class="height-h">申请退款</h4>
+            <div class="refund">
+                <div>
+                    <span><b class="red">*</b>数量：</span>
+                <span>
+                    <span class="gw-num">
+                        <em class="jian" id="shSaleOrder-button-qty-sub_new">-</em>
+                        <input type="text" value="1" class="num" id="sh-saleOrder-button-qty" name ="qty">
+                        <em class="add" id="shSaleOrder-button-qty-add_new">+</em>
+                    </span>
+                    <span class="red">最多能选<span id="MAX_QTY"></span>个</em></em></span>
+                </span>
+                </div>
+
+                <div>
+                    <span><b class="red">*</b>金额：</span>
+                    <span><input type="text" value="" class="money-inp" name="money" id="DEMAND_INPUT_MONEY">元</span>
+                </div>
+                <div>
+                    <span><b class="red">*</b>问题描述：</span>
+                    <span><textarea class="refund-area" name="desc"></textarea></span>
+                </div>
+                <div class="refund-accessory">
+                    <span style="vertical-align: top;">附件：</span>
+                    <div id="uploader" class="refund-accessory-uploader">
+                        <div class="queueList">
+                            <div id="dndArea" class="placeholder2">
+                                <div id="filePicker"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="refund-button">
+                    <button class="btn-org uploadBtn2" id="refunds-apply" onclick="refundsApply();">提交申请</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div>
+        <h4 class="height-h">商品信息</h4>
+        <div class="three-2 light-gray purchase-list" style="margin: 0">
+            <div class="purchase-table">
+                <table>
+                    <thead>
+                    <tr class="four-2-tr1 bg-gray word-black">
+                        <th class="tr1-td1">商品名称</th>
+                        <th class="tr1-td2">商品编号</th>
+                        <th class="tr1-td3">发货数量(个)</th>
+                        <th class="tr1-td5">所属仓库</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="three-2-tr2">
+                        <td class="tr2-td1">
+                            <div>
+                                <a href="/product/product-detail.html?sku=IF109-2&amp;warehouseId=2024" target="_blank">
+                                    <img class="bbclazy" src="https://static.tomtop.com.cn/imaging/imaging/product/IF109-2/80-80-100/IF109-2-1-4c5a-ZyrX.jpg" data-original="https://static.tomtop.com.cn/imaging/imaging/product/IF109-2/80-80-100/IF109-2-1-4c5a-ZyrX.jpg" style="display: inline-block;"></a>
+                            </div>
+                            <p style="width: 230px;">
+                                <a href="/product/product-detail.html?sku=IF109-2&amp;warehouseId=2024" class="pnamelk brk" target="_blank">小老板辛辣味香脆紫菜（盒装）36g</a>
+                            </p>
+                        </td>
+                        <td class="tr2-td2"><span class="sku">IF109-2</span></td>
+                        <td>
+                            <p><span class="qty blk">1</span></p>
+                        </td>
+                        <td class="tr2-td5">
+                            <span class="warehousename">深圳仓</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="searchUD" onclick="CustomerSilder(this)" style="display: none;">
+                <b>
+                    <span class="attMs" style="display: inline;"><span>查看更多</span></span>
+                    <span class="attLs" style="display: none;">上拉</span><em></em>
+                </b>
+            </div>
+            <input type="hidden" class="bbcPostage" value="4.5">
+        </div>
+    </div>
+    <div>
+        <h4 class="height-h">采购信息</h4>
+        <div class="three-2 light-gray purchase-list" style="margin: 0">
+            <ul>
+                <li>采购编号:<span>CG2016052515474800000684</span></li>
+                <li>下单时间:<span>2016-05-25 15:47:48</span></li>
+            </ul>
+            <div class="purchase-table">
+                <table>
+                    <thead>
+                    <tr class="four-2-tr1 bg-gray word-black">
+                        <th style="width: 40%">商品编号</th>
+                        <th style="width: 30%">采购单价（元）</th>
+                        <th style="width: 30%">均摊价（元）</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="three-2-tr2">
+                        <td>IF109-2</td>
+                        <td>43.55</td>
+                        <td>43.55</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="searchUD" onclick="CustomerSilder(this)" style="display: none;">
+                <b>
+                    <span class="attMs" style="display: inline;"><span>查看更多</span></span>
+                    <span class="attLs" style="display: none;">上拉</span><em></em>
+                </b>
+            </div>
+            <input type="hidden" class="bbcPostage" value="4.5">
+        </div>
+    </div>
+</div>
+<!--发起退款/售后 end-->
+
+<!--退款/售后-查看详情 start-->
+<div class="application-drawback" id="applicationDrawback" style="display:none;">
+    <p class="customer_detail">创建终端订单-退款单-查看详情</p><span class="close_detail" onclick="applicationDrawbackBack2();">返回</span>
+    <input type="hidden" id="SH_ORDER_ID">
+    <div class="return-flow">
+        <span class="return-flow-state">
+            <img src="../img/return-flow-chart/finish.png" alt=""/>
+            <span id="SH_ORDER_RESULT"></span>
+        </span>
+        <ul class="return-flow-con">
+            <!--<li>-->
+                <!--<span>2016-12-20  15：23:00</span>-->
+                <!--<span>提交申请</span>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<span>2016-12-20  15：23:00</span>-->
+                <!--<span>平台审核通过</span>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<span>2016-12-20  15：23:00</span>-->
+                <!--<span>寄回商品</span>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<span>2016-12-20  15：23:00</span>-->
+                <!--<span>平台收货无误，退款至用户余额</span>-->
+            <!--</li>-->
+        </ul>
+    </div>
+    <div class="return-flow-chat">
+        <img src="../img/return-flow-chart/1.png" alt=""/>
+        <img src="../img/return-flow-chart/2.png" alt="" class="hide"/>
+        <img src="../img/return-flow-chart/3.png" alt="" class="hide"/>
+        <img src="../img/return-flow-chart/4.png" alt="" class="hide"/>
+    </div>
+    <div>
+        <h4 class="height-h">申请退款</h4>
+        <div class="refund">
+            <div>
+                <span>编号：</span>
+                <span id="SH_ORDER_NO_SPAN"></span>
+            </div>
+            <div>
+                <span><b class="red">*</b>数量：</span>
+                <span id="SH_ORDRE_QTY_SAPN"><em></em>个</span>
+            </div>
+            <div>
+                <span><b class="red">*</b>金额：</span>
+                <span id="SH_ORDER_MONEY_SPAN"><em></em>元</span>
+            </div>
+            <div>
+                <span><b class="red">*</b>问题描述：</span>
+                <span id="SH_ORDER_QADESC_SPAN">商品变形，影响销售</span>
+            </div>
+            <div class="refund-accessory">
+                <span>附件：</span>
+                <span id="imgBox">
+
+                </span>
+            </div>
+            <div class="refund-button">
+                <button class="btn-org" onclick="cancelRequest();" id="detail_btn_cancle_apply">取消申请</button>
+                <button class="btn-org" onclick="returnGoods();" id="detail_btn_return_product">寄回商品</button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h4 class="height-h">商品信息</h4>
+        <div class="three-2 light-gray purchase-list" style="margin: 0">
+            <div class="purchase-table">
+                <table>
+                    <thead>
+                    <tr class="four-2-tr1 bg-gray word-black">
+                        <th class="tr1-td1">商品名称</th>
+                        <th class="tr1-td2">商品编号</th>
+                        <th class="tr1-td3">发货数量(个)</th>
+                        <th class="tr1-td5">所属仓库</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="three-2-tr2">
+                        <td class="tr2-td1">
+                            <div>
+                                <a href="/product/product-detail.html?sku=IF109-2&amp;warehouseId=2024" target="_blank">
+                                    <img class="bbclazy" src="https://static.tomtop.com.cn/imaging/imaging/product/IF109-2/80-80-100/IF109-2-1-4c5a-ZyrX.jpg" data-original="https://static.tomtop.com.cn/imaging/imaging/product/IF109-2/80-80-100/IF109-2-1-4c5a-ZyrX.jpg" style="display: inline-block;"></a>
+                            </div>
+                            <p style="width: 230px;">
+                                <a href="/product/product-detail.html?sku=IF109-2&amp;warehouseId=2024" class="pnamelk brk" target="_blank">小老板辛辣味香脆紫菜（盒装）36g</a>
+                            </p>
+                        </td>
+                        <td class="tr2-td2"><span class="sku">IF109-2</span></td>
+                        <td>
+                            <p><span class="qty blk">1</span></p>
+                        </td>
+                        <td class="tr2-td5">
+                            <span class="warehousename">深圳仓</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="searchUD" onclick="CustomerSilder(this)" style="display: none;">
+                <b>
+                    <span class="attMs" style="display: inline;"><span>查看更多</span></span>
+                    <span class="attLs" style="display: none;">上拉</span><em></em>
+                </b>
+            </div>
+            <input type="hidden" class="bbcPostage" value="4.5">
+        </div>
+    </div>
+    <div>
+        <h4 class="height-h">采购信息</h4>
+        <div class="three-2 light-gray purchase-list" style="margin: 0">
+            <ul>
+                <li>采购编号:<span>CG2016052515474800000684</span></li>
+                <li>下单时间:<span>2016-05-25 15:47:48</span></li>
+            </ul>
+            <div class="purchase-table">
+                <table>
+                    <thead>
+                    <tr class="four-2-tr1 bg-gray word-black">
+                        <th style="width: 40%">商品编号</th>
+                        <th style="width: 30%">采购单价（元）</th>
+                        <th style="width: 30%">均摊价（元）</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="three-2-tr2">
+                        <td>IF109-2</td>
+                        <td>43.55</td>
+                        <td>43.55</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="searchUD" onclick="CustomerSilder(this)" style="display: none;">
+                <b>
+                    <span class="attMs" style="display: inline;"><span>查看更多</span></span>
+                    <span class="attLs" style="display: none;">上拉</span><em></em>
+                </b>
+            </div>
+            <input type="hidden" class="bbcPostage" value="4.5">
+        </div>
+    </div>
+</div>
+<div class="return-goods display">
+    <div>
+        <span><em class="red">*</em>快递公司：</span>
+        <span><input type="text" name="company"/></span>
+    </div>
+    <div>
+        <span><em class="red">*</em>快递单号：</span>
+        <span><input type="text" name="expressCode"/></span>
+    </div>
+</div>
+<!--退款/售后-查看详情 end-->
+
+
+<div id='add-logisticsExport-box' class="display">
+    <div>
+        <div>
+            <div class="market-box">
+                <label><input type="checkbox" name="field" value="platformOrderNo" checked="checked"/>订单号</label>
+                <label><input type="checkbox" name="field" value="logisticsMode" checked="checked"/>物流公司（中文）</label>
+                <label><input type="checkbox" name="field" value="trackingNumber" checked="checked"/>物流单号</label>
+                <label><input type="checkbox" name="field" value="saleOrderNO"/>BBC订单编号</label>
+            </div>
+            <div class="market-box">
+                <label><input type="checkbox" name="field" value="buyerId"/>客户昵称</label>
+                <label><input type="checkbox" name="field" value="receiver"/>收件人姓名</label>
+                <label><input type="checkbox" name="field" value="tel"/>收件人手机号</label>
+            </div>
+        </div>
+        <div class="market-box">
+            <span>选择导出类型：</span>
+            <select>
+                <option value='1'>导出当前页</option>
+                <option value='2'>导出所有待收货订单</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div  id = "winxin_content" class="modal fade in"></div>
+

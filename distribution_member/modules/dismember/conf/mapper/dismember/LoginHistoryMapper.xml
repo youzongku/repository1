@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.LoginHistoryMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.LoginHistory" >
+    <result column="dtimestamp" property="dtimestamp" jdbcType="TIMESTAMP" />
+    <result column="cemail" property="cemail" jdbcType="VARCHAR" />
+    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+    <result column="cltc" property="cltc" jdbcType="VARCHAR" />
+    <result column="cstc" property="cstc" jdbcType="VARCHAR" />
+    <result column="cclientip" property="cclientip" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="entity.dismember.LoginHistory" >
+    insert into t_member_login_history (dtimestamp, cemail, iwebsiteid, 
+      cltc, cstc, cclientip
+      )
+    values (#{dtimestamp,jdbcType=TIMESTAMP}, #{cemail,jdbcType=VARCHAR}, #{iwebsiteid,jdbcType=INTEGER}, 
+      #{cltc,jdbcType=VARCHAR}, #{cstc,jdbcType=VARCHAR}, #{cclientip,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.LoginHistory" >
+    insert into t_member_login_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dtimestamp != null" >
+        dtimestamp,
+      </if>
+      <if test="cemail != null" >
+        cemail,
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid,
+      </if>
+      <if test="cltc != null" >
+        cltc,
+      </if>
+      <if test="cstc != null" >
+        cstc,
+      </if>
+      <if test="cclientip != null" >
+        cclientip,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dtimestamp != null" >
+        #{dtimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cemail != null" >
+        #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="iwebsiteid != null" >
+        #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="cltc != null" >
+        #{cltc,jdbcType=VARCHAR},
+      </if>
+      <if test="cstc != null" >
+        #{cstc,jdbcType=VARCHAR},
+      </if>
+      <if test="cclientip != null" >
+        #{cclientip,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getRecentHistory" resultType="entity.dismember.LoginHistory" parameterType="java.lang.String">
+    SELECT * FROM t_member_login_history WHERE cemail = #{cemail}
+    ORDER BY dtimestamp DESC
+  </select>
+</mapper>

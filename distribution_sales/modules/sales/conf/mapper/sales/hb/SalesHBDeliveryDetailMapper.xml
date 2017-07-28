@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.hb.SalesHBDeliveryDetailMapper" >
+  <resultMap id="BaseResultMap" type="entity.sales.hb.SalesHBDeliveryDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sales_hb_id" property="salesHbId" jdbcType="INTEGER" />
+    <result column="sales_hb_no" property="salesHbNo" jdbcType="VARCHAR" />
+    <result column="sales_order_no" property="salesOrderNo" jdbcType="VARCHAR" />
+    <result column="shop_id" property="shopId" jdbcType="INTEGER" />
+    <result column="sales_order_id" property="salesOrderId" jdbcType="INTEGER" />
+    <result column="purchase_order_no" property="purchaseOrderNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sales_hb_id, sales_hb_no, sales_order_no, shop_id, sales_order_id, purchase_order_no
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sales_hb_delivery_details
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByHbId" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
+  	select 
+    <include refid="Base_Column_List" />
+    from t_sales_hb_delivery_details
+    where sales_hb_id = #{hbId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByHbNo" parameterType="java.lang.String" resultMap="BaseResultMap" >
+  	select 
+    <include refid="Base_Column_List" />
+    from t_sales_hb_delivery_details
+    where sales_hb_no = #{hbNo,jdbcType=VARCHAR}
+  </select>
+  
+  <insert id="insert" parameterType="entity.sales.hb.SalesHBDeliveryDetail" >
+    insert into t_sales_hb_delivery_details (sales_hb_id, sales_hb_no, 
+      sales_order_no, shop_id, sales_order_id, purchase_order_no)
+    values (#{salesHbId,jdbcType=INTEGER}, #{salesHbNo,jdbcType=VARCHAR}, 
+      #{salesOrderNo,jdbcType=VARCHAR}, #{shopId}, #{salesOrderId}, #{purchaseOrderNo})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="entity.sales.hb.SalesHBDeliveryDetail" >
+    insert into t_sales_hb_delivery_details
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="salesHbId != null" >
+        sales_hb_id,
+      </if>
+      <if test="salesHbNo != null" >
+        sales_hb_no,
+      </if>
+      <if test="salesOrderNo != null" >
+        sales_order_no,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="salesOrderId != null" >
+        sales_order_id,
+      </if>
+      <if test="purchaseOrderNo != null" >
+        purchase_order_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="salesHbId != null" >
+        #{salesHbId,jdbcType=INTEGER},
+      </if>
+      <if test="salesHbNo != null" >
+        #{salesHbNo,jdbcType=VARCHAR},
+      </if>
+      <if test="salesOrderNo != null" >
+        #{salesOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        #{shopId},
+      </if>
+      <if test="salesOrderId != null" >
+        #{salesOrderId},
+      </if>
+      <if test="purchaseOrderNo != null" >
+        #{purchaseOrderNo},
+      </if>
+    </trim>
+  </insert>
+  
+</mapper>

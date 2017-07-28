@@ -1,0 +1,252 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<!--用户管理--组织管理-->
+<h1>用户管理<span>---</span><span>组织架构管理</span></h1>
+<div>
+    <div class="organizational_L">
+        <ul class="structure_button">
+            <li>
+                <button style="cursor: pointer" class="promotion_button add_structure">新增架构</button>
+            </li>
+            <li>
+                <button style="cursor: pointer" class="promotion_button edit_structure">编辑架构</button>
+            </li>
+            <li>
+                <button style="cursor: pointer" class="promotion_button del_structure">删除架构</button>
+            </li>
+        </ul>
+        <div class="organizational_tree">
+            <ul id="organization_tree" class="ztree" style="width:160px; overflow:auto; height: 450px;margin-top: 20px;"></ul>
+        </div>
+    </div>
+    <div class="organizational_R">
+        <div class="related_operation">
+            <ul class="search_category" style="width:100%;min-width:500px;">
+                <li>
+                    <button style="cursor: pointer" class="promotion_button new_operation">新增员工</button>
+                    <button style="cursor: pointer" class="promotion_button addDistributor">添加分销用户</button>
+                </li>
+
+                <li style="float:right">
+                    <div>
+                        <input onkeyup="enter_keyUp(event,this, getSalesman4EnterKey)" style="width: 200px;" class="searchInput" placeholder="员工姓名/ERP账号/联系电话"/>
+                        <button class="searchButton">搜索</button>
+                    </div>
+                </li>
+            </ul>
+            <p class="red business_message" style="display: none;">
+                <span>区域负责人:<em>张三</em></span>      
+                <span>联系电话:<em>13800138000</em></span>
+                <span>员工总数:<em></em></span>
+            </p>
+            <table class="organizational_table">
+                <thead>
+                <tr>
+                    <th style="width: 5%">勾选</th>
+                    <th style="width: 10%">员工姓名</th>
+                    <th style="width: 10%">ERP账号</th>
+                    <th style="width: 15%">联系电话</th>
+                    <th style="width: 15%">已关联分销商</th>
+                    <th style="width: 45%">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div  class="list_content_salesman list_content">
+                <p>共<span id="count_salesman" style="display: inline-block; color: #55ccc8;">0</span>条记录，每页显示
+                    <select>
+                        <option value="10" selected="selected">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                    </select>
+                    ，共<span id="page_count_salesman" style="display: inline-block; color: #55ccc8;">0</span>页
+                </p>
+            </div>
+            <div id="pagination_salesman" style="text-align: center; margin-top: 30px;"></div>
+        </div>
+        <!--已关联分销商-->
+        <div class="related_distract display">
+            <ul class="search_category" style="width:100%;min-width:500px;">
+                <li>
+                    <div>
+                        <input onkeyup="enter_keyUp(event,this, getMemberList4RelatedDistract)" class="searchInput" placeholder="分销账号/名称/手机号"/>
+                        <button class="searchButton">搜索</button>
+                        <input type="hidden" id="type">
+                    </div>
+                </li>
+                <li style="float: right;">
+                    <button style="cursor: pointer" class="promotion_button back_operation">返回</button>
+                </li>
+            </ul>
+            <table class="related_distract_table">
+                <thead>
+                <tr>
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 25%">分销商账号</th>
+                    <th style="width: 20%">名称</th>
+                    <th style="width: 25%">手机号</th>
+                    <th style="width: 20%">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div  class="list_content_member list_content">
+                <p>共<span id="count_member" style="display: inline-block; color: #55ccc8;">0</span>条记录，每页显示
+                    <select>
+                        <option value="10" selected="selected">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                    </select>
+                    ，共<span id="page_count_member" style="display: inline-block; color: #55ccc8;">0</span>页
+                </p>
+            </div>
+            <div id="pagination_member" style="text-align: center; margin-top: 30px;"></div>
+        </div>
+    </div>
+</div>
+<!--新增弹出窗-->
+<div class="add_structure_pop structure_pop display">
+    <div>
+        <em>上级区域:</em>
+
+        <div><input class="parent_node" style="width: 260px;" type="text" disabled="disabled"></div>
+    </div>
+    <div>
+        <em>
+            <d class="red">*</d>
+            架构类型:</em>
+        <div id="node_type">
+            <input style="width: 15px;" type="radio" checked name="nodeType" tag="1">业务岗位&nbsp;&nbsp;&nbsp;&nbsp;<input style="width: 15px;" type="radio" name="nodeType" tag="2">行政岗位
+        </div>
+    </div>
+    <div>
+        <em>
+            <d class="red">*</d>
+            区域名称:</em>
+
+        <div><input class="node_name" style="width: 260px;" type="text"></div>
+    </div>
+    <div>
+        <em>
+            <d class="red">*</d>
+            区域负责人:</em>
+
+        <div><input class="node_header" style="width: 260px;" type="text"></div>
+    </div>
+    <div>
+        <em>
+            <d class="red">*</d>
+            联系电话:</em>
+
+        <div><input class="node_headerTel" style="width: 260px;" type="text"></div>
+    </div>
+</div>
+<!--编辑弹出窗-->
+<div class="edit_structure_pop structure_pop display">
+    <div>
+        <em>上级区域:</em>
+
+        <div><input style="width: 260px;" type="text" disabled="disabled"></div>
+    </div>
+    <div>
+        <em>
+            <d class="red">*</d>
+            区域名称:</em>
+
+        <div><input style="width: 260px;" type="text"></div>
+    </div>
+    <div>
+        <em>
+            <d class="red">*</d>
+            区域负责人:</em>
+
+        <div><input style="width: 260px;" type="text"></div>
+    </div>
+    <div>
+        <em>
+            <d class="red">*</d>
+            联系电话:</em>
+
+        <div><input style="width: 260px;" type="text"></div>
+    </div>
+</div>
+<!--删除弹出窗-->
+<div class="del_structure_pop structure_pop display">
+    <div style="text-align: center">
+        您确定要删除组织架构[<b class="red"></b>]吗？
+    </div>
+</div>
+<!--新增员工-->
+<div class="new_operation_pop structure_pop display">
+    <div>
+        <em>
+            <d class="red">*</d>
+            员工姓名:</em>
+
+        <div><input style="width: 260px;" type="text"></div>
+    </div>
+    <div>
+        <em>
+            <d class="red">*</d>
+            ERP账号:</em>
+
+        <div><input style="width: 260px;" type="text"></div>
+    </div>
+    <div>
+        <em>
+            <d class="red">*</d>
+            联系电话:</em>
+
+        <div><input style="width: 260px;" type="text"></div>
+    </div>
+</div>
+<!--编辑业务-->
+<div class="edit_operation_pop structure_pop display">
+    <div>
+        <em>
+            <d class="red">*</d>
+            员工姓名:</em>
+
+        <div><input style="width: 260px;" type="text"></div>
+    </div>
+    <div>
+        <em>
+            <d class="red">*</d>
+            ERP账号:</em>
+
+        <div><input style="width: 260px;" type="text"></div>
+    </div>
+    <div>
+        <em>
+            <d class="red">*</d>
+            联系电话:</em>
+
+        <div><input style="width: 260px;" type="text"></div>
+    </div>
+</div>
+
+<!--关联后台用户-->
+<div class="user_operation_pop structure_pop display">
+    <div>
+        <em>
+            <d class="red">*</d>
+            用户名:</em>
+
+        <div><input style="width: 260px;" type="text"></div>
+    </div>
+    <div>
+        <em>工号:</em>
+
+        <div><input style="width: 260px;" type="text"></div>
+    </div>
+</div>
+<!--删除员工-->
+<div class="del_operation_pop structure_pop display">
+    <div style="text-align: center">
+        您确定要删除员工[<b class="red"></b>]吗？
+    </div>
+</div>
+

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.inventory.WarehouseInventoryMapper" >
+  <resultMap id="BaseResultMap" type="entity.inventory.WarehouseInventory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="warehouse_product_id" property="warehouseProductId" jdbcType="INTEGER" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="frozen_stock" property="frozenStock" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="costprice" property="costprice" jdbcType="DOUBLE" />
+    <result column="fprice" property="fprice" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, warehouse_id, warehouse_name, warehouse_product_id, stock,sku,costprice,fprice,frozen_stock
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_warehouse_inventory
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_warehouse_inventory
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.inventory.WarehouseInventory" >
+    insert into t_warehouse_inventory (id, warehouse_id, warehouse_name, 
+      warehouse_product_id, stock,sku,costprice,fprice,frozen_stock)
+    values (#{id,jdbcType=INTEGER}, #{warehouseId,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR}, 
+      #{warehouseProductId,jdbcType=INTEGER}, #{stock,jdbcType=INTEGER},
+      #{sku,jdbcType=VARCHAR},#{costprice,jdbcType=DOUBLE},#{fprice,jdbcType=DOUBLE},#{frozenStock,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.inventory.WarehouseInventory" >
+    insert into t_warehouse_inventory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="warehouseProductId != null" >
+        warehouse_product_id,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="costprice != null" >
+        costprice,
+      </if>
+      <if test="fprice != null" >
+        fprice,
+      </if>
+      <if test="frozenStock != null" >
+        frozen_stock,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseProductId != null" >
+        #{warehouseProductId,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="costprice != null" >
+        #{costprice,jdbcType=DOUBLE},
+      </if>
+      <if test="fprice != null" >
+        #{fprice,jdbcType=DOUBLE},
+      </if>
+      <if test="frozenStock != null" >
+        #{frozenStock,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.inventory.WarehouseInventory" >
+    update t_warehouse_inventory
+    <set >
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseProductId != null" >
+        warehouse_product_id = #{warehouseProductId,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="costprice != null" >
+        costprice = #{costprice,jdbcType=DOUBLE},
+      </if>
+      <if test="fprice != null" >
+        fprice = #{fprice,jdbcType=DOUBLE},
+      </if>
+      <if test="frozenStock != null" >
+        frozen_stock = #{frozenStock,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.inventory.WarehouseInventory" >
+    update t_warehouse_inventory
+    set warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      warehouse_product_id = #{warehouseProductId,jdbcType=INTEGER},
+      stock = #{stock,jdbcType=INTEGER},
+      sku = #{sku,jdbcType=VARCHAR},
+      costprice = #{costprice,jdbcType=DOUBLE},
+      fprice = #{fprice,jdbcType=DOUBLE},
+      frozen_stock = #{frozenStock,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+	<update id="updateStockAndFrozenInWarehouse">
+	  	UPDATE t_warehouse_inventory
+		SET stock = stock + #{2},
+		    frozen_stock = frozen_stock + #{2}
+		WHERE 1 = 1
+		AND 
+			sku = #{0}
+		AND 
+			warehouse_id = #{1}
+	</update>
+	
+	<update id="updateStockInWarehouse">
+	  	UPDATE t_warehouse_inventory
+		SET stock = stock + #{2}
+		WHERE 1 = 1
+		AND 
+			sku = #{0}
+		AND 
+			warehouse_id = #{1}
+	</update>
+	
+	<update id="updateFrozenStockInWarehouse">
+	  	UPDATE t_warehouse_inventory
+		SET frozen_stock = frozen_stock + #{2}
+		WHERE 1 = 1
+		AND 
+			sku = #{0}
+		AND 
+			warehouse_id = #{1}
+	</update>
+	
+	<select id="checkInventory" resultMap="BaseResultMap" parameterType="entity.inventory.WarehouseInventory">
+		select 
+		<include refid="Base_Column_List" />
+	    from t_warehouse_inventory
+	    where 1=1
+		  <if test="param.warehouseId != null" >
+        	and	warehouse_id = #{param.warehouseId,jdbcType=INTEGER}
+      	  </if>
+	      <if test="param.sku != null" >
+	        and sku = #{param.sku,jdbcType=VARCHAR}
+	      </if>
+	</select>
+	
+	
+	<select id="queryInventory" resultMap="BaseResultMap" parameterType="entity.inventory.PostB2CData">
+		select 
+		<include refid="Base_Column_List" />
+	    from t_warehouse_inventory
+	    where 1=1
+		  <if test="param.warehouseId != null" >
+        	and	warehouse_id = #{param.warehouseId,jdbcType=INTEGER}
+      	  </if>
+	      <if test="param.sku != null" >
+	        and sku like '%'||#{param.sku,jdbcType=VARCHAR}||'%'
+	      </if>
+	      <if test="param.minPrice != null">
+			and fprice <![CDATA[>=]]> #{param.minPrice}
+		  </if>
+		  <if test="param.maxPrice != null">
+			and fprice <![CDATA[<=]]>  #{param.maxPrice}
+		  </if>
+	      <if test="param.skus != null">
+	      	and sku in 
+	      	<foreach collection="param.skus" item="item" open="(" separator="," close=")">
+	      		#{item,jdbcType=VARCHAR}
+	      	</foreach>
+	      </if>
+	      ORDER BY stock desc 
+	      <if test="param.pageSize != null">
+	      	limit #{param.pageSize} offset (#{param.currPage}-1)*#{param.pageSize}
+	      </if>
+	</select>
+	<select id="queryInventoryCount" resultType="java.lang.Integer" >
+		select 
+		count(1)
+	    from t_warehouse_inventory
+	    where 1=1
+		  <if test="param.warehouseId != null" >
+        	and	warehouse_id = #{param.warehouseId,jdbcType=INTEGER}
+      	  </if>
+	      <if test="param.sku != null" >
+	        and sku like '%'||#{param.sku,jdbcType=VARCHAR}||'%'
+	      </if>
+	      <if test="param.minPrice != null">
+			and fprice <![CDATA[>=]]> #{param.minPrice}
+		  </if>
+		  <if test="param.maxPrice != null">
+			and fprice <![CDATA[<=]]>  #{param.maxPrice}
+		  </if>
+	      <if test="param.skus != null">
+	      	and sku in 
+	      	<foreach collection="param.skus" item="item" open="(" separator="," close=")">
+	      		#{item,jdbcType=VARCHAR}
+	      	</foreach>
+	      </if>
+	</select>
+</mapper>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="email=no" name="format-detection" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>录入发货单</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main/main.css">
+</head>
+<body id="body_ele" v-cloak>
+<header class="posFix head">
+    <a href="step_1.html" class="ret-logo"></a>
+    录入发货单
+    <a href="search.html?sc={{search}}" class="search-logo"></a>
+</header>
+<div class="conTop">
+    <div class="list-box">
+        <ul class="list ui-row-flex">
+            <li @click="selectCategory('all')"> <span id="categorySpan_all" class="current">全部</span></li>
+            <li v-for="category in categories" @click="selectCategory(category.iid)"><span id="categorySpan_{{category.iid}}" categoryId="{{category.iid}}">{{category.cname}}</span></li>
+        </ul>
+    </div>
+</div>
+
+<section class="imporCon">
+    <div class="impornor">
+        <select v-model="warehouseId">
+            <!--<option selected value="">默认所有仓库</option>-->
+            <option v-for="warehouse in warehouses" value="{{warehouse.warehouseId}}">{{warehouse.warehouseName}}</option>
+        </select>
+    </div>
+    <div id="products_div" v-if="showProducts">
+        <div class="impornor" id="checkall">
+            <label><input type="checkbox" value="全选" v-model="selectAllChecked" class="mui-checkbox"/>全选</label>
+        </div>
+        <div class="imporCom"  v-for="product in products">
+            <div class="imporComL">
+                <input type="checkbox" name="list" v-model="selectedProducts" checked="{{product.csku | filterChecked product.warehouseId}}" disabled="{{product.disPrice == null?true:false}}"
+                       value="{{product.csku}},{{product.warehouseId}},{{product.batchNumber}},{{product.warehouseName}},{{product.imageUrl}},{{product.disPrice}},{{product.ctitle}}" class="mui-checkbox"/>
+            </div>
+            <div class="imporComR">
+                <div class="impor-img">
+                    <a><img v-bind:data-original='product.imageUrl' src="../../img/blank.png" alt="{{product.ctitle}}" class="p-goods-img"/></a>
+                </div>
+                <div class="impor-tit">
+                    <h5>{{product.ctitle}}</h5>
+                    <div>
+                        <span>采购价：<b><i>¥</i>{{(product.disPrice == null)?"--":product.disPrice}}</b></span>
+                        <span>库存：<b class="impor-tit2">{{product.stock}}</b></span>
+                    </div>
+                    <div>
+                        <span>商品编号：<b class="impor-tit2">{{product.csku}}</b></span>
+                        <span style="float: right">仓库：<b class="impor-tit2">{{product.warehouseName}}</b></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="imporSear" v-else>
+        该搜索条件下无可选商品
+    </div>
+</section>
+<footer class="foot">
+    <a>
+        <input @click="goStep3" type="button" value="确认添加" class="inp-1 btn-blue"/>
+    </a>
+</footer>
+<script src="/js/lib/require.js" data-main="/js/sales/addProducts.js?time=new Date()"></script>
+</body>
+</html>

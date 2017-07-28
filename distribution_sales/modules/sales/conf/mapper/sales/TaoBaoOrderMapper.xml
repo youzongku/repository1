@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.TaoBaoOrderMapper">
+	<resultMap id="BaseResultMap" type="entity.platform.order.template.TaoBaoOrder">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="buyer_account" property="buyerAccount"
+			jdbcType="VARCHAR" />
+		<result column="receiver_name" property="receiverName"
+			jdbcType="VARCHAR" />
+		<result column="receiver_card_number" property="receiverCardNumber"
+			jdbcType="VARCHAR" />
+		<result column="receiver_phone" property="receiverPhone"
+			jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="order_total" property="orderTotal" jdbcType="DOUBLE" />
+		<result column="order_status" property="orderStatus" jdbcType="VARCHAR" />
+		<result column="payment_date" property="paymentDate" jdbcType="TIMESTAMP" />
+		<result column="payment_no" property="paymentNo" jdbcType="VARCHAR" />
+		<result column="payment_phone" property="paymentPhone"
+			jdbcType="VARCHAR" />
+		<result column="payment_name" property="paymentName" jdbcType="VARCHAR" />
+		<result column="payment_card_number" property="paymentCardNumber"
+			jdbcType="VARCHAR" />
+		<result column="seller_remark" property="sellerRemark"
+			jdbcType="VARCHAR" />
+		<result column="buyer_message" property="buyerMessage"
+			jdbcType="VARCHAR" />
+		<result column="invoice_info" property="invoiceInfo" jdbcType="VARCHAR" />
+		<result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+		<result column="is_create" property="isCreate" jdbcType="INTEGER" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="oprate_status" property="oprateStatus"
+			jdbcType="INTEGER" />
+		<result column="post_code" property="postCode" jdbcType="VARCHAR" />
+		<result column="logistics_cost" property="logisticsCost"
+			jdbcType="DOUBLE" />
+		<result column="finance_remark" property="financeRemark" jdbcType="VARCHAR" />
+		
+		<result column="logistics_type_code" property="logisticsTypeCode" jdbcType="VARCHAR" />
+		<result column="logistics_type_name" property="logisticsTypeName" jdbcType="VARCHAR" />
+		<result column="receiver_telephone" property="receiverTelephone" jdbcType="VARCHAR" />
+		<result column="is_part" property="isPart" jdbcType="BIT" />
+		<result column="third_postfee" property="thirdPostfee" jdbcType="DOUBLE" />
+		<result column="plateform" property="plateform" jdbcType="INTEGER" />
+
+		<result column="is_complete" property="isComplete" jdbcType="INTEGER" />
+		<result column="is_need_invoice" property="isNeedInvoice" jdbcType="BIT" />
+		<result column="invoice_type" property="invoiceType" jdbcType="INTEGER" />
+		<result column="invoice_title" property="invoiceTitle" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, buyer_account, receiver_name,
+		receiver_card_number,
+		receiver_phone, receiver_telephone,address,
+		shop_name, order_no, order_total,
+		order_status, payment_date, payment_no,
+		payment_phone, payment_name,
+		payment_card_number,
+		seller_remark, buyer_message, invoice_info,
+		is_deleted, is_create, update_date, email, oprate_status, post_code,
+		logistics_cost, finance_remark,logistics_type_code,logistics_type_name,
+		is_part,third_postfee,plateform,is_complete,
+		is_need_invoice,invoice_type,invoice_title
+	</sql>
+
+	<select id="selectByOrderNoAndEmail" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from t_product_sales_order_taobao
+		where
+		order_no=#{orderNo,jdbcType=VARCHAR} and is_deleted = 0
+		<if test="email != null and email !=''">
+		 and email = #{email,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<select id="getAllOrders" resultMap="BaseResultMap"
+		parameterType="dto.sales.TaoBaoOrderForm">
+		select
+		<include refid="Base_Column_List"></include>
+		from t_product_sales_order_taobao
+		<where>
+			1=1 and is_deleted=0 and is_create=0
+			<if test="paramDto.email != null">
+				and email = #{paramDto.email,jdbcType=VARCHAR}
+			</if>
+			<if test="paramDto.isComplete != null">
+				and is_complete = #{paramDto.isComplete,jdbcType=INTEGER}
+				and logistics_type_code is NULL
+			</if>
+			<!--<if test="paramDto.oprateStatus != null">-->
+				<!--and oprate_status = #{paramDto.oprateStatus}-->
+			<!--</if>-->
+		</where>
+		ORDER BY id
+		<if test="paramDto.pageNo != null and paramDto.pageNo !=0">
+			limit #{paramDto.pageSize} offset
+			(#{paramDto.pageNo}-1)*#{paramDto.pageSize}
+		</if>
+	</select>
+	<select id="selectBygroube" resultMap="BaseResultMap"
+		parameterType="entity.platform.order.template.TaoBaoOrder">
+		select
+		<include refid="Base_Column_List"></include>
+		from t_product_sales_order_taobao
+		<where>
+			1=1 and is_deleted=0
+			<if test="paramDto.email != null">
+				and email = #{paramDto.email,jdbcType=VARCHAR}
+			</if>
+			<if test="paramDto.orderNo != null">
+				and order_no = #{paramDto.orderNo}
+			</if>
+		</where>
+	</select>
+	<select id="getTotal" resultType="Integer" parameterType="dto.sales.TaoBaoOrderForm">
+		select
+		count(*)
+		from t_product_sales_order_taobao
+		<where>
+			1=1 and is_deleted=0 and is_create=0
+			<if test="paramDto.email != null">
+				and email = #{paramDto.email,jdbcType=VARCHAR}
+			</if>
+			<!--<if test="paramDto.oprateStatus != null">-->
+				<!--and oprate_status = #{paramDto.oprateStatus}-->
+			<!--</if>-->
+		</where>
+	</select>
+	<delete id="deleteOrder" parameterType="java.lang.String">
+		delete from
+		t_product_sales_order_taobao where
+		order_no=#{orderNo,jdbcType=VARCHAR}
+	</delete>
+	<update id="deleteLogicOrder">
+		update
+		t_product_sales_order_taobao
+		set is_deleted=1
+		where
+		order_no=#{orderNo,jdbcType=VARCHAR}
+		and email = #{email,jdbcType=VARCHAR}
+	</update>
+	<delete id="batchDeleteOrder" parameterType="dto.sales.TaoBaoOrderForm">
+		delete from
+		t_product_sales_order_taobao
+		where
+		1=1
+		<if test="paramDto.orderList != null and paramDto.orderList.size() > 0">
+			and order_no in
+			<foreach item="item" index="index" collection="paramDto.orderList"
+				open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		and email=#{paramDto.email,jdbcType=VARCHAR}
+	</delete>
+	<update id="saveOrder" parameterType="dto.sales.TaoBaoOrderForm">
+		update t_product_sales_order_taobao
+		<set>
+			<if test="paramDao.buyerAccount!=null">
+				buyer_account=#{paramDao.buyerAccount},
+			</if>
+			<if test="paramDao.receiverName!=null">
+				receiver_name=#{paramDao.receiverName},
+			</if>
+			<if test="paramDao.receiverCardNumber!=null">
+				receiver_card_number=#{paramDao.receiverCardNumber},
+			</if>
+			<if test="paramDao.receiverPhone!=null">
+				receiver_phone=#{paramDao.receiverPhone},
+			</if>
+			<if test="paramDao.receiverTelephone!=null">
+				receiver_telephone=#{paramDao.receiverTelephone},
+			</if>
+			<if test="paramDao.address!=null">
+				address=#{paramDao.address},
+			</if>
+			<if test="paramDao.shopName!=null">
+				shop_name=#{paramDao.shopName},
+			</if>
+			<if test="paramDao.orderNo!=null">
+				order_no=#{paramDao.orderNo},
+			</if>
+			<if test="paramDao.orderTotal!=null">
+				order_total=#{paramDao.orderTotal},
+			</if>
+			<if test="paramDao.orderStatus!=null">
+				order_status=#{paramDao.orderStatus},
+			</if>
+			<if test="paramDao.paymentDate!=null">
+				payment_date=#{paramDao.paymentDate},
+			</if>
+			<if test="paramDao.paymentNo!=null">
+				payment_no=#{paramDao.paymentNo},
+			</if>
+			<if test="paramDao.paymentPhone!=null">
+				payment_phone=#{paramDao.paymentPhone},
+			</if>
+			<if test="paramDao.paymentName!=null">
+				payment_name=#{paramDao.paymentName},
+			</if>
+			<if test="paramDao.paymentCardNumber!=null">
+				payment_card_number=#{paramDao.paymentCardNumber},
+			</if>
+			<if test="paramDao.sellerRemark!=null">
+				seller_remark=#{paramDao.sellerRemark},
+			</if>
+			<if test="paramDao.buyerMessage!=null">
+				buyer_message=#{paramDao.buyerMessage},
+			</if>
+			<if test="paramDao.invoiceInfo!=null">
+				invoice_info=#{paramDao.invoiceInfo},
+			</if>
+			<if test="paramDao.isDeleted!=null">
+				is_deleted=#{paramDao.isDeleted},
+			</if>
+			<if test="paramDao.isCreate!=null">
+				is_create=#{paramDao.isCreate},
+			</if>
+			<if test="paramDao.updateDate!=null">
+				update_date=#{paramDao.updateDate},
+			</if>
+			<if test="paramDao.postCode!=null">
+				post_code=#{paramDao.postCode},
+			</if>
+			<if test="paramDao.logisticsCost!=null">
+				logistics_cost=#{paramDao.logisticsCost},
+			</if>
+			<if test="paramDao.financeRemark != null">
+				finance_remark=#{paramDao.financeRemark},
+			</if>
+			<if test="paramDao.logisticsTypeCode != null">
+				logistics_type_code=#{paramDao.logisticsTypeCode},
+			</if>
+			<if test="paramDao.logisticsTypeName != null">
+				logistics_type_name=#{paramDao.logisticsTypeName},
+			</if>
+			<if test="paramDao.email != null and paramDao.email !=''">
+				email=#{paramDao.email},
+			</if>
+			<if test="paramDao.isPart != null">
+				is_part = #{paramDao.isPart,jdbcType=BIT},
+			</if>
+			<if test="paramDao.thirdPostfee != null">
+				third_postfee = #{paramDao.thirdPostfee,jdbcType=DOUBLE},
+			</if>
+			<if test="paramDao.isNeedInvoice != null">
+				is_need_invoice = #{paramDao.isNeedInvoice,jdbcType=BIT},
+			</if>
+			<if test="paramDao.invoiceType != null">
+				invoice_type = #{paramDao.invoiceType,jdbcType=INTEGER},
+			</if>
+			<if test="paramDao.invoiceTitle != null">
+				invoice_title = #{paramDao.invoiceTitle,jdbcType=VARCHAR},
+			</if>
+			oprate_status = 1
+		</set>
+		<where>
+		    <if test="paramDao.id != null and paramDao.id != ''">
+				id=#{paramDao.id,jdbcType=INTEGER}
+			</if>
+			<if test="paramDao.orderNo != null and paramDao.orderNo != ''">
+				order_no=#{paramDao.orderNo,jdbcType=VARCHAR}
+			</if>
+			
+		</where>
+	</update>
+
+	<insert id="insert" parameterType="entity.platform.order.template.TaoBaoOrder">
+		insert into
+		t_product_sales_order_taobao (id, buyer_account,
+		receiver_name,
+		receiver_card_number, receiver_phone,receiver_telephone, address,
+		shop_name, order_no,
+		order_total,
+		order_status, payment_date, payment_no,
+		payment_phone,
+		payment_name, payment_card_number,
+		seller_remark, buyer_message,
+		invoice_info,
+		is_deleted, is_create, update_date, email, oprate_status,
+		post_code, logistics_cost,logistics_type_code,logistics_type_name,finance_remark,plateform)
+		values
+		(#{id,jdbcType=INTEGER},
+		#{buyerAccount,jdbcType=VARCHAR},
+		#{receiverName,jdbcType=VARCHAR},
+		#{receiverCardNumber,jdbcType=VARCHAR},
+		#{receiverPhone,jdbcType=VARCHAR},#{receiverTelephone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+		#{shopName,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR},
+		#{orderTotal,jdbcType=DOUBLE},
+		#{orderStatus,jdbcType=VARCHAR},
+		#{paymentDate,jdbcType=TIMESTAMP}, #{paymentNo,jdbcType=VARCHAR},
+		#{paymentPhone,jdbcType=VARCHAR}, #{paymentName,jdbcType=VARCHAR},
+		#{paymentCardNumber,jdbcType=VARCHAR},
+		#{sellerRemark,jdbcType=VARCHAR}, #{buyerMessage,jdbcType=VARCHAR},
+		#{invoiceInfo,jdbcType=VARCHAR},
+		#{isDeleted,jdbcType=INTEGER},
+		#{isCreate,jdbcType=INTEGER},#{updateDate,jdbcType=TIMESTAMP},
+		#{email,jdbcType=VARCHAR},#{oprateStatus,jdbcType=INTEGER},
+		#{postCode,jdbcType=VARCHAR},#{logisticsCost,jdbcType=DOUBLE},
+		#{logisticsTypeCode,jdbcType=VARCHAR},#{logisticsTypeName,jdbcType=VARCHAR},
+		#{financeRemark,jdbcType=VARCHAR},#{plateform,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="entity.platform.order.template.TaoBaoOrder">
+		insert into t_product_sales_order_taobao
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="buyerAccount != null">
+				buyer_account,
+			</if>
+			<if test="receiverName != null">
+				receiver_name,
+			</if>
+			<if test="receiverCardNumber != null">
+				receiver_card_number,
+			</if>
+			<if test="receiverPhone != null">
+				receiver_phone,
+			</if>
+			<if test="receiverTelephone != null">
+				receiver_telephone,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="shopName != null">
+				shop_name,
+			</if>
+			<if test="orderNo != null">
+				order_no,
+			</if>
+			<if test="orderTotal != null">
+				order_total,
+			</if>
+			<if test="orderStatus != null">
+				order_status,
+			</if>
+			<if test="paymentDate != null">
+				payment_date,
+			</if>
+			<if test="paymentNo != null">
+				payment_no,
+			</if>
+			<if test="paymentPhone != null">
+				payment_phone,
+			</if>
+			<if test="paymentName != null">
+				payment_name,
+			</if>
+			<if test="paymentCardNumber != null">
+				payment_card_number,
+			</if>
+			<if test="sellerRemark != null">
+				seller_remark,
+			</if>
+			<if test="buyerMessage != null">
+				buyer_message,
+			</if>
+			<if test="invoiceInfo != null">
+				invoice_info,
+			</if>
+			<if test="isDeleted != null">
+				is_deleted,
+			</if>
+			<if test="isCreate != null">
+				is_create,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="oprateStatus != null">
+				oprate_status,
+			</if>
+			<if test="postCode != null">
+				post_code,
+			</if>
+			<if test="logisticsCost != null">
+				logistics_cost,
+			</if>
+			<if test="financeRemark != null">
+				finance_remark,
+			</if>
+			<if test="logisticsTypeCode != null">
+				logistics_type_code,
+			</if>
+			<if test="logisticsTypeName != null">
+				logistics_type_name,
+			</if>
+			<if test="plateform != null">
+				plateform,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="buyerAccount != null">
+				#{buyerAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="receiverName != null">
+				#{receiverName,jdbcType=VARCHAR},
+			</if>
+			<if test="receiverCardNumber != null">
+				#{receiverCardNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="receiverPhone != null">
+				#{receiverPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="receiverTelephone != null">
+				#{receiverTelephone,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="shopName != null">
+				#{shopName,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNo != null">
+				#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderTotal != null">
+				#{orderTotal,jdbcType=DOUBLE},
+			</if>
+			<if test="orderStatus != null">
+				#{orderStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="paymentDate != null">
+				#{paymentDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="paymentNo != null">
+				#{paymentNo,jdbcType=VARCHAR},
+			</if>
+			<if test="paymentPhone != null">
+				#{paymentPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="paymentName != null">
+				#{paymentName,jdbcType=VARCHAR},
+			</if>
+			<if test="paymentCardNumber != null">
+				#{paymentCardNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="sellerRemark != null">
+				#{sellerRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="buyerMessage != null">
+				#{buyerMessage,jdbcType=VARCHAR},
+			</if>
+			<if test="invoiceInfo != null">
+				#{invoiceInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="isDeleted != null">
+				#{isDeleted,jdbcType=INTEGER},
+			</if>
+			<if test="isCreate != null">
+				#{isCreate,jdbcType=INTEGER},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="oprateStatus != null">
+				#{oprateStatus,jdbcType=INTEGER},
+			</if>
+			<if test="postCode != null">
+				#{postCode,jdbcType=VARCHAR},
+			</if>
+			<if test="logisticsCost != null">
+				#{logisticsCost,jdbcType=DOUBLE},
+			</if>
+			<if test="financeRemark != null">
+				#{financeRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="logisticsTypeCode != null">
+				#{logisticsTypeCode,jdbcType=VARCHAR},
+			</if>
+			<if test="logisticsTypeName != null">
+				#{logisticsTypeName,jdbcType=VARCHAR},
+			</if>
+			<if test="plateform != null">
+				#{plateform,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<insert id="batchInsert" parameterType="java.util.List">
+    <foreach collection="list" item="item" index="index" separator=";">
+        insert into t_product_sales_order_taobao
+			<trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="item.id != null">
+					id,
+				</if>
+				<if test="item.buyerAccount != null">
+					buyer_account,
+				</if>
+				<if test="item.receiverName != null">
+					receiver_name,
+				</if>
+				<if test="item.receiverCardNumber != null">
+					receiver_card_number,
+				</if>
+				<if test="item.receiverPhone != null">
+					receiver_phone,
+				</if>
+				<if test="item.receiverTelephone != null">
+					receiver_telephone,
+				</if>
+				<if test="item.address != null">
+					address,
+				</if>
+				<if test="item.shopName != null">
+					shop_name,
+				</if>
+				<if test="item.orderNo != null">
+					order_no,
+				</if>
+				<if test="item.orderTotal != null">
+					order_total,
+				</if>
+				<if test="item.orderStatus != null">
+					order_status,
+				</if>
+				<if test="item.paymentDate != null">
+					payment_date,
+				</if>
+				<if test="item.paymentNo != null">
+					payment_no,
+				</if>
+				<if test="item.paymentPhone != null">
+					payment_phone,
+				</if>
+				<if test="item.paymentName != null">
+					payment_name,
+				</if>
+				<if test="item.paymentCardNumber != null">
+					payment_card_number,
+				</if>
+				<if test="item.paymentPostCode != null">
+					payment_postcode,
+				</if>
+				<if test="item.sellerRemark != null">
+					seller_remark,
+				</if>
+				<if test="item.buyerMessage != null">
+					buyer_message,
+				</if>
+				<if test="item.invoiceInfo != null">
+					invoice_info,
+				</if>
+				<if test="item.isDeleted != null">
+					is_deleted,
+				</if>
+				<if test="item.isCreate != null">
+					is_create,
+				</if>
+				<if test="item.updateDate != null">
+					update_date,
+				</if>
+				<if test="item.email != null">
+					email,
+				</if>
+				<if test="item.oprateStatus != null">
+					oprate_status,
+				</if>
+				<if test="item.postCode != null">
+					post_code,
+				</if>
+				<if test="item.logisticsCost != null">
+					logistics_cost,
+				</if>
+				<if test="item.financeRemark != null">
+					finance_remark,
+				</if>
+				<if test="item.logisticsTypeCode != null">
+					logistics_type_code,
+				</if>
+				<if test="item.logisticsTypeName != null">
+					logistics_type_name,
+				</if>
+				<if test="item.plateform != null">
+					plateform,
+				</if>
+	    	</trim>
+	        <trim prefix="values (" suffix=")" suffixOverrides="," >
+				<if test="item.id != null">
+					#{item.id,jdbcType=INTEGER},
+				</if>
+				<if test="item.buyerAccount != null">
+					#{item.buyerAccount,jdbcType=VARCHAR},
+				</if>
+				<if test="item.receiverName != null">
+					#{item.receiverName,jdbcType=VARCHAR},
+				</if>
+				<if test="item.receiverCardNumber != null">
+					#{item.receiverCardNumber,jdbcType=VARCHAR},
+				</if>
+				<if test="item.receiverPhone != null">
+					#{item.receiverPhone,jdbcType=VARCHAR},
+				</if>
+				<if test="item.receiverTelephone != null">
+					#{item.receiverTelephone,jdbcType=VARCHAR},
+				</if>
+				<if test="item.address != null">
+					#{item.address,jdbcType=VARCHAR},
+				</if>
+				<if test="item.shopName != null">
+					#{item.shopName,jdbcType=VARCHAR},
+				</if>
+				<if test="item.orderNo != null">
+					#{item.orderNo,jdbcType=VARCHAR},
+				</if>
+				<if test="item.orderTotal != null">
+					#{item.orderTotal,jdbcType=DOUBLE},
+				</if>
+				<if test="item.orderStatus != null">
+					#{item.orderStatus,jdbcType=VARCHAR},
+				</if>
+				<if test="item.paymentDate != null">
+					#{item.paymentDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.paymentNo != null">
+					#{item.paymentNo,jdbcType=VARCHAR},
+				</if>
+				<if test="item.paymentPhone != null">
+					#{item.paymentPhone,jdbcType=VARCHAR},
+				</if>
+				<if test="item.paymentName != null">
+					#{item.paymentName,jdbcType=VARCHAR},
+				</if>
+				<if test="item.paymentCardNumber != null">
+					#{item.paymentCardNumber,jdbcType=VARCHAR},
+				</if>
+				<if test="item.paymentPostCode != null">
+					#{item.paymentPostCode,jdbcType=VARCHAR},
+				</if>
+				<if test="item.sellerRemark != null">
+					#{item.sellerRemark,jdbcType=VARCHAR},
+				</if>
+				<if test="item.buyerMessage != null">
+					#{item.buyerMessage,jdbcType=VARCHAR},
+				</if>
+				<if test="item.invoiceInfo != null">
+					#{item.invoiceInfo,jdbcType=VARCHAR},
+				</if>
+				<if test="item.isDeleted != null">
+					#{item.isDeleted,jdbcType=INTEGER},
+				</if>
+				<if test="item.isCreate != null">
+					#{item.isCreate,jdbcType=INTEGER},
+				</if>
+				<if test="item.updateDate != null">
+					#{item.updateDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.email != null">
+					#{item.email,jdbcType=VARCHAR},
+				</if>
+				<if test="item.oprateStatus != null">
+					#{item.oprateStatus,jdbcType=INTEGER},
+				</if>
+				<if test="item.postCode != null">
+					#{item.postCode,jdbcType=VARCHAR},
+				</if>
+				<if test="item.logisticsCost != null">
+					#{item.logisticsCost,jdbcType=DOUBLE},
+				</if>
+				<if test="item.financeRemark != null">
+					#{item.financeRemark,jdbcType=VARCHAR},
+				</if>
+				<if test="item.logisticsTypeCode != null">
+					#{item.logisticsTypeCode,jdbcType=VARCHAR},
+				</if>
+				<if test="item.logisticsTypeName != null">
+					#{item.logisticsTypeName,jdbcType=VARCHAR},
+				</if>
+				<if test="item.plateform != null">
+					#{item.plateform,jdbcType=INTEGER},
+				</if>
+	       </trim>
+    </foreach>
+  </insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="entity.platform.order.template.TaoBaoOrder">
+		update t_product_sales_order_taobao
+		<set >
+			<if test="isComplete != null" >
+				is_complete = #{isComplete,jdbcType=INTEGER},
+			</if>
+			<if test="logisticsTypeCode != null" >
+				logistics_type_code=#{logisticsTypeCode},
+			</if>
+			<if test="logisticsTypeName != null" >
+				logistics_type_name=#{logisticsTypeName},
+			</if>
+			<if test="updateDate != null" >
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

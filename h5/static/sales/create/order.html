@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="email=no" name="format-detection" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>添加收货地址</title>
+    <link rel="stylesheet" href="/css/frozenui-1.3.0/css/frozen.css?time=(new Date()).getTime()">
+    <link rel="stylesheet" href="/css/frozenui-1.3.0/css/icon.css?time=(new Date()).getTime()">
+    <link rel="stylesheet" href="/css/frozenui-1.3.0/css/icon-full.css?time=(new Date()).getTime()">
+    <link rel="stylesheet" type="text/css" href="../../css/main/main.css?time=(new Date()).getTime()">
+</head>
+<body id="body_ele">
+    <header class="posFix head">
+        <!--<a class="back" style='display:inline-block;margin-top:9px;background:#fff url("../../img/spirit.png") no-repeat;width:25.6px;height: 25.6px;background-size:320px auto;position:absolute;background-position:0 1px;left:8px;'></a>-->
+        <a class="ret-logo"></a>
+        添加收货地址
+        <a href="####" class="home-logo"></a>
+    </header>
+    <section class="invoCon conTop curr" id="receiverList" style="display: none">
+        <div class="impornor invonor">
+            <label><b class="red-start">*</b>收货人姓名：</label>
+            <label><input type="text" v-model="receiver" class="inp4"/></label>
+        </div>
+        <div class="impornor invonor">
+            <label><b class="red-start">*</b>手机号码：</label>
+            <label><input type="text" v-model="tel" class="inp4"/></label>
+        </div>
+        <div class="impornor invonor">
+            <label><b class="red-start">*</b>省/市/区：</label>
+            <label class="chooseAddr" @click="getProvince($event)">请选择</label>
+        </div>
+        <div class="impornor invonor">
+            <label><b class="red-start">*</b>街道地址：</label>
+            <label><input type="text" v-model="addr" class="inp4"/></label>
+        </div>
+        <div class="impornor invonor">
+            <label>邮政编码：</label>
+            <label><input type="text" v-model="postcode" class="inp4 postCode"/></label>
+        </div>
+        <div class="impornor invonor" style="height: auto;">
+            <label><b class="red-start">*</b>运送方式：</label>
+            <label>
+                <select name="" id="shippings"  class="inp4">
+                </select>
+            </label>
+            <div class="freight">运费：
+                <b class="b-style sale_freight">0.00</b>
+                <input id="thirdPostfee" @blur = "checkfee()" class="b-style " placeholder="第三方物流费用" 
+                style="width: 100px;">
+            元</div>
+            <div>
+                <label class="freight" style="width: 100%;">
+                <input v-model="isPay" type="checkbox" class="mui-checkbox autoFreight"/>
+                    从分销商账户余额扣除
+                </label>
+            </div>
+        </div>
+    </section>
+    <section style="display: none" class="invoCon conTop" id="provinceIds">
+        <div style="" id="provinces">
+        </div>
+    </section>
+    <section class="invoCon conTop" id="cityIds" style="display: none">
+        <div id="cities">
+        </div>
+    </section>
+    <section class="invoCon conTop" id="regionIds" style="display: none">
+        <div id="areas">
+        </div>
+    </section>
+    <footer class="foot">
+        <a class="opration">
+            <input @click="cancleGenerate" type="button" value="取消" class="inp-3 btn-gray fl"/>
+            <input @click="generateSaleOrder" type="button" value="生成订单" class="inp-3 btn-blue fr"/>
+        </a>
+    </footer>
+    <script src="/js/lib/require.js" data-main="/js/sales/generateOrder.js?time=(new Date()).getTime()"></script>
+</body>
+</html>

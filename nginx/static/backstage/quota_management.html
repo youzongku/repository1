@@ -1,0 +1,136 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<h1>用户管理<span>---</span><span>额度管理</span></h1>
+<ul class="search_category" style="height: 120px;">
+    <li>有效时间：
+        <input  class="searchInput" placeholder="开始日期" style="width: 130px;" id="seachTime0"
+               onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">至
+        <input  class="searchInput" placeholder="结束日期" style="width: 130px;" id="seachTime1"
+               onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+    </li>
+    <li>
+        <div class="search">
+            <input onkeyup="enter_keyUp(event,this, ajax_get_credit)" id="searchInput" class="searchInput" placeholder="用户名/手机号">
+            <input id="searchButton" class="searchButton" value="搜索" type="submit">
+        </div>
+    </li>
+    <li>
+        <select name="" id="comsumerTypeOfCredit">
+            <option value="">所有分销商类型</option>
+            <option value="2">合营分销商</option>
+            <option value="3">内部分销商</option>
+        </select>
+    </li>
+    <li>
+        <select name="" id="limiteStatus">
+            <option value="">所有额度状态</option>
+            <option value="1">待使用</option>
+            <option value="2">使用中</option>
+            <option value="3">已失效</option>
+        </select>
+    </li>
+    <li class="quotaManagement">
+        <div class="quota">
+            <input type="hidden" id="redit" value="1"/>
+            <button class="quota-current btn-cho" onclick="toggleBox('1',this)">临时额度</button>
+            <button onclick="toggleBox('2',this)">永久额度</button>
+        </div>
+        <div class="search">
+            <button class="aftersales-addQuota">添加额度</button>
+            <button id="exportCredit">导出excel</button>
+        </div>
+    </li>
+</ul>
+
+<div class="quota-group">
+    <!-- 临时额度 -->
+    <div class="interim">
+        <div class="content_list">
+            <table class="list_title all_table">
+                <thead>
+                <tr>
+                    <th style="width:3%"></th>
+                    <th style="width:8%" name="comsumerType">分销商类型</th>
+                    <th style="width:9%" name="userEmail">用户名</th>
+                    <th style="width:5%" name="userName">姓名</th>
+                    <th style="width:9%" name="tel">手机号</th>
+                    <th style="width:6%" name="creditLimit">信用额度</th>
+                    <th style="width:8%" name="usedAmount">已使用额度</th>
+                    <th style="width:6%" name="redit">剩余额度</th>
+                    <th style="width:8%" name="startTime">开始时间</th>
+                    <th style="width:8%" name="endTime">失效时间</th>
+                    <th style="width:6%" name="limitState">额度状态</th>
+                    <th style="width:6%" name="isFinished">是否还款</th>
+                    <th style="width:5%" name="createuser">责任人</th>
+                    <th style="width:13%">操作</th>
+                </tr>
+                </thead>
+                <tbody class="list_content change_bgc">
+                </tbody>
+            </table>
+
+            <p>共<span id="count" style="display: inline-block; color: #55ccc8;">0</span>条记录，每页显示
+                <select>
+                    <option value="10">10</option>
+                    <option value="20" selected="selected">20</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                </select>
+                ，共<span id="page_count" style="display: inline-block; color: #55ccc8;">0</span>页
+            </p>
+            <div id="credit_pagination" style="text-align: center; margin-top: 30px;"></div>
+        </div>
+    </div>
+</div>
+</div>
+<!--额度设置弹出窗-->
+<div class="aftersales-audit-pop" style="display: none">
+    <div class="recharge-button" style="margin-left: 35px;">
+        <input type="hidden" name="setId"/>
+        <span>分销商账号：<input type="text" name="setEmail"/></span>
+        <span>分销商姓名：<input type="text" name="setName"/></span>
+        <span>审核单据号：<input type="text" name="setAudioCode"></span>
+        <span style="padding-top:20px;">&nbsp;&nbsp;&nbsp;额度类型：<select name="setRedit" onchange="setReditChange(this)">
+            <option value="1">临时额度</option>
+            <option value="2">永久额度</option>
+        </select></span>
+        <span style="padding-top:20px;">&nbsp;&nbsp;*设置额度：<input type="text" name="setCreditLimit"></span>
+                <!--<ul>-->
+                    <!--<li>&nbsp;&nbsp;&nbsp;有效时间：<span><ul><li class="setStartTime"></li>至<li class="setEndTime"></li></ul></span>-->
+                    <!--</li>-->
+                <!--</ul>-->
+        <span>
+            <ul>
+                <li>
+                    <p style="width: 84px">&nbsp;&nbsp;有效时间：</p>
+                    <div class="valid-time">
+                        <input class="setStartTime" name="setStartTime" >
+                        <div>至</div>
+                        <input class="setEndTime" name="setEndTime">
+                    </div>
+                </li>
+            </ul>
+        </span>
+    </div>
+    <div class="y-recharge" style="display: none">
+        <p>是否需要寄回商品：
+            <span><input type="radio" name="return">是</span>
+            <span><input type="radio" name="return">否</span>
+        </p>
+    </div>
+    <div class="n-recharge" style="display: none">
+        <p>请填写不通过审核的原因：</p>
+        <textarea placeholder="不超过500字"></textarea>
+    </div>
+</div>
+<!--操作日志-->
+<div class="aftersales-log-lit" style="display: none">
+    <!--<ul class="aftersales_lit">
+        <li>2016-03-25 13：23：14</li>
+        <li>admin1审核临时额度成功。临时余额为1000元。</li>
+    </ul>
+    <ul class="aftersales_lit">
+        <li>2016-03-25 13：23：14</li>
+        <li>admin1审核临时额度成功。临时余额为1000元。</li>
+    </ul>-->
+</div>
+

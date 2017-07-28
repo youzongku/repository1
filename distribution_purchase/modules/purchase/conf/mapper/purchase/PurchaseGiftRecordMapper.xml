@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.purchase.PurchaseGiftRecordMapper" >
+  <resultMap id="BaseResultMap" type="entity.purchase.PurchaseGiftRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="operator_email" property="operatorEmail" jdbcType="VARCHAR" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="qty" property="qty" jdbcType="INTEGER" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="comments" property="comments" jdbcType="VARCHAR" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="purchase_no" property="purchaseNo" jdbcType="VARCHAR" />
+    <result column="purchase_id" property="purchaseId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_email, operator_email, sku, warehouse_id, qty, operate_time, comments, warehouse_name,purchase_id,purchase_no
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_purchase_gift_op_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPurchaseId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_purchase_gift_op_record
+    where purchase_id = #{purchaseId,jdbcType=INTEGER}
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+	<foreach collection="list" item="item" index="index" separator=";">
+		insert into t_purchase_gift_op_record
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="item.userEmail != null">
+				user_email,
+			</if>
+			<if test="item.operatorEmail != null">
+				operator_email,
+			</if>
+			<if test="item.sku != null">
+				sku,
+			</if>
+			<if test="item.warehouseId != null">
+				warehouse_id,
+			</if>
+			<if test="item.qty != null">
+				qty,
+			</if>
+			<if test="item.operateTime != null">
+				operate_time,
+			</if>
+			<if test="item.comments != null">
+				comments,
+			</if>
+			<if test="item.warehouseName != null">
+				warehouse_name,
+			</if>
+			<if test="item.purchaseId != null">
+				purchase_id,
+			</if>
+			<if test="item.purchaseNo != null">
+				purchase_no,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="item.userEmail != null">
+				#{item.userEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="item.operatorEmail != null">
+				#{item.operatorEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="item.sku != null">
+				#{item.sku,jdbcType=VARCHAR},
+			</if>
+			<if test="item.warehouseId != null">
+				#{item.warehouseId,jdbcType=INTEGER},
+			</if>
+			<if test="item.qty != null">
+				#{item.qty,jdbcType=INTEGER},
+			</if>
+			<if test="item.operateTime != null">
+				#{item.operateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="item.comments != null">
+				#{item.comments,jdbcType=VARCHAR},
+			</if>
+			<if test="item.warehouseName != null">
+				#{item.warehouseName,jdbcType=VARCHAR},
+			</if>
+			<if test="item.purchaseId != null">
+				#{item.purchaseId,jdbcType=INTEGER},
+			</if>
+			<if test="item.purchaseNo != null">
+				#{item.purchaseNo,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</foreach>
+</insert>
+</mapper>

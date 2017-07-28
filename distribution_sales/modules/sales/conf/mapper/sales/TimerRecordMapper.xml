@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.TimerRecordMapper" >
+
+  <resultMap id="BaseResultMap" type="entity.sales.TimerRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="execute_type" property="executeType" jdbcType="VARCHAR" />
+    <result column="execute_date" property="executeDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <!--  查询  -->
+  <select id="getRecord" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT *
+    FROM t_timer_record
+    WHERE execute_type = #{executeType}
+    ORDER BY execute_date DESC
+    LiMiT 1 OFFSET 0
+  </select>
+
+  <!--  保存  -->
+  <insert id="saveRecord" parameterType="entity.sales.TimerRecord" >
+    insert into t_timer_record (
+        execute_type, execute_date
+      )
+    values (
+        #{executeType,jdbcType=VARCHAR},
+        #{executeDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+  <!--  更新时间点  -->
+  <update id="upRecord" parameterType="entity.sales.TimerRecord">
+    UPDATE
+        t_timer_record
+    SET
+        execute_date = #{executeDate,jdbcType=TIMESTAMP}
+    WHERE
+        id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

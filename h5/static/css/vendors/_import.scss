@@ -1,0 +1,326 @@
+.imporNav{
+  text-align: center;
+  background-color: #fff;
+  p:nth-child(1){
+    height: 38px;
+    line-height: 38px;
+    background-color: #444;
+    color: #fff;
+  }
+  p:nth-child(2){
+    border-bottom: 1px solid #eee;
+    a{
+      position: relative;
+      input{
+        width: 70%;
+        text-indent: 10px;
+        border: 1px solid #eee;
+        border-radius: 20px;
+        background-color: #fafafa;
+        padding: 8px 0!important;
+        font-size: 13px;
+      }
+      .del{
+        @include imgPos;
+        background-size: 246px auto!important;
+        background-position: -20px 0px;
+        width: 20px;
+        height: 20px;
+        top: -7px;
+        right: 6px;
+      }
+    }
+  }
+}
+.imporCon{
+  padding:0 0 40px!important;
+  @include bg;
+  p{
+    @include bg;
+    span:nth-child(1){
+      width: 60%;
+      display: inline-block;
+    }
+    span:nth-child(2){
+      width: 40%;
+      display: inline-block;
+    }
+  }
+}
+.imporCon{
+  p:active{
+    background-color: #fafafa;
+    color: #333;
+  }
+}
+
+.impornor{
+  @include bg;
+  input{
+    vertical-align: middle;
+    margin: 0 5px 3px 0;
+  }
+  label{
+    margin-right: 4px;
+  }
+}
+.imporCon2{
+  margin-top: 126px;
+  height: auto!important;
+  padding: 0!important;
+  border: none;
+  padding-bottom: 40px;
+  @include bg;
+  .imporP{
+    padding: 0!important;
+    a{
+      color: #444;
+      padding: 0 5px;
+      display: block;
+      height: 45px;
+      span{
+        padding: 0 .5%;
+        overflow: hidden;
+        display: inline-block;
+      }
+      span:nth-child(1){
+        width: 62%;
+      }
+      span:nth-child(2){
+        width: 36%;
+      }
+    }
+  }
+}
+.imporCom{
+  width: 100%;
+  padding: 3px 5px;
+  display: table;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  margin: 2px 0;
+  .imporComL{
+    width: 2%;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 10px;
+  }
+  .imporComR{
+    display: table;
+    width: 98%;
+    float: right;
+    .impor-img{
+      display: table-cell;
+      width: 100px;
+      height: 100px;
+      vertical-align: middle;
+      a{
+        border: 1px solid #fafafa;
+        display: inline-block;
+        img{
+          max-width: 100px;
+          max-height: 100px;
+          min-width: 100px;
+          min-height: 100px;
+          background: url(../../img/c.gif) no-repeat center center;
+          background-size: 50%;
+          text-indent: -2000em;
+          vertical-align: middle;
+        }
+      }
+    }
+    .impor-tit{
+      padding: 5px;
+      font-size: 13px;
+      max-width: 220px;
+      display: table-cell;
+      h5{
+        line-height: 23px;
+        height: 46px;
+        font-weight: normal;
+        color: #333;
+        text-overflow: -o-ellipsis-lastline;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        span{
+          position: relative;
+        }
+      }
+      div{
+        line-height: 20px;
+        font-size: 10px;
+        span:nth-child(1){
+          margin-right: 10px;
+          b{
+            color: #90ddff;
+            i{
+              font-weight: normal;
+              font-style: normal;
+              padding-right: 2px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.impor-tit2{
+  font-weight: normal;
+  color: #444!important;
+}
+
+.imporSear{
+  text-align: center;
+  p{
+    padding: 15px 0;
+    margin-bottom: 15px;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    input{
+      width: 90%;
+      padding: 8px 0!important;
+      @include inp;
+    }
+  }
+  div{
+    padding: 20px;
+  }
+}
+
+.editPop{
+  p{
+    line-height: 50px;
+    border-top: 1px solid #eee;
+    a{
+      color: #444;
+      display: block;
+      padding: 0 20px;
+      span{
+        display: block;
+      }
+    }
+  }
+  p:active{
+    background-color: #fafafa;
+    a{
+      color: #333;
+    }
+  }
+}
+.generatePop{
+  p{
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #eee;
+    padding: 0 3%;
+    span{
+      line-height: 32px;
+    }
+  }
+  .gen-p-l{
+    span{
+      width: 50%;
+      display: inline-block;
+      b{
+        font-weight: normal;
+        i{
+          padding: 5px;
+        }
+      }
+    }
+  }
+  .gen-p-r{
+    height: auto;
+    padding-bottom: 5px;
+    border-bottom: 0;
+    span{
+      display: inline-block;
+      vertical-align: top;
+      label{
+        input{
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}
+
+.invoCon{
+  height: auto;
+  background: #fff;
+}
+.invonor{
+  max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
+  @include bg;
+  label{
+    display: inline-block;
+  }
+  label:nth-child(1){
+    width: 30%;
+    text-align: right;
+    b{
+      margin-right: 5px;
+    }
+  }
+  label:nth-child(2){
+    width: 66%;
+    max-width: 320px;
+  }
+}
+.freight{
+  text-align: right;
+  padding: 0 10px;
+}
+.invo-sele{
+  background: rgba(68,68,68,0.8);
+  color: #fff;
+  font-size: 14px;
+  display: block;
+  height: 38px;
+  line-height: 38px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  padding: 0 10px;
+  .invo-sele-1{
+    margin-right: 15px;
+  }
+}
+
+.non-gift{
+  border: 1px solid #eee;
+  margin: 4px;
+  box-shadow: 0 2px 5px #eee;
+  margin-bottom: 48px;
+}
+.addSel{
+  text-align: center;
+}
+.addSel:active{
+  background: #eee;
+}
+
+.list-box{
+  width: 100%;
+  height: 44px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background-color: #444;
+  color: #fff;
+  .list{
+    width: auto;
+    li{
+      line-height: 44px;
+      padding: 0 10px;
+      span{
+        display: inline-block;
+        line-height: 27px;
+      }
+    }
+  }
+}

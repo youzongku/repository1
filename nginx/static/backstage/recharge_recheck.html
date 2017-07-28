@@ -1,0 +1,43 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<h1>充值提现<span>---</span><span>充值复审</span></h1>
+<div class="content_list" >
+	<div>
+		<ul class="search_category" style="height:62px;">
+			<li>初审状态：
+				<select id="audit_state" name="audit_state" style="width: 100px;">
+					<option value="" selected="selected">全部状态</option>
+					<option value="0">待审核</option>
+					<option value="1">审核不通过</option>
+					<option value="2">审核通过</option>
+					<option value="3">审核异常</option>
+				</select>
+			</li>
+			<li>收款渠道：
+				<select id="receipt_mode" name="receipt_mode">
+					<option value="" selected="selected">全部渠道</option>
+				</select>
+			</li>
+			<li>转账时间：
+				<select id="transfer_time" name="transfer_time" style="width: 100px;">
+					<option value="" selected="selected">请选择</option>
+					<option value="1">1个月以内</option>
+					<option value="3">3个月以内</option>
+					<option value="6">6个月以内</option>
+					<option value="9">9个月以内</option>
+					<option value="12">12个月以内</option>
+				</select>
+			</li>
+			<li>
+				<div class="search">
+					<input id="review_searchInput" class="searchInput" placeholder="录入人/用户名/付款人" style="width: 166px">
+					<input id="review_searchButton" class="searchButton" value="搜索" type="button" style="cursor: pointer;">
+				</div>
+			</li>
+		</ul>
+	</div>
+	<table id="review_audit_tab"></table>
+	<div id="review_audit_pager"></div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="../css/laydate/skins/molv/laydate.css">
+<script type="text/javascript" src="../js/lib/laydate/laydate.js" ></script>

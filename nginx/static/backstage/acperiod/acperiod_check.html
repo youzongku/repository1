@@ -1,0 +1,44 @@
+<script src="../js/backstage/lib/laydate/laydate.js"></script>
+<div id="homepage">
+    <h1>用户管理<span>---</span><span>查看账期</span></h1>
+    <ul class="search_category">
+        <li>
+            <select id="model_select">
+            </select>
+        </li>
+        <li>
+            <input type="text" id="apm_input" class="input-s" placeholder="分销商用户名/名称/OA审批单号/账期合同单号/责任人/创建人" style="width: 400px;">
+            <input type="button" id="apm_search" class="searchButton" value="搜索">
+        </li>
+    </ul>
+
+    <div class="content_list">
+        <table id="apm_table"></table>
+        <div id="apm_pagination"></div>
+    </div>
+</div>
+
+<div id="follower" class="display">
+    <h1>用户管理<span>---</span><span>账期管理</span><span class="record_sendList_do"><button class="btn-black" onclick="ck_checkDetailsBack();">返回</button></span></h1>
+    <ul class="search_category">
+        <li>
+            <select id="state_select" >
+                <option value="">所有账期状态</option>
+                <option value="0">未生效</option>
+                <option value="1">可使用</option>
+                <option value="2">待还款</option>
+                <option value="3">已逾期</option>
+                <option value="4">禁用中</option>
+                <option value="5">已完结</option>
+            </select>
+        </li>
+        <li>
+            <select id="std_select" >
+            </select>
+        </li>
+    </ul>
+    <div class="content_list">
+        <table id="aps_table"></table>
+        <div id="aps_pagination"></div>
+    </div>
+</div>

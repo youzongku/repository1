@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.dismember.DisTransferAccountMapper" >
+  <resultMap id="BaseResultMap" type="entity.dismember.DisTransferAccount" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+   	<result column="transfer_card" property="transferCard" jdbcType="VARCHAR" />
+   	<result column="distributor_email" property="distributorEmail" jdbcType="VARCHAR" />
+   	<result column="payer_name" property="payerName" jdbcType="VARCHAR" />
+   	<result column="custom_status" property="customStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, bank_name, create_date,transfer_card,distributor_email,payer_name,custom_status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dis_transfer_account
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_dis_transfer_account
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.dismember.DisTransferAccount" >
+    insert into t_dis_transfer_account (id, bank_name, create_date,transfer_card,distributor_email,payer_name
+    ,custom_status)
+    values (#{id,jdbcType=INTEGER}, #{bankName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      		#{transferCard,jdbcType=VARCHAR},#{distributorEmail,jdbcType=VARCHAR},
+      		#{payerName,jdbcType=VARCHAR},#{customStatus,jdbcType=INTEGER}     		
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.dismember.DisTransferAccount" >
+    insert into t_dis_transfer_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="transferCard != null" >
+        transfer_card,
+      </if>
+      <if test="distributorEmail != null" >
+        distributor_email,
+      </if>
+      <if test="payerName != null" >
+        payer_name,
+      </if>
+      <if test="customStatus != null" >
+        custom_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transferCard != null" >
+      	 #{transferCard,jdbcType=VARCHAR},
+      </if>
+      <if test="distributorEmail != null" >
+         #{distributorEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="payerName != null" >
+        #{payerName,jdbcType=VARCHAR},
+      </if>  
+      <if test="customStatus != null" >
+     	 #{customStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.dismember.DisTransferAccount" >
+    update t_dis_transfer_account
+    <set >
+      <if test="bankName != null" >
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transferCard != null" >
+        transfer_card = #{transferCard,jdbcType=VARCHAR},
+      </if>
+      <if test="distributorEmail != null" >
+        distributor_email = #{distributorEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="payerName != null" >
+        payer_name = #{payerName,jdbcType=VARCHAR},
+      </if>  
+      <if test="customStatus != null" >
+     	custom_status =  #{customStatus,jdbcType=INTEGER},
+      </if>   
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="entity.dismember.DisTransferAccount" >
+    update t_dis_transfer_account
+    set bank_name = #{bankName,jdbcType=VARCHAR},
+      	transfer_card = #{transferCard,jdbcType=VARCHAR},
+      	payer_name = #{payerName,jdbcType=VARCHAR},
+      	custom_status =  #{customStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getAccountByDto" resultMap="BaseResultMap" parameterType= "dto.dismember.TransferAccountDto" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dis_transfer_account
+    where 1 =1
+    <if test="email!= null" >
+   	AND distributor_email = #{email,jdbcType=VARCHAR}
+   	</if>
+    <if test="bankName != null" >
+     AND   bank_name = #{bankName,jdbcType=VARCHAR}
+    </if>
+   	<if test="card != null" >
+   	  ANd  transfer_card = #{card,jdbcType=VARCHAR}
+	</if> 
+    order by id desc
+  </select>
+  <select id="getBankNameByEmail" resultType="String" parameterType= "java.lang.String" >
+    select  DISTINCT  bank_name
+    from t_dis_transfer_account
+    where distributor_email = #{email,jdbcType=VARCHAR}
+  </select>
+</mapper>

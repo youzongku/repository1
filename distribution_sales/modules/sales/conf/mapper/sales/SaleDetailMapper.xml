@@ -1,0 +1,1048 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.sales.SaleDetailMapper" >
+  <resultMap id="BaseResultMap" type="entity.sales.SaleDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="product_purchase_id" property="productPurchaseId" jdbcType="VARCHAR" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="qty" property="qty" jdbcType="INTEGER" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="inter_bar_code" property="interBarCode" jdbcType="VARCHAR" />
+    <result column="plateform_name" property="plateformName" jdbcType="VARCHAR" />
+    <result column="purchase_price" property="purchasePrice" jdbcType="DOUBLE" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="sales_order_id" property="salesOrderId" jdbcType="INTEGER" />
+    <result column="product_img" property="productImg" jdbcType="VARCHAR" />
+    <result column="sales_order_no" property="salesOrderNo" jdbcType="VARCHAR" />
+    <result column="is_deducted" property="isDeducted" jdbcType="INTEGER" />
+    <result column="market_price" property="marketPrice" jdbcType="DOUBLE" />
+    <result column="dis_profit_rate" property="disProfitRate" jdbcType="DOUBLE" />
+    <result column="dis_profit" property="disProfit" jdbcType="DOUBLE" />
+    <result column="dis_vat" property="disVat" jdbcType="DOUBLE" />
+    <result column="dis_stock_fee" property="disStockFee" jdbcType="DOUBLE" />
+    <result column="dis_shipping_type" property="disShippingType" jdbcType="VARCHAR" />
+    <result column="dis_other_cost" property="disOtherCost" jdbcType="DOUBLE" />
+    <result column="dis_total_cost" property="disTotalCost" jdbcType="DOUBLE" />
+    <result column="dis_transfer_fee" property="disTransferFee" jdbcType="DOUBLE" />
+    <result column="dis_list_fee" property="disListFee" jdbcType="DOUBLE" />
+    <result column="dis_trade_fee" property="disTradeFee" jdbcType="DOUBLE" />
+    <result column="dis_pay_fee" property="disPayFee" jdbcType="DOUBLE" />
+    <result column="dis_postal_fee" property="disPostalFee" jdbcType="DOUBLE" />
+    <result column="dis_import_tar" property="disImportTar" jdbcType="DOUBLE" />
+    <result column="dis_gst" property="disGst" jdbcType="DOUBLE" />
+    <result column="dis_insurance" property="disInsurance" jdbcType="DOUBLE" />
+    <result column="dis_total_vat" property="disTotalVat" jdbcType="DOUBLE" />
+    <result column="cost" property="cost" jdbcType="DOUBLE" />
+    <result column="dis_freight" property="disFreight" jdbcType="DOUBLE" />
+    <result column="dis_price" property="disPrice" jdbcType="DOUBLE" />
+    <result column="dis_cif_price" property="disCifPrice" jdbcType="DOUBLE" />
+    <result column="gst_rate" property="gstRate" jdbcType="DOUBLE" />
+    <result column="vat_rate" property="vatRate" jdbcType="DOUBLE" />
+    <result column="import_tar_rate" property="importTarRate" jdbcType="DOUBLE" />
+    <result column="postal_fee_rate" property="postalFeeRate" jdbcType="DOUBLE" />
+    <result column="logistic_fee" property="logisticFee" jdbcType="DOUBLE" />
+    <result column="final_selling_price" property="finalSellingPrice" jdbcType="DOUBLE" />
+    <result column="postal_rate"       property="postalRate"       jdbcType="DOUBLE" />
+    <result column="is_after_service"  property="isAfterService"   jdbcType="INTEGER" />
+    <result column="is_deducted_history"  property="isDeductedHistory"   jdbcType="INTEGER" />
+    <result column="isgift"  property="isgift"   jdbcType="BIT" />
+    <result column="giftnum"  property="giftNum"   jdbcType="INTEGER" />
+    <result column="purchase_order_no" property="purchaseOrderNo" jdbcType="VARCHAR" />
+    <result column="cap_fee" property="capFee" jdbcType="DOUBLE" />
+    <result column="arrive_ware_price" property="arriveWarePrice" jdbcType="DOUBLE" />
+    <result column="expiration_date" property="expirationDate" jdbcType="TIMESTAMP" />
+    <result column="inter_bar_code" property="interBarCode" jdbcType="VARCHAR" />
+    <result column="inter_bar_code" property="interBarCode" jdbcType="VARCHAR" />
+    <result column="contract_no" property="contractNo" jdbcType="VARCHAR" />
+    <result column="clearance_price" property="clearancePrice" jdbcType="DOUBLE" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, product_purchase_id, sku, qty, product_name, inter_bar_code, plateform_name, purchase_price, 
+    warehouse_id, warehouse_name, sales_order_id ,product_img ,sales_order_no,sales_order_no,is_deducted,
+    market_price,dis_profit_rate, dis_profit, dis_vat, dis_stock_fee, dis_shipping_type,
+    dis_other_cost, dis_total_cost, dis_transfer_fee, dis_list_fee, dis_trade_fee, dis_pay_fee, 
+    dis_postal_fee, dis_import_tar, dis_gst, dis_insurance, dis_total_vat, cost, dis_freight, 
+    dis_price, dis_cif_price,final_selling_price,postal_rate,is_after_service,
+    is_deducted_history,isgift,giftnum,gst_rate,vat_rate,import_tar_rate,postal_fee_rate,logistic_fee,
+    purchase_order_no,cap_fee,arrive_ware_price,expiration_date,inter_bar_code,contract_no,clearance_price
+  </sql>
+  <delete id="deleteByOrderId"  parameterType="java.lang.Integer" >
+  	delete from t_product_sales_order_details where sales_order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_sales_order_details
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectHistoryByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+      select 
+      <include refid="Base_Column_List"></include>
+      from t_product_sales_order_details where sales_order_id=#{orderId} and is_deducted_history = 1 order by purchase_price
+  </select>
+  
+  <select id="getHistoryByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+      select 
+      <include refid="Base_Column_List"></include>
+      from t_product_sales_order_details where sales_order_id=#{orderId} and is_deducted_history = 1 order by id
+  </select>
+
+  <select id="selectEffectiveDetails" resultMap="BaseResultMap"
+          parameterType="java.util.List">
+    select
+    <include refid="Base_Column_List"></include>
+    from
+    <foreach collection="list" open="(" item="id" separator=" union all "
+             close=")">
+      select #{id} as mid
+    </foreach>
+    as mids
+    LEFT JOIN t_product_sales_order_details sod on mids.mid = sod.sales_order_id
+    where
+    sod.id is not null and is_deducted_history = 1
+  </select>
+  
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+      select 
+      <include refid="Base_Column_List"></include>
+      from t_product_sales_order_details where sales_order_id=#{orderId} and is_deducted_history = 0 order by purchase_price
+  </select>
+  
+  <select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+      select 
+      <include refid="Base_Column_List"></include>
+      from t_product_sales_order_details where sales_order_no=#{orderNo} and is_deducted_history = 0 order by purchase_price
+  </select>
+  
+  <select id="getDetailBySkuAndOrderNo" resultMap="BaseResultMap" parameterType="entity.sales.SaleDetail">
+   	  select 
+      <include refid="Base_Column_List"></include>
+      from t_product_sales_order_details where 
+      sales_order_no=#{salesOrderNo,jdbcType=VARCHAR} 
+      and sku=#{sku,jdbcType=VARCHAR}
+      and is_deducted_history = 0 
+      limit 1 offset 0
+  </select>
+  <!-- 批量查询 -->
+  <select id="selectByOrderIdList" resultMap="BaseResultMap" parameterType="java.util.List" >
+      select 
+      <include refid="Base_Column_List"></include>
+      from t_product_sales_order_details 
+      where 
+      is_deducted_history = 0
+      <if test="list!=null and list.size()>0">
+      	and sales_order_id in 
+	      <foreach item="orderId" collection="list" open="(" separator="," close=")">
+			#{orderId}
+		  </foreach>
+      </if>
+      order by purchase_price
+  </select>
+  <select id="selectByOrderNoList" resultMap="BaseResultMap" parameterType="java.util.List" >
+      select 
+      <include refid="Base_Column_List"></include>
+      from t_product_sales_order_details 
+      where 
+      is_deducted_history = 0
+      <if test="list!=null and list.size()>0">
+      	and sales_order_no in 
+	      <foreach item="orderNo" collection="list" open="(" separator="," close=")">
+			#{orderNo}
+		  </foreach>
+      </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_product_sales_order_details
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByMainOrderId" parameterType="java.lang.Integer" >
+    delete from t_product_sales_order_details
+    where sales_order_id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="entity.sales.SaleDetail" useGeneratedKeys="true" keyProperty="id">
+    insert into t_product_sales_order_details (id, product_purchase_id, sku, 
+      qty, product_name, inter_bar_code, plateform_name, 
+      purchase_price, warehouse_id, warehouse_name, 
+      sales_order_id)
+    values (#{id,jdbcType=INTEGER}, #{productPurchaseId,jdbcType=VARCHAR}, #{sku,jdbcType=VARCHAR}, 
+      #{qty,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{interBarCode},
+      #{plateformName,jdbcType=VARCHAR}, #{purchasePrice,jdbcType=DOUBLE}, #{warehouseId,jdbcType=INTEGER}, 
+      #{warehouseName,jdbcType=VARCHAR}, 
+      #{salesOrderId,jdbcType=INTEGER})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="entity.sales.SaleDetail" useGeneratedKeys="true" keyProperty="id">
+    insert into t_product_sales_order_details
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productPurchaseId != null" >
+        product_purchase_id,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="qty != null" >
+        qty,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="interBarCode != null" >
+        inter_bar_code,
+      </if>
+      <if test="plateformName != null" >
+        plateform_name,
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="salesOrderId != null" >
+        sales_order_id,
+      </if>
+      <if test="productImg != null" >
+        product_img,
+      </if>
+      <if test="salesOrderNo != null" >
+        sales_order_no,
+      </if>
+      <if test="isDeducted != null" >
+        is_deducted,
+      </if>
+      <if test="marketPrice != null" >
+        market_price,
+      </if>
+      <if test="disProfitRate != null" >
+        dis_profit_rate,
+      </if>
+      <if test="disProfit != null" >
+        dis_profit,
+      </if>
+      <if test="disVat != null" >
+        dis_vat,
+      </if>
+      <if test="disStockFee != null" >
+        dis_stock_fee,
+      </if>
+      <if test="disShippingType != null" >
+        dis_shipping_type,
+      </if>
+      <if test="disOtherCost != null" >
+        dis_other_cost,
+      </if>
+      <if test="disTotalCost != null" >
+        dis_total_cost,
+      </if>
+      <if test="disTransferFee != null" >
+        dis_transfer_fee,
+      </if>
+      <if test="disListFee != null" >
+        dis_list_fee,
+      </if>
+      <if test="disTradeFee != null" >
+        dis_trade_fee,
+      </if>
+      <if test="disPayFee != null" >
+        dis_pay_fee,
+      </if>
+      <if test="disPostalFee != null" >
+        dis_postal_fee,
+      </if>
+      <if test="disImportTar != null" >
+        dis_import_tar,
+      </if>
+      <if test="disGst != null" >
+        dis_gst,
+      </if>
+      <if test="disInsurance != null" >
+        dis_insurance,
+      </if>
+      <if test="disTotalVat != null" >
+        dis_total_vat,
+      </if>
+      <if test="cost != null" >
+        cost,
+      </if>
+      <if test="disFreight != null" >
+        dis_freight,
+      </if>
+      <if test="disPrice != null" >
+        dis_price,
+      </if>
+      <if test="disCifPrice != null" >
+        dis_cif_price,
+      </if>
+      <if test="finalSellingPrice != null" >
+        final_selling_price,
+      </if>
+      <if test="postalRate != null" >
+        postal_rate,
+      </if>
+      <if test="isAfterService != null" >
+        is_after_service,
+      </if>
+      <if test="isDeductedHistory != null" >
+        is_deducted_history,
+      </if>
+      <if test="gstRate != null" >
+      	gst_rate,
+      </if>
+      <if test="vatRate != null" >
+      	vat_rate,
+	  </if>
+	  <if test="importTarRate != null" >
+      	import_tar_rate,
+      </if>
+      <if test="postalFeeRate != null" >
+      	postal_fee_rate,
+      </if>
+      <if test="logisticFee != null" >
+      	logistic_fee,
+      </if>
+      <if test="purchaseOrderNo != null" >
+      	purchase_order_no,
+      </if>
+      <if test="capFee != null" >
+      	cap_fee,
+      </if>
+      <if test="arriveWarePrice != null" >
+      	arrive_ware_price,
+      </if>
+       <if test="isgift != null" >
+      	isgift,
+      </if>
+       <if test="expirationDate != null" >
+      	expiration_date,
+      </if>
+       <if test="contractNo != null" >
+      	contract_no,
+      </if>
+       <if test="clearancePrice != null" >
+      	clearance_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productPurchaseId != null" >
+        #{productPurchaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="interBarCode != null" >
+        #{interBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="plateformName != null" >
+        #{plateformName,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasePrice != null" >
+        #{purchasePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="salesOrderId != null" >
+        #{salesOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="productImg != null" >
+        #{productImg,jdbcType=VARCHAR},
+      </if>
+      <if test="salesOrderNo != null" >
+        #{salesOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeducted != null" >
+        #{isDeducted,jdbcType=INTEGER},
+      </if>
+      <if test="marketPrice != null" >
+        #{marketPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="disProfitRate != null" >
+        #{disProfitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="disProfit != null" >
+        #{disProfit,jdbcType=DOUBLE},
+      </if>
+      <if test="disVat != null" >
+        #{disVat,jdbcType=DOUBLE},
+      </if>
+      <if test="disStockFee != null" >
+        #{disStockFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disShippingType != null" >
+        #{disShippingType,jdbcType=VARCHAR},
+      </if>
+      <if test="disOtherCost != null" >
+        #{disOtherCost,jdbcType=DOUBLE},
+      </if>
+      <if test="disTotalCost != null" >
+        #{disTotalCost,jdbcType=DOUBLE},
+      </if>
+      <if test="disTransferFee != null" >
+        #{disTransferFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disListFee != null" >
+        #{disListFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disTradeFee != null" >
+        #{disTradeFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disPayFee != null" >
+        #{disPayFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disPostalFee != null" >
+        #{disPostalFee,jdbcType=DOUBLE},
+      </if>
+      <if test="disImportTar != null" >
+        #{disImportTar,jdbcType=DOUBLE},
+      </if>
+      <if test="disGst != null" >
+        #{disGst,jdbcType=DOUBLE},
+      </if>
+      <if test="disInsurance != null" >
+        #{disInsurance,jdbcType=DOUBLE},
+      </if>
+      <if test="disTotalVat != null" >
+        #{disTotalVat,jdbcType=DOUBLE},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=DOUBLE},
+      </if>
+      <if test="disFreight != null" >
+        #{disFreight,jdbcType=DOUBLE},
+      </if>
+      <if test="disPrice != null" >
+        #{disPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="disCifPrice != null" >
+        #{disCifPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="finalSellingPrice != null" >
+        #{finalSellingPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="postalRate != null" >
+        #{postalRate,jdbcType=DOUBLE},
+      </if>
+      <if test="isAfterService != null" >
+        #{isAfterService,jdbcType=INTEGER},
+      </if>
+      <if test="isDeductedHistory != null" >
+      	#{isDeductedHistory,jdbcType=INTEGER},
+      </if>
+      <if test="gstRate != null" >
+      	#{gstRate},
+      </if>
+      <if test="vatRate != null" >
+      	#{vatRate},
+	  </if>
+	  <if test="importTarRate != null" >
+      	#{importTarRate},
+      </if>
+      <if test="postalFeeRate != null" >
+      	#{postalFeeRate},
+      </if>
+      <if test="logisticFee != null" >
+      	#{logisticFee},
+      </if>
+      <if test="purchaseOrderNo != null" >
+      	#{purchaseOrderNo},
+      </if>
+      <if test="capFee != null" >
+      	#{capFee,jdbcType=DOUBLE},
+      </if>
+      <if test="arriveWarePrice != null" >
+      	#{arriveWarePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="isgift != null" >
+      	#{isgift,jdbcType=BIT},
+      </if>
+       <if test="expirationDate != null" >
+      	#{expirationDate,jdbcType=TIMESTAMP},
+      </if>
+       <if test="contractNo != null" >
+      	#{contractNo,jdbcType=VARCHAR},
+      </if>
+       <if test="clearancePrice != null" >
+      	#{clearancePrice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+
+	<insert id="batchInsertSelective" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index"
+			separator=";">
+			insert into t_product_sales_order_details
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				<if test="item.id != null">
+					id,
+				</if>
+				<if test="item.productPurchaseId != null">
+					product_purchase_id,
+				</if>
+				<if test="item.sku != null">
+					sku,
+				</if>
+				<if test="item.qty != null">
+					qty,
+				</if>
+				<if test="item.productName != null">
+					product_name,
+				</if>
+				<if test="item.interBarCode != null">
+					inter_bar_code,
+				</if>
+				<if test="item.plateformName != null">
+					plateform_name,
+				</if>
+				<if test="item.purchasePrice != null">
+					purchase_price,
+				</if>
+				<if test="item.warehouseId != null">
+					warehouse_id,
+				</if>
+				<if test="item.warehouseName != null">
+					warehouse_name,
+				</if>
+				<if test="item.salesOrderId != null">
+					sales_order_id,
+				</if>
+				<if test="item.productImg != null">
+					product_img,
+				</if>
+				<if test="item.salesOrderNo != null">
+					sales_order_no,
+				</if>
+				<if test="item.isDeducted != null">
+					is_deducted,
+				</if>
+				<if test="item.marketPrice != null">
+					market_price,
+				</if>
+				<if test="item.disProfitRate != null">
+					dis_profit_rate,
+				</if>
+				<if test="item.disProfit != null">
+					dis_profit,
+				</if>
+				<if test="item.disVat != null">
+					dis_vat,
+				</if>
+				<if test="item.disStockFee != null">
+					dis_stock_fee,
+				</if>
+				<if test="item.disShippingType != null">
+					dis_shipping_type,
+				</if>
+				<if test="item.disOtherCost != null">
+					dis_other_cost,
+				</if>
+				<if test="item.disTotalCost != null">
+					dis_total_cost,
+				</if>
+				<if test="item.disTransferFee != null">
+					dis_transfer_fee,
+				</if>
+				<if test="item.disListFee != null">
+					dis_list_fee,
+				</if>
+				<if test="item.disTradeFee != null">
+					dis_trade_fee,
+				</if>
+				<if test="item.disPayFee != null">
+					dis_pay_fee,
+				</if>
+				<if test="item.disPostalFee != null">
+					dis_postal_fee,
+				</if>
+				<if test="item.disImportTar != null">
+					dis_import_tar,
+				</if>
+				<if test="item.disGst != null">
+					dis_gst,
+				</if>
+				<if test="item.disInsurance != null">
+					dis_insurance,
+				</if>
+				<if test="item.disTotalVat != null">
+					dis_total_vat,
+				</if>
+				<if test="item.cost != null">
+					cost,
+				</if>
+				<if test="item.disFreight != null">
+					dis_freight,
+				</if>
+				<if test="item.disPrice != null">
+					dis_price,
+				</if>
+				<if test="item.disCifPrice != null">
+					dis_cif_price,
+				</if>
+				<if test="item.finalSellingPrice != null">
+					final_selling_price,
+				</if>
+				<if test="item.postalRate != null">
+					postal_rate,
+				</if>
+				<if test="item.isAfterService != null">
+					is_after_service,
+				</if>
+				<if test="item.isDeductedHistory != null">
+					is_deducted_history,
+				</if>
+				<if test="item.gstRate != null">
+					gst_rate,
+				</if>
+				<if test="item.vatRate != null">
+					vat_rate,
+				</if>
+				<if test="item.importTarRate != null">
+					import_tar_rate,
+				</if>
+				<if test="item.postalFeeRate != null">
+					postal_fee_rate,
+				</if>
+				<if test="item.logisticFee != null">
+					logistic_fee,
+				</if>
+				<if test="item.purchaseOrderNo != null">
+					purchase_order_no,
+				</if>
+				<if test="item.capFee != null">
+					cap_fee,
+				</if>
+				<if test="item.arriveWarePrice != null">
+					arrive_ware_price,
+				</if>
+				<if test="item.isgift != null">
+					isgift,
+				</if>
+				<if test="item.expirationDate != null">
+					expiration_date,
+				</if>
+				<if test="item.contractNo != null">
+					contract_no,
+				</if>
+				<if test="item.clearancePrice != null">
+					clearance_price,
+				</if>
+			</trim>
+			<trim prefix="values (" suffix=")" suffixOverrides=",">
+				<if test="item.id != null">
+					#{item.id,jdbcType=INTEGER},
+				</if>
+				<if test="item.productPurchaseId != null">
+					#{item.productPurchaseId,jdbcType=VARCHAR},
+				</if>
+				<if test="item.sku != null">
+					#{item.sku,jdbcType=VARCHAR},
+				</if>
+				<if test="item.qty != null">
+					#{item.qty,jdbcType=INTEGER},
+				</if>
+				<if test="item.productName != null">
+					#{item.productName,jdbcType=VARCHAR},
+				</if>
+				<if test="item.interBarCode != null">
+					#{item.interBarCode,jdbcType=VARCHAR},
+				</if>
+				<if test="item.plateformName != null">
+					#{item.plateformName,jdbcType=VARCHAR},
+				</if>
+				<if test="item.purchasePrice != null">
+					#{item.purchasePrice,jdbcType=DOUBLE},
+				</if>
+				<if test="item.warehouseId != null">
+					#{item.warehouseId,jdbcType=INTEGER},
+				</if>
+				<if test="item.warehouseName != null">
+					#{item.warehouseName,jdbcType=VARCHAR},
+				</if>
+				<if test="item.salesOrderId != null">
+					#{item.salesOrderId,jdbcType=INTEGER},
+				</if>
+				<if test="item.productImg != null">
+					#{item.productImg,jdbcType=VARCHAR},
+				</if>
+				<if test="item.salesOrderNo != null">
+					#{item.salesOrderNo,jdbcType=VARCHAR},
+				</if>
+				<if test="item.isDeducted != null">
+					#{item.isDeducted,jdbcType=INTEGER},
+				</if>
+				<if test="item.marketPrice != null">
+					#{item.marketPrice,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disProfitRate != null">
+					#{item.disProfitRate,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disProfit != null">
+					#{item.disProfit,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disVat != null">
+					#{item.disVat,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disStockFee != null">
+					#{item.disStockFee,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disShippingType != null">
+					#{item.disShippingType,jdbcType=VARCHAR},
+				</if>
+				<if test="item.disOtherCost != null">
+					#{item.disOtherCost,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disTotalCost != null">
+					#{item.disTotalCost,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disTransferFee != null">
+					#{item.disTransferFee,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disListFee != null">
+					#{item.disListFee,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disTradeFee != null">
+					#{item.disTradeFee,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disPayFee != null">
+					#{item.disPayFee,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disPostalFee != null">
+					#{item.disPostalFee,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disImportTar != null">
+					#{item.disImportTar,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disGst != null">
+					#{item.disGst,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disInsurance != null">
+					#{item.disInsurance,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disTotalVat != null">
+					#{item.disTotalVat,jdbcType=DOUBLE},
+				</if>
+				<if test="item.cost != null">
+					#{item.cost,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disFreight != null">
+					#{item.disFreight,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disPrice != null">
+					#{item.disPrice,jdbcType=DOUBLE},
+				</if>
+				<if test="item.disCifPrice != null">
+					#{item.disCifPrice,jdbcType=DOUBLE},
+				</if>
+				<if test="item.finalSellingPrice != null">
+					#{item.finalSellingPrice,jdbcType=DOUBLE},
+				</if>
+				<if test="item.postalRate != null">
+					#{item.postalRate,jdbcType=DOUBLE},
+				</if>
+				<if test="item.isAfterService != null">
+					#{item.isAfterService,jdbcType=INTEGER},
+				</if>
+				<if test="item.isDeductedHistory != null">
+					#{item.isDeductedHistory,jdbcType=INTEGER},
+				</if>
+				<if test="item.gstRate != null">
+					#{item.gstRate},
+				</if>
+				<if test="item.vatRate != null">
+					#{item.vatRate},
+				</if>
+				<if test="item.importTarRate != null">
+					#{item.importTarRate},
+				</if>
+				<if test="item.postalFeeRate != null">
+					#{item.postalFeeRate},
+				</if>
+				<if test="item.logisticFee != null">
+					#{item.logisticFee},
+				</if>
+				<if test="item.purchaseOrderNo != null">
+					#{item.purchaseOrderNo},
+				</if>
+				<if test="item.capFee != null">
+					#{item.capFee,jdbcType=DOUBLE},
+				</if>
+				<if test="item.arriveWarePrice != null">
+					#{item.arriveWarePrice,jdbcType=DOUBLE},
+				</if>
+				<if test="item.isgift != null">
+					#{item.isgift,jdbcType=BIT},
+				</if>
+				<if test="item.expirationDate != null">
+					#{item.expirationDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.contractNo != null">
+					#{item.contractNo,jdbcType=VARCHAR},
+				</if>
+				<if test="item.clearancePrice != null">
+					#{item.clearancePrice,jdbcType=DOUBLE},
+				</if>
+			</trim>
+		</foreach>
+	</insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="entity.sales.SaleDetail" >
+    update t_product_sales_order_details
+    <set >
+      <if test="productPurchaseId != null" >
+        product_purchase_id = #{productPurchaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        qty = #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="plateformName != null" >
+        plateform_name = #{plateformName,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price = #{purchasePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="salesOrderId != null" >
+        sales_order_id = #{salesOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="productImg != null" >
+        product_img = #{productImg,jdbcType=VARCHAR},
+      </if>
+      <if test="salesOrderNo != null" >
+        sales_order_no = #{salesOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="marketPrice">
+      	market_price = #{marketPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="isDeducted != null" >
+        is_deducted = #{isDeducted,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="entity.sales.SaleDetail" >
+    update t_product_sales_order_details
+    set product_purchase_id = #{productPurchaseId,jdbcType=VARCHAR},
+      sku = #{sku,jdbcType=VARCHAR},
+      qty = #{qty,jdbcType=INTEGER},
+      product_name = #{productName,jdbcType=VARCHAR},
+      plateform_name = #{plateformName,jdbcType=VARCHAR},
+      purchase_price = #{purchasePrice,jdbcType=DOUBLE},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      sales_order_id = #{salesOrderId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <insert id="batchInsert" parameterType="java.util.List">
+     insert into(
+       product_purchase_id, sku, qty, product_name, plateform_name, purchase_price, 
+       warehouse_id, warehouse_name, sales_order_id) values
+       <foreach collection="list" item="item" index="index" separator=",">
+         (${item.productPurchaseId}, #{item.sku},${item.qty},${item.productName},${item.plateformName},${purchasePrice},${warehouseId},${warehouseName},${salesOrderId})
+       </foreach>
+  </insert>
+  
+  <update id="batchUpdate" parameterType="java.util.List">
+      <foreach collection="list" item="item" index="index" separator=";">
+           update t_product_sales_order_details
+           <trim prefix="set" suffix="" suffixOverrides=",">
+			      <if test="productPurchaseId != null" >
+			        product_purchase_id = ${item.productPurchaseId},
+			      </if>
+			      <if test="sku != null" >
+			        sku = ${item.sku},
+			      </if>
+			      <if test="qty != null" >
+			        qty = ${item.qty},
+			      </if>
+			      <if test="productName != null" >
+			        product_name = ${item.productName},
+			      </if>
+			      <if test="plateformName != null" >
+			        plateform_name = ${item.plateformName},
+			      </if>
+			      <if test="purchasePrice != null" >
+			        purchase_price = ${item.purchasePrice},
+			      </if>
+			      <if test="warehouseId != null" >
+			        warehouse_id = ${item.warehouseId},
+			      </if>
+			      <if test="warehouseName != null" >
+			        warehouse_name = ${item.warehouseName},
+			      </if>
+			      <if test="salesOrderId != null" >
+			        sales_order_id = ${item.salesOrderId},
+			      </if>
+			      <if test="isDeducted != null" >
+			        is_deducted = ${item.isDeducted},
+			      </if>
+		      </trim>
+    where id = ${item.id}
+      </foreach>
+  </update>
+  
+  <update id="updateIsAfterSaleTo1">
+      update t_product_sales_order_details set is_after_service = 1 where sales_order_no = #{0} and sku = #{1}
+  </update>
+  
+  <select id="selectByOrderIdAndWarehouseIdAndSku" resultMap="BaseResultMap">
+	select
+	d.*,
+	b.ordering_date as
+	orderingDateStr,
+	m.trade_no
+	from
+	t_product_sales_order_base b,
+	t_product_sales_order_main m,
+	t_product_sales_order_details d
+	where
+	b.sales_order_id = m.id AND
+	d.sales_order_id = m.id AND
+	b.platform_order_no = #{orderNo,jdbcType=VARCHAR}
+	AND m.warehouse_id = #{warehouseId,jdbcType=INTEGER} AND m.status != 5 AND d.sku in 
+	<foreach collection="list" item="sku" index="index" open="(" separator="," close=")">
+		  #{sku,jdbcType=VARCHAR}
+	</foreach>
+	
+  </select>
+
+  <select id="getDetails" resultType="dto.sales.SalesToB2cDetail" parameterType="java.lang.Integer" >
+	select
+		id as id,
+		product_name as ctitle,--产品名
+		sku as csku,
+		qty as iqty,--数量
+		final_selling_price as fprice,--单价
+		qty*final_selling_price as ftotalprices, --总价
+		warehouse_id as warehouseId,--仓库id
+		warehouse_name as warehousename,--仓库名
+		purchase_price as foriginalprice,--原价
+		expiration_date as expirationDate,--到期日期
+		dis_price as disPrice,
+		final_selling_price as finalSellingPrice
+	from t_product_sales_order_details
+		where sales_order_id=#{orderId} and 
+		is_deducted_history = 	(
+		select case (SOURCE = 'BBC' or SOURCE is null)
+			when 'true' then 1
+			ELSE 0 END from t_product_sales_order_main 
+		where id = #{orderId})
+  </select>
+
+  <resultMap id="Price" type="java.util.Map" >
+    <result column="platformamount" property="platformamount" jdbcType="DOUBLE" />
+    <result column="clearanceamount" property="clearanceamount" jdbcType="DOUBLE" />
+    <result column="distributortype" property="distributortype" jdbcType="INTEGER" />
+    <result column="bbcpostage" property="bbcpostage" jdbcType="DOUBLE" />
+    <result column="arrvicetotal" property="arrvicetotal" jdbcType="DOUBLE" />
+    <result column="optfee" property="optfee" jdbcType="DOUBLE" />
+    <result column="originalfreight" property="originalfreight" jdbcType="DOUBLE" />
+    <result column="clearancepricetotal" property="clearancepricetotal" jdbcType="DOUBLE" />
+  </resultMap>
+
+  <select id="getAmount" resultMap="Price" parameterType="java.lang.Integer">
+		select 
+		sum(platformamount) AS platformamount,
+		clearanceamount,
+		distributortype,
+		bbcpostage,
+		originalfreight,
+		sum(arrvicetotal) AS arrvicetotal,
+		optfee,
+		sum(clearancepricetotal) AS clearancepricetotal
+		 from 
+		(SELECT
+			case (sod.cap_fee is null)
+			when 'true' then sum(sod.purchase_price * sod.qty)
+			ELSE sum(sod.cap_fee * sod.qty) END
+			AS platformamount,--平台收入，商品采购价总和
+			sob.order_actual_amount as clearanceamount, -- 报关金额=实付款
+			som.distributor_type as distributortype,
+			sob.bbc_postage as bbcpostage,
+			sob.original_freight as originalfreight,
+			case (sod.arrive_ware_price is null)
+			when 'true' then sum(sod.purchase_price * sod.qty)
+			ELSE sum(sod.arrive_ware_price * sod.qty) END
+		    AS arrvicetotal,--到仓价总计
+			som.opt_fee AS optfee, -- 操作费
+			CASE (sod.clearance_price IS NOT NULL)
+			when 'true' then sum(sod.clearance_price * sod.qty)
+			ELSE  sum(sod.arrive_ware_price * sod.qty) END
+		    AS clearancepricetotal --清货价总计
+		FROM
+			t_product_sales_order_details sod
+		RIGHT JOIN t_product_sales_order_base sob ON sob.sales_order_id = sod.sales_order_id
+		RIGHT JOIN t_product_sales_order_main som ON sob.sales_order_id = som.id
+		WHERE
+			sod.sales_order_id = #{0} and sod.is_deducted_history = 1 
+			GROUP BY sod.clearance_price,sob.original_freight,sob.order_actual_amount,som.distributor_type,sob.bbc_postage,sod.cap_fee,sod.arrive_ware_price,som.opt_fee
+		) t 
+		group by clearanceamount,distributortype,bbcpostage,optfee,originalfreight
+  </select>
+
+  <select id="selectDetails" resultMap="BaseResultMap" parameterType="java.util.List">
+	select
+	<include refid="Base_Column_List"/>
+	from t_product_sales_order_details
+	<where>
+		is_deducted_history = 0
+		<if test="list!=null and list.size()>0">
+			and sales_order_id in 
+			<foreach collection="list" item="id" open="(" close=")" separator=",">
+				#{id}
+			</foreach>
+		</if>
+	</where>
+	order by purchase_price
+  </select>
+  
+	<resultMap id="ContractPrice" type="java.util.Map" >
+	    <result column="contract_no" property="contractNo" jdbcType="VARCHAR" />
+	  </resultMap>
+	<select id="getContractPrice" parameterType="java.lang.Integer" resultMap="ContractPrice">
+		select
+			contract_no,sum (purchase_price*qty) as sum
+		from
+			t_product_sales_order_details
+		where
+			contract_no is not null
+			and sales_order_id = #{sid,jdbcType=INTEGER}
+			and is_deducted_history = 1
+		group by contract_no
+	</select>
+</mapper>

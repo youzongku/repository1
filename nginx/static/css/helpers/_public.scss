@@ -1,0 +1,300 @@
+.main{
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.hotR{color: $cRec !important;}
+.hotB{color: $cB1 !important;}
+
+.current-new{
+  color: $cG5!important;
+}
+.current1{
+  color: $cB1!important;
+}
+.current2{
+  color: $cB7c;
+}
+.current3{
+  background: $cB7c;
+}
+.current4{
+  border: 1px solid $cB5!important;
+}
+.content-category-cont .hd .on a{
+  color: $cB1!important;
+  border-bottom: 2px solid $cB1;
+}
+.current5{
+  color: $cB1;
+}
+.current6{
+  background: $cOrg;
+  color: $cW!important;
+}
+.current7{
+  background: $cB7c!important;
+}
+
+.current-circle{
+  background: $cW!important;
+  border: 1px solid $cG69;
+  opacity: 1!important;
+  filter:alpha(opacity=100)!important;
+}
+
+.hide{
+  display: none;
+}
+.show{
+  display: block;
+}
+
+.arrows_top{
+  width: 10px;
+  height: 6px;
+  background: url("../../img/sprite.png") no-repeat;
+  background-position: -1px -1px;
+  display: inline-block;
+}
+
+.last{
+  border-right: none!important;
+  padding-right: 0!important;
+}
+
+.placeholder{
+  color: $cG9;
+  font-size: $f12;
+}
+
+.bor-b{
+  border-bottom: 1px solid $cGe9;
+}
+
+.bor-b-d{
+  border-bottom: 1px dashed $cGbf;
+}
+
+.bor-r-org{
+  border-right: 1px solid $cOrgffc;
+}
+
+.acco-icon{
+  @include iconBg;
+  width: 16px;
+  height: 16px;
+  background-position: -39px 0;
+}
+
+.passw-icon{
+  @include iconBg;
+  width: 12px;
+  height: 16px;
+  background-position: -59px 0;
+}
+
+.width290{
+  width: 290px;
+}
+
+.width180{
+  width: 180px;
+}
+
+.width2564{
+  width: 256px;
+}
+
+.btn-code{
+  color: $cW;
+  background: $cB35;
+}
+
+.arrows-r-g{
+  @include iconBg;
+  width: 5px!important;
+  height: 10px!important;
+  background-position: -30px -4px;
+}
+
+.arrows-b-g{
+  @include iconBg;
+  width: 10px!important;
+  height: 6px!important;
+  background-position: -77px -6px;
+}
+
+.checklist{
+  float:left;
+}
+.checkbox{
+  width: 14px;
+  opacity:0;
+  filter:alpha(opacity=0);
+  cursor: pointer;
+}
+.iCheck{
+  background:url(../../img/chk-bg1.png) no-repeat left 2px;
+}
+.iCheck-ed{
+  background:url(../../img/chk-bg2.png) no-repeat left 2px;
+}
+
+.inp-min{
+  width: 42px;
+  height: 32px;
+  line-height: 32px;
+  border: 1px solid $cGbf;
+  text-indent: 0;
+  padding: 0 10px;
+}
+
+.btn-bule-min{
+  width: 58px;
+  height: 34px;
+  line-height: 34px;
+  color: $cB1;
+  border: 1px solid $cB1;
+}
+.btn-gray-line{
+  padding: 12px 16px;
+  font-size: $f12;
+  border: 1px solid $cG9;
+  &:hover{
+    color: $cB1;
+    border: 1px solid $cB1;
+  }
+}
+
+.btn-bule{
+  color: $cW;
+  background: $cB4c;
+}
+
+.btn-org{
+  color: $cW;
+  background: $cOrg;
+}
+
+
+.icon1{
+  @include iconBg;
+  background-position: -3px -325px;
+}
+.icon2{
+  @include iconBg;
+  background-position: -3px -354px;
+}
+.icon3{
+  @include iconBg;
+  background-position: -3px -384px;
+}
+.icon4{
+  @include iconBg;
+  background-position: -3px -414px;
+}
+.icon5{
+  @include iconBg;
+  background-position: -3px -443px;
+}
+
+.pers-icon{
+  width: 24px!important;
+  height: 25px!important;
+  @include iconBg;
+  background-position: -47px -23px;
+}
+.shop-icon{
+  width: 26px!important;
+  height: 24px!important;
+  @include iconBg;
+  background-position: -46px -59px;
+}
+.tel-icon{
+  width: 24px!important;
+  height: 27px!important;
+  @include iconBg;
+  background-position: -47px -92px;
+}
+.serv-icon{
+  width: 28px!important;
+  height: 25px!important;
+  @include iconBg;
+  background-position: -45px -128px;
+}
+.top-icon{
+  width: 28px!important;
+  height: 21px!important;
+  @include iconBg;
+  background-position: -45px -165px;
+  vertical-align: middle;
+}
+
+.area1{
+  @include iconBg;
+  background-position: -966px  -3px!important;
+}
+.area2{
+  @include iconBg;
+  background-position: -966px -40px!important;
+}
+.area3{
+  @include iconBg;
+  background-position: -966px -76px!important;
+}
+.area4{
+  @include iconBg;
+  background-position: -966px -113px!important;
+}
+
+.service-b-icon{
+  @include iconBg;
+  background-position: -47px -197px;
+}
+
+.classify-icon{
+  @include iconBg;
+  height: 12px;
+  background-position: -5px -308px;
+}
+
+//.icon-delete-blue{
+//  height: 22px!important;
+//  @include iconBg;
+//  background-position: -46px -232px;
+//  vertical-align: middle;
+//  cursor: pointer;
+//}
+.icon-delete-gray{
+  height: 22px!important;
+  @include iconBg;
+  background-position: -46px -265px;
+  vertical-align: middle;
+  cursor: pointer;
+  &:hover{
+    background-position: -46px -232px;
+  }
+}
+
+.btn-org-deep{
+  color: $cW;
+  background: $cOrg6a;
+}
+.btn-org-light{
+  color: $cW;
+  background: $cOrgfdb;
+}
+
+.inp-selc{
+  width: 168px;
+  height: 30px;
+  border: 1px solid $cB357;
+}
+
+.arrows-solid-icon{
+  width: 10px!important;
+  height: 6px!important;
+  @include iconBg;
+  background-position: -98px -6px;
+}
