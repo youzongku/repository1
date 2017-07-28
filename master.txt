@@ -1,1 +1,3 @@
 master_text
+
+branch2_text
